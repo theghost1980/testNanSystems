@@ -1,0 +1,47 @@
+{
+  "name": "nansystems",
+  "version": "1.0.0",
+  "description": "Ana Echeverria is a professional Enginner who works in Energy Sector, automatisation, electronics and many other areas to improve the quality of inner services of many companies.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "develop": "gatsby develop",
+    "clean": "gatsby clean",
+    "build": "gatsby build"
+  },
+  "keywords": [
+    "energy",
+    "ana",
+    "echeverria",
+    "universidad",
+    "yacambu",
+    "ventures",
+    "blog",
+    "business",
+    "analyist",
+    "project",
+    "management",
+    "BAS",
+    "inet",
+    "niagara",
+    "tracer",
+    "vista",
+    "autoCAD"
+  ],
+  "author": "Saturno Mangieri - saturnoman.com",
+  "license": "ISC",
+  "dependencies": {
+    "bootstrap": "^4.5.3",
+    "dotenv": "^8.2.0",
+    "gatsby": "^2.28.2",
+    "gatsby-image": "^2.8.0",
+    "gatsby-plugin-sharp": "^2.11.1",
+    "gatsby-source-datocms": "^2.5.7",
+    "gatsby-transformer-remark": "^2.13.0",
+    "gatsby-transformer-sharp": "^2.9.0",
+    "react": "^17.0.1",
+    "react-bootstrap": "^1.4.0",
+    "react-dom": "^17.0.1",
+    "react-parallax": "^3.1.2"
+  }
+}
