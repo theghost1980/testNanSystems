@@ -43,6 +43,11 @@ const Header = () => {
                         ...GatsbyDatoCmsFluid
                     }
                 }
+                logoSiteWhite {
+                    fluid {
+                        ...GatsbyDatoCmsFluid
+                    }
+                }
                 logoSiteSquare{
                     fluid {
                         ...GatsbyDatoCmsFluid
@@ -57,7 +62,7 @@ const Header = () => {
                     <div className="navBlock">
                         <Link to="/" activeClassName="activeNavLink">
                             <div className="logoCont">
-                                <Img fluid={data.datoCmsInfoSite.logoSite.fluid} className="logoImg"/>
+                                <Img fluid={data.datoCmsInfoSite.logoSiteWhite.fluid} className="logoImg"/>
                             </div>
                         </Link>
                         <ul className={mobileMenu ? 'hide': 'navItemsUL'}>

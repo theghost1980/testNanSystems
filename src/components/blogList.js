@@ -1,5 +1,5 @@
 import React from 'react';
-import { StaticQuery, graphql } from 'gatsby';
+import { StaticQuery, graphql, Link } from 'gatsby';
 
 const Bloglist = () => {
 
@@ -32,7 +32,9 @@ const Bloglist = () => {
                             return (
                                 <li key={item.node.id}>
                                     <div className="itemBlogList">
-                                        <p className="subtitleHome">{item.node.title}</p>
+                                        <Link to={`blog/${item.node.slug}`}>
+                                            <p className="subtitleHome">{item.node.title}</p>
+                                        </Link>
                                         <p className="spanReadingTime">({item.node.contentNode.childMarkdownRemark.timeToRead} min to read)</p>
                                     </div>
                                 </li>

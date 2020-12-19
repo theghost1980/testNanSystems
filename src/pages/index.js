@@ -26,21 +26,23 @@ const Index = () => {
                         <Bloglist />
                     </div>
                     <div className="contDiv60">
-                        <p className="titleHome rightAlign">Some technologies We work with:</p>
-                        <ul className="ulTechListHome">
-                            <li>
-                                <img src={autoLogo} alt="AutoCAD professional Ana Echeverria" className="logoHome"/>
-                            </li>
-                            <li>
-                                <img src={redLogo} alt="RedHat professional Ana Echeverria"  className="logoHome" />
-                            </li>
-                            <li>
-                                <img src={tridiumLogo} alt="Tridium professional Ana Echeverria"  className="logoHome"/>
-                            </li>
-                            <li>
-                                <img src={niagaLogo} alt="Niagara professional Ana Echeverria"  className="logoHome" />
-                            </li>
-                        </ul>
+                        <p className="titleHome centerAlign">Some technologies We work with:</p>
+                        <div className="rowLogosCont">
+                            <ul className="ulTechListHome">
+                                <li>
+                                    <img src={autoLogo} alt="AutoCAD professional Ana Echeverria" className="logoHome"/>
+                                </li>
+                                <li>
+                                    <img src={redLogo} alt="RedHat professional Ana Echeverria"  className="logoHome" />
+                                </li>
+                                <li>
+                                    <img src={tridiumLogo} alt="Tridium professional Ana Echeverria"  className="logoHome"/>
+                                </li>
+                                <li>
+                                    <img src={niagaLogo} alt="Niagara professional Ana Echeverria"  className="logoHome" />
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                </div>
            </div>

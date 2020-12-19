@@ -1,6 +1,8 @@
 import React from 'react';
 import { StaticQuery, graphql, Link } from 'gatsby';
 import Img from 'gatsby-image';
+//media-imgs
+import heartIcon from '../media-imgs/heart.png';
 
 const Footer = () => {
 
@@ -103,7 +105,7 @@ const Footer = () => {
                         </div>
                     </div>
                     <div className="rowColumFooter">
-                        <p className="textFooter">Copyright ©2020 made with love by <a href="http://saturnoman.com/">@theghost1980</a> | </p>
+                        <p className="textFooter">Copyright ©2020 with <span><img src={heartIcon} className="heartIcon" /></span> by <a href="http://saturnoman.com/">@theghost1980</a> | </p>
                         <p className="textFooter"><a href="">&nbsp;&nbsp;Terms of Service</a>.</p>
                     </div>
                 </footer>
