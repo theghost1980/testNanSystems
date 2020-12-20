@@ -105,7 +105,7 @@ const Footer = () => {
                         </div>
                     </div>
                     <div className="rowColumFooter">
-                        <p className="textFooter">Copyright ©2020 with <span><img src={heartIcon} className="heartIcon" /></span> by <a href="http://saturnoman.com/">@theghost1980</a> | </p>
+                        <p className="textFooter">Copyright ©2020 with <span><img src={heartIcon} className="heartIcon" alt="love love love" /></span> by <a href="http://saturnoman.com/">@theghost1980</a> | </p>
                         <p className="textFooter"><Link to="/tos">&nbsp;&nbsp;Terms of Service</Link>.</p>
                     </div>
                 </footer>

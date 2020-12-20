@@ -3,6 +3,8 @@ import { graphql } from 'gatsby';
 //components
 import Img from 'gatsby-image';
 import Layout from '../components/layout';
+//styles
+import '../styles/styles.css';
 
 const Notfound = (props) => {
     return (

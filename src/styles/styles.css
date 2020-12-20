@@ -17,6 +17,7 @@
     --var-colorFont-lightThemeAlphasized2:rgba(1, 59, 194, 0.5);
     --var-colorFont-lightThemeAlphasized:rgba(1, 59, 194, 0.3);
     --var-colorFont-lightTheme-Selected: rgb(7, 204, 161);
+    --var-colorFont-lightTheme-Selected-Light: rgba(7, 204, 161, 0.25);
     --var-colorFont-lightTheme-darker: rgb(9, 163, 130);
     --var-bg-light-theme: #f5f5f5;
     --var-bg-light-theme-darker: #cecdcd;
@@ -334,11 +335,11 @@ html, body {
 
 /* Footer */
 footer {
-    margin-top: var(--var-margin-top-sections);
+    /* margin-top: var(--var-margin-top-sections); */
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 240px;
+    height: 200px;
     /* background: var(--var-colorFont-lightTheme); */
     /* testing adriatic */
     background: var(--var-adriaticBlue);
@@ -414,6 +415,7 @@ footer {
     color: var(--var-colorFont-lightTheme-Selected)
 }
 .rowFooter {
+    margin-top: var(--var-margin-top-sections);
     display: flex;
     flex-direction: row;
 }
@@ -713,6 +715,101 @@ figcaption p {
 }
 /* end blog page */
 
+/* portfolio page */
+.portfolioCont {
+    margin: calc(var(--var-margin-top-sections)*3);
+    background: url('../media-imgs/bgportfolio.jpg');
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-position: right;
+    border-radius: var(--var-border-radius);
+}
+.portfUL {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    min-height: 60vh;
+    list-style: none;
+    padding-inline-start: 0px;
+}
+.portfUL li {
+    margin-bottom: var(--var-padding-imgMini);
+}
+.workCont {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /* align-items: center; */
+    align-content: center;
+    justify-content: flex-start;
+    transition: all .4s ease;
+    overflow: hidden;
+}
+.expanded{
+    height: 300px;
+    overflow: auto;
+    background: var(--var-colorFont-lightTheme-Selected-Light);
+    width: 95%;
+    padding: var(--var-margin-top-sections);
+    border-radius: var(--var-border-radius);
+}
+.noExpanded {
+    height: 38px;
+}
+.workContRow {
+    margin-top: var(--var-paddingTitles);
+    display: flex;
+    flex-direction: row;
+}
+.workCont p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+.iconImgCont {
+    margin-left: var(--var-padding-imgMini);
+    display: flex;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    transition: all .2s ease;
+    border-radius: 50%;
+    padding: 2px;
+    border: 1px solid var(--var-adriaticBlue);
+}
+.iconImgCont:hover{
+    transform: scale(1.1);
+    background: var(--var-colorFont-lightThemeAlphasized);
+}
+.iconExpand {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.pargraphPortfolio {
+    width: 50%;
+    color: var(--var-adriaticBlue);
+    font-size: large;
+    font-weight: bold;
+    font-family: var(--var-paragraph-font);
+    padding-right: 10px;
+}
+.titlePortfolio {
+    color: var(--var-adriaticBlue);
+    font-weight: bold;
+    font-family: var(--var-prim-font);
+}
+.subtitlePortfolio {
+    color: var(--var-adriaticBlue);
+    font-family: var(--var-font-subtitles);
+    font-size: large;
+}
+.textPortfolio {
+    color: var(--var-adriaticBlue);
+    font-family: var(--var-paragraph-font);
+    font-size: medium;
+}
+/* end portfolio page */
+
 /* Media rules support */
 @media only screen and (max-width: 968px) {
     .blogListCont{
@@ -734,6 +831,67 @@ figcaption p {
     }
 }
 @media only screen and (max-width: 836px) {
+    .portfolioCont {
+        /* margin: var(--var-margin-top-sections); */
+        background-position: top;
+        background-size: cover;
+        width: 100%;
+        margin: 0 auto;
+        border-radius: 0px;
+        background: url('../media-imgs/bgportfolio-mobiles.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
+        padding-bottom: var(--var-margin-top-sections);
+    }
+    .portfUL {
+        width: 80%;
+        margin: 0 auto;
+        background: rgba(0, 0, 0, 0.2);
+    }
+    .titlePortfolio {
+        color: var(--var-bg-light-theme);
+        text-shadow: 1px 1px 4px black;
+    }
+    .pargraphPortfolio {
+        padding: var(--var-margin-top-sections);
+        width: 80%;
+        margin: 0 auto;
+        color: var(--var-bg-light-theme);
+        text-shadow: 1px 1px 4px black;
+        background: rgba(0, 0, 0, 0.2);
+    }
+    .subtitlePortfolio, .textPortfolio {
+        color: var(--var-bg-light-theme);
+        text-shadow: 1px 1px 4px black;
+    }
+    .subtitlePortfolio a {
+        color: var(--var-bg-light-theme);
+        text-shadow: 1px 1px 4px black;
+        text-decoration: underline;
+    }
+    .subtitlePortfolio a:hover{
+        font-weight: bold;
+        color: var(--var-colorFont-lightTheme-Selected);
+    }
+    .workCont {
+        justify-content: unset;
+    }
+    .expanded {
+        width: 100%;
+        background: rgba(0, 0, 0, 0.304);
+    }
+    .workContRow {
+        flex-direction: row;
+        justify-content: center;
+    }
+    .noExpanded {
+        height: 40px;
+    }
+    .iconImgCont {
+        border-color: var(--var-bg-light-theme);
+        background: var(--var-bg-light-theme);
+        margin-left: var(--var-margin-top-sections);
+    }
     footer {
         height: auto;
     }
@@ -798,6 +956,12 @@ figcaption p {
     }
 }
 @media only screen and (max-width: 536px) {
+    .portfUL {
+        width: 100%;
+    }
+    .pargraphPortfolio {
+        width: 100%;
+    }
     .contDiv40 {
         width: 100%;
         box-shadow: none;
@@ -845,8 +1009,15 @@ figcaption p {
     .rowColumFooter {
         flex-direction: column;
     }
+    .noExpanded {
+        height: 41px;
+    }
 }
 @media only screen and (max-width: 400px) {
+    .titlePortfolio {
+        font-size: 14px;
+        font-weight: bolder;
+    }
     .logoCont {
         width: 300px;
     }
@@ -896,4 +1067,6 @@ figcaption p {
 /* https://www.pinclipart.com/pindetail/xooRwo_astronaut-clipart-transparent-astronaut-clip-art-png-download/ */
 /* Foto de Suzy Hazelwood en Pexels */
 /* https://www.pexels.com/es-es/foto/madera-industria-teclear-escritura-3601081/ */
+/* Foto de fauxels en Pexels */
+/* https://www.pexels.com/es-es/foto/gente-trabajando-efecto-desenfocado-ventana-3183172/ */
 /* end credits */

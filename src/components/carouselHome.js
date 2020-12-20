@@ -31,7 +31,7 @@ const Carouselhome = () => {
         return () => {
             window.removeEventListener('resize', handleResize);
         }
-    }, []);
+    }, [handleResize]);
 
     return (
         <StaticQuery
