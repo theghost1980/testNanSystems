@@ -7,6 +7,7 @@ import expLightIcon from '../media-imgs/expand-light.png';
 import expDarkIcon from '../media-imgs/expand-dark.png';
 import collapseLightIcon from '../media-imgs/collapse-light.png';
 import collapseDarkIcon from '../media-imgs/collapse-dark.png';
+import actualJobIcon from '../media-imgs/actualJob.png';
 
 const Portfolio = (props) => {
     // const [expanded, setExpanded] = useState(false);
@@ -37,6 +38,14 @@ const Portfolio = (props) => {
                                             <div className="iconImgCont" onClick={() => HandleState(work.id)}>
                                                 <img src={expanded.value ? collapseLightIcon : expLightIcon } alt="expand view" className="iconExpand"/>
                                             </div>
+                                            {   
+                                                (!work.dateOut || work.dateOut === ' ' || work.dateOut === null || work.dateOut ==='N/A')
+                                                ?
+                                                    <div className="actualJobIconCont">
+                                                        <img src={actualJobIcon} alt="actual Job" className="actualJobIcon"/>
+                                                    </div>
+                                                : null
+                                            }
                                         </div>
                                         <ul>
                                             <li className="subtitlePortfolio">{work.company}</li>
@@ -82,7 +91,7 @@ export default Portfolio;
 
 export const data = graphql`
     query{
-        allDatoCmsWorkExperience {
+        allDatoCmsWorkExperience (sort: {order: DESC, fields: dateIn}) {
             edges {
                 node {
                     accomplishmentsNode {

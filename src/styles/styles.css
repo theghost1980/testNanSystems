@@ -17,6 +17,7 @@
     --var-colorFont-lightThemeAlphasized2:rgba(1, 59, 194, 0.5);
     --var-colorFont-lightThemeAlphasized:rgba(1, 59, 194, 0.3);
     --var-colorFont-lightTheme-Selected: rgb(7, 204, 161);
+    --var-colorFont-lightTheme-Selected2: rgba(7, 204, 161, 0.555);
     --var-colorFont-lightTheme-Selected-Light: rgba(7, 204, 161, 0.25);
     --var-colorFont-lightTheme-darker: rgb(9, 163, 130);
     --var-bg-light-theme: #f5f5f5;
@@ -217,6 +218,7 @@ html, body {
 .homeContainer {
     /* margin-top: var(--var-margin-top-sections); */
     width: 100%;
+    margin-bottom: var(--var-margin-top-sections)
 }
 .carouselContainer {
     display: block;
@@ -431,6 +433,7 @@ footer {
     color: var(--var-bg-light-theme);
     font-size: medium;
     font-family: var(--var-font-subtitles);
+    margin-bottom: 0px;
 }
 .textFooter a {
     color: var(--var-colorFont-lightTheme-Selected);
@@ -754,7 +757,7 @@ figcaption p {
     border-radius: var(--var-border-radius);
 }
 .noExpanded {
-    height: 38px;
+    height: 34px;
 }
 .workContRow {
     margin-top: var(--var-paddingTitles);
@@ -769,8 +772,8 @@ figcaption p {
     margin-left: var(--var-padding-imgMini);
     display: flex;
     cursor: pointer;
-    width: 32px;
-    height: 32px;
+    width: 25px;
+    height: 25px;
     transition: all .2s ease;
     border-radius: 50%;
     padding: 2px;
@@ -808,10 +811,206 @@ figcaption p {
     font-family: var(--var-paragraph-font);
     font-size: medium;
 }
+.actualJobIconCont {
+    margin-left: var(--var-padding-imgMini);
+    display: block;
+    width: 20px;
+    height: 20px;
+}
+.actualJobIcon {
+    width: 20px;
+    height: 20px;
+}
 /* end portfolio page */
 
+/* Contact page */
+.contactContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 410px;
+    /* margin-top: var(--var-margin-top-sections); */
+    /* margin-bottom: var(--var-margin-top-sections); */
+    justify-content: center;
+    background: url('../media-imgs/bgContact.png');
+    background-repeat: no-repeat;
+    background-position: right;
+}
+.formContainer {
+    margin-left: var(--var-margin-top-sections);
+    display: flex;
+    flex-direction: column;
+}
+.contactForm {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    /* border: 1px solid black; */
+}
+.rowCont {
+    display: flex;
+    flex-direction: row;
+}
+.labelsCont {
+    margin-left: var(--var-margin-top-sections);
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+}
+.inputsCont {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+}
+.btnCont {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-bottom: calc(var(--var-margin-top-sections)/2);
+}
+.btnRowCont {
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+}
+.btnForm {
+    margin: var(--var-padding-imgMini);
+    padding: var(--var-padding-imgMini);
+}
+.sendingEmailCont {
+    margin-top: calc(var(--var-margin-top-sections)/2);
+    margin-bottom: calc(var(--var-margin-top-sections)/2);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.imgSendingCont {
+    margin-left: var(--var-padding-imgMini);
+    width: 35px;
+    height: 35px;
+}
+.sendingText {
+    font-weight: bold;
+    text-align: center;
+    color: var(--var-adriaticBlue);
+    font-size: large;
+    font-family: var(--var-font-subtitles);
+    transition: all 1s ease;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+    animation-name: sendingEmailText;
+    margin-bottom: 0px;
+}
+    /* animation */
+    @keyframes sendingEmailText {
+        from {
+            opacity: .8;
+        }
+        to {
+            opacity: 1;
+        }
+    }
+.iconSending {
+    width: 35px;
+    height: 35px;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-name: sendingEmail;
+}
+    /* animation */
+    @keyframes sendingEmail {
+        from {
+            transform: rotateZ(0deg);
+        }
+        to {
+            transform: rotateZ(359deg);
+        }
+    }
+    /* end animation */
+.lblForm {
+    font-size: large;
+    font-weight: bold;
+    font-family: var(--var-paragraph-font);
+    color: var(--var-adriaticBlue);
+}
+.inputForm {
+    font-size: large;
+    font-weight: normal;
+    font-family: var(--var-paragraph-font);
+    color: var(--var-colorFont-lightTheme-Selected);
+}
+/* placeholders */
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: var(--var-colorFont-lightTheme-Selected2);
+    opacity: 1; /* Firefox */
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: var(--var-colorFont-lightTheme-Selected2);
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: var(--var-colorFont-lightTheme-Selected2);
+}
+/* end placeholders */
+.btnForm {
+    font-size: medium;
+    font-family: var(--var-font-subtitles);
+    color: var(--var-bg-light-theme);
+    background: var(--var-adriaticBlue);
+    border-radius: var(--var-border-radius);
+    border: none;
+    padding: 8px;
+}
+.btnForm:hover{
+    background: var(--var-colorFont-lightTheme-Selected2);
+    color: var(--var-adriaticBlue);
+}
+/* end contact page */
+
 /* Media rules support */
+@media only screen and (max-width: 1160px) {
+    .contactForm{
+        width: 40%;
+    }
+}
 @media only screen and (max-width: 968px) {
+    .contactContainer {
+        background-size: cover;
+    }
+    .formContainer {
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+        margin-left: 0px;
+    }
+    .contactForm{
+        background: var(--var-adriaticBlue);
+        opacity: 0.95;
+        border-radius: var(--var-border-radius);
+        width: 60%;
+    }
+    .sendingText {
+        color: var(--var-bg-light-theme);
+    }
+    .lblForm {
+        color: var(--var-bg-light-theme);
+    }
+    .labelsCont {
+        margin-left: var(--var-margin-top-sections);
+        margin-top: var(--var-margin-top-sections);
+    }
+    .inputsCont{
+        width: 65%;
+        margin-top: var(--var-margin-top-sections);
+        margin-right: var(--var-margin-top-sections);
+    }
+    .btnForm {
+        background: var(--var-bg-light-theme);
+        color: var(--var-adriaticBlue);
+    }
+    .btnForm:hover {
+        color: var(--var-bg-light-theme);
+    }
     .blogListCont{
         flex-direction: column;
     }
@@ -847,18 +1046,20 @@ figcaption p {
         width: 80%;
         margin: 0 auto;
         background: rgba(0, 0, 0, 0.2);
+        padding: var(--var-margin-top-sections);
     }
     .titlePortfolio {
         color: var(--var-bg-light-theme);
         text-shadow: 1px 1px 4px black;
     }
     .pargraphPortfolio {
-        padding: var(--var-margin-top-sections);
-        width: 80%;
         margin: 0 auto;
+        width: 80%;
         color: var(--var-bg-light-theme);
         text-shadow: 1px 1px 4px black;
         background: rgba(0, 0, 0, 0.2);
+        padding-right: 0px;
+        padding: var(--var-margin-top-sections);
     }
     .subtitlePortfolio, .textPortfolio {
         color: var(--var-bg-light-theme);
@@ -879,13 +1080,14 @@ figcaption p {
     .expanded {
         width: 100%;
         background: rgba(0, 0, 0, 0.304);
+        padding: 0px;
     }
     .workContRow {
         flex-direction: row;
         justify-content: center;
     }
     .noExpanded {
-        height: 40px;
+        height: 34px;
     }
     .iconImgCont {
         border-color: var(--var-bg-light-theme);
@@ -920,6 +1122,12 @@ figcaption p {
     }
 }
 @media only screen and (max-width: 736px) {
+    .contactForm{
+        width: 90%;
+    }
+    .formContainer {
+        margin-left: 0px;
+    }
     .cardCont {
         flex-direction: column;
     }
@@ -941,6 +1149,7 @@ figcaption p {
 @media only screen and (max-width: 636px) {
     .contDiv40 {
         width: 98%;
+        margin-left: 0px;
     }
     .contDiv60 {
         width: 98%;
@@ -956,15 +1165,28 @@ figcaption p {
     }
 }
 @media only screen and (max-width: 536px) {
+    .labelsCont {
+        display: none;
+    }
+    .inputsCont {
+        width: 90%;
+        margin-left: var(--var-margin-top-sections);
+    }
     .portfUL {
         width: 100%;
+        padding: 0px;
     }
     .pargraphPortfolio {
-        width: 100%;
+        width: auto;
+        padding: 10px;
+        margin-block-end: 0px;
+        margin-block-start: 0px;
     }
     .contDiv40 {
         width: 100%;
+        padding: 0px;
         box-shadow: none;
+        margin-left: 0px;
     }
     .contDiv60 {
         width: 100%;
@@ -976,6 +1198,12 @@ figcaption p {
     .logoHome{
         height: 75px;
     }
+    .blogULHome{
+        list-style: none;
+    }
+    /* .itemBlogList {
+        flex-direction: column;
+    } */
     .quotesCarouselHome {
         font-size: medium;
     }
@@ -1010,7 +1238,7 @@ figcaption p {
         flex-direction: column;
     }
     .noExpanded {
-        height: 41px;
+        height: 34px;
     }
 }
 @media only screen and (max-width: 400px) {
@@ -1055,6 +1283,14 @@ figcaption p {
         font-size: larger;
         font-weight: bold;
     }
+    .workContRow {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .noExpanded {
+        height: 50px;
+    }
 }
 /* end media rules */
 
@@ -1069,4 +1305,6 @@ figcaption p {
 /* https://www.pexels.com/es-es/foto/madera-industria-teclear-escritura-3601081/ */
 /* Foto de fauxels en Pexels */
 /* https://www.pexels.com/es-es/foto/gente-trabajando-efecto-desenfocado-ventana-3183172/ */
+/* Foto de Oleg Magni en Pexels */
+/* https://www.pexels.com/es-es/foto/persona-manos-telefono-inteligente-escritorio-2764678/ */
 /* end credits */
