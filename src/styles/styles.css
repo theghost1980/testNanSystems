@@ -341,7 +341,7 @@ footer {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 200px;
+    height: auto;
     /* background: var(--var-colorFont-lightTheme); */
     /* testing adriatic */
     background: var(--var-adriaticBlue);
@@ -488,6 +488,7 @@ footer {
     color: var(--var-adriaticBlue);
     font-family: var(--var-paragraph-font);
     font-size: large;
+    margin-right: calc(var(--var-margin-top-sections)/2);
 }
 .certCont {
     display: flex;
@@ -528,6 +529,7 @@ footer {
     margin: var(--var-margin-top-sections);
     border-radius: var(--var-border-radius);
     box-shadow: 1px 1px 8px 1px var(--var-adriaticBlue);
+    overflow: auto;
 }
 .subtitleAbout {
     margin-left: calc(var(--var-padding-imgMini)*3);
@@ -652,9 +654,11 @@ footer {
 .imgCoverCont {
     display: block;
     width: 600px;
+    border-radius: var(--var-border-radius);
 }
 .blogPageImg {
     object-fit: cover;
+    border-radius: var(--var-border-radius);
 }
 .topTextBlog {
     width: 300px;
@@ -967,6 +971,31 @@ figcaption p {
 }
 /* end contact page */
 
+/* Selector component - for language or possible dar mode */
+.selectorCont {
+    border-radius: var(--var-border-radius);
+    background: var(--var-bg-light-theme);
+    border: 1px solid var(--var-bg-light-theme);
+    display: flex;
+    flex-direction: column;
+    width: 52px;
+    height: 32px;
+    text-align: left;
+    cursor: pointer;
+}
+.iconSelector {
+    transition: all .4s ease;
+    width: 30px;
+    height: 30px;
+}
+.selectorRight {
+    margin-left: var(--var-margin-top-sections);
+}
+.selectorLeft {
+    margin-left: 0px;
+}
+/* end selector component */
+
 /* Media rules support */
 @media only screen and (max-width: 1160px) {
     .contactForm{
@@ -1120,6 +1149,9 @@ figcaption p {
     .imgCoverCont {
         width: 100%;
     }
+    .selectorCont {
+        margin-left: calc(var(--var-margin-top-sections)/2);
+    }
 }
 @media only screen and (max-width: 736px) {
     .contactForm{
@@ -1200,6 +1232,7 @@ figcaption p {
     }
     .blogULHome{
         list-style: none;
+        padding-inline-start: calc(var(--var-margin-top-sections)/2);
     }
     /* .itemBlogList {
         flex-direction: column;
@@ -1231,6 +1264,10 @@ figcaption p {
     }
     .miniDateBlog {
         display: none;
+    }
+    .leftCont40 {
+        flex-direction: column;
+        margin-bottom: var(--var-padding-imgMini);
     }
 }
 @media only screen and (max-width: 436px) {
@@ -1290,6 +1327,12 @@ figcaption p {
     }
     .noExpanded {
         height: 50px;
+    }
+    .textAbout {
+        margin-right: 0px;
+    }
+    .selectorCont {
+        margin-bottom: calc(var(--var-margin-top-sections)/2);
     }
 }
 /* end media rules */

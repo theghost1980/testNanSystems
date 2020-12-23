@@ -2,10 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Link, StaticQuery, graphql } from 'gatsby';
 import Img from 'gatsby-image';
 
+//translations
+import { useTranslation } from "react-i18next";
 
 const Header = () => {
     const [mobileMenu, setMobileMenu] = useState(false);
     const [clickedMenu, setClickedMenu] = useState(false);
+
+    //translations
+    const { t } = useTranslation();
 
     function checkWidth(){
         const _screenWidth = window.innerWidth;
@@ -68,32 +73,32 @@ const Header = () => {
                         <ul className={mobileMenu ? 'hide': 'navItemsUL'}>
                             <li className="navItem">
                                 <Link to="/" className="navLink" activeClassName="activeNavLink">
-                                    Home
+                                    {t('menu.home')}
                                 </Link>
                             </li>
                             <li className="navItem">
                                 <Link to="/about" className="navLink" activeClassName="activeNavLink">
-                                    About
+                                    {t('menu.about')}
                                 </Link>
                             </li>
                             <li className="navItem">
                                 <Link to="/portfolio" className="navLink" activeClassName="activeNavLink">
-                                    Portfolio
+                                    {t('menu.portfolio')}
                                 </Link>
                             </li>
                             <li className="navItem">
                                 <Link to="/blog" className="navLink" activeClassName="activeNavLink">
-                                    Blog
+                                    {t('menu.blog')}
                                 </Link>
                             </li>
                             <li className="navItem">
                                 <Link to="/ventures" className="navLink" activeClassName="activeNavLink">
-                                    Ventures
+                                    {t('menu.ventures')}
                                 </Link>
                             </li>
                             <li className="navItem">
                                 <Link to="/contact" className="navLink" activeClassName="activeNavLink">
-                                    Contact
+                                    {t('menu.contact')}
                                 </Link>
                             </li>
                         </ul>
@@ -113,32 +118,32 @@ const Header = () => {
                                     <ul className="mobileMenuUL">
                                         <li className="navItemMobile">
                                             <Link to="/" className="navLinkMobile" onClick={() => setClickedMenu(!clickedMenu)}>
-                                                Home
+                                                {t('menu.home')}
                                             </Link>
                                         </li>
                                         <li className="navItemMobile">
                                             <Link to="/about" className="navLinkMobile" onClick={() => setClickedMenu(!clickedMenu)}>
-                                                About
+                                                {t('menu.about')}
                                             </Link>
                                         </li>
                                         <li className="navItemMobile">
                                             <Link to="/portfolio" className="navLinkMobile" onClick={() => setClickedMenu(!clickedMenu)}>
-                                                Portfolio
+                                                {t('menu.portfolio')}
                                             </Link>
                                         </li>
                                         <li className="navItemMobile">
                                             <Link to="/blog" className="navLinkMobile" onClick={() => setClickedMenu(!clickedMenu)}>
-                                                Blog
+                                                {t('menu.blog')}
                                             </Link>
                                         </li>
                                         <li className="navItemMobile">
                                             <Link to="/ventures" className="navLinkMobile" onClick={() => setClickedMenu(!clickedMenu)}>
-                                                Ventures
+                                                {t('menu.ventures')}
                                             </Link>
                                         </li>
                                         <li className="navItemMobile">
                                             <Link to="/contact" className="navLinkMobile" onClick={() => setClickedMenu(!clickedMenu)}>
-                                                Contact
+                                                {t('menu.contact')}
                                             </Link>
                                         </li>
                                     </ul>
@@ -146,7 +151,7 @@ const Header = () => {
                                         <Img fluid={data.datoCmsInfoSite.logoSiteSquare.fluid} className="bgImgBg" />
                                     </div>
                                     <div className="closeBtnCont" onClick={() => setClickedMenu(!clickedMenu)}>
-                                        CLOSE
+                                        {t('menu.close')}
                                     </div>
                                 </div>
                         }

@@ -5,123 +5,50 @@
       "author": "@theghost1980",
       "footer": "Construido con  Gatsby"
     },
-    "navbar": {
+    "menu": {
       "home": "Home",
       "about": "About",
       "portfolio": "Portfolio",
       "blog": "Blog",
       "ventures": "Ventures",
-      "contact": "Contact"
-    },
-    "head": {
-      "content": "Desarrollador Full Stack y músico. Saturno Mangieri diseña sitios web utilizando tecnologías modernas como Reactjs, Gatsbyjs, MongoDB, GraphQL, HTML5 y CSS3. Proporciona soluciones prácticas como: CMS sin cabeza, sitios web estáticos y dinámicos que funcionan sin problemas y rápidamente. También compone música que se puede comprar en este sitio.",
-      "keywords": "Sitios web, diseño de sitios web, cms sin cabeza, páginas estáticas, páginas dinámicas, música, saturno mangieri, necesito un buen sitio web, sitios web baratos, sitios web modernos, música de meditación, música de Dios, oraciones, oraciones cantadas",
-      "title": "Portafolio del Desarrollador Web y músico - Saturno Mangieri"
-    },
-    "home": {
-      "titlePage": "Inicio",
-      "textHome1": "Hola. Yo hago sitios web con",
-      "textHome2": "y",
-      "textHome3": "música con pasión."
+      "contact": "Contact",
+      "close": "CLOSE"
     },
     "footer": {
-      "txtFooter1": "Creado por Saturno Mangieri © 2020",
-      "txtFooter2": "Potenciado por"
+      "copy": "Copyright ©2020 with ",
+      "by": " by ",
+      "terms": "Terms of Service",
+      "contactme": "Contact me over Social Media"
     },
-    "about": {
-      "titlePage": "Biografía",
-      "txtAbout1": "Nací en Venezuela y me considero una mezcla entre dos culturas: indígena y europea. Desde que tengo memoria he amado las computadoras y los instrumentos musicales. Recuerdo mi rostro de asombro al ver unas de las primeras computadoras Macintosh, desde ese entonces me dediqué a tocar, cantar y jugar video juegos. Con el tiempo, me capacité en programación y hoy día me dedico al diseño web y al desarrollo Full-Stack.",
-      "txtAbout2": "Me gradué como Ingeniero Electrónico en Computación, conocido como Ciencia de Computadoras, en el año 2009 en la Universidad Yacambú. Algunas áreas de mi formación académica incluyen: redes de computadoras, circuitos eléctricos y electrónicos, programación en alto y bajo nivel, entre otros.",
-      "txtAbout3": "Lenguajes de Programación",
-      "txtAbout4": "Desde hace varios años, me he preparado en las tecnologías emergentes para la programación de aplicaciones web. Considero que la innovación nunca duerme, y por consiguiente, nuestro aprendizaje, tampoco debe mermar. Si deseas mirar mi experiencia profesional y otras aptitudes, por favor revisa mi perfil en Linkedin haciendo clic en el Icono debajo.",
-      "sliderTitle1": "Diseños con primer enfoque en móviles",
-        "altItem1": "Sitios Web responsivos y adaptativos",
-      "sliderTitle2": "Tecnologías Web adaptativas, basadas en:",
-        "sliderItem2-1": "Aplicaciones web estáticas y dinámicas",
-        "sliderItem2-2": "Enfoque Única/Multi página",
-      "sliderTitle3": "Sistemas CMS usando como fuente:",
-        "sliderItem3-1": "Prisma y muchos otros",
-        "altItem3": "Responsivos adaptables Sitios Web Wordpress",
-      "sliderTitle4": "Sitios Web muy rápidos:",
-        "sliderItem4-1": "Imágenes adaptables",
-        "sliderItem4-2": "Archivos de Media trabajados",
-        "altItem4": "Sitios Web veloces para ganar",
-      "sliderTitle5": "Tecnologías de punta:",
-      "sliderItem5-1": "Node.js, MongoDB y más.",
-      "sliderTitle6": "Diseños artísticos y conceptuales.",
-        "sliderItem6-1": "Profesional",
-        "sliderItem6-2": "Rápido desarrollo",
-        "altItem6": "Sitios Web artísticos",
-      "sliderTitle7": "Nos adaptamos",
-        "sliderItem7-1": "Dependiendo en sus necesidades",
-        "sliderItem7-2": "puedo desarrollar solo",
-        "sliderItem7-3": "o llamar a más profesionales",
-        "altItem7": "Trabajo solo en equipo"
+    "home": {
+      "latest": "Lastest Articles",
+      "some": "Some technologies We work with:"
+    },
+    "blogList": {
+      "readingtime": "minutes to read)"
     },
     "portfolio": {
-      "titlePage": "Portfalio"
-    },
-    "music": {
-      "titlePage": "Música",
-      "textMusic1": "Desde que puedo recordar, siempre he amado la música. Empecé a tocar la guitarra desde los 18 años y también a cantar. Durante mi infancia tomé clases de música en el conservatorio de música Vicente Emilio Sojo en la hermosa ciudad de Barquisimeto en Venezuela. La música ha sido una de mis grandes pasiones.  Tuve la oportunidad de tocar entre muchos grandes músicos.Mientras vivía en Marruecos pude disfrutar tocando música latina en muchos lugares y ciudades.",
-      "titleMusic1": "Música para Todos",
-      "textMusic2": "Puedes apoyar mi música y ayudar a muchos otros detrás de mí. Puedes ver los álbumes de CD que he subido para ti. Este ha sido el esfuerzo de muchos otros músicos y productores. Comprando uno de los álbumes nos ayudas a seguir adelante y también, nos ayudas como venezolanos en estos tiempos difíciles. He colocado un bonito reproductor de música para que puedan escuchar algunas de las canciones de cada CD.",
-      "titleMusic2": "¿Cómo puedes Ayudar?",
-      "subtitleMusic1": "Siguiendo estos sencillos 4 pasos",
-      "listItemMusic1": "Haz clic en el botón Comprar",
-      "listItemMusic2": "Seleccciona el o los albumes, y haz clic en Pagar",
-      "listItemMusic3": "Puedes usar Paypal o tarjeta de crédito(*)",
-      "listItemMusic4": "Una vez confirmado el pago, los archivos se descargarán automáticamente",
-      "listItemMusic5": "(*) Este sitio web no recava datos personales. Todos los detalles de pago son recolectados directamente por ",
-      "titleMusic3": "Una imagen dice más que mil palabras",
-      "textMusic3": "Puedes visitar mi galería de imágenes en cualquier momento, sólo haciendo clic en el icono de la imagen, a la derecha. Estos son algunos de los lugares por los que he viajado, vivido y tocado."
-    },
-    "slider": {
-      "title": "Título:",
-      "format": "Formato:",
-      "styles": "Estilos:",
-      "price": "Precio:",
-      "btnText": "Comprar",
-      "styles1": "Pop Rock Folk Espiritual",
-      "styles2": "Balada Folk Vocal Meditación",
-      "styles3": "Pop Rock Folk",
-      "formatM": "Digital MP3 + Carátula",
-      "titleCD1": "Inspiración",
-      "titleCD2": "Estar en Ti",
-      "titleCD3": "El largo viaje del Sol",
-      "credits": "Créditos:"
-    },
-    "paymentCO": {
-      "addMeText": "Añadir al carrito",
-      "totalA": "Monto Total",
-      "proceedP": "Pagar",
-      "important": "Recomiendo usar el PC o el escritorio para evitar posibles errores al descargar los archivos. También asegúrese de que su dispositivo o PC tenga suficiente espacio. Espacio mínimo recomendado: 90Mb para cada CD-Album."
-    },
-    "ppalBtn": {
-      "messageJoy": "Grandioso has ayudado a muchas personas!",
-      "downloadPT": "La descarga debe empezar pronto, si no empieza automáticamente, por favor haga click sobre el ícono de descarga.",
-      "contactMe": "Si ocurre algun error, por favor ",
-      "contactMeAsap": "contáctame",
-      "linkPPal": "Take me to Music"
-    },
-    "contact": {
-      "titlePage": "Contacto",
-      "titleContact": "Por favor, no dude en ponerse en contacto conmigo en cualquier momento, utilizando el formulario debajo o haga clic en los iconos de las redes sociales.",
-      "name": "Nombre",
-      "email": "Email",
-      "comments": "Commentarios",
-      "phName": " nombre acá",
-      "phEmail": " email acá",
-      "phFeedback": " coloque sus comentarios acá",
-      "submitValue": "Enviar",
-      "cancelValue": "Cancelar",
-      "emailSent": "Email enviado! Le responderé a la brevedad posible."
+      "text": "During more than 6 years of experience, I have been able to work on medium and large projects. Each experience has been of great help in completing my skills as an engineer.",
+      "since": "Working since:",
+      "until": "Until",
+      "actual": "Actual Job",
+      "visit": "Visit Company Web Site",
+      "salary": "Wage: $"
     },
     "blog": {
-      "written": "Escrito en"
+      "quote": "Writing a book is an adventure to begin with, it is a toy and an amusement, then it becomes a mistress, and then it becomes a master, and then a tyrant. The last phase is that just as you are about to be reconciled to your servitude, you kill the monster, and fling him out to the public."
     },
-    "project": {
-      "published": "Publicado en",
-      "visit": "Por favor visite la versión en vivo cuando guste"
+    "contact": {
+      "name": "Name",
+      "email": "Email",
+      "feedback": "Feedback",
+      "submit": "Submit",
+      "cancel": "Cancel",
+      "inputName": "name here please",
+      "inputEmail": "email here please",
+      "inputFeedback": "feedback/comments here please",
+      "sending": "Sending Email. Please Wait!",
+      "sentOne": "Email Sent!",
+      "sentTwo": "Thank you. I will replay as soon as possible."
     }
   }

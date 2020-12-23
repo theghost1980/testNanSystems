@@ -3,23 +3,30 @@ import React from 'react';
 import Layout from '../components/layout';
 import { graphql } from 'gatsby';
 import Img from 'gatsby-image';
+//translations
+import { useTranslation } from "react-i18next";
 
 const About = (props) => {
+    const { i18n } = useTranslation();
+    const _lang = i18n.language;
+    const dataAbout = (_lang === 'es' ? props.data.data_es : props.data.data_en);
+    const dataCert = ( _lang === 'es' ? props.data.dataCert_es : props.data.dataCert_en);
+
     return (
         <Layout>
             <div className="cardCont">
                 <div className="profilePicCont">
-                    <Img fluid={props.data.datoCmsAbout.profilePicNoir.fluid} className="profileImg" />
+                    <Img fluid={dataAbout.profilePicNoir.fluid} className="profileImg" />
                 </div>
                 <div className="textContAbout">
                     <div className="textAbout"
                         dangerouslySetInnerHTML={{
-                            __html: props.data.datoCmsAbout.welcomeNode.childMarkdownRemark.html
+                            __html: dataAbout.welcomeNode.childMarkdownRemark.html
                         }}
                     />
                     <div className="textAbout"
                         dangerouslySetInnerHTML={{
-                            __html: props.data.datoCmsAbout.engineerNode.childMarkdownRemark.html
+                            __html: dataAbout.engineerNode.childMarkdownRemark.html
                         }}
                     />
                 </div>
@@ -27,7 +34,7 @@ const About = (props) => {
             <div className="certCont">
                 <ul className="certUL">
                     {
-                        props.data.allDatoCmsCertification.edges.map(item => {
+                        dataCert.edges.map(item => {
                             return (
                                 <li key={item.node.id} className="divLiCert">
                                     <div className="imgCertCont">
@@ -56,7 +63,7 @@ export default About;
 
 export const data = graphql`
     query{
-        datoCmsAbout {
+        data_en: datoCmsAbout (locale: {eq: "en"}) {
             engineerNode {
                 childMarkdownRemark {
                     html
@@ -82,7 +89,53 @@ export const data = graphql`
                 ...GatsbyDatoCmsSeoMetaTags
             }
         }
-        allDatoCmsCertification(sort: {order: DESC, fields: issuedDate}) {
+        data_es: datoCmsAbout (locale: {eq: "es"}) {
+            engineerNode {
+                childMarkdownRemark {
+                    html
+                }
+            }
+            id
+            profilePic {
+                fluid {
+                    ...GatsbyDatoCmsFluid
+                }
+            }
+            profilePicNoir {
+                fluid {
+                    ...GatsbyDatoCmsFluid
+                }
+            }
+            welcomeNode {
+                childMarkdownRemark {
+                    html
+                }
+            }
+            seoMetaTags {
+                ...GatsbyDatoCmsSeoMetaTags
+            }
+        }
+        dataCert_en: allDatoCmsCertification(filter: {locale: {eq: "en"}},sort: {order: DESC, fields: issuedDate}) {
+            edges {
+                node {
+                    areaExpertise
+                    certificationLogo {
+                        fluid {
+                            ...GatsbyDatoCmsFluid
+                        }
+                    }
+                    descriptionNode {
+                        childMarkdownRemark {
+                            html
+                        }
+                    }
+                    id
+                    issuedDate(formatString: "YYYY-MM-DD")
+                    title
+                }
+            }
+        }
+        dataCert_es: allDatoCmsCertification(filter: {locale: {eq: "es"}},sort: {order: DESC, fields: issuedDate}) {
             edges {
                 node {
                     areaExpertise

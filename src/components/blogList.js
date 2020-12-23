@@ -1,7 +1,11 @@
 import React from 'react';
 import { StaticQuery, graphql, Link } from 'gatsby';
+//translations
+import { useTranslation } from "react-i18next";
 
-const Bloglist = () => {
+const Bloglist = (props) => {
+    const { t, i18n } = useTranslation();
+    const _lang = i18n.language;
 
     return (
             <StaticQuery
@@ -24,7 +28,6 @@ const Bloglist = () => {
                         }
                     }
                 }`}
-
             render={data => (
                 <ul className="blogULHome">
                     {
@@ -35,7 +38,7 @@ const Bloglist = () => {
                                         <Link to={`blog/${item.node.slug}`}>
                                             <p className="subtitleHome">{item.node.title}</p>
                                         </Link>
-                                        <p className="spanReadingTime">({item.node.contentNode.childMarkdownRemark.timeToRead} min to read)</p>
+                                        <p className="spanReadingTime">({item.node.contentNode.childMarkdownRemark.timeToRead} {t('blogList.readingtime')}</p>
                                     </div>
                                 </li>
                             )

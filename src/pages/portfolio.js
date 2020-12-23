@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 //components
 import Layout from '../components/layout';
 import { graphql } from 'gatsby';
@@ -8,28 +8,72 @@ import expDarkIcon from '../media-imgs/expand-dark.png';
 import collapseLightIcon from '../media-imgs/collapse-light.png';
 import collapseDarkIcon from '../media-imgs/collapse-dark.png';
 import actualJobIcon from '../media-imgs/actualJob.png';
+//translations
+import { useTranslation } from "react-i18next";
 
 const Portfolio = (props) => {
-    // const [expanded, setExpanded] = useState(false);
-    const _itemsArray = props.data.allDatoCmsWorkExperience.edges.map(({ node: item }) => {
+    //new code testing ini array
+    // const [states, setStates] = useState({});
+    //////
+    
+    const { t, i18n } = useTranslation();
+    const _lang = i18n.language;
+    const dataWorkList = (_lang === 'es' ? props.data.work_es : props.data.work_en);
+    // console.log('dataWorkList',dataWorkList);
+    const initialState = dataWorkList.edges.map(({ node: item }) => {
         return {id: item.id, value: false}
     });
-    const [states, setStates] = useState(_itemsArray);
-    // console.log(states);
+    let [states, setStates] = useState(initialState);
+    // console.log('initializing states',states);
+
+    // old code
+    // const _itemsArray = dataWorkList.edges.map(({ node: item }) => {
+    //     return {id: item.id, value: false}
+    // });
+    ///////////
+
+    // new code
+    // const initialState = dataWorkList.edges.map(({ node: item }) => {
+    //         return {id: item.id, value: false}
+    // });
+    // const [states, setStates] = useState(initialState);
+    // console.log('initializing states',states);
+
+    // const handleInit = () => {
+    //     setStates({...initialState});
+    // }
+    // useEffect(() => {
+    //     setStates({});
+    //     setStates(initialState);
+    //     console.log('initializing states inside useeffect',states);
+    // },[initialState,dataWorkList]);
+    ///////////
+
+    // old code as it was
+    // const [states, setStates] = useState(_itemsArray);
+    // console.log('states array:',states);
+    ////
 
     const HandleState = (idItem) => {
-        setStates(prevState => prevState.map(item => item.id === idItem ? {id: item.id,value:!item.value}: item));
+        // old line of code
+        // setStates(prevState => prevState.map(item => item.id === idItem ? {id: item.id,value:!item.value}: item));
+        
+        // new line of code
+        // String(element.id).substr(0,String(element.id).length - 3) === String(work.id).substr(0,String(work.id).length - 3);
+        setStates(prevState => prevState.map(item => String(item.id).substr(0,String(item.id).length - 3) === String(idItem).substr(0,String(idItem).length - 3) ? {id: item.id,value:!item.value}: item));
     };
 
     return (
         <Layout>
             <div className="portfolioCont">
-                <p className="pargraphPortfolio">During more than 6 years of experience, I have been able to work on medium and large projects. Each experience has been of great help in completing my skills as an engineer.</p>
+                <p className="pargraphPortfolio">{t('portfolio.text')}</p>
                 <ul className="portfUL">
                     {
-                        props.data.allDatoCmsWorkExperience.edges.map(({ node: work }) => {
-                            const expanded = states.find(element => element.id === work.id);
-
+                        dataWorkList.edges.map(({ node: work }) => {
+                                const expanded = states.find(element => String(element.id).substr(0,String(element.id).length - 3) === String(work.id).substr(0,String(work.id).length - 3));
+                                // console.log('trying to find work.id',work.id);
+                                // console.log('found',String(expanded.id).substr(0,String(expanded.id).length - 3));
+                                // console.log('Value:',expanded.value);
                             return (
                                 <li key={work.id}>
                                     <div className={`workCont ${expanded.value ? 'expanded': 'noExpanded' }`}>
@@ -49,25 +93,29 @@ const Portfolio = (props) => {
                                         </div>
                                         <ul>
                                             <li className="subtitlePortfolio">{work.company}</li>
-                                            <li>
-                                                <div className="textPortfolio"
-                                                    dangerouslySetInnerHTML={{
-                                                        __html: work.accomplishmentsNode.childMarkdownRemark.html
-                                                    }}
-                                                />
-                                            </li>
-                                            <li className="subtitlePortfolio">Working since: {work.dateIn} {work.dateOut ? `Until: ${work.dateOut}`: 'Actual Job'}</li>
+                                            {
+                                                work.accomplishmentsNode.childMarkdownRemark.html !== '' && work.accomplishmentsNode.childMarkdownRemark.html !== null 
+                                                    &&
+                                                    <li>
+                                                        <div className="textPortfolio"
+                                                            dangerouslySetInnerHTML={{
+                                                                __html: work.accomplishmentsNode.childMarkdownRemark.html
+                                                            }}
+                                                        />
+                                                    </li>
+                                            }
+                                            <li className="subtitlePortfolio">{t('portfolio.since')} {work.dateIn} {work.dateOut ? `${t('portfolio.until')} ${work.dateOut}`: `${t('portfolio.actual')}`}</li>
                                             <li className="subtitlePortfolio">{work.company}</li>
                                             {
                                                 (work.urlCompany !== null && work.urlCompany !== '' && work.urlCompany !== 'N/A' ) &&
                                                 <li className="subtitlePortfolio">
                                                     <a href={work.urlCompany} target="_blank" rel="noreferrer">
-                                                        Visit Company Web Site
+                                                        {t('portfolio.visit')}
                                                     </a>
                                                 </li>
                                             }
                                             <li className="subtitlePortfolio">{work.place}</li>
-                                            <li className="subtitlePortfolio">Wage: ${work.salary}</li>
+                                            <li className="subtitlePortfolio">{t('portfolio.salary')}{work.salary}</li>
                                             <li>
                                                 <div className="textPortfolio"
                                                     dangerouslySetInnerHTML={{
@@ -91,7 +139,42 @@ export default Portfolio;
 
 export const data = graphql`
     query{
-        allDatoCmsWorkExperience (sort: {order: DESC, fields: dateIn}) {
+        work_en: allDatoCmsWorkExperience (filter: {locale: {eq: "en"}}, sort: {order: DESC, fields: dateIn}) {
+            edges {
+                node {
+                    accomplishmentsNode {
+                        childMarkdownRemark {
+                            html
+                        }
+                    }
+                    company
+                    dateIn(formatString: "DD:MM:YYYY")
+                    dateOut(formatString: "DD:MM:YYYY")
+                    id
+                    jobDescriptionNode {
+                        childMarkdownRemark {
+                            html
+                        }
+                    }
+                    jobTitle
+                    locale
+                    opinionAboutCompanyNode {
+                        childMarkdownRemark {
+                            html
+                        }
+                    }
+                    place
+                    responsibilitiesNode {
+                        childMarkdownRemark {
+                            html
+                        }
+                    }
+                    salary
+                    urlCompany
+                }
+            }
+        }
+        work_es: allDatoCmsWorkExperience (filter: {locale: {eq: "es"}}, sort: {order: DESC, fields: dateIn}) {
             edges {
                 node {
                     accomplishmentsNode {

@@ -5,6 +5,8 @@ import Layout from '../components/layout';
 import _emailJs from 'emailjs-com';
 //media-imgs
 import iconSystem from '../media-imgs/test-logo-system.png';
+// translations
+import { withTranslation } from 'react-i18next';
 
 //declarations emailjs
 const userId = "user_eI2TfwSXCTylXcY4axXJe";
@@ -32,16 +34,16 @@ class Contact extends React.Component{
                         <form className="contactForm" onSubmit={this.handleSubmit}>
                             <div className="rowCont">
                                 <div className="labelsCont">
-                                    <p className="lblForm">Name</p>
-                                    <p className="lblForm">Email</p>
-                                    <p className="lblForm">Feedback</p>
+                                    <p className="lblForm">{this.props.t('contact.name')}</p>
+                                    <p className="lblForm">{this.props.t('contact.email')}</p>
+                                    <p className="lblForm">{this.props.t('contact.feedback')}</p>
                                 </div>
                                 <div className="inputsCont">
                                     <input 
                                         id="test-text"
                                         name="test-text"
                                         onChange={this.handleChangeText}
-                                        placeholder="name here please"
+                                        placeholder={this.props.t('contact.inputName')}
                                         required
                                         value={this.state.name}
                                         className="inputForm"
@@ -51,7 +53,7 @@ class Contact extends React.Component{
                                         id="test-email"
                                         name="test-email"
                                         onChange={this.handleChangeEmail}
-                                        placeholder="email here please"
+                                        placeholder={this.props.t('contact.inputEmail')}
                                         type="email"
                                         required
                                         value={this.state.email}
@@ -62,7 +64,7 @@ class Contact extends React.Component{
                                         id="test-mailing"
                                         name="test-mailing"
                                         onChange={this.handleChange}
-                                        placeholder="feedback or comments here please"
+                                        placeholder={this.props.t('contact.inputFeedback')}
                                         required
                                         value={this.state.feedback}
                                         className="inputForm"
@@ -74,8 +76,8 @@ class Contact extends React.Component{
                                 {
                                     !this.state.sending && !this.state.sent &&
                                         <div className="btnRowCont">
-                                            <input type="submit" value="Submit" className="btnForm" />
-                                            <input type="button" value="Cancel" className="btnForm" onClick={this.resetForm} />
+                                            <input type="submit" value={this.props.t('contact.submit')} className="btnForm" />
+                                            <input type="button" value={this.props.t('contact.cancel')} className="btnForm" onClick={this.resetForm} />
                                         </div>
                                 }
                                 {
@@ -83,7 +85,7 @@ class Contact extends React.Component{
                                         <div className="sendingEmailCont">
                                             {/* Sending Email...(I am so animated right?) */}
                                             <div>
-                                                <p className="sendingText">Sending Email. Please Wait!</p>
+                                                <p className="sendingText">{this.props.t('contact.sending')}</p>
                                             </div>
                                             <div className="imgSendingCont">
                                                 <img src={iconSystem} alt="sending email" className="iconSending" />
@@ -93,7 +95,7 @@ class Contact extends React.Component{
                                 { 
                                     this.state.sent && 
                                         <div className="sendingEmailCont">
-                                            <p className="sendingText">Email Sent!<br></br>Thank you. I will replay as soon as possible.</p>
+                                            <p className="sendingText">{this.props.t('contact.sentOne')}<br></br>{this.props.t('contact.sentTwo')}</p>
                                             {/* <img src={iconSent} alt="Message Delivered" className="iconSent" /> */}
                                         </div>
                                 }
@@ -153,7 +155,7 @@ class Contact extends React.Component{
     }
 }
 
-export default Contact;
+export default withTranslation()(Contact);
 
 // contact template
 // import React from 'react';

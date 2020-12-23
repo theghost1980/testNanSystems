@@ -6,13 +6,13 @@ import Footer from './footer';
 import PropTypes from 'prop-types';
 import { withTrans } from '../i18n/withTrans';
 
-const Layout = (props) => {
+const Layout = ({ children, t, i18n }) => {
     return (
         <div className="layoutContainer">
             <div className="content">
                 <Header />
                 <div className="dataContainer">
-                    {props.children}
+                    {children}
                 </div>
             </div>
             <Footer />
