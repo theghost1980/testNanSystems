@@ -5,6 +5,8 @@ import { graphql } from 'gatsby';
 import Img from 'gatsby-image';
 //translations
 import { useTranslation } from "react-i18next";
+//SEO
+import { HelmetDatoCms } from 'gatsby-source-datocms';
 
 const About = (props) => {
     const { i18n } = useTranslation();
@@ -14,6 +16,7 @@ const About = (props) => {
 
     return (
         <Layout>
+            <HelmetDatoCms seo={dataAbout.seoMetaTags} />
             <div className="cardCont">
                 <div className="profilePicCont">
                     <Img fluid={dataAbout.profilePicNoir.fluid} className="profileImg" />

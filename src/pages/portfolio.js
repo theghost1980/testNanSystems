@@ -10,6 +10,8 @@ import collapseDarkIcon from '../media-imgs/collapse-dark.png';
 import actualJobIcon from '../media-imgs/actualJob.png';
 //translations
 import { useTranslation } from "react-i18next";
+//SEO
+import { HelmetDatoCms } from 'gatsby-source-datocms';
 
 const Portfolio = (props) => {
     //new code testing ini array
@@ -19,6 +21,7 @@ const Portfolio = (props) => {
     const { t, i18n } = useTranslation();
     const _lang = i18n.language;
     const dataWorkList = (_lang === 'es' ? props.data.work_es : props.data.work_en);
+    const dataSEO = (_lang === 'es' ? props.data.dataSEO_es : props.data.dataSEO_en);
     // console.log('dataWorkList',dataWorkList);
     const initialState = dataWorkList.edges.map(({ node: item }) => {
         return {id: item.id, value: false}
@@ -65,6 +68,7 @@ const Portfolio = (props) => {
 
     return (
         <Layout>
+            <HelmetDatoCms seo={dataSEO.seoMetaTags}/>
             <div className="portfolioCont">
                 <p className="pargraphPortfolio">{t('portfolio.text')}</p>
                 <ul className="portfUL">
@@ -207,6 +211,16 @@ export const data = graphql`
                     salary
                     urlCompany
                 }
+            }
+        }
+        dataSEO_en: datoCmsSeoPortfolio (locale: {eq: "en"}) {
+            seoMetaTags {
+                ...GatsbyDatoCmsSeoMetaTags
+            }
+        }
+        dataSEO_es: datoCmsSeoPortfolio (locale: {eq: "es"}) {
+            seoMetaTags {
+                ...GatsbyDatoCmsSeoMetaTags
             }
         }
     }

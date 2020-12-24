@@ -7,6 +7,9 @@ import _emailJs from 'emailjs-com';
 import iconSystem from '../media-imgs/test-logo-system.png';
 // translations
 import { withTranslation } from 'react-i18next';
+//SEO
+import { HelmetDatoCms } from 'gatsby-source-datocms';
+import { graphql } from 'gatsby';
 
 //declarations emailjs
 const userId = "user_eI2TfwSXCTylXcY4axXJe";
@@ -24,10 +27,16 @@ class Contact extends React.Component{
       this.resetForm = this.resetForm.bind(this);
       this.messageSentSuccess = this.messageSentSuccess.bind(this);
     }
-
+    
     render(){
+      
+      const _lang = this.props.i18n.language;
+      const dataSEO = (_lang === 'es' ? this.props.data.dataSEO_es : this.props.data.dataSEO_en);
+    //   console.log(dataSEO);
+
         return (
             <Layout>
+                <HelmetDatoCms seo={dataSEO.seoMetaTags} />
                 <div className="contactContainer">
                     {/* <Head title={this.props.t('contact.titlePage')}/> */}
                     <div className="formContainer">
@@ -156,6 +165,21 @@ class Contact extends React.Component{
 }
 
 export default withTranslation()(Contact);
+
+export const data = graphql`
+    query {
+        dataSEO_en: datoCmsSeoContact(locale: {eq: "en"}) {
+            seoMetaTags {
+                ...GatsbyDatoCmsSeoMetaTags
+            }
+        }
+        dataSEO_es: datoCmsSeoContact(locale: {eq: "es"}) {
+            seoMetaTags {
+                ...GatsbyDatoCmsSeoMetaTags
+            }
+        }
+    }
+`;
 
 // contact template
 // import React from 'react';

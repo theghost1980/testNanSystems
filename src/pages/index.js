@@ -12,9 +12,10 @@ import niagaLogo from '../media-imgs/niagara-framework.svg';
 import tridiumLogo from '../media-imgs/tridium.svg';
 //translations
 import { useTranslation } from "react-i18next";
-
 // queries
 import { graphql, Link } from 'gatsby';
+//SEO
+import { HelmetDatoCms } from 'gatsby-source-datocms';
 
 const Index = (props) => {
 
@@ -23,10 +24,12 @@ const Index = (props) => {
     // console.log('_lang index',_lang);
     // console.log('props.data',props.data);
     const dataBlogList = (_lang === 'es' ? props.data.data_es : props.data.data_en);
+    const dataSEO = (_lang === 'es' ? props.data.dataSEO_es : props.data.dataSEO_en);
     // console.log('dataBlogList',dataBlogList);
 
     return (
         <Layout>
+           <HelmetDatoCms seo={dataSEO.seoMetaTags} />
            <div className="homeContainer">
                <div className="carouselContainer">
                     <Carouselhome />
@@ -82,6 +85,16 @@ export default Index;
 
 export const data = graphql`
     query {
+        dataSEO_en:   datoCmsInfoSite(locale: {eq: "en"}) {
+            seoMetaTags {
+                ...GatsbyDatoCmsSeoMetaTags
+            }
+        }
+        dataSEO_es:   datoCmsInfoSite(locale: {eq: "es"}) {
+            seoMetaTags {
+                ...GatsbyDatoCmsSeoMetaTags
+            }
+        }
         data_en: allDatoCmsBlogPost(filter: {locale: {eq: "en"}}, sort: {fields: datePublished, order: ASC}, limit: 3) {
             edges {
                 node {
