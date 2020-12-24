@@ -5,15 +5,19 @@ import Img from 'gatsby-image';
 import Layout from '../components/layout';
 //translations
 import { useTranslation } from "react-i18next";
+//SEO
+import { HelmetDatoCms } from 'gatsby-source-datocms';
 
 const Blog = (props) => {
     const { t, i18n } = useTranslation();
     const _lang = i18n.language;
     const dataBlogList = (_lang === 'es' ? props.data.data_es : props.data.data_en);
     const blogImg = (_lang === 'es' ? props.data.datoCmsInfoSite.blogImg_es : props.data.datoCmsInfoSite.blogImg_en);
+    const dataSEO = ( _lang === 'es' ? props.data.dataSEO_es : props.data.dataSEO_en);
 
     return (
         <Layout>
+            <HelmetDatoCms seo={dataSEO.seoMetaTags} />
             <div className="blogCont">
                 <div className="topSectionBlog">
                     <div className="topTextBlog">
@@ -113,6 +117,16 @@ export const data = graphql`
                         }
                     }
                 }
+            }
+        }
+        dataSEO_en: datoCmsSeoBlog(locale: {eq: "en"}) {
+            seoMetaTags {
+                ...GatsbyDatoCmsSeoMetaTags
+            }
+        }
+        dataSEO_es: datoCmsSeoBlog(locale: {eq: "es"}) {
+            seoMetaTags {
+                ...GatsbyDatoCmsSeoMetaTags
             }
         }
     }
