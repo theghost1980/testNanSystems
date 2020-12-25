@@ -12,6 +12,10 @@ import {
 } from 'react-share';
 
 const Sharebuttons = ({url,twitterHandle,tags,sizeAll,title}) => {
+    
+    const _tags = String(tags).split(',');
+
+
     return (
         <div className="shareButtonCont">
             <FacebookShareButton url={url} className="shareBtn">
@@ -22,7 +26,7 @@ const Sharebuttons = ({url,twitterHandle,tags,sizeAll,title}) => {
                 <LinkedinIcon size={sizeAll} round={true} />
             </LinkedinShareButton>
 
-            <TwitterShareButton url={url} title={title} via={twitterHandle} hashtags={tags} className="shareBtn">
+            <TwitterShareButton url={url} title={title} via={twitterHandle} hashtags={_tags} className="shareBtn">
                 <TwitterIcon size={sizeAll} round={true} />
             </TwitterShareButton>
 
