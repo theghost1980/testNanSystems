@@ -996,6 +996,28 @@ figcaption p {
 }
 /* end selector component */
 
+/* share buttons */
+.shareButtonCont {
+    margin-top: var(--var-margin-top-sections);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.shareBtn {
+    margin-right: var(--var-margin-top-sections);
+    border-radius: 50%;
+    box-shadow: 1px 1px 3px 1px var(--var-adriaticBlue);
+    transition: all .2 ease;
+}
+.shareBtn:hover {
+    transform: scale(1.05);
+}
+.shareBtn:last-child{
+    margin-right: 0px;
+}
+/* end share buttons */
+
 /* Media rules support */
 @media only screen and (max-width: 1160px) {
     .contactForm{
