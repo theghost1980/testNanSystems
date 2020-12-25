@@ -6,6 +6,8 @@ import Img from 'gatsby-image';
 import Sharebuttons from '../components/shareButton';
 //translations
 import { useTranslation } from "react-i18next";
+//SEO
+import { HelmetDatoCms } from 'gatsby-source-datocms';
 
 const Blogpost = (props) => {
     const { i18n } = useTranslation();
@@ -24,6 +26,7 @@ const Blogpost = (props) => {
 
     return (
         <Layout>
+            <HelmetDatoCms seo={dataPost.seoMetaTags} />
             <div className="postCont">
                 <div className="imgPostCont">
                     <Img fluid={dataPost.coverImage.fluid} className="coverImgPost" />
