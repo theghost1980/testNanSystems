@@ -16,7 +16,7 @@ const Header = () => {
     function checkWidth(){
         const _screenWidth = window.innerWidth;
         console.log(`Actual Width:${_screenWidth}`);
-        if (_screenWidth <= 844){
+        if (_screenWidth <= 885){
             setMobileMenu(true);
         } else {
             setMobileMenu(false);

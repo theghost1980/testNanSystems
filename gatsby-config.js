@@ -59,7 +59,19 @@ module.exports = {
           // rootMargin: '0% 50%', // Corresponds to root's bounding box margin
           // enterEventName: 'sal:in', // Enter event name
           // exitEventName: 'sal:out', // Exit event name
-      }
-    }
+      },
+    },
+    {
+      resolve: `gatsby-plugin-gdpr-cookies`,
+      options: {
+        // googleAnalytics: {
+        //   trackingId: 'YOUR_GOOGLE_ANALYTICS_TRACKING_ID',
+        //   // Setting this parameter is optional
+        //   anonymize: true
+        // },     >>>>>>> todo LATER dont forget configure the google analytics using nansystems.us@gmail.com <<<<<<<<
+        // Defines the environments where the tracking should be available  - default is ["production"]
+        environments: ['production', 'development']
+      },
+    },
   ],
 }

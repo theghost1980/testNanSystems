@@ -51,6 +51,13 @@ html, body {
 }
 
 /* main - layout */
+.cookiesConsentCont {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    bottom: 0px;
+    z-index: 99999;
+}
 .layoutContainer {
     width: 100%;
     display: flex;
@@ -66,21 +73,60 @@ html, body {
 }
 /* end layout */
 
+/* buttons */
+.btnX {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: calc(var(--var-padding-imgMini)*3);
+    border-radius: var(--var-border-radius);
+    max-width: 150px;
+    height: 30px;
+    transition: all 0.1s ease;
+}
+.btnFilled {
+    background: var(--var-adriaticBlue);
+    color: var(--var-bg-light-theme);
+}
+.btnNoFilled {
+    background: var(--var-bg-light-theme);
+    color: var(--var-adriaticBlue);
+    font-family: var(--var-font-subtitles);
+    font-weight: bold;
+    font-size: large;
+    border: 2px solid var(--var-adriaticBlue);
+    text-shadow: 1px 1px 3px #2857904f;
+}
+.btnX:hover {
+    opacity: 0.9;
+    transform: scale(1.1);
+    text-decoration: none !important;
+}
+.btnLink a {
+    text-decoration: none !important;
+}
+/* end buttons */
+
 /* nav component */
 header {
     display: flex !important;
     flex-direction: column;
-    justify-content: flex-end;
+    /* justify-content: flex-end; */
     background: var(--var-adriaticBlue);
     /* test bg on top navbar */
     background: url('../media-imgs/test-bg-topnav.png') no-repeat;
     background-position: cover;
+    width: 100%;
     height: 230px;
 }
 .navBlock {
+    position: relative;
+    top: 140px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
     height: 80px;
 }
 .navItemsUL {
@@ -88,6 +134,7 @@ header {
     flex-direction: row;
     /* justify-content: flex-end; */
     align-content: center;
+    align-items: center;
     list-style: none;
     padding-inline-start: 0px;
     transition: all .3s ease;
@@ -118,7 +165,7 @@ header {
     text-shadow: 1px 1px 8px #28579050;
 }
 .navLink:hover {
-    color:var(--var-bg-light-theme-darker);
+    color: var(--var-colorFont-lightTheme-Selected);
 }
 .activeNavLink {
     text-decoration: underline;
@@ -406,7 +453,7 @@ footer {
     align-items: center;
     margin-bottom: 0px;
     margin-left:calc(var(--var-margin-top-sections)/2);
-    z-index: 99999;
+    z-index: 99990;
 }
 .socialULfooter li {
     padding: var(--var-padding-imgMini);
@@ -418,6 +465,7 @@ footer {
     box-shadow: 1px 1px 8px 1px var(--var-bg-light-theme);
 }
 .socialIcon {
+    /* position: relative; */
     width: 60px;
     height: 60px;
 }
@@ -699,7 +747,7 @@ footer {
     display: flex;
     flex-direction: row;
     width: 100%;
-    height: 350px;
+    height: 400px;
     justify-content: center;
     align-items: center;
 }
@@ -713,14 +761,14 @@ footer {
     border-radius: var(--var-border-radius);
 }
 .topTextBlog {
-    width: 300px;
+    width: 400px;
     justify-content: center;
     align-items: center;
     margin: var(--var-margin-top-sections);
 }
 .topTextBlog blockquote {
     color: var(--var-adriaticBlue);
-    font-size: large;
+    font-size: x-large;
     font-family: var(--var-font-subtitles);
     font-weight: bold;
 }
@@ -1111,7 +1159,7 @@ figcaption p {
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 400px;
+    height: 500px;
     /* test bg */
     /* background: url('../media-imgs/bgtest-bottom.png') no-repeat;
     background-size: cover; */
@@ -1119,19 +1167,23 @@ figcaption p {
     /* border: 1px solid black; */
 }
 .mainImgVentures {
-    width: 40%;
+    width: 45%;
     border-radius: var(--var-border-radius);
     box-shadow: 1px 2px 10px 2px var(--var-adriaticBlue);
+    object-fit: cover;
 }
 .textVentures {
+    /* position: absolute; */
     width: 320px;
     height: auto;
     color: var(--var-adriaticBlue);
+    /* color: var(--var-bg-light-theme); */
     font-family: var(--var-paragraph-font);
-    font-size: large;
-    background: white;
+    font-size: x-large;
+    /* background: white; */
     border-radius: 10px;
     padding: 20px;
+    /* z-index: 99999; */
 }
 .textVentures h1 {
     font-family: var(--var-font-subtitles);
@@ -1150,6 +1202,10 @@ figcaption p {
     margin-top: calc(var(--var-margin-top-sections)*3);
     box-shadow: 0 4px 4px -2px #28579050;
     border-radius: var(--var-border-radius);
+    /* testing bgbottom */
+    background: url('../media-imgs/lineBG.png') no-repeat;
+    background-position: bottom;
+    /* end test */
 }
 .itemVenture:last-child {
     margin-bottom: calc(var(--var-margin-top-sections)*3);
@@ -1375,6 +1431,43 @@ figcaption p {
     .textMiniAbout {
         font-size: small;
     }
+    .firstDiv {
+        flex-direction: column-reverse;
+        height: 700px;
+    }
+    .itemVenture {
+        height: auto;
+        background: none;
+    }
+    .mainImgVentures {
+        margin-top: var(--var-margin-top-sections);
+        width: 90%;
+    }
+    .textVentures {
+        width: 90%;
+    }
+    .ventureItemCont {
+        flex-direction: column-reverse;
+        width: 90%;
+        height: auto;
+        margin-bottom: calc(3*var(--var-margin-top-sections));
+    }
+    .contentVentureItem {
+        margin-top: var(--var-margin-top-sections);
+        width: 100%;
+        justify-content: center;
+        align-items: center;
+    }
+    .descItemVenture {
+        margin-right: 0px;
+    }
+    .itemVentureImg {
+        width: 70%;
+        height: 70%;
+    }
+    .titleItemVenture {
+        text-align: center;
+    }
 }
 @media only screen and (max-width: 636px) {
     .contDiv40 {
@@ -1467,6 +1560,9 @@ figcaption p {
         flex-direction: column;
         margin-bottom: var(--var-padding-imgMini);
     }
+    .itemVentureImg {
+        width: 100%;
+    }
 }
 @media only screen and (max-width: 436px) {
     .rowColumFooter {
@@ -1474,6 +1570,9 @@ figcaption p {
     }
     .noExpanded {
         height: 34px;
+    }
+    .titleItemVenture, .textVentures h1 {
+        font-size: xx-large;
     }
 }
 @media only screen and (max-width: 400px) {
@@ -1528,6 +1627,9 @@ figcaption p {
     }
     .textAbout {
         margin-right: 0px;
+    }
+    .titleItemVenture, .textVentures h1 {
+        font-size: x-large;
     }
     /* .selectorCont {
         margin-bottom: calc(var(--var-margin-top-sections)/2);

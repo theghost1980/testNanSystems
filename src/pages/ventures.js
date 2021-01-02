@@ -2,6 +2,7 @@ import React from 'react';
 //components
 import Img from 'gatsby-image';
 import Layout from '../components/layout';
+import Button from '../components/button';
 // translations
 import { useTranslation } from 'react-i18next';
 //SEO
@@ -50,7 +51,8 @@ const Ventures = (props) => {
                                             __html: venture.shortDescriptionNode.childMarkdownRemark.html
                                         }}
                                         />
-                                        <img src={bottomImg} alt="smooth lines" className="bgBottom" />
+                                        <Button value="Read more" type="btnNoFilled" />
+                                        {/* <img src={bottomImg} alt="smooth lines" className="bgBottom" /> */}
                                     </div>
                                     <Img fluid={venture.imageVenture.fluid} className="itemVentureImg" />
                                 </div>
