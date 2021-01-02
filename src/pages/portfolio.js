@@ -119,14 +119,14 @@ const Portfolio = (props) => {
                                                 </li>
                                             }
                                             <li className="subtitlePortfolio">{work.place}</li>
-                                            <li className="subtitlePortfolio">{t('portfolio.salary')}{work.salary}</li>
-                                            <li>
+                                            {/* <li className="subtitlePortfolio">{t('portfolio.salary')}{work.salary}</li> */}
+                                            {/* <li>
                                                 <div className="textPortfolio"
                                                     dangerouslySetInnerHTML={{
                                                         __html: work.opinionAboutCompanyNode.childMarkdownRemark.html
                                                     }}
                                                 />
-                                            </li>
+                                            </li> */}
                                         </ul>
                                     </div>
                                 </li>
@@ -141,6 +141,10 @@ const Portfolio = (props) => {
 
 export default Portfolio;
 
+// old format date
+// dateIn(formatString: "DD:MM:YYYY")
+// dateOut(formatString: "DD:MM:YYYY")
+
 export const data = graphql`
     query{
         work_en: allDatoCmsWorkExperience (filter: {locale: {eq: "en"}}, sort: {order: DESC, fields: dateIn}) {
@@ -152,8 +156,8 @@ export const data = graphql`
                         }
                     }
                     company
-                    dateIn(formatString: "DD:MM:YYYY")
-                    dateOut(formatString: "DD:MM:YYYY")
+                    dateIn(formatString: "YYYY")
+                    dateOut(formatString: "YYYY")
                     id
                     jobDescriptionNode {
                         childMarkdownRemark {
@@ -187,8 +191,8 @@ export const data = graphql`
                         }
                     }
                     company
-                    dateIn(formatString: "DD:MM:YYYY")
-                    dateOut(formatString: "DD:MM:YYYY")
+                    dateIn(formatString: "YYYY")
+                    dateOut(formatString: "YYYY")
                     id
                     jobDescriptionNode {
                         childMarkdownRemark {

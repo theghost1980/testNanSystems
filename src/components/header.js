@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link, StaticQuery, graphql } from 'gatsby';
 import Img from 'gatsby-image';
-
+//components
+import Selector from '../components/selector';
 //translations
 import { useTranslation } from "react-i18next";
 
@@ -65,11 +66,6 @@ const Header = () => {
             <header>
                 <nav>
                     <div className="navBlock">
-                        <Link to="/" activeClassName="activeNavLink">
-                            <div className="logoCont">
-                                <Img fluid={data.datoCmsInfoSite.logoSiteWhite.fluid} className="logoImg"/>
-                            </div>
-                        </Link>
                         <ul className={mobileMenu ? 'hide': 'navItemsUL'}>
                             <li className="navItem">
                                 <Link to="/" className="navLink" activeClassName="activeNavLink">
@@ -101,6 +97,9 @@ const Header = () => {
                                     {t('menu.contact')}
                                 </Link>
                             </li>
+                            <li className="navItem">
+                                <Selector />
+                            </li>
                         </ul>
                         {
                             mobileMenu &&
@@ -115,6 +114,9 @@ const Header = () => {
                         {
                             clickedMenu && 
                                 <div className="flyerMobileMenu">
+                                    <div className="mobileMenuSqrImgBgCont">
+                                        <Img fluid={data.datoCmsInfoSite.logoSiteSquare.fluid} className="bgImgBg" />
+                                    </div>
                                     <ul className="mobileMenuUL">
                                         <li className="navItemMobile">
                                             <Link to="/" className="navLinkMobile" onClick={() => setClickedMenu(!clickedMenu)}>
@@ -146,15 +148,20 @@ const Header = () => {
                                                 {t('menu.contact')}
                                             </Link>
                                         </li>
+                                        <li className="navItemMobile">
+                                            <Selector />
+                                        </li>
                                     </ul>
-                                    <div className="mobileMenuSqrImgBgCont">
-                                        <Img fluid={data.datoCmsInfoSite.logoSiteSquare.fluid} className="bgImgBg" />
-                                    </div>
                                     <div className="closeBtnCont" onClick={() => setClickedMenu(!clickedMenu)}>
                                         {t('menu.close')}
                                     </div>
                                 </div>
                         }
+                        <Link to="/" activeClassName="activeNavLink">
+                            <div className="logoCont">
+                                <Img fluid={data.datoCmsInfoSite.logoSite.fluid} className="logoImg"/>
+                            </div>
+                        </Link>
                     </div>
                 </nav>
             </header>

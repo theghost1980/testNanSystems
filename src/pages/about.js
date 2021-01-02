@@ -19,7 +19,7 @@ const About = (props) => {
             <HelmetDatoCms seo={dataAbout.seoMetaTags} />
             <div className="cardCont">
                 <div className="profilePicCont">
-                    <Img fluid={dataAbout.profilePicNoir.fluid} className="profileImg" />
+                    <Img fluid={dataAbout.profilePic.fluid} className="profileImg" />
                 </div>
                 <div className="textContAbout">
                     <div className="textAbout"

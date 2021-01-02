@@ -33,7 +33,7 @@ const Selector = (props) => {
         >
             <img src={(selectedLang === 'en') ? iconSystemsEN : iconSystemsES} alt="click to slide" 
                 className={`iconSelector ${(selectedLang === 'en') ? 'selectorRight' : 'selectorLeft'}`} 
-                title={(selectedLang === 'en') ? 'Slide the language' : 'Desliza el Idioma'}/>
+                title={(selectedLang === 'en') ? 'Change the language' : 'Cambia el Idioma'}/>
         </div>
     )
 }

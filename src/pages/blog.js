@@ -7,6 +7,8 @@ import Layout from '../components/layout';
 import { useTranslation } from "react-i18next";
 //SEO
 import { HelmetDatoCms } from 'gatsby-source-datocms';
+//media-img
+import bottomImg from '../media-imgs/lineBG.png';
 
 const Blog = (props) => {
     const { t, i18n } = useTranslation();
@@ -30,7 +32,10 @@ const Blog = (props) => {
                         <Img fluid={blogImg.fluid} className="blogPageImg" />
                     </div>
                 </div>
-                <hr className="hrBlogPost" />
+                {/* <hr className="hrBlogPost" /> */}
+                <div className="fancyDivSepCont">
+                    <img src={bottomImg} alt="fancy Line Sep" className="imgLineSep" />
+                </div>
                 <div className="blogListBlog">
                     <ul className="ulBlogListBlog">
                         {

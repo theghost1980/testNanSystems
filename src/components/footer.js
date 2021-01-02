@@ -4,7 +4,7 @@ import Img from 'gatsby-image';
 //media-imgs
 import heartIcon from '../media-imgs/heart.png';
 //components
-import Selector from '../components/selector';
+// import Selector from '../components/selector';
 //translations
 import { useTranslation } from "react-i18next";
 
@@ -69,12 +69,12 @@ const Footer = () => {
                                     })
                                 }
                             </ul>
-                            <p className="subtitleFooter">{t('footer.contactme')}</p>
-                            <Selector />
+                            {/* <p className="subtitleFooter">{t('footer.contactme')}</p> */}
+                            {/* <Selector /> */}
                         </div>
                         <div className="rightCont60">
                                 <div className="logoFooterCont">
-                                    <Img fluid={data.datoCmsInfoSite.logoSiteWhite.fluid} className="logoFooter" />
+                                    <Img fluid={data.datoCmsInfoSite.logoSite.fluid} className="logoFooter" />
                                 </div>
                                 <ul className="ulFooterSiteMap">
                                     <li className="navItem">
@@ -112,7 +112,8 @@ const Footer = () => {
                     </div>
                     <div className="rowColumFooter">
                         <p className="textFooter">{t('footer.copy')}<span><img src={heartIcon} className="heartIcon" alt="love love love" /></span>{t('footer.by')}<a href="http://saturnoman.com/">@theghost1980</a> | </p>
-                        <p className="textFooter"><Link to="/tos">&nbsp;&nbsp;{t('footer.terms')}</Link>.</p>
+                        <p className="textFooter"><Link to="/tos">&nbsp;&nbsp;{t('footer.terms')}</Link>&nbsp;&nbsp;|</p>
+                        <p className="textFooter"><Link to="/credits">&nbsp;&nbsp;Credits</Link>.</p>
                     </div>
                 </footer>
             )}
