@@ -11,13 +11,13 @@ import {
     WhatsappIcon
 } from 'react-share';
 
-const Sharebuttons = ({url,twitterHandle,tags,sizeAll,title}) => {
+const Sharebuttons = ({url,twitterHandle,tags,sizeAll,title, align}) => {
     
     const _tags = String(tags).split(',');
-
+    const _align = align || '';
 
     return (
-        <div className="shareButtonCont">
+        <div className={`shareButtonCont ${_align}`}>
             <FacebookShareButton url={url} className="shareBtn">
                 <FacebookIcon size={sizeAll} round={true} />
             </FacebookShareButton>

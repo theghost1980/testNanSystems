@@ -10,6 +10,7 @@ const Selector = (props) => {
     const { i18n } = useTranslation();
     // console.log('Lang received from i18n:',i18n.language);
     const [selectedLang, setSelectedLang] = useState(i18n.language);
+    const _classMobile = props.classMobile || '';
 
     // useEffect(() => {
     //     ///////////
@@ -28,7 +29,7 @@ const Selector = (props) => {
 
     // console.log('SelectedLang', selectedLang);
     return (
-        <div className="selectorCont" 
+        <div className={`selectorCont ${_classMobile}`} 
             onClick={() => setSelectedLang((selectedLang === 'es') ? 'en': 'es')}
         >
             <img src={(selectedLang === 'en') ? iconSystemsEN : iconSystemsES} alt="click to slide" 

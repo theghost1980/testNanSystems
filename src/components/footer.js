@@ -111,7 +111,8 @@ const Footer = () => {
                         </div>
                     </div>
                     <div className="rowColumFooter">
-                        <p className="textFooter">{t('footer.copy')}<span><img src={heartIcon} className="heartIcon" alt="love love love" /></span>{t('footer.by')}<a href="http://saturnoman.com/">@theghost1980</a> | </p>
+                        <p className="textFooter">{t('footer.copy')}<span><img src={heartIcon} className="heartIcon" alt="love love love" /></span>{t('footer.by')}&nbsp;&nbsp;</p>
+                        <p className="textFooter"><a href="http://saturnoman.com/">@theghost1980</a> | </p>
                         <p className="textFooter"><Link to="/tos">&nbsp;&nbsp;{t('footer.terms')}</Link>&nbsp;&nbsp;|</p>
                         <p className="textFooter"><Link to="/credits">&nbsp;&nbsp;Credits</Link>.</p>
                     </div>

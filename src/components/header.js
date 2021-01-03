@@ -149,12 +149,14 @@ const Header = () => {
                                             </Link>
                                         </li>
                                         <li className="navItemMobile">
-                                            <Selector />
+                                            <Selector classMobile="mobileSelector"/>
+                                        </li>
+                                        <li className="navItemMobile">
+                                            <div className="closeBtnCont" onClick={() => setClickedMenu(!clickedMenu)}>
+                                                {t('menu.close')}
+                                            </div>
                                         </li>
                                     </ul>
-                                    <div className="closeBtnCont" onClick={() => setClickedMenu(!clickedMenu)}>
-                                        {t('menu.close')}
-                                    </div>
                                 </div>
                         }
                         <Link to="/" activeClassName="activeNavLink">

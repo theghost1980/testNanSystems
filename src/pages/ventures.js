@@ -51,7 +51,27 @@ const Ventures = (props) => {
                                             __html: venture.shortDescriptionNode.childMarkdownRemark.html
                                         }}
                                         />
-                                        <Button value="Read more" type="btnNoFilled" />
+                                        <Button 
+                                            value="Read more" 
+                                            type="btnNoFilled" 
+                                            pathname="/singleventure"
+                                            data={
+                                                {
+                                                    title: venture.title,
+                                                    id: venture.id,
+                                                    mainImage: venture.imageVenture.fluid,
+                                                    shortDesc: venture.shortDescriptionNode.childMarkdownRemark.html,
+                                                    content: venture.contentNode.childMarkdownRemark.html,
+                                                    seoData: dataSEO.seoMetaTags
+                                                }
+                                            }
+                                            // link={{
+                                            //     pathname: "/singleventure",
+                                            //     data: [
+                                            //         venture.title
+                                            //     ]
+                                            // }} 
+                                        />
                                         {/* <img src={bottomImg} alt="smooth lines" className="bgBottom" /> */}
                                     </div>
                                     <Img fluid={venture.imageVenture.fluid} className="itemVentureImg" />
@@ -106,6 +126,11 @@ export const data = graphql`
                         ...GatsbyDatoCmsFluid
                     }
                 }
+                contentNode {
+                    childMarkdownRemark {
+                        html
+                    }
+                }
             }
             sidePicture {
                 fluid {
@@ -130,6 +155,11 @@ export const data = graphql`
                 imageVenture {
                     fluid {
                         ...GatsbyDatoCmsFluid
+                    }
+                }
+                contentNode {
+                    childMarkdownRemark {
+                        html
                     }
                 }
             }
