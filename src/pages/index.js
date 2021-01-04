@@ -3,6 +3,8 @@ import React from 'react';
 // import Bloglist from '../components/blogList';
 import Layout from '../components/layout';
 import Carouselhome from '../components/carouselHome';
+import Button from '../components/button';
+import Img from 'gatsby-image';
 //styles
 import '../styles/styles.css';
 //media-imgs
@@ -25,6 +27,7 @@ const Index = (props) => {
     // console.log('props.data',props.data);
     const dataBlogList = (_lang === 'es' ? props.data.data_es : props.data.data_en);
     const dataSEO = (_lang === 'es' ? props.data.dataSEO_es : props.data.dataSEO_en);
+    const dataVenture = (_lang === 'es' ? props.data.dataVenture_es : props.data.dataVenture_en);
     // console.log('dataBlogList',dataBlogList);
 
     return (
@@ -76,6 +79,39 @@ const Index = (props) => {
                         </div>
                     </div>
                </div>
+               <div className="technologiesContHome">
+               {
+                    dataVenture.edges.map(({ node: tech }) => {
+                        return (
+                            <div
+                                key={tech.id}
+                                // data-sal="slide-right"
+                                // data-sal-delay="300"
+                                // data-sal-easing="ease"
+                                className="itemVenture"
+                            >
+                                <div className="ventureItemCont">
+                                    <div className="contentVentureItem">
+                                        <h1 className="titleItemVenture">{tech.title}</h1>
+                                        <div className="descItemVenture"
+                                        dangerouslySetInnerHTML={{
+                                            __html: tech.shortDescriptionNode.childMarkdownRemark.html
+                                        }}
+                                        />
+                                        <Button 
+                                            value={t('button.readmore')}
+                                            type="btnNoFilled" 
+                                            pathname={`/${tech.slug}`}
+                                            // {`blog/${item.node.slug}
+                                        />
+                                    </div>
+                                    <Img fluid={tech.coverImage.fluid} className="itemVentureImg" />
+                                </div>
+                            </div>
+                        )
+                    })
+                }
+                </div>
            </div>
         </Layout>
     )
@@ -124,6 +160,44 @@ export const data = graphql`
                             timeToRead
                         }
                     }
+                }
+            }
+        }
+        dataVenture_en: allDatoCmsTechnology(filter: {locale: {eq: "en"}}) {
+            edges {
+                node {
+                    coverImage {
+                        fluid {
+                            src
+                        }
+                    }
+                    shortDescriptionNode {
+                        childMarkdownRemark {
+                            html
+                        }
+                    }
+                    slug
+                    title
+                    id
+                }
+            }
+        }
+        dataVenture_es: allDatoCmsTechnology(filter: {locale: {eq: "es"}}) {
+            edges {
+                node {
+                    coverImage {
+                        fluid {
+                            src
+                        }
+                    }
+                    shortDescriptionNode {
+                        childMarkdownRemark {
+                            html
+                        }
+                    }
+                    slug
+                    title
+                    id
                 }
             }
         }

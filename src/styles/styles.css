@@ -306,6 +306,14 @@ header {
     width: 100%;
     margin-bottom: var(--var-margin-top-sections)
 }
+.technologiesContHome {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+}
 .carouselContainer {
     display: block;
     width: 100%;
@@ -344,6 +352,7 @@ header {
     flex-direction: row;
     /* justify-content: space-between; */
     /* margin: var(--var-margin-general-paragr); */
+    justify-content: center;
     align-items: center;
     width: 100%;
     height: auto;
@@ -406,7 +415,7 @@ header {
 .contDiv60 {
     display: flex;
     flex-direction: column;
-    width: 60%;
+    width: 50%;
     justify-content: center;
     align-items: center;
 }
@@ -760,11 +769,11 @@ footer {
     font-size: large;
 }
 .ventureContent img {
-    max-height: 400px;
+    width: 65%;
     margin-left: auto;
     margin-right: auto;
     display: block;
-    object-fit: scale-down;
+    /* object-fit: scale-down; */
     border-radius: var(--var-border-radius);
     box-shadow: 1px 2px 10px 2px var(--var-adriaticBlue);
 }
@@ -1309,7 +1318,7 @@ figcaption p {
     display: flex;
     flex-direction: column;
     width: 50%;
-    height: 100%;
+    height: auto;
     /* padding-right: var(--var-margin-top-sections); */
 }
 .bgBottom {
@@ -1534,7 +1543,7 @@ figcaption p {
         height: 700px;
     }
     .itemVenture {
-        height: auto;
+        height: 700px;
         background: none;
     }
     .mainImgVentures {
@@ -1560,8 +1569,9 @@ figcaption p {
         margin-right: 0px;
     }
     .itemVentureImg {
-        width: 70%;
-        height: 70%;
+        width: 500px;
+        height: 400px;
+        object-fit: scale-down;
     }
     .titleItemVenture {
         text-align: center;
@@ -1676,6 +1686,8 @@ figcaption p {
 @media only screen and (max-width: 436px) {
     .rowColumFooter {
         flex-direction: column;
+        width: 90%;
+        padding: 0px;
     }
     .noExpanded {
         height: 34px;
@@ -1685,6 +1697,9 @@ figcaption p {
     }
     .ventureContent img {
         width: 100%;
+    }
+    .mobileMenuSqrImgBgCont {
+        display: none;
     }
 }
 @media only screen and (max-width: 400px) {
@@ -1768,4 +1783,18 @@ figcaption p {
 /* https://unsplash.com/photos/7e2pe9wjL9M  Photo by Riccardo Annandale on Unsplash */
 /* https://www.pexels.com/es-es/foto/apple-cuaderno-escritorio-imac-39284/  */
 /* https://www.pexels.com/es-es/foto/adentro-administracion-adulto-arquitecto-416405/  */
+/* https://unsplash.com/photos/jJT2r2n7lYA */
+/* https://pixabay.com/photos/blueprint-technical-drawing-5090067/ */
+/* https://unsplash.com/photos/iPrjQEDnNEY */
+/* https://unsplash.com/photos/b6dfPNHa81w */
+/* https://pixabay.com/photos/industry-industry-4-web-network-2630319/ */
+/* https://pixabay.com/photos/smart-home-house-technology-3395994/ */
+/* https://pixabay.com/photos/ipad-tablet-technology-touch-820272/ */
+/* https://www.tridium.com/us/en */
+    /* websites de donde hemos tomado contenido / quotes o imagenes */
+    /* aca podemos usar los links a estos sitios como back link en la pagina de creditos */
+    /* https://www.prototicad3d.com/2018/06/soluciones-de-autodesk-para-el-diseno-de-productos-y-manufactura.html */
+    /* https://digipime.com/es/linuxservers */
+    /* https://www.avnet.com/wps/portal/us/solutions/iot/ */
+    /* end websites */
 /* end credits */

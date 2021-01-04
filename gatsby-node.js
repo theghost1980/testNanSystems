@@ -14,8 +14,18 @@ exports.createPages = ({ graphql, actions}) => {
                       }
                     }
                 }
+                allDatoCmsTechnology {
+                    edges {
+                      node {
+                        slug
+                        title
+                        locale
+                      }
+                    }
+                }
             }
         `).then(result => {
+            //for blog
             result.data.allDatoCmsBlogPost.edges.map(({ node: blog }) => {
                 createPage({
                     path: `blog/${blog.slug}`,
@@ -23,6 +33,19 @@ exports.createPages = ({ graphql, actions}) => {
                     context: {
                         slug: blog.slug,
                         locale: blog.locale,
+                    },
+                })
+            })
+            //for technologies
+            result.data.allDatoCmsTechnology.edges.map(({ node: tech }) => {
+                // console.log(`found tech:${tech.title}`);
+
+                createPage({
+                    path: `/${tech.slug}`,
+                    component: path.resolve(`./src/templates/technology.js`),
+                    context: {
+                        slug: tech.slug,
+                        locale: tech.locale,
                     },
                 })
             })
