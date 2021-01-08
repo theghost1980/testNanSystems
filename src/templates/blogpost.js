@@ -10,7 +10,7 @@ import { useTranslation } from "react-i18next";
 import { HelmetDatoCms } from 'gatsby-source-datocms';
 
 const Blogpost = (props) => {
-    const { i18n } = useTranslation();
+    const { t, i18n } = useTranslation();
     const _lang = i18n.language;
     const dataPost = (_lang === 'es' ? props.data.post_es : props.data.post_en);
     //for sharebuttons
@@ -18,6 +18,7 @@ const Blogpost = (props) => {
     const _url = props.location.href;
     const _titlePost = dataPost.title;
     const _tags = dataPost.categories;
+    console.log(typeof dataPost.categories);
     // console.log('shareButtons props-----');
     // console.log(`href:${_url}`);
     // console.log(`title:${_titlePost}`);
@@ -49,6 +50,9 @@ const Blogpost = (props) => {
                             __html: dataPost.contentNode.childMarkdownRemark.html
                         }}
                     />
+                    <div className="postCatCont">
+                        <p className="textParaPost smalltext">{t('blogpost.categories')} {dataPost.categories}.</p>
+                    </div>
                 </div>
             </div>
         </Layout>

@@ -25,6 +25,7 @@
     --var-adriaticBlue: #285790;
     --var-adriaticBlueLighter: #3a81d6;
     --var-blueseaNew: #263A78;
+    --var-abswhite: white;
     /* end colors */
 
     /* margins/padding sections */
@@ -439,7 +440,8 @@ footer {
     display: flex !important;
     flex-direction: column;
     width: 100%;
-    height: 170px;
+    /* height: 170px; */
+    height: 220px;
     /* background: var(--var-colorFont-lightTheme); */
     /* testing adriatic */
     /* background: var(--var-adriaticBlue); */
@@ -481,11 +483,13 @@ footer {
     border-radius: var(--var-border-radius);
     transform: scale(1.05);
     box-shadow: 1px 1px 8px 1px var(--var-bg-light-theme);
+    border-radius: 50%;
 }
 .socialIcon {
     /* position: relative; */
     width: 60px;
     height: 60px;
+    
 }
 .rightCont60 {
     display: flex;
@@ -566,6 +570,28 @@ footer {
     width: 22px;
     height: 22px;
 }
+    /* services inside footer */
+    .servicesUL {
+        list-style: none;
+    }
+    .serviceFooterLink {
+        font-size: normal;
+        font-family: var(--var-font-subtitles);
+        color: var(--var-adriaticBlue);
+        cursor: pointer;
+        border-radius: var(--var-border-radius);
+        background: var(--var-abswhite);
+        padding: var(--var-paddingTitles);
+        transition: all .1s ease;
+    }
+    .serviceFooterLink:hover{
+        color: var(--var-colorFont-lightTheme-Selected);
+    }
+    .serviceFooterLink:first-child:hover{
+        color: var(--var-adriaticBlue);
+        cursor: none;
+    }
+    /* end services inside footer */
 /* end footer */
 
 /* Not found page 404 */
@@ -675,7 +701,7 @@ footer {
 }
 /* end about page */
 
-/* single post page */
+/* single post page blog post template */
 .postCont {
     margin-top: var(--var-margin-top-sections);
 }
@@ -734,6 +760,21 @@ footer {
     padding: var(--var-margin-top-sections);
     font-style: italic;
     color: var(--var-adriaticBlueLighter);
+}
+.postCatCont {
+    margin-top: var(--var-margin-top-sections);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+    width: 100%;
+}
+.smalltext {
+    font-size: small;
+    font-family: var(--var-font-subtitles);
+    font-weight: bold;
+    letter-spacing: 1px;
 }
 /* end single post page */
 
@@ -1045,6 +1086,8 @@ figcaption p {
     display: flex;
     flex-direction: column;
     width: 50%;
+    background: url('../media-imgs/lineBG.png') no-repeat;
+    background-size: bottom;
     /* border: 1px solid black; */
 }
 .rowCont {
@@ -1240,6 +1283,116 @@ figcaption p {
     margin-right: 0px;
 }
 /* end share buttons */
+
+/* Quotes button component componentContFixed */
+.bgDivFullFixed {
+    position: fixed;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background: #285790c4;
+    z-index: 99991;
+}
+.componentContFixed {
+    /* margin: auto; */
+    position: relative;
+    top: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: var(--var-border-radius);
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    min-height: 300px;
+    z-index: 99990;
+    background: var(--var-abswhite);
+    padding: var(--var-margin-top-sections);
+}
+.formQuote {
+    background: url('../media-imgs/lineBG.png') no-repeat;
+    background-size: cover;
+    /* background-position: top; */
+}
+.lblFormQuote {
+    color: var(--var-adriaticBlue);
+}
+.inputSpan {
+    display: flex;
+    flex-direction: column;
+}
+.hideLabels, .hideInputSpans {
+    display: none;
+}
+.lbl-checkBoxQuote {
+    display: inline-block;
+    padding: 10px;
+    cursor: pointer;
+}
+.btnCloseQuote {
+    position: absolute;
+    right: 3px;
+    top: 4px;
+    cursor: pointer;
+    border-radius: var(--var-border-radius);
+    background: var(--var-adriaticBlue);
+    color: var(--var-abswhite);
+    font-family: var(--var-prim-font);
+    font-size: normal;
+    width: 80px;
+    height: 25px;
+    text-align: center;
+    justify-items: center;
+    align-content: center;
+    transition: all 0.1s ease;
+}
+.btnCloseQuote:hover{
+    opacity: 0.7;
+}
+.boldLblInputs {
+    font-weight: bold;
+}
+.robotQuote {
+    width: 50px;
+    height: 50px;
+    animation-name: robotO;
+    animation-duration: 1s;
+    animation-timing-function: infinite;
+}
+@keyframes robotO {
+    from {
+        transform: scale(0.2);
+    }
+    to {
+        transform: scale(1.1);
+    }
+}
+.divFloatMessageQuote {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: var(--var-border-radius);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /* min-height: 370px; */
+    height: 100%;
+    z-index: 99999;
+    background: rgba(255, 255, 255, 0.94);
+    /* padding: var(--var-margin-top-sections); */
+    justify-content: center;
+    align-items: center;
+}
+.biggerText {
+    font-size: large;
+    margin: var(--var-margin-top-sections);
+}
+/* end quote button component */
 
 /* Ventures page */
 .venturesCont {
@@ -1605,6 +1758,9 @@ figcaption p {
         flex-direction: column;
         width: 60%;
     }
+    footer {
+        margin-top: 0px;
+    }
 }
 @media only screen and (max-width: 536px) {
     .labelsCont {
@@ -1725,7 +1881,7 @@ figcaption p {
 }
 @media only screen and (max-width: 369px) {
     .logoCont {
-        width: 260px;
+        width: 240px;
     }
     .rectHamItem {
         width: 80px;

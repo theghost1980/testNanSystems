@@ -8,30 +8,56 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const Carouselhome = () => {
     const [mobile, setMobile] = useState(false);
 
-    function checkWidth(){
-        const _screenWidth = window.innerWidth;
-        console.log(`Actual Width:${_screenWidth}`);
-        if (_screenWidth <= 544){
-            setMobile(true);
-        } else {
-            setMobile(false);
-        }
-    }
+    // function checkWidth(){
+    //     const _screenWidth = window.innerWidth;
+    //     console.log(`Actual Width:${_screenWidth}`);
+    //     if (_screenWidth <= 544){
+    //         setMobile(true);
+    //     } else {
+    //         setMobile(false);
+    //     }
+    // }
 
-    const handleResize = () => {
-        checkWidth();
-    }
-    useEffect(() => {
-        checkWidth();
-    },[]);
+    // const handleResize = () => {
+    //     checkWidth();
+    // }
+    // useEffect(() => {
+    //     checkWidth();
+    // },[]);
 
-    useEffect(() => {
-        window.addEventListener('resize', handleResize);
+    // useEffect(() => {
+    //     window.addEventListener('resize', handleResize);
+
+    //     return () => {
+    //         window.removeEventListener('resize', handleResize);
+    //     }
+    // }, [handleResize]);
+
+       //test to improve coding
+       useEffect(() => {
+        window.addEventListener('resize', () => {
+            const _screenWidth = window.innerWidth;
+            // console.log(`Actual Width:${_screenWidth}`);
+            if (_screenWidth <= 544){
+                setMobile(true);
+            } else {
+                setMobile(false);
+            }
+        });
 
         return () => {
-            window.removeEventListener('resize', handleResize);
+            window.removeEventListener('resize', () => {
+            const _screenWidth = window.innerWidth;
+            // console.log(`Actual Width:${_screenWidth}`);
+            if (_screenWidth <= 544){
+                setMobile(true);
+            } else {
+                setMobile(false);
+            }
+            });
         }
-    }, [handleResize]);
+    }, []);
+    //end test
 
     return (
         <StaticQuery

@@ -18,7 +18,8 @@
       "copy": "Copyright ©2020 with ",
       "by": " by ",
       "terms": "Terms of Service",
-      "contactme": "Contact me over Social Media"
+      "contactme": "Contact me over Social Media",
+      "ourserv": "Our Services"
     },
     "home": {
       "latest": "Lastest Articles",
@@ -98,5 +99,29 @@
     "button": {
       "readmore": "Read More",
       "getquote": "Get quote by Email"
+    },
+    "blogpost": {
+      "categories": "Categories: "
+    },
+    "quickquote": {
+      "companyUser": "Company User",
+      "name": "Name",
+      "phone": "Phone(optional)",
+      "company": "Company",
+      "job": "Job Title",
+      "email": "Email",
+      "comments": "Comments",
+      "nameh": "name here",
+      "phoneh": "phone here",
+      "companyh": "company name here",
+      "jobth": "job title here",
+      "emailh": "email here",
+      "commentsh": "comments here",
+      "send": "Send",
+      "cancel": "Cancel",
+      "sending": "Sending Message Please Wait..",
+      "ourobots": "Our Robots are making the world a better place :D",
+      "sent": "Message Sent. Our Robots are happy to work for you!",
+      "wewill": "We will answer you as soon as possible. Please add our email to your safe contacts"
     }
   }

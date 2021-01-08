@@ -108,8 +108,18 @@ const Index = (props) => {
                                         <Button 
                                             value={t('button.readmore')}
                                             type="btnNoFilled" 
+                                            action="Link"
                                             pathname={`/${tech.slug}`}
-                                            // {`blog/${item.node.slug}
+                                            data={
+                                                {
+                                                    title: tech.title,
+                                                    id: tech.id,
+                                                    mainImage: tech.coverImage.fluid,
+                                                    shortDesc: tech.shortDescriptionNode.childMarkdownRemark.html,
+                                                    content: tech.contentNode.childMarkdownRemark.html,
+                                                    seoData: dataSEO.seoMetaTags
+                                                }
+                                            }
                                         />
                                     </div>
                                     <Img fluid={tech.coverImage.fluid} className="itemVentureImg" />
@@ -175,7 +185,12 @@ export const data = graphql`
                 node {
                     coverImage {
                         fluid {
-                            src
+                            ...GatsbyDatoCmsFluid
+                        }
+                    }
+                    contentNode {
+                        childMarkdownRemark {
+                            html
                         }
                     }
                     shortDescriptionNode {
@@ -194,7 +209,12 @@ export const data = graphql`
                 node {
                     coverImage {
                         fluid {
-                            src
+                            ...GatsbyDatoCmsFluid
+                        }
+                    }
+                    contentNode {
+                        childMarkdownRemark {
+                            html
                         }
                     }
                     shortDescriptionNode {

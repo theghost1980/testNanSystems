@@ -9,7 +9,8 @@ import heartIcon from '../media-imgs/heart.png';
 import { useTranslation } from "react-i18next";
 
 const Footer = () => {
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
+    const _lang = i18n.language;
 
     return (
             <StaticQuery
@@ -47,6 +48,24 @@ const Footer = () => {
                         logoSiteWhite{
                             fluid {
                                 ...GatsbyDatoCmsFluid
+                            }
+                        }
+                    }
+                    dataServices_en:   allDatoCmsTechnology(filter: {locale: {eq: "en"}}) {
+                        edges {
+                            node {
+                                id
+                                shortTitle
+                                slug
+                            }
+                        }
+                    }
+                    dataServices_es:   allDatoCmsTechnology(filter: {locale: {eq: "es"}}) {
+                        edges {
+                            node {
+                                id
+                                shortTitle
+                                slug
                             }
                         }
                     }
@@ -108,6 +127,35 @@ const Footer = () => {
                                         </Link>
                                     </li>
                                 </ul>
+                                <div className="servicesDiv">
+                                    <ul className="servicesUL">
+                                        <li className="serviceFooterLink">
+                                            {t('footer.ourserv')}
+                                        </li>
+                                        {
+                                            (_lang === "en") ? data.dataServices_en.edges.map(({ node: service }) => {
+                                                // console.log(item);
+                                                return (
+                                                    <li key={service.id}>
+                                                        <Link to={`/${service.slug}`} className="serviceFooterLink">
+                                                            {service.shortTitle}
+                                                        </Link>
+                                                    </li>
+                                                )
+                                            }) :
+                                                data.dataServices_es.edges.map(({ node: service }) => {
+                                                    // console.log(item);
+                                                    return (
+                                                        <li key={service.id}>
+                                                            <Link to={`/${service.slug}`} className="serviceFooterLink">
+                                                                {service.shortTitle}
+                                                            </Link>
+                                                        </li>
+                                                    )
+                                                })
+                                        }
+                                    </ul>
+                                </div>
                         </div>
                     </div>
                     <div className="rowColumFooter">

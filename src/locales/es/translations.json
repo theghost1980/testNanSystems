@@ -18,7 +18,8 @@
       "copy": "Derechos Reservados ©2020 con ",
       "by": " por ",
       "terms": "Términos de Servicio",
-      "contactme": "Contáctame en las Redes Sociales"
+      "contactme": "Contáctame en las Redes Sociales",
+      "ourserv": "Nuestros Servicios"
     },
     "home": {
       "latest": "Artículos Recientes",
@@ -98,5 +99,29 @@
     "button": {
       "readmore": "Leer Más",
       "getquote": "Cotizar por Email"
+    },
+    "blogpost": {
+      "categories": "Categorías: "
+    },
+    "quickquote": {
+      "companyUser": "Trabajador/Empleado",
+      "name": "Nombre",
+      "phone": "Teléfono(opcional)",
+      "company": "Compañía",
+      "job": "Empleo",
+      "email": "Email",
+      "comments": "Comentarios",
+      "nameh": "nombre acá",
+      "phoneh": "telêfono acá",
+      "companyh": "nombre de compañía acá",
+      "jobth": "empleo acá",
+      "emailh": "email acá",
+      "commentsh": "comentarios acá",
+      "send": "Enviar",
+      "cancel": "Cancelar",
+      "sending": "Enviando mensaje por favor espere...",
+      "ourobots": "Nuestros robots están haciendo del mundo un lugar mejor :D",
+      "sent": "Mensaje enviado. Nuestros robots están felices de trabajar para usted!",
+      "wewill": "Le responderemos lo antes posible. Por favor, añada nuestro correo electrónico a sus contactos seguros"
     }
   }

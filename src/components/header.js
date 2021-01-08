@@ -38,6 +38,32 @@ const Header = () => {
         }
     }, [handleResize]);
 
+    //test to improve coding
+    // useEffect(() => {
+    //     window.addEventListener('resize', () => {
+    //         const _screenWidth = window.innerWidth;
+    //         // console.log(`Actual Width:${_screenWidth}`);
+    //         if (_screenWidth <= 885){
+    //             setMobileMenu(true);
+    //         } else {
+    //             setMobileMenu(false);
+    //         }
+    //     });
+
+    //     return () => {
+    //         window.removeEventListener('resize', () => {
+    //         const _screenWidth = window.innerWidth;
+    //         // console.log(`Actual Width:${_screenWidth}`);
+    //         if (_screenWidth <= 885){
+    //             setMobileMenu(true);
+    //         } else {
+    //             setMobileMenu(false);
+    //         }
+    //         });
+    //     }
+    // }, []);
+    //end test
+
     return (
         <StaticQuery
         query={graphql`

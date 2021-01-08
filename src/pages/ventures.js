@@ -55,6 +55,7 @@ const Ventures = (props) => {
                                             value={t('button.readmore')}
                                             type="btnNoFilled" 
                                             pathname="/singleventure"
+                                            action="move"
                                             data={
                                                 {
                                                     title: venture.title,

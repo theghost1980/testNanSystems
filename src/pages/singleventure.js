@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 //components
 import Img from 'gatsby-image';
 import Layout from '../components/layout';
 import Button from '../components/button';
 //components
 import Sharebuttons from '../components/shareButton';
+import QuickQuote from '../components/quickQuote';
 //SEO
 import { HelmetDatoCms } from 'gatsby-source-datocms';
+//translations
+import { useTranslation } from "react-i18next";
 
 const SingleVenture = (props) => {
+
+    const { t } = useTranslation();
+
     const data = props.location.state || 
         {
             title: 'Greatest Title Ever',
@@ -43,7 +49,12 @@ const SingleVenture = (props) => {
                                 __html: data.shortDesc
                             }}
                         />
-                        <Button value="Get a Quote by email" type="btnFilled" pathname="/"/>
+                        <Button 
+                            value={t('button.getquote')}
+                            type="btnFilled" 
+                            action="quote"
+                            data= {{ title: data.title }}
+                        />
                         {/* test share buttons */}
                         <Sharebuttons 
                             url={_url} 
