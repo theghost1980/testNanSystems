@@ -434,6 +434,88 @@ header {
 }
 /* end index */
 
+/* testimony carousel component */
+.carouselTestCont {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 400px;
+    justify-content: center;
+    align-items: center;
+    /* margin: var(--var-margin-top-sections); */
+    background: var(--var-adriaticBlue);
+}
+.testBottomCont {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    width: 100%;
+    height: 120px;
+    /* margin: 0 auto; */
+    color: var(--var-bg-light-theme);
+    font-family: var(--var-prim-font);
+    font-weight: bold;
+}
+.iconTestiCont {
+    width: 48px;
+    height: 48px;
+}
+.icon48x48 {
+    width: 48px;
+    height: 48px;
+}
+.profileImgTestiCont {
+    margin-top: var(--var-margin-top-sections);
+    margin-bottom: var(--var-margin-top-sections);
+}
+.profilePicTesti {
+    /* padding-top: var(--var-margin-top-sections); */
+    width: 250px;
+    width: 250px;
+    border-radius: 50%;
+    margin: 0 auto;
+    box-shadow: 0px 2px 8px 1px var(--var-abswhite);
+    background: var(--var-abswhite);
+}
+.tesTitleCont {
+    margin-bottom: var(--var-margin-top-sections);
+}
+.testiTitle {
+    font-size: xx-large;
+    color: var(--var-abswhite);
+    font-family: var(--var-font-subtitles);
+    /* text-decoration: underline; */
+    font-weight: bold;
+    justify-content: center;
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
+}
+.testiContentCont {
+    position: relative;
+    min-height: 150px;
+    background: var(--var-abswhite);
+    font-size: x-large;
+    font-family: var(--var-paragraph-font);
+    width: 80%;
+    margin: 0 auto;
+    padding: calc(2*var(--var-margin-top-sections));
+    border-radius: var(--var-border-radius);
+    box-shadow: 0px 2px 3px 1px var(--var-abswhite);
+    z-index: 99990;
+}
+.fancyDivSepCont2 {
+    top: 350px;
+    position: absolute;
+    width: 100%;
+    height: auto;
+    z-index: 99980;
+    opacity: 0.6;
+}
+/* end testimony carousel component  */
+
 /* Footer */
 footer {
     /* margin-top: var(--var-margin-top-sections); */
@@ -1761,6 +1843,21 @@ figcaption p {
     footer {
         margin-top: 0px;
     }
+    .testBottomCont {
+        width: 90%;
+        margin: 0 auto;
+    }
+    .testBottomCont h4 {
+        font-size: large;
+    }
+    .icon48x48 {
+        width: 40px;
+        height: 40px;
+    }
+    .testiTitle {
+        position: relative;
+        z-index: 99990;
+    }
 }
 @media only screen and (max-width: 536px) {
     .labelsCont {
@@ -1856,6 +1953,12 @@ figcaption p {
     }
     .mobileMenuSqrImgBgCont {
         display: none;
+    }
+    .testiContentCont {
+        padding: calc(var(--var-margin-top-sections)/2);
+    }
+    .fancyDivSepCont2 {
+        opacity: 0.4;
     }
 }
 @media only screen and (max-width: 400px) {

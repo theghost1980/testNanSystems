@@ -5,6 +5,7 @@ import Layout from '../components/layout';
 import Carouselhome from '../components/carouselHome';
 import Button from '../components/button';
 import Img from 'gatsby-image';
+import Testimony from '../components/testimony';
 //styles
 import '../styles/styles.css';
 //media-imgs
@@ -86,6 +87,7 @@ const Index = (props) => {
                         </div>
                     </div>
                </div>
+               <Testimony />
                <div className="technologiesContHome">
                {
                     dataVenture.edges.map(({ node: tech }) => {
