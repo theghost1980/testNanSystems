@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 //components
 // import Bloglist from '../components/blogList';
 import Layout from '../components/layout';
@@ -19,9 +19,11 @@ import { useTranslation } from "react-i18next";
 import { graphql, Link } from 'gatsby';
 //SEO
 import { HelmetDatoCms } from 'gatsby-source-datocms';
+import Mailchimpform from '../components/mailChimpForm';
 
 const Index = (props) => {
 
+    const [showSubcription, setShowSubcription] = useState(false);
     const { t, i18n } = useTranslation();
     const _lang = i18n.language;
     // console.log('_lang index',_lang);
@@ -131,6 +133,21 @@ const Index = (props) => {
                     })
                 }
                 </div>
+                <section className="divSubcriptionNewsLetter">
+                    <div className="btnSubscribe xtraStyles" onClick={() => setShowSubcription(!showSubcription)}>
+                        {t('subscribe.getgood')}
+                    </div>
+                    
+                    {
+                        showSubcription &&
+                        <>
+                            <Mailchimpform />
+                            <div className="btnSubscribe btnFixed" onClick={() => setShowSubcription(!showSubcription)}>
+                                Close
+                            </div>
+                        </>
+                    }
+               </section>
            </div>
         </Layout>
     )

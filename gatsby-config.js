@@ -82,5 +82,12 @@ module.exports = {
         ],
       },
     },
+    //mailchimo plugin to add new mails to site's newsletter
+    {
+          resolve: 'gatsby-plugin-mailchimp',
+          options: {
+              endpoint: `${process.env.MAILCHIMP_ENDPOINT}`, 
+          },
+    },
   ],
 }

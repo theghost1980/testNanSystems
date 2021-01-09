@@ -103,10 +103,23 @@
     "blogpost": {
       "categories": "Categorías: "
     },
+    "subscribe": {
+      "getgood": "Únete a la Familia",
+      "getme": "Subscribirme!",
+      "emailhere": " email acá por favor",
+      "thanks": "Grazie, Gracias, Shukran, 감사합니다!",
+      "error": "Si el error persiste,",
+      "error2": "contáctenos"
+    },
     "quickquote": {
       "companyUser": "Trabajador/Empleado",
       "name": "Nombre",
       "phone": "Teléfono(opcional)",
+      "callme": "Llamar sólo durante",
+      "call": "por favor seleccione un mejor momento para llamarle",
+      "callB": "Horario Laboral 9 a.m. - 5 p.m.",
+      "callA": "Después del Trabajo 5 p.m. - 9 p.m.",
+      "iwill": "me pondré en contacto con usted, así que por favor no me llame.",
       "company": "Compañía",
       "job": "Empleo",
       "email": "Email",

@@ -432,6 +432,20 @@ header {
 .centerAlign {
     text-align: center;
 }
+.divSubcriptionNewsLetter {
+    width: 100%;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(to right,white,var(--var-adriaticBlue));
+    /* background: var(--var-adriaticBlue); */
+}
+.xtraStyles {
+    border: 2px solid var(--var-abswhite);
+    height: 70px;
+}
 /* end index */
 
 /* testimony carousel component */
@@ -1582,6 +1596,88 @@ figcaption p {
 }
 /* end ventures page */
 
+/* subcriptions mailchimp newsletter component && classes from use cases */
+.coloredScreenBGFixed {
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    background: #285790b0;
+    z-index: 99999;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+}
+.btnSubscribe {
+    display: flex;
+    background: var(--var-bg-light-theme);
+    color: var(--var-adriaticBlue);
+    font-family: var(--var-font-subtitles);
+    font-weight: bold;
+    font-size: large;
+    width: 200px;
+    border: 2px solid var(--var-adriaticBlue);
+    text-shadow: 1px 1px 3px #2857904f;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--var-border-radius);
+    cursor: pointer;
+    transition: all 0.1s ease;
+}
+.btnSubscribe:hover{
+    opacity: 0.7;
+}
+.outerDivFullBlack {
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+    background: #285790b0;
+}
+.subcriptionCont {
+    /* top: 150px; */
+    /* position: fixed; */
+    position: relative;
+    top: 150px;
+    background: var(--var-abswhite);
+    width: 700px;
+    height: 320px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-radius: var(--var-border-radius);
+    margin: 0 auto;
+    border: 3px solid var(--var-adriaticBlue);
+    box-shadow: 0px 5px 8px 8px var(--var-blueseaNew);
+}
+.formSubcription {
+    display: flex;
+    flex-direction: column;
+}
+.btnFixed {
+    bottom: var(--var-margin-top-sections);
+    position: fixed;
+    z-index: 99999;
+}
+.inputMailChimp {
+    color: var(--var-adriaticBlue);
+    font-size: large;
+    font-family: var(--var-paragraph-font);
+    border-radius: var(--var-border-radius);
+    /* margin-bottom: calc(var(--var-margin-top-sections)/2); */
+    width: 320px;
+    height: 50px;
+}
+.divErrorSubcriptions {
+    color: var(--var-adriaticBlue);
+    font-size: large;
+    font-family: var(--var-paragraph-font);
+    border-radius: var(--var-border-radius);
+    margin: var(--var-margin-top-sections);
+}
+/* end subscriptions newsletter */
+
 /* Media rules support */
 @media only screen and (max-width: 1160px) {
     .contactForm{
@@ -1818,6 +1914,16 @@ figcaption p {
     .btnX, .btnLink {
         margin: 0 auto;
     }
+    .subcriptionCont {
+        flex-direction: column;
+        height: auto;
+        width: 95%;
+    }
+    .formSubcription {
+        margin-bottom: var(--var-margin-top-sections);
+        justify-content: center;
+        align-items: center;
+    }
 }
 @media only screen and (max-width: 636px) {
     .contDiv40 {
@@ -1960,6 +2066,9 @@ figcaption p {
     .fancyDivSepCont2 {
         opacity: 0.4;
     }
+    .subcriptionCont {
+        top:100px;
+    }
 }
 @media only screen and (max-width: 400px) {
     .titlePortfolio {
@@ -2017,9 +2126,21 @@ figcaption p {
     .titleItemVenture, .textVentures h1 {
         font-size: x-large;
     }
-    /* .selectorCont {
-        margin-bottom: calc(var(--var-margin-top-sections)/2);
-    } */
+    .subcriptionCont {
+        top: 50px;
+    }
+    .inputMailChimp {
+        width: 280px;
+    }
+}
+@media only screen and (max-width: 330px) {
+    .subcriptionCont {
+        top: 20px;
+    }
+    .imgSubscriptions {
+        width: 200px;
+        height: 200px;
+    }
 }
 /* end media rules */
 
@@ -2049,11 +2170,13 @@ figcaption p {
 /* https://pixabay.com/photos/industry-industry-4-web-network-2630319/ */
 /* https://pixabay.com/photos/smart-home-house-technology-3395994/ */
 /* https://pixabay.com/photos/ipad-tablet-technology-touch-820272/ */
+/* https://github.com/alampros/react-confetti#readme */
 /* https://www.tridium.com/us/en */
-    /* websites de donde hemos tomado contenido / quotes o imagenes */
+    /* websites de donde hemos tomado contenido / quotes o imagenes o tutoriales */
     /* aca podemos usar los links a estos sitios como back link en la pagina de creditos */
     /* https://www.prototicad3d.com/2018/06/soluciones-de-autodesk-para-el-diseno-de-productos-y-manufactura.html */
     /* https://digipime.com/es/linuxservers */
     /* https://www.avnet.com/wps/portal/us/solutions/iot/ */
+    /* https://medium.com/javascript-in-plain-english/how-to-create-a-newsletter-with-mailchimp-gatsby-js-netlify-d48778d5c774 */
     /* end websites */
 /* end credits */

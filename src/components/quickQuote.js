@@ -17,7 +17,9 @@ const QuickQuote = (props) => {
     const refForm = useRef(null);
 
     const { t, i18n } = useTranslation();
-    const _lang = i18n.language;
+    // const _lang = i18n.language;
+
+    const [optionState, setOptionState] = useState('Not Set');
 
     const [sending, setSending] = useState(false);
     const [sent, setSent] = useState(false);
@@ -67,6 +69,12 @@ const QuickQuote = (props) => {
             }))
         }
         // console.log(data);
+    }
+
+    const handleSelectChange = (e) => {
+        // console.log(`I'm changing to:${e.target.value}`);
+        setOptionState(e.target.value);
+        handleChange(e);
     }
 
     const resetForm = () => {
@@ -148,8 +156,6 @@ const QuickQuote = (props) => {
     // callme: 'Business Hours',
     // dateTime: _dateTime
         sendFeedback({
-            comments: data.comments, 
-            from: data.name, 
             reply_to: data.email, 
             quote: data.quote,
             companyUser: `${companyUser ? "It was a company User": "t was a home user"}`,
@@ -159,7 +165,8 @@ const QuickQuote = (props) => {
             email: data.email,
             phone: data.phone,
             callme: data.callme,
-            dateTime: data.dateTime
+            dateTime: data.dateTime,
+            comments: data.comments, 
 
         })
        
@@ -201,11 +208,12 @@ const QuickQuote = (props) => {
                         disabled={sending}
                     />
                 </label>
-                <form onSubmit={handleSubmit} ref={refForm} className="formQuote">
+                <form onSubmit={handleSubmit} ref={refForm} className="formQuote" id="form-Quote">
                     <div className="rowCont">
                         <div className="labelsCont">
                             <p className="lblFormQuote boldLblInputs">{t('quickquote.name')}</p>
                             <p className="lblFormQuote boldLblInputs">{t('quickquote.phone')}</p>
+                            <p className="lblFormQuote boldLblInputs">{t('quickquote.callme')}</p>
                             <span className={`labelSpan ${companyUser ? null : 'hideLabels' }`}>
                                 <p className="lblFormQuote boldLblInputs">{t('quickquote.company')}</p>
                                 <p className="lblFormQuote boldLblInputs">{t('quickquote.job')}</p>
@@ -233,6 +241,23 @@ const QuickQuote = (props) => {
                                 className="inputForm boldLblInputs"
                                 disabled={sending}
                             />
+                            <select 
+                                id="test-callme"
+                                name="callme"
+                                // value={optionState}
+                                onChange={handleSelectChange}
+                                // placeholder={t('quickquote.call')}
+                                // value={this.state.name}
+                                className="inputForm boldLblInputs"
+                                disabled={sending}
+                                form="form-Quote"
+                                // value={t('quickquote.call')}
+                            >
+                                <option value="" disabled selected>{t('quickquote.call')}</option>
+                                <option value={t('quickquote.callB')}>{t('quickquote.callB')}</option>
+                                <option value={t('quickquote.callA')}>{t('quickquote.callA')}</option>
+                                <option value={t('quickquote.iwill')}>{t('quickquote.iwill')}</option>
+                            </select>
                             <span className={`inputSpan ${companyUser ? null : 'hideInputSpans' }`}>
                                 <input 
                                     id="test-company"

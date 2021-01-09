@@ -103,10 +103,23 @@
     "blogpost": {
       "categories": "Categories: "
     },
+    "subscribe": {
+      "getgood": "Get good News",
+      "getme": "I'm in!",
+      "emailhere": " email here please",
+      "thanks": "Grazie, Gracias, Shukran, 감사합니다!",
+      "error": "If error persists, ",
+      "error2": "contact us"
+    },
     "quickquote": {
       "companyUser": "Company User",
       "name": "Name",
       "phone": "Phone(optional)",
+      "callme": "Call me during",
+      "call": "Please select better time to call you",
+      "callB": "Business Hours 9 a.m. - 5 p.m.",
+      "callA": "After Hours 5 p.m. - 9 p.m.",
+      "iwill": "I will contact you, so please do not call me.",
       "company": "Company",
       "job": "Job Title",
       "email": "Email",
