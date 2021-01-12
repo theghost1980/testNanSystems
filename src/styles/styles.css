@@ -1003,24 +1003,36 @@ footer {
 /* Tos / privacy page */
 .tosCont {
     margin: calc(var(--var-margin-top-sections)*2);
+    background: var(--var-abswhite);
+    border-radius: var(--var-border-radius);
 }
 .titleTos, .subtitleTos, .textTos {
     color: var(--var-adriaticBlue);
+    margin-left: var(--var-paddingTitles);
+    margin-right: var(--var-paddingTitles);
 }
 .titleTos {
     font-family: var(--var-prim-font);
+    margin-left: var(--var-paddingTitles);
+    margin-right: var(--var-paddingTitles);
 }
 .subtitleTos {
     font-family: var(--var-font-subtitles);
+    margin-left: var(--var-paddingTitles);
+    margin-right: var(--var-paddingTitles);
 }
 .textTos {
     font-family: var(--var-paragraph-font);
+    margin-left: var(--var-paddingTitles);
+    margin-right: var(--var-paddingTitles);
 }
 .centerTextTos {
     text-align: center;
 }
 .miniText {
     font-size: small;
+    margin-left: var(--var-paddingTitles);
+    margin-right: var(--var-paddingTitles);
 }
 /* end tos / privacy page */
 
@@ -1069,6 +1081,7 @@ footer {
     align-items: center;
     width: 100%;
     height: auto;
+    padding-inline-start: 0px;
 }
 
 .miniDateBlog {
@@ -1993,7 +2006,7 @@ footer {
     }
     .itemVentureImg {
         width: 500px;
-        height: 400px;
+        /* height: 400px; */
         object-fit: scale-down;
     }
     .titleItemVenture {
@@ -2024,6 +2037,9 @@ footer {
     }
     .bgLogoBigBottom {
         display: none;
+    }
+    .fullw {
+        height: auto !important;
     }
 }
 @media only screen and (max-width: 636px) {
@@ -2292,6 +2308,9 @@ footer {
 /* https://pixabay.com/photos/ipad-tablet-technology-touch-820272/ */
 /* https://github.com/alampros/react-confetti#readme */
 /* https://www.tridium.com/us/en */
+/* https://www.pexels.com/es-es/foto/gente-trabajando-efecto-desenfocado-ventana-3183153/ */
+/* https://www.pexels.com/es-es/foto/moda-gente-amigos-hombres-3184419/ */
+/* Foto de ThisIsEngineering en Pexels */
     /* websites de donde hemos tomado contenido / quotes o imagenes o tutoriales */
     /* aca podemos usar los links a estos sitios como back link en la pagina de creditos */
     /* https://www.prototicad3d.com/2018/06/soluciones-de-autodesk-para-el-diseno-de-productos-y-manufactura.html */
