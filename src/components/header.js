@@ -89,6 +89,7 @@ const Header = () => {
           }
         `}
         render={data => (
+            <div className="whiteBG">
             <header>
                 <nav>
                     <div className="navBlock">
@@ -193,6 +194,7 @@ const Header = () => {
                     </div>
                 </nav>
             </header>
+            </div>
         )}
       />
     )

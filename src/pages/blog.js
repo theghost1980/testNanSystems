@@ -21,7 +21,7 @@ const Blog = (props) => {
         <Layout>
             <HelmetDatoCms seo={dataSEO.seoMetaTags} />
             <div className="blogCont">
-                <div className="topSectionBlog">
+                {/* <div className="topSectionBlog">
                     <div className="topTextBlog">
                         <blockquote>
                             {t('blog.quote')}
@@ -31,27 +31,49 @@ const Blog = (props) => {
                     <div className="imgCoverCont">
                         <Img fluid={blogImg.fluid} className="blogPageImg" />
                     </div>
-                </div>
+                </div> */}
                 {/* <hr className="hrBlogPost" /> */}
-                <div className="fancyDivSepCont">
+                {/* <div className="fancyDivSepCont">
                     <img src={bottomImg} alt="fancy Line Sep" className="imgLineSep" />
-                </div>
+                </div> */}
                 <div className="blogListBlog">
                     <ul className="ulBlogListBlog">
                         {
-                            dataBlogList.edges.map(item => {
+                            dataBlogList.edges.map(({ node: post }) => {
                                 return (
-                                    <li key={item.node.id}>
-                                        <Link to={`${item.node.slug}`}>
-                                            <figure className="figBlogList">
-                                                <Img fluid={item.node.coverImage.fluid} />
-                                                <figcaption>
-                                                    <p className="boldtext marginTop">{item.node.title}</p>
-                                                    <p className="miniDateBlog">{item.node.datePublished}</p>
-                                                </figcaption>
-                                            </figure>
-                                        </Link>
-                                    </li>
+                                    //old
+                                        // <li key={item.node.id} className="blogPostItem">
+                                        //         <div className="postImgCont">
+                                        //             <Img fluid={item.node.coverImage.fluid} className="imgBlogPost" />
+                                        //         </div>
+                                        //         <div className="postDesc">
+                                        //             <p className="boldtext marginTop">{item.node.title}</p>
+                                        //             <p className="miniDateBlog">{item.node.datePublished}</p>
+                                        //         </div>
+                                        // </li>
+                                        //end old
+                                        <div
+                                            key={post.id}
+                                            className="itemVenture fullw"
+                                        >
+                                            <div className="ventureItemCont">
+                                                <div className="bgLogoBigBottom">
+                                                </div>
+                                                <div className="contentVentureItem">
+                                                    <Link to={`/blog/${post.slug}`}>
+                                                        <h1 className="titleItemVenture">{post.title}</h1>
+                                                        <h3 className="titleItemVenture">
+                                                            <p>{post.datePublished} - ({post.contentNode.childMarkdownRemark.timeToRead} {t('blogList.readingtime')}</p>
+                                                        </h3>
+                                                        {/* <h4 className="titleItemVenture">({post.contentNode.childMarkdownRemark.timeToRead} {t('blogList.readingtime')}</h4> */}
+                                                        <h6 className="miniDateBlog">
+                                                            {post.categories}
+                                                        </h6>
+                                                    </Link>
+                                                </div>
+                                                <Img fluid={post.coverImage.fluid} className="itemVentureImg" />
+                                            </div>
+                                        </div>
                                 )
                             })
                         }
@@ -100,6 +122,7 @@ export const data = graphql`
                             ...GatsbyDatoCmsFluid
                         }
                     }
+                    categories
                 }
             }
         }
@@ -121,6 +144,7 @@ export const data = graphql`
                             ...GatsbyDatoCmsFluid
                         }
                     }
+                    categories
                 }
             }
         }

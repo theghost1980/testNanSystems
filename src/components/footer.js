@@ -127,7 +127,7 @@ const Footer = () => {
                                         </Link>
                                     </li>
                                 </ul>
-                                <div className="servicesDiv">
+                                {/* <div className="servicesDiv">
                                     <ul className="servicesUL">
                                         <li className="serviceFooterLink">
                                             {t('footer.ourserv')}
@@ -155,7 +155,7 @@ const Footer = () => {
                                                 })
                                         }
                                     </ul>
-                                </div>
+                                </div> */}
                         </div>
                     </div>
                     <div className="rowColumFooter">

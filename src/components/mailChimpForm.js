@@ -8,6 +8,7 @@ import imgSubcription from '../media-imgs/dummy300x300-subscriptions.png';
 // testing now npm install react-confetti
 import ConfettiAnimation from './confettiAnimation';
 
+
 //translations
 import { useTranslation } from "react-i18next";
 import { Link } from 'gatsby';
@@ -42,6 +43,11 @@ const Mailchimpform = (props) => {
             result: data.result
         });
     }
+
+    // const element = document.createElement('canvas');
+    // element.style.zIndex='100000';
+    // element.style.background='black';
+    // document.getElementById("confettyDiv").appendChild(element);
 
     // function confettyRain() {
     //     // let siteColors = ['#ffa68d', '#fd3a84'];
@@ -79,7 +85,7 @@ const Mailchimpform = (props) => {
                                 placeholder={t('subscribe.emailhere')}
                             />
                             <br />
-                            <button name="btnSubscribe" className="btnSubscribe" type="submit">{t('subscribe.getme')}</button>
+                            <button name="btnSubscribe" className="btnSubscribe xtraSubscribeBtn" type="submit">{t('subscribe.getme')}</button>
                             {/* <div id="my-button" style={{ zIndex: '20'}} onClick={() => party.screen()}>
                                 Click me!
                             </div> */}
