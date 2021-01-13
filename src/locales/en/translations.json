@@ -12,7 +12,17 @@
       "blog": "Blog",
       "ventures": "Ventures",
       "contact": "Contact",
-      "close": "CLOSE"
+      "close": "CLOSE",
+      "ariaHome": "Navigate to home page",
+      "ariaAbout": "Navigate to about page",
+      "ariaPortfolio": "Navigate to portfolio page",
+      "ariaBlog": "Navigate to blog page",
+      "ariaVentures": "Navigate to venture page",
+      "ariaContact": "Navigate to contact page",
+      "ariaLanguage": "Change Language",
+      "ariaHam": "Open or close mobile Menu",
+      "ariaLogo": "Company logo",
+      "ariaClose": "Close"
     },
     "footer": {
       "copy": "Copyright ©2020 with ",

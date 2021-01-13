@@ -12,7 +12,17 @@
       "blog": "Blog",
       "ventures": "Projectos",
       "contact": "Contacto",
-      "close": "CERRAR"
+      "close": "CERRAR",
+      "ariaHome": "Ir página inicio",
+      "ariaAbout": "Ir página acerca de",
+      "ariaPortfolio": "Ir página portafolio",
+      "ariaBlog": "Ir página blog",
+      "ariaVentures": "Ir página projectos",
+      "ariaContact": "Ir página contacto",
+      "ariaLanguage": "Cambiar lenguaje",
+      "ariaHam": "Abrir o cerrar mini menú",
+      "ariaLogo": "Logo de Nansystems",
+      "ariaClose": "Cerrar"
     },
     "footer": {
       "copy": "Derechos Reservados ©2020 con ",

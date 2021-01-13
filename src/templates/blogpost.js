@@ -4,7 +4,7 @@ import Layout from '../components/layout';
 import Img from 'gatsby-image';
 //components
 import Sharebuttons from '../components/shareButton';
-import Commentsform from '../components/commentsForm';
+// import Commentsform from '../components/commentsForm';
 //translations
 import { useTranslation } from "react-i18next";
 //SEO
@@ -56,7 +56,7 @@ const Blogpost = (props) => {
                     </div>
                 </div>
             </div>
-            <Commentsform />
+            {/* <Commentsform /> */}
         </Layout>
     )
 }

@@ -95,42 +95,56 @@ const Header = () => {
                     <div className="navBlock">
                         <ul className={mobileMenu ? 'hide': 'navItemsUL'}>
                             <li className="navItem">
-                                <Link to="/" className="navLink" activeClassName="activeNavLink">
+                                <Link to="/" className="navLink" activeClassName="activeNavLink"
+                                    aria-label={t('menu.ariaHome')}
+                                >
                                     {t('menu.home')}
                                 </Link>
                             </li>
                             <li className="navItem">
-                                <Link to="/about" className="navLink" activeClassName="activeNavLink">
+                                <Link to="/about" className="navLink" activeClassName="activeNavLink"
+                                    aria-label={t('menu.ariaAbout')}
+                                >
                                     {t('menu.about')}
                                 </Link>
                             </li>
                             <li className="navItem">
-                                <Link to="/portfolio" className="navLink" activeClassName="activeNavLink">
+                                <Link to="/portfolio" className="navLink" activeClassName="activeNavLink"
+                                    aria-label={t('menu.ariaPortfolio')}
+                                >
                                     {t('menu.portfolio')}
                                 </Link>
                             </li>
                             <li className="navItem">
-                                <Link to="/blog" className="navLink" activeClassName="activeNavLink">
+                                <Link to="/blog" className="navLink" activeClassName="activeNavLink"
+                                    aria-label={t('menu.ariaBlog')}
+                                >
                                     {t('menu.blog')}
                                 </Link>
                             </li>
                             <li className="navItem">
-                                <Link to="/ventures" className="navLink" activeClassName="activeNavLink">
+                                <Link to="/ventures" className="navLink" activeClassName="activeNavLink"
+                                    aria-label={t('menu.ariaVentures')}
+                                >
                                     {t('menu.ventures')}
                                 </Link>
                             </li>
                             <li className="navItem">
-                                <Link to="/contact" className="navLink" activeClassName="activeNavLink">
+                                <Link to="/contact" className="navLink" activeClassName="activeNavLink"
+                                    aria-label={t('menu.ariaContact')}
+                                >
                                     {t('menu.contact')}
                                 </Link>
                             </li>
                             <li className="navItem">
-                                <Selector />
+                                <Selector aria-label={t('menu.ariaLanguage')} />
                             </li>
                         </ul>
                         {
                             mobileMenu &&
-                                <div className="burguerMenuCont" onClick={() => setClickedMenu(!clickedMenu)}>
+                                <div className="burguerMenuCont" onClick={() => setClickedMenu(!clickedMenu)}
+                                    aria-label={t('menu.ariaHam')}
+                                >
                                     <svg viewBox="0 0 100 80" width="40" height="40">
                                         <rect className="rectHamItem" width="100" height="20"></rect>
                                         <rect className="rectHamItem" y="30" width="100" height="20"></rect>
@@ -141,53 +155,69 @@ const Header = () => {
                         {
                             clickedMenu && 
                                 <div className="flyerMobileMenu">
-                                    <div className="mobileMenuSqrImgBgCont">
+                                    <div className="mobileMenuSqrImgBgCont"
+                                        aria-label={t('menu.ariaLogo')}
+                                    >
                                         <Img fluid={data.datoCmsInfoSite.logoSiteSquare.fluid} className="bgImgBg" />
                                     </div>
                                     <ul className="mobileMenuUL">
                                         <li className="navItemMobile">
-                                            <Link to="/" className="navLinkMobile" onClick={() => setClickedMenu(!clickedMenu)}>
+                                            <Link to="/" className="navLinkMobile" onClick={() => setClickedMenu(!clickedMenu)}
+                                                aria-label={t('menu.ariaHome')}
+                                            >
                                                 {t('menu.home')}
                                             </Link>
                                         </li>
                                         <li className="navItemMobile">
-                                            <Link to="/about" className="navLinkMobile" onClick={() => setClickedMenu(!clickedMenu)}>
+                                            <Link to="/about" className="navLinkMobile" onClick={() => setClickedMenu(!clickedMenu)}
+                                                aria-label={t('menu.ariaAbout')}
+                                            >
                                                 {t('menu.about')}
                                             </Link>
                                         </li>
                                         <li className="navItemMobile">
-                                            <Link to="/portfolio" className="navLinkMobile" onClick={() => setClickedMenu(!clickedMenu)}>
+                                            <Link to="/portfolio" className="navLinkMobile" onClick={() => setClickedMenu(!clickedMenu)}
+                                                aria-label={t('menu.ariaPortfolio')}
+                                            >
                                                 {t('menu.portfolio')}
                                             </Link>
                                         </li>
                                         <li className="navItemMobile">
-                                            <Link to="/blog" className="navLinkMobile" onClick={() => setClickedMenu(!clickedMenu)}>
+                                            <Link to="/blog" className="navLinkMobile" onClick={() => setClickedMenu(!clickedMenu)}
+                                                aria-label={t('menu.ariaBlog')}
+                                            >
                                                 {t('menu.blog')}
                                             </Link>
                                         </li>
                                         <li className="navItemMobile">
-                                            <Link to="/ventures" className="navLinkMobile" onClick={() => setClickedMenu(!clickedMenu)}>
+                                            <Link to="/ventures" className="navLinkMobile" onClick={() => setClickedMenu(!clickedMenu)}
+                                                aria-label={t('menu.ariaVentures')}
+                                            >
                                                 {t('menu.ventures')}
                                             </Link>
                                         </li>
                                         <li className="navItemMobile">
-                                            <Link to="/contact" className="navLinkMobile" onClick={() => setClickedMenu(!clickedMenu)}>
+                                            <Link to="/contact" className="navLinkMobile" onClick={() => setClickedMenu(!clickedMenu)}
+                                                aria-label={t('menu.ariaContact')}
+                                            >
                                                 {t('menu.contact')}
                                             </Link>
                                         </li>
                                         <li className="navItemMobile">
-                                            <Selector classMobile="mobileSelector"/>
+                                            <Selector classMobile="mobileSelector" aria-label={t('menu.ariaLanguage')} />
                                         </li>
                                         <li className="navItemMobile">
-                                            <div className="closeBtnCont" onClick={() => setClickedMenu(!clickedMenu)}>
+                                            <div className="closeBtnCont" onClick={() => setClickedMenu(!clickedMenu)}
+                                                aria-label={t('menu.ariaClose')} 
+                                            >
                                                 {t('menu.close')}
                                             </div>
                                         </li>
                                     </ul>
                                 </div>
                         }
-                        <Link to="/" activeClassName="activeNavLink">
-                            <div className="logoCont">
+                        <Link to="/" activeClassName="activeNavLink" aria-label={t('menu.ariaHome')}>
+                            <div className="logoCont" aria-label={t('menu.ariaLogo')}>
                                 <Img fluid={data.datoCmsInfoSite.logoSite.fluid} className="logoImg"/>
                             </div>
                         </Link>
