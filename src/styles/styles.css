@@ -1775,17 +1775,34 @@ footer {
 .commentsFormCont {
     display: flex;
     flex-direction: column;
-    width: 60%;
+    width: 80%;
     margin: 0 auto;
     background: var(--var-greenComple);
     border-radius: var(--var-border-radius);
+    justify-content: center;
+    align-items: center;
 }
 .commentsForm {
     justify-content: center;
     align-items: center;
     width: 100%;
     height: auto;
-    margin: calc(2*var(--var-margin-top-sections));
+    padding: calc(2*var(--var-margin-top-sections));
+}
+.formPComments {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    color: var(--var-abswhite);
+    font-size: x-large;
+    font-family: var(--var-font-subtitles);
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+}
+.formPComments input {
+    margin-left: var(--var-margin-top-sections);
+    width: 320px;
 }
 /* end testing */
 
