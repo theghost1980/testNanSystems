@@ -145,7 +145,7 @@ const Header = () => {
                                 <div className="burguerMenuCont" onClick={() => setClickedMenu(!clickedMenu)}
                                     aria-label={t('menu.ariaHam')}
                                 >
-                                    <svg viewBox="0 0 100 80" width="40" height="40">
+                                    <svg viewBox="0 0 100 80" width="40" height="40" className="svgHam">
                                         <rect className="rectHamItem" width="100" height="20"></rect>
                                         <rect className="rectHamItem" y="30" width="100" height="20"></rect>
                                         <rect className="rectHamItem" y="60" width="100" height="20"></rect>

@@ -146,5 +146,8 @@
       "ourobots": "Our Robots are making the world a better place :D",
       "sent": "Message Sent. Our Robots are happy to work for you!",
       "wewill": "We will answer you as soon as possible. Please add our email to your safe contacts"
+    },
+    "carousel": {
+      "tellme": "More"
     }
   }

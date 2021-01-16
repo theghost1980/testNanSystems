@@ -5,7 +5,8 @@ import Layout from '../components/layout';
 import Carouselhome from '../components/carouselHome';
 import Button from '../components/button';
 import Img from 'gatsby-image';
-import Testimony from '../components/testimony';
+// import Testimony from '../components/testimony';
+import Testimonyfixed from '../components/testimonyFixed';
 //styles
 import '../styles/styles.css';
 //media-imgs
@@ -49,6 +50,7 @@ const Index = (props) => {
                </div>
                <div className="blogListCont">
                    <div className="contDiv40">
+                     <div className="bgDivPadd w100hAutoBr">
                         <p className="titleHome">{t('home.latest')}</p>
                         {/* <Bloglist /> */}
                         {/* testing doing the query here instead of inside a component */}
@@ -69,27 +71,32 @@ const Index = (props) => {
                             }
                         </ul>
                     </div>
+                    </div>
                     <div className="contDiv60">
-                        <p className="titleHome centerAlign">{t('home.some')}</p>
-                        <div className="rowLogosCont">
-                            <ul className="ulTechListHome">
-                                <li>
-                                    <img src={autoLogo} alt="AutoCAD professional Ana Echeverria" className="logoHome"/>
-                                </li>
-                                <li>
-                                    <img src={redLogo} alt="RedHat professional Ana Echeverria"  className="logoHome" />
-                                </li>
-                                <li>
-                                    <img src={tridiumLogo} alt="Tridium professional Ana Echeverria"  className="logoHome"/>
-                                </li>
-                                <li>
-                                    <img src={niagaLogo} alt="Niagara professional Ana Echeverria"  className="logoHome" />
-                                </li>
-                            </ul>
+                        <div className="bgDivPadd w100hAutoBr">
+                            <p className="titleHome centerAlign">{t('home.some')}</p>
+                            <div className="rowLogosCont">
+                                <ul className="ulTechListHome">
+                                    <li>
+                                        <img src={autoLogo} alt="AutoCAD professional Ana Echeverria" className="logoHome"/>
+                                    </li>
+                                    <li>
+                                        <img src={redLogo} alt="RedHat professional Ana Echeverria"  className="logoHome" />
+                                    </li>
+                                    <li>
+                                        <img src={tridiumLogo} alt="Tridium professional Ana Echeverria"  className="logoHome"/>
+                                    </li>
+                                    <li>
+                                        <img src={niagaLogo} alt="Niagara professional Ana Echeverria"  className="logoHome" />
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                </div>
-               <Testimony />
+               {/* <Testimony /> dynamic testimonies */} 
+               {/* fixed ones */}
+               <Testimonyfixed />
                <div className="technologiesContHome">
                {
                     dataVenture.edges.map(({ node: tech }) => {
