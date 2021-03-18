@@ -8,8 +8,9 @@ import { useTranslation } from "react-i18next";
 
 const Teamlist = () => {
     //translations
-    const { t } = useTranslation();
-
+    // const { t } = useTranslation();
+    const { i18n } = useTranslation();
+    const _lang = i18n.language;
     return (
         <StaticQuery
         query={graphql`
@@ -33,9 +34,14 @@ const Teamlist = () => {
                     }
                 }
             }
-            team_en: allDatoCmsTeam (filter: {locale: {eq: "en"}}) {
+            team_en: allDatoCmsTeam (filter: {locale: {eq: "en"}}, sort: {fields: name, order: DESC}) {
                 edges {
                     node {
+                        profilePicture {
+                            fluid {
+                                ...GatsbyDatoCmsFluid
+                            }
+                        }
                         descriptionNode {
                             childMarkdownRemark {
                                 html
@@ -53,7 +59,32 @@ const Teamlist = () => {
         render={data => (
             <div className="whiteBG">
                 {
+                    (_lang === "es") &&
                     data.team_es.edges.map(({ node: profile }) => {
+                        return (
+                            <div key={profile.id} className="cardTeam">
+                                <div className="imgCont">
+                                    <Img fluid={profile.profilePicture.fluid} className="teamImg" />
+                                </div>
+                                <div className="contentTeam">
+                                    <h2 className="h2Title">{profile.jobTitle}</h2>
+                                    <div className="contentMargin"
+                                        dangerouslySetInnerHTML={{
+                                            __html: profile.descriptionNode.childMarkdownRemark.html
+                                        }}
+                                    />
+                                    <h3 className="h2Title rigthted">{profile.name}</h3>
+                                </div>
+                                <div className="btnExpandCert">
+                                    <p className="noMargins h2Title btnP">{'Expand My Certifications'}</p>
+                                </div>
+                            </div>
+                        )
+                    })
+                }
+                {
+                    (_lang === "en") &&
+                    data.team_en.edges.map(({ node: profile }) => {
                         return (
                             <div key={profile.id} className="cardTeam">
                                 <div className="imgCont">
