@@ -167,7 +167,7 @@ html, body {
 .imgCont {
     display: flex;
     flex-direction: column;
-    width: 30%;
+    width: auto;
     height: 370px;
     justify-content: center;
     align-content: center;
