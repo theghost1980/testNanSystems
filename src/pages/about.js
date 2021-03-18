@@ -34,6 +34,7 @@ const About = (props) => {
                                 __html: dataAbout.engineerNode.childMarkdownRemark.html
                             }}
                         />
+                        <h3 className="h2Title goRight">Ana Echeverría - CEO</h3>
                     </div>
                     <div className="btnExpandCert" onClick={() => setExpandCerts(!expandCerts)}>
                         <p className="noMargins h2Title btnP">{expandCerts ? 'Collapse My Certifications': 'Expand My Certifications'}</p>

@@ -227,6 +227,9 @@ html, body {
 .btnExpandCert:hover > .btnP {
     color: white;
 }
+.goRight {
+    text-align: right;
+}
 /* end teamlist component */
 
 /* nav component */
@@ -987,7 +990,7 @@ footer {
     display: flex;
     flex-direction: row;
     width: 100%;
-    min-height: 400px;
+    min-height: 460px;
     justify-content: center;
     align-items: center;
     /* background: var(--var-abswhite); */
@@ -997,6 +1000,7 @@ footer {
     /* end testing */
     border-radius: var(--var-border-radius);
     margin-bottom: var(--var-margin-top-sections);
+    padding-bottom: 30px;
 }
 .whiteBack {
     background: white;
@@ -2117,6 +2121,10 @@ footer {
     }
 }
 @media only screen and (max-width: 900px) {
+    .cardCont {
+        padding-bottom: 60px;
+        min-height: 500px;
+    }
     .cardTeam{
         flex-direction: column;
         justify-content: center;
@@ -2266,6 +2274,16 @@ footer {
     }
     .cardCont {
         flex-direction: column;
+        padding-bottom: 80px;
+    }
+    .contentTeam{
+        text-align: unset;
+    }
+    .imgCont {
+        width: auto;
+    }
+    .contentTeam {
+        width: 90%;
     }
     .textContAbout {
         width: 90%;
@@ -2370,6 +2388,10 @@ footer {
         width: 220px;
         height: 50px;
     }
+    .btnExpandCert {
+        width: 280px;
+        box-shadow: 1px 2px 4px 1px var(--var-adriaticBlue);
+    }
     .ulTechListHome {
         flex-wrap: wrap;
         justify-content: center;
@@ -2428,6 +2450,10 @@ footer {
         padding: 0px;
         box-shadow: none;
         margin-left: 0px;
+    }
+    .teamImg {
+        width: 270px;
+        height: 270px;
     }
     .contDiv60 {
         width: 100%;
