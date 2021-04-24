@@ -21,6 +21,7 @@ import { graphql, Link } from 'gatsby';
 //SEO
 import { HelmetDatoCms } from 'gatsby-source-datocms';
 import Mailchimpform from '../components/mailChimpForm';
+import NewCarouselHome from '../components/newCarouselHome';
 
 const Index = (props) => {
 
@@ -45,53 +46,52 @@ const Index = (props) => {
         <Layout>
            <HelmetDatoCms seo={dataSEO.seoMetaTags} />
            <div className="homeContainer">
-               <div className="carouselContainer">
+                <div className="carouselContainer">
+                    <NewCarouselHome />
+                </div>
+               {/* <div className="carouselContainer">
                     <Carouselhome />
-               </div>
-               <div className="blogListCont">
-                   <div className="contDiv40">
-                     <div className="bgDivPadd w100hAutoBr">
-                        <p className="titleHome">{t('home.latest')}</p>
-                        {/* <Bloglist /> */}
-                        {/* testing doing the query here instead of inside a component */}
+               </div> */}
+               <div className="rowSection">
+                    <div className="justMinH200p">
+                        <p className="titleHome colorContrastText2">{t('home.latest')}</p>
                         <ul className="blogULHome">
                             {
                                 dataBlogList.edges.map(item => {
+                                    // console.log(item)
                                     return (
+                                        <Link to={`blog/${item.node.slug}`}>
                                         <li key={item.node.id}>
-                                            <div className="itemBlogList">
-                                                <Link to={`blog/${item.node.slug}`}>
-                                                    <p className="subtitleHome">{item.node.title}</p>
-                                                </Link>
+                                            <div className="itemBlogList justWhiteBack">
+                                                <p className="subtitleHome">{item.node.title}</p>
                                                 <p className="spanReadingTime">({item.node.contentNode.childMarkdownRemark.timeToRead} {t('blogList.readingtime')}</p>
+                                                <div className="imgContNew">
+                                                    <Img fluid={item.node.coverImage.fluid} className="imgPostIndex" />
+                                                </div>
                                             </div>
                                         </li>
+                                        </Link>
                                     )
                                 })
                             }
                         </ul>
                     </div>
-                    </div>
-                    <div className="contDiv60">
-                        <div className="bgDivPadd w100hAutoBr">
-                            <p className="titleHome centerAlign">{t('home.some')}</p>
-                            <div className="rowLogosCont">
-                                <ul className="ulTechListHome">
-                                    <li>
-                                        <img src={autoLogo} alt="AutoCAD professional Ana Echeverria" className="logoHome"/>
-                                    </li>
-                                    <li>
-                                        <img src={redLogo} alt="RedHat professional Ana Echeverria"  className="logoHome" />
-                                    </li>
-                                    <li>
-                                        <img src={tridiumLogo} alt="Tridium professional Ana Echeverria"  className="logoHome"/>
-                                    </li>
-                                    <li>
-                                        <img src={niagaLogo} alt="Niagara professional Ana Echeverria"  className="logoHome" />
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                    <div className="justMinH200p">
+                        <p className="titleHome centerAlign colorContrastText2">{t('home.some')}</p>
+                        <ul className="ulTechListHome">
+                            <li>
+                                <img src={autoLogo} alt="AutoCAD professional Ana Echeverria" className="logoHome"/>
+                            </li>
+                            <li>
+                                <img src={redLogo} alt="RedHat professional Ana Echeverria"  className="logoHome" />
+                            </li>
+                            <li>
+                                <img src={tridiumLogo} alt="Tridium professional Ana Echeverria"  className="logoHome"/>
+                            </li>
+                            <li>
+                                <img src={niagaLogo} alt="Niagara professional Ana Echeverria"  className="logoHome" />
+                            </li>
+                        </ul>
                     </div>
                </div>
                {/* <Testimony /> dynamic testimonies */} 
@@ -174,7 +174,7 @@ export const data = graphql`
                 ...GatsbyDatoCmsSeoMetaTags
             }
         }
-        data_en: allDatoCmsBlogPost(filter: {locale: {eq: "en"}}, sort: {fields: datePublished, order: ASC}, limit: 3) {
+        data_en: allDatoCmsBlogPost(filter: {locale: {eq: "en"}}, sort: {fields: datePublished, order: ASC}, limit: 2) {
             edges {
                 node {
                     id
@@ -187,10 +187,15 @@ export const data = graphql`
                             timeToRead
                         }
                     }
+                    coverImage {
+                        fluid {
+                            ...GatsbyDatoCmsFluid
+                        }
+                    }
                 }
             }
         }
-        data_es: allDatoCmsBlogPost(filter: {locale: {eq: "es"}}, sort: {fields: datePublished, order: ASC}, limit: 3) {
+        data_es: allDatoCmsBlogPost(filter: {locale: {eq: "es"}}, sort: {fields: datePublished, order: ASC}, limit: 2) {
             edges {
                 node {
                     id
@@ -201,6 +206,11 @@ export const data = graphql`
                     contentNode {
                         childMarkdownRemark {
                             timeToRead
+                        }
+                    }
+                    coverImage {
+                        fluid {
+                            ...GatsbyDatoCmsFluid
                         }
                     }
                 }

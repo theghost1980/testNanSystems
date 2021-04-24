@@ -59,7 +59,7 @@ const Testimonyfixed = (props) => {
                                             <Img fluid={testi.profilePicture.fluid} className="imgTesFixed" alt="..." />
                                         </div>
                                         <h1 className="testiTitleFixed marginLR">"{testi.title}"</h1>
-                                        <div className="contentTestiFixed marginLR"
+                                        <div className="contentTestiFixed marginLR contrastDivFortext justMarginBottom"
                                             dangerouslySetInnerHTML={{
                                                 __html: testi.contentNode.childMarkdownRemark.html
                                             }}

@@ -98,56 +98,31 @@ const Carouselhome = () => {
         render={data => (
             <Carousel className="testDivCar">
                 {
-                    !mobile ? 
                     data.allDatoCmsInfoSite.edges.filter(item => item.node.locale === _lang).map(element => 
-                            // console.log(element)
-                                element.node.carouselHome.map(imgItem => {
-                                    return (
-                                        <Carousel.Item key={imgItem.id}>
-                                            <div className="img-gradient">
-                                                <Img fluid={imgItem.imageCarousel.fluid} alt={imgItem.imageCaption} className="imgCarHome"/>
-                                            </div>
-                                            <Carousel.Caption>
-                                                <h1 className="quotesCarouselHome">
-                                                    {imgItem.imageCaption}
-                                                    <Button 
-                                                        value={t('carousel.tellme')}
-                                                        type={"btnNoFilled"}
-                                                        extraclass={"btnActCarousel"}
-                                                        action={"Link"} 
-                                                        pathname={"/ventures"}
-                                                        data={null}
-                                                    />    
-                                                </h1>  
-                                            </Carousel.Caption>
-                                        </Carousel.Item>
-                                    )
-                                })
-                        )
-                    :
-                        data.allDatoCmsInfoSite.edges.filter(item => item.node.locale === _lang).map(element => 
-                            element.node.carouselHomeMobiles.map(imgItem => {
-                                return (
-                                    <Carousel.Item key={imgItem.id}>
-                                        <div className="img-gradient">
-                                            <Img fluid={imgItem.imageCarousel.fluid} alt={imgItem.imageCaption} className="imgCarHome"/>
-                                        </div>
-                                        <Carousel.Caption>
-                                            <h1 className="quotesCarouselHome">
-                                                {imgItem.imageCaption}
-                                                <Button 
-                                                    value={t('carousel.tellme')}
-                                                    type={"btnNoFilled"}
-                                                    extraclass={"btnActCarousel"}
-                                                    action={"Link"} 
-                                                    pathname={"/ventures"}
-                                                    data={null}
-                                                />    
-                                            </h1>  
-                                        </Carousel.Caption>
-                                    </Carousel.Item>
-                                )
-                            })
+                        // console.log(element)
+                        element.node.carouselHome.map(imgItem => {
+                            {console.log(imgItem)}
+                            return (
+                                <Carousel.Item key={imgItem.id}>
+                                    <div className="img-gradient">
+                                        <Img fluid={imgItem.imageCarousel.fluid} alt={imgItem.imageCaption} className="imgCarHome"/>
+                                    </div>
+                                    <Carousel.Caption>
+                                        <h1 className="quotesCarouselHome">
+                                            {imgItem.imageCaption}
+                                            <Button 
+                                                value={t('carousel.tellme')}
+                                                type={"btnNoFilled"}
+                                                extraclass={"btnActCarousel"}
+                                                action={"Link"} 
+                                                pathname={"/ventures"}
+                                                data={null}
+                                            />    
+                                        </h1>  
+                                    </Carousel.Caption>
+                                </Carousel.Item>
+                            )
+                        })
                     )
                 }
             </Carousel>

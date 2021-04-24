@@ -22,7 +22,7 @@ const Ventures = (props) => {
         <Layout>
             <HelmetDatoCms seo={dataSEO.seoMetaTags} />
             <div className="venturesCont">
-                <div className="firstDiv">
+                {/* <div className="firstDiv">
                     <div className="textVentures"
                         dangerouslySetInnerHTML={{
                             __html: dataVenture.welcomeNode.childMarkdownRemark.html
@@ -32,7 +32,7 @@ const Ventures = (props) => {
                 </div>
                 <div className="fancyDivSepCont">
                     <img src={bottomImg} alt="fancy Line Sep" className="imgLineSep" />
-                </div>
+                </div> */}
                 {
                     dataVenture.itemVenture.map(venture => {
                         return (

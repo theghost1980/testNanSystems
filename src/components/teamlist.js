@@ -75,9 +75,9 @@ const Teamlist = () => {
                                     />
                                     <h3 className="h2Title rigthted">{profile.name}</h3>
                                 </div>
-                                <div className="btnExpandCert">
-                                    <p className="noMargins h2Title btnP">{'Expand My Certifications'}</p>
-                                </div>
+                                {/* <div className="btnExpandCert">
+                                    <p className="noMargins h2Title btnP">{'Certificados & Membresías'}</p>
+                                </div> */}
                             </div>
                         )
                     })
@@ -99,9 +99,9 @@ const Teamlist = () => {
                                     />
                                     <h3 className="h2Title rigthted">{profile.name}</h3>
                                 </div>
-                                <div className="btnExpandCert">
-                                    <p className="noMargins h2Title btnP">{'Expand My Certifications'}</p>
-                                </div>
+                                {/* <div className="btnExpandCert">
+                                    <p className="noMargins h2Title btnP">{'Certifications & Memberships'}</p>
+                                </div> */}
                             </div>
                         )
                     })

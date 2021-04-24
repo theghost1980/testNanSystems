@@ -37,7 +37,9 @@ const About = (props) => {
                         <h3 className="h2Title goRight">Ana Echeverría - CEO</h3>
                     </div>
                     <div className="btnExpandCert" onClick={() => setExpandCerts(!expandCerts)}>
-                        <p className="noMargins h2Title btnP">{expandCerts ? 'Collapse My Certifications': 'Expand My Certifications'}</p>
+                        <p className="noMargins h2Title btnP">
+                            { _lang === 'en' ? 'Certifications & Memberships' : 'Certificados & Membresías'}
+                        </p>
                     </div>
             </div>
             {
