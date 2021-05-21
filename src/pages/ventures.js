@@ -43,6 +43,7 @@ const Ventures = (props) => {
                                 data-sal-easing="ease"
                                 className="itemVenture"
                             >
+                                <div className="contentAllMargins">
                                 <div className="ventureItemCont">
                                     <div className="contentVentureItem">
                                         <h1 className="titleItemVenture">{venture.title}</h1>
@@ -76,6 +77,7 @@ const Ventures = (props) => {
                                         {/* <img src={bottomImg} alt="smooth lines" className="bgBottom" /> */}
                                     </div>
                                     <Img fluid={venture.imageVenture.fluid} className="itemVentureImg" />
+                                </div>
                                 </div>
                             </div>
                         )

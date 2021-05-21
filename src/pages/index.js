@@ -108,32 +108,34 @@ const Index = (props) => {
                                 // data-sal-easing="ease"
                                 className="itemVenture"
                             >
+                                <div className="contentAllMargins">
                                 <div className="ventureItemCont">
-                                    <div className="contentVentureItem">
-                                        <h1 className="titleItemVenture">{tech.title}</h1>
-                                        <div className="descItemVenture"
-                                        dangerouslySetInnerHTML={{
-                                            __html: tech.shortDescriptionNode.childMarkdownRemark.html
-                                        }}
-                                        />
-                                        <Button 
-                                            value={t('button.readmore')}
-                                            type="btnNoFilled" 
-                                            action="Link"
-                                            pathname={`/${tech.slug}`}
-                                            data={
-                                                {
-                                                    title: tech.title,
-                                                    id: tech.id,
-                                                    mainImage: tech.coverImage.fluid,
-                                                    shortDesc: tech.shortDescriptionNode.childMarkdownRemark.html,
-                                                    content: tech.contentNode.childMarkdownRemark.html,
-                                                    seoData: dataSEO.seoMetaTags
+                                        <div className="contentVentureItem">
+                                            <h1 className="titleItemVenture">{tech.title}</h1>
+                                            <div className="descItemVenture"
+                                            dangerouslySetInnerHTML={{
+                                                __html: tech.shortDescriptionNode.childMarkdownRemark.html
+                                            }}
+                                            />
+                                            <Button 
+                                                value={t('button.readmore')}
+                                                type="btnNoFilled" 
+                                                action="Link"
+                                                pathname={`/${tech.slug}`}
+                                                data={
+                                                    {
+                                                        title: tech.title,
+                                                        id: tech.id,
+                                                        mainImage: tech.coverImage.fluid,
+                                                        shortDesc: tech.shortDescriptionNode.childMarkdownRemark.html,
+                                                        content: tech.contentNode.childMarkdownRemark.html,
+                                                        seoData: dataSEO.seoMetaTags
+                                                    }
                                                 }
-                                            }
-                                        />
+                                            />
+                                        </div>
+                                        <Img fluid={tech.coverImage.fluid} className="itemVentureImg" />
                                     </div>
-                                    <Img fluid={tech.coverImage.fluid} className="itemVentureImg" />
                                 </div>
                             </div>
                         )

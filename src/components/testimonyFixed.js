@@ -54,7 +54,7 @@ const Testimonyfixed = (props) => {
 
                             return (
                                 <div className="testiItem" key={testi.id}>
-                                    <div className="bgDivPadd">
+                                    <div className="bgDivPadd extraPropsDiv">
                                         <div className="imgContFixedTesti">
                                             <Img fluid={testi.profilePicture.fluid} className="imgTesFixed" alt="..." />
                                         </div>

@@ -56,6 +56,7 @@ const Blog = (props) => {
                                             key={post.id}
                                             className="itemVenture fullw"
                                         >
+                                            <div className="contentAllMargins">
                                             <div className="ventureItemCont">
                                                 <div className="bgLogoBigBottom">
                                                 </div>
@@ -72,6 +73,7 @@ const Blog = (props) => {
                                                     </Link>
                                                 </div>
                                                 <Img fluid={post.coverImage.fluid} className="itemVentureImg" />
+                                            </div>
                                             </div>
                                         </div>
                                 )
