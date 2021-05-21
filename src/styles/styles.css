@@ -955,7 +955,7 @@ header {
     flex-direction: column;
     justify-content: flex-start;
     width: 380px;
-    height: 510px;
+    height: 560px;
     margin-right: var(--var-margin-top-sections);
     margin-bottom: var(--var-margin-top-sections);
     border-radius: var(--var-border-radius);
