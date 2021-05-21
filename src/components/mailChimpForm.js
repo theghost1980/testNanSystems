@@ -16,6 +16,7 @@ import { Link } from 'gatsby';
 
 const Mailchimpform = (props) => {
     // const _show = props.show || false;
+    const { closeCB } = props;
     const { t } = useTranslation();
     const [data, setData] = useState({
         email: "",
@@ -70,7 +71,7 @@ const Mailchimpform = (props) => {
 
     return (
             data.result.result === "empty" ? (
-                <div className="coloredScreenBGFixed">
+                <div className="coloredScreenBGFixed relativeDiv">
                     <div className="subcriptionCont" id="confettyDiv">
                         <img src={imgSubcription} alt="subscribe to NaNSYSTEMS NewsLetter" className="imgSubscriptions" />
                         <form onSubmit={_handleSubmit} className="formSubcription">
@@ -90,6 +91,9 @@ const Mailchimpform = (props) => {
                                 Click me!
                             </div> */}
                         </form>
+                        <div className="btnSubscribeMini positionAbs1 " onClick={() => closeCB()}>
+                            Close
+                        </div>
                     </div>
                 </div>
             ) :

@@ -148,10 +148,7 @@ const Index = (props) => {
                     {
                         showSubcription &&
                         <>
-                            <Mailchimpform />
-                            <div className="btnSubscribe btnFixed" onClick={() => setShowSubcription(!showSubcription)}>
-                                Close
-                            </div>
+                            <Mailchimpform  closeCB={() => setShowSubcription(false)}/>
                         </>
                     }
                </section>

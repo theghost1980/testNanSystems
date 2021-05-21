@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StaticQuery, graphql, Link } from 'gatsby';
 import Img from 'gatsby-image';
 //media-imgs
@@ -11,6 +11,8 @@ import { useTranslation } from "react-i18next";
 const Footer = () => {
     const { t, i18n } = useTranslation();
     const _lang = i18n.language;
+
+    const [clickedMap, setClickedMap] = useState(false);
 
     return (
             <StaticQuery
@@ -74,28 +76,35 @@ const Footer = () => {
             render={data => (
                 <footer>
                     <div className="rowFooter">
-                        <div className="leftCont40">
-                            <ul className="socialULfooter">
+                        <div className="rowDisplay justW100 justSpace">
+                            <div className="columnDisplay justW40p justAligItems">
+                                <div className="displayBlock250p">
+                                    <Link to="/" activeClassName="activeNavLink" aria-label={t('menu.ariaHome')}>
+                                        <Img fluid={data.datoCmsInfoSite.logoSiteWhite.fluid} className="logoFooter scaleHovered justBorderWhite justBorderRounded" />
+                                    </Link>
+                                </div>
+                                <ul className="socialULfooter">
                                 {
                                     data.allDatoCmsSocialProfile.edges.map(item => {
                                         return (
-                                            <li key={item.node.id}>
+                                            <li key={item.node.id} className="scaleHovered">
                                                 <a href={item.node.url}>
-                                                    <Img fluid={item.node.lightIcon.fluid} className="socialIcon" />
+                                                    <Img fluid={item.node.lightIcon.fluid} className="socialIconSmaller" />
                                                 </a>
                                             </li>
                                         )
                                     })
                                 }
-                            </ul>
-                            {/* <p className="subtitleFooter">{t('footer.contactme')}</p> */}
-                            {/* <Selector /> */}
-                        </div>
-                        <div className="rightCont60">
-                                <div className="logoFooterCont">
-                                    <Img fluid={data.datoCmsInfoSite.logoSite.fluid} className="logoFooter" />
-                                </div>
-                                <ul className="ulFooterSiteMap">
+                                </ul>
+                            </div>
+                            <div className={`columnDisplay justW40p relativeDiv justAligItems`}>
+                                <ul className={`ulFooterSiteMap ${clickedMap ? 'expandedMap shadowWhite' : 'collapsedMap'}`}
+                                    onMouseLeave={() => setClickedMap(false)}
+                                    onMouseOver={() => setClickedMap(true)}
+                                >
+                                    <li className={`navItem pointer boldTextTitles fontSizeLarge ${clickedMap ? 'displayNone': null }`}>
+                                            {t('menu.siteMap')}
+                                    </li>
                                     <li className="navItem">
                                         <Link to="/" className="navLinkWhite" activeClassName="activeNavLink">
                                             {t('menu.home')}
@@ -127,42 +136,16 @@ const Footer = () => {
                                         </Link>
                                     </li>
                                 </ul>
-                                {/* <div className="servicesDiv">
-                                    <ul className="servicesUL">
-                                        <li className="serviceFooterLink">
-                                            {t('footer.ourserv')}
-                                        </li>
-                                        {
-                                            (_lang === "en") ? data.dataServices_en.edges.map(({ node: service }) => {
-                                                // console.log(item);
-                                                return (
-                                                    <li key={service.id}>
-                                                        <Link to={`/${service.slug}`} className="serviceFooterLink">
-                                                            {service.shortTitle}
-                                                        </Link>
-                                                    </li>
-                                                )
-                                            }) :
-                                                data.dataServices_es.edges.map(({ node: service }) => {
-                                                    // console.log(item);
-                                                    return (
-                                                        <li key={service.id}>
-                                                            <Link to={`/${service.slug}`} className="serviceFooterLink">
-                                                                {service.shortTitle}
-                                                            </Link>
-                                                        </li>
-                                                    )
-                                                })
-                                        }
-                                    </ul>
-                                </div> */}
+                            </div>
                         </div>
                     </div>
-                    <div className="rowColumFooter">
-                        <p className="textFooter">{t('footer.copy')}<span><img src={heartIcon} className="heartIcon" alt="love love love" /></span>{t('footer.by')}&nbsp;&nbsp;</p>
-                        <p className="textFooter"><a href="http://saturnoman.com/">@theghost1980</a> | </p>
-                        <p className="textFooter"><Link to="/tos">&nbsp;&nbsp;{t('footer.terms')}</Link>&nbsp;&nbsp;|</p>
-                        <p className="textFooter"><Link to="/credits">&nbsp;&nbsp;Credits</Link>.</p>
+                    <div className="justPaddingTop">
+                        <div className="rowColumFooter">
+                            <p className="textFooterSmall">{t('footer.copy')}<span><img src={heartIcon} className="heartIcon" alt="love love love" /></span>{t('footer.by')}&nbsp;&nbsp;</p>
+                            <p className="textFooterSmall"><a className="whiteHover" href="http://saturnoman.com/">@theghost1980</a> | </p>
+                            <p className="textFooterSmall"><Link className="whiteHover" to="/tos">&nbsp;&nbsp;{t('footer.terms')}</Link>&nbsp;&nbsp;|</p>
+                            <p className="textFooterSmall"><Link className="whiteHover" to="/credits">&nbsp;&nbsp;Credits</Link>.</p>
+                        </div>
                     </div>
                 </footer>
             )}

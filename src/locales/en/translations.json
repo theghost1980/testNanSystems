@@ -6,6 +6,7 @@
       "footer": "Construido con  Gatsby"
     },
     "menu": {
+      "siteMap": "Site Map",
       "home": "Home",
       "about": "About",
       "portfolio": "Portfolio",
@@ -149,5 +150,10 @@
     },
     "carousel": {
       "tellme": "More"
+    },
+    "cookies": {
+      "title": "This website uses cookies to enhance the user experience. We don't store/retrieve/commerce personal information of any kind. The user's data is used within NANSYSTEMS with the user's consent.",
+      "sub_title": "Our robots are working to make the world a better place.",
+      "msg": "I Understand"
     }
   }

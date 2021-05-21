@@ -73,6 +73,7 @@ const About = (props) => {
             {/* <Teamlist /> */}
             {
                 dataTeam.edges.map(({ node: profile }) => {
+                    if(!profile.activeMember) return null
                     return (
                         <div key={profile.id} className="cardTeam">
                             <div className="imgCont">
@@ -207,6 +208,7 @@ export const data = graphql`
                     id
                     jobTitle
                     name
+                    activeMember
                 }
             }
         }
@@ -226,6 +228,7 @@ export const data = graphql`
                     id
                     jobTitle
                     name
+                    activeMember
                 }
             }
         }  

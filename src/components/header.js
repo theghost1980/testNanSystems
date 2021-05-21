@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 
 const Header = () => {
     const [mobileMenu, setMobileMenu] = useState(false);
+    const [fixedBar, setFixedBar] = useState(false);
     const [clickedMenu, setClickedMenu] = useState(false);
 
     //translations
@@ -16,11 +17,17 @@ const Header = () => {
     function checkWidth(){
         const _screenWidth = window.innerWidth;
         console.log(`Actual Width:${_screenWidth}`);
-        if (_screenWidth <= 885){
+        if (_screenWidth <= 946){
             setMobileMenu(true);
         } else {
             setMobileMenu(false);
         }
+    }
+
+    function checkScroll(){
+        const _scrollPosition = window.scrollY;
+        console.log('Scrolling on: ', _scrollPosition);
+        setFixedBar(_scrollPosition >= 97 ? true : false );
     }
 
     const handleResize = () => {
@@ -32,9 +39,11 @@ const Header = () => {
 
     useEffect(() => {
         window.addEventListener('resize', handleResize);
+        window.addEventListener('scroll', checkScroll);
 
         return () => {
             window.removeEventListener('resize', handleResize);
+            window.removeEventListener('scroll', checkScroll);
         }
     }, [handleResize]);
 
@@ -92,8 +101,13 @@ const Header = () => {
             <div className="whiteBG">
             <header>
                 <nav>
-                    <div className="navBlock">
-                        <ul className={mobileMenu ? 'hide': 'navItemsUL'}>
+                    <div className={`navBlock ${fixedBar ? 'fixedNavBlock shadowBottom' : null }`}>
+                        <Link to="/" className={`${fixedBar ? 'justMarginLeft': null}`} activeClassName="activeNavLink" aria-label={t('menu.ariaHome')}>
+                            <div className="logoCont" aria-label={t('menu.ariaLogo')}>
+                                <Img fluid={data.datoCmsInfoSite.logoSite.fluid} className="logoImg"/>
+                            </div>
+                        </Link>
+                        <ul className={`${mobileMenu ? 'hide': 'navItemsUL'} marginLeft`}>
                             <li className="navItem">
                                 <Link to="/" className="navLink" activeClassName="activeNavLink"
                                     aria-label={t('menu.ariaHome')}
@@ -216,11 +230,6 @@ const Header = () => {
                                     </ul>
                                 </div>
                         }
-                        <Link to="/" activeClassName="activeNavLink" aria-label={t('menu.ariaHome')}>
-                            <div className="logoCont" aria-label={t('menu.ariaLogo')}>
-                                <Img fluid={data.datoCmsInfoSite.logoSite.fluid} className="logoImg"/>
-                            </div>
-                        </Link>
                     </div>
                 </nav>
             </header>

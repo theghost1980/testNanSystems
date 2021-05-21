@@ -35,7 +35,7 @@ const Button = (props) => {
                 }
                     {
                         clickQuote &&
-                        <div className="bgDivFullFixed"> 
+                        <div className="bgDivFullFixed extraHeight"> 
                             <div className="componentContFixed">
                                 <QuickQuote quote={_data.title} />
                                 <div onClick={() => setClickQuote(!clickQuote)} className="btnCloseQuote boldLblInputs">

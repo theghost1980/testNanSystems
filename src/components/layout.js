@@ -7,21 +7,25 @@ import CookieConsent from 'react-cookie-consent';
 // translations
 import PropTypes from 'prop-types';
 import { withTrans } from '../i18n/withTrans';
+import { useTranslation } from "react-i18next";
 
-const Layout = ({ children, t, i18n }) => {
+const Layout = (props) => {
+
+    const { t, i18n } = useTranslation();
+
     return (
         <div className="layoutContainer">
             <div className="content">
                 <Header />
                 <div className="dataContainer">
-                    {children}
+                    {props.children}
                 </div>
             </div>
             {/* cookies consent */}
             <div className="cookiesConsentCont">
                 <CookieConsent
                     location="bottom"
-                    buttonText="I Understand"
+                    buttonText={t('cookies.msg')}
                     declineButtonText="Decline"
                     cookieName="gatsby-gdpr-google-analytics"
                     onAccept={() => {
@@ -34,8 +38,8 @@ const Layout = ({ children, t, i18n }) => {
                         fontWeight: "bold"  
                     }}
                 >
-                        This website uses cookies to enhance the user experience.<br></br>
-                        <span style={{ fontSize: "10px" }}>The NaNSYSTEMS robots are working to make the world a better place.</span>
+                        {t('cookies.title')}.<br></br>
+                        <span style={{ fontSize: "10px" }}>{t('cookies.sub_title')}</span>
                 </CookieConsent>
             </div>
             {/* end cookies consent */}
