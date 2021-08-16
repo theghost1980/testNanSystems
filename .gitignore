@@ -88,6 +88,7 @@ e2e-tests/gatsby-pnp/
 .idea/
 .vscode/
 *.sw*
+*.code-workspace
 
 # misc
 .serverless/
