@@ -111,7 +111,8 @@ const Footer = () => {
                                         </Link>
                                     </li>
                                     <li className="navItem">
-                                        <Link to="/about" className="navLinkWhite" activeClassName="activeNavLink">
+                                        {/* oldOne /about newOne /aboutNew */}
+                                        <Link to="/aboutNew" className="navLinkWhite" activeClassName="activeNavLink">
                                             {t('menu.about')}
                                         </Link>
                                     </li>

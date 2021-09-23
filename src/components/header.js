@@ -116,7 +116,8 @@ const Header = () => {
                                 </Link>
                             </li>
                             <li className="navItem">
-                                <Link to="/about" className="navLink" activeClassName="activeNavLink"
+                                {/* oldOne /about newOne aboutNew */}
+                                <Link to="/aboutNew" className="navLink" activeClassName="activeNavLink"
                                     aria-label={t('menu.ariaAbout')}
                                 >
                                     {t('menu.about')}
@@ -183,7 +184,8 @@ const Header = () => {
                                             </Link>
                                         </li>
                                         <li className="navItemMobile">
-                                            <Link to="/about" className="navLinkMobile" onClick={() => setClickedMenu(!clickedMenu)}
+                                            {/* oldOne /about newOne /aboutNew */}
+                                            <Link to="/aboutNew" className="navLinkMobile" onClick={() => setClickedMenu(!clickedMenu)}
                                                 aria-label={t('menu.ariaAbout')}
                                             >
                                                 {t('menu.about')}
