@@ -16,7 +16,6 @@ const Header = () => {
 
     function checkWidth(){
         const _screenWidth = window.innerWidth;
-        console.log(`Actual Width:${_screenWidth}`);
         if (_screenWidth <= 946){
             setMobileMenu(true);
         } else {
@@ -26,7 +25,6 @@ const Header = () => {
 
     function checkScroll(){
         const _scrollPosition = window.scrollY;
-        console.log('Scrolling on: ', _scrollPosition);
         setFixedBar(_scrollPosition >= 97 ? true : false );
     }
 
@@ -46,32 +44,6 @@ const Header = () => {
             window.removeEventListener('scroll', checkScroll);
         }
     }, [handleResize]);
-
-    //test to improve coding
-    // useEffect(() => {
-    //     window.addEventListener('resize', () => {
-    //         const _screenWidth = window.innerWidth;
-    //         // console.log(`Actual Width:${_screenWidth}`);
-    //         if (_screenWidth <= 885){
-    //             setMobileMenu(true);
-    //         } else {
-    //             setMobileMenu(false);
-    //         }
-    //     });
-
-    //     return () => {
-    //         window.removeEventListener('resize', () => {
-    //         const _screenWidth = window.innerWidth;
-    //         // console.log(`Actual Width:${_screenWidth}`);
-    //         if (_screenWidth <= 885){
-    //             setMobileMenu(true);
-    //         } else {
-    //             setMobileMenu(false);
-    //         }
-    //         });
-    //     }
-    // }, []);
-    //end test
 
     return (
         <StaticQuery

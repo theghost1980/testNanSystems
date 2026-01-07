@@ -28,19 +28,9 @@ const Index = (props) => {
     const [showSubcription, setShowSubcription] = useState(false);
     const { t, i18n } = useTranslation();
     const _lang = i18n.language;
-    // console.log('_lang index',_lang);
-    // console.log('props.data',props.data);
     const dataBlogList = (_lang === 'es' ? props.data.data_es : props.data.data_en);
     const dataSEO = (_lang === 'es' ? props.data.dataSEO_es : props.data.dataSEO_en);
     const dataVenture = (_lang === 'es' ? props.data.dataVenture_es : props.data.dataVenture_en);
-    // console.log('dataBlogList',dataBlogList);
-
-    // useEffect(() => {
-    //     // accesibility code
-    //     // <!-- Accessibility Code for "dreamy-keller-b0a352.netlify.app" -->
-    //     window.interdeal = { "sitekey": "570f10caadcf593e2b70c3ad9f7beb4d", "Position": "Left", "Menulang": "EN", "domains": { "js": "https://cdn.equalweb.com/", "acc": "https://access.equalweb.com/" }, "btnStyle": { "scale": [ "0.7", "0.7" ], "icon": { "type": 13, "shape": "circle", "outline": false }, "color": { "main": "#285790", "second": "" } } }; (function(doc, head, body){ var coreCall = doc.createElement('script'); coreCall.src = 'https://cdn.equalweb.com/core/2.1.8/accessibility.js'; coreCall.defer = true; coreCall.integrity = 'sha512-tA0/58RaxqQMY+p5wW7LgZM88ckav7DG0iT6VEUqGVyFvH6PcFkmMVuWQgqftDp3BYYHxjeYTAX14Ct7DS/fRQ=='; coreCall.crossOrigin = 'anonymous'; coreCall.setAttribute('data-cfasync', true ); body? body.appendChild(coreCall) : head.appendChild(coreCall); })(document, document.head, document.body);
-    //     // end test
-    // },[]);
 
     return (
         <Layout>
@@ -49,16 +39,12 @@ const Index = (props) => {
                 <div className="carouselContainer">
                     <NewCarouselHome />
                 </div>
-               {/* <div className="carouselContainer">
-                    <Carouselhome />
-               </div> */}
                <div className="rowSection">
                     <div className="justMinH200p">
                         <p className="titleHome colorContrastText2">{t('home.latest')}</p>
                         <ul className="blogULHome">
                             {
                                 dataBlogList.edges.map(item => {
-                                    // console.log(item)
                                     return (
                                         <Link to={`blog/${item.node.slug}`}>
                                         <li key={item.node.id}>
