@@ -25,11 +25,11 @@ const NetlifyForm = (props) => {
         e.preventDefault();
         
         try {
-            await fetch("/", {
+            await fetch("/?no-cache=1", {
                 method: "POST",
                 headers: { "Content-Type": "application/x-www-form-urlencoded" },
                 body: encode({ 
-                    "form-name": "newsletter", // El nombre que verá Netlify
+                    "form-name": "newsletter",
                     "email": data.email 
                 })
             });
