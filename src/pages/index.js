@@ -20,7 +20,7 @@ import { useTranslation } from "react-i18next";
 import { graphql, Link } from 'gatsby';
 //SEO
 import { HelmetDatoCms } from 'gatsby-source-datocms';
-import Mailchimpform from '../components/mailChimpForm';
+import NetlifyForm from '../components/mailChimpForm';
 import NewCarouselHome from '../components/newCarouselHome';
 
 const Index = (props) => {
@@ -150,7 +150,7 @@ const Index = (props) => {
                     {
                         showSubcription &&
                         <>
-                            <Mailchimpform  closeCB={() => setShowSubcription(false)}/>
+                            <NetlifyForm  closeCB={() => setShowSubcription(false)}/>
                         </>
                     }
                </section>

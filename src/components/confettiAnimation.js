@@ -1,14 +1,11 @@
 import React from 'react';
-// import useWindowSize from 'react-use/lib/useWindowSize'
-import Confetti from 'react-confetti';
+
+//TODO add a new confetti!
  
 const ConfettiAnimation = () => {
   // const { width, height } = useWindowSize()
-  return (
-    <Confetti
-      // width={window.innerWidth}
-      // height={window.innerHeight}
-    />
-  )
+  const confettiAlert = () => alert('Thanks!');
+
+  return confettiAlert();
 }
  export default ConfettiAnimation;

@@ -1,6 +1,4 @@
-require("dotenv").config({
-  path: `.env.${process.env.NODE_ENV}`,
-});
+require("dotenv").config();
 
 module.exports = {
   siteMetadata: {
@@ -81,13 +79,6 @@ module.exports = {
           "G-GWX08J3QRF", // Google Analytics / GA
         ],
       },
-    },
-    //mailchimo plugin to add new mails to site's newsletter
-    {
-          resolve: 'gatsby-plugin-mailchimp',
-          options: {
-              endpoint: `${process.env.MAILCHIMP_ENDPOINT}`, 
-          },
     },
   ],
 }
