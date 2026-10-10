@@ -59,6 +59,7 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 - **SSR con `gatsby-ssr.js`** (sin instalar nada) para `<body class="nx-root">`, `lang`, fuentes y tema, salvo que A3 llegue antes.
 - **Idioma inicial por detección normalizada** (`es*`/`en*`, otro → `es`); la elección guardada manda.
 - **A6 se documenta sin detalles** porque el repo es público: el detalle se comunicó al dueño por otra vía.
+- **Los docs se fusionan primero a `master`** (PR con fusión "squash", para dejar un asunto de commit limpio) y **toda rama de código nace de `master`**. Sustituye a la idea anterior de ramificar desde la rama de docs. Comprobado: la rama solo cambia 10 archivos dentro de `docs/` (+932 líneas), no hay divergencia con `master` y no toca código, configuración ni dependencias.
 
 ### Hallazgos / sorpresas
 - **A6 (nuevo, urgente):** una consulta pide campos que la página no muestra y que Gatsby publica en el JSON público de la página. Corrección pequeña y de bajo riesgo en `portfolio.js`.

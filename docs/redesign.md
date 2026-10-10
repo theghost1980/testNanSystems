@@ -124,7 +124,7 @@ Realista para el primer día de trabajo: **R0 a R2** (tokens, header/footer y ho
 
 - Gatsby 2, React 17 y `gatsby-image` se quedan como están. Solo **CSS plano con variables** (sin Tailwind ni librerías nuevas).
 - Las consultas a DatoCMS no cambian salvo que sea imprescindible.
-- Rama de código aparte (`feat/redesign-…`), creada desde `docs/project-documentation`, para que los docs puedan fusionarse antes y el rediseño no llegue a producción sin aprobación.
+- Rama de código aparte (`feat/redesign-…`), creada **desde `master` una vez fusionados los docs**, para que el rediseño no llegue a producción sin aprobación.
 - Netlify: el preview del PR permite revisarlo sin tocar producción. Con 1 de 300 minutos usados hay margen (ver [deploy-netlify.md](deploy-netlify.md)).
 - Cuando haya una muestra HTML aceptada, se enlazará aquí y se decidirá si se guarda en `docs/assets/`.
 
@@ -161,4 +161,4 @@ Se revisó contra los datos reales (esquema de DatoCMS, consultas del repo) y en
 6. **Imágenes:** envolver `<Img fluid>` en `.nx-media` (ratio fijo, recorte por punto focal, texto alternativo del CMS o título como respaldo).
 
 ## Siguiente paso: pieza vertical (R1a)
-Antes de portar las 11 pantallas restantes se construye una rebanada completa en una rama `feat/redesign-…` (desde `docs/project-documentation`): `layout` nuevo (`gatsby-ssr.js`, tema, idioma, cabecera, pie) + hero de la home alimentado por el CMS con `.nx-media`. Se valida con `npm run build` y `gatsby serve` en local (Node 14) y con el deploy preview. Si algo no encaja (imágenes, SSR, hidratación), se descubre con una pantalla, no con doce.
+Antes de portar las 11 pantallas restantes se construye una rebanada completa en una rama `feat/redesign-…` (desde `master`, tras fusionar los docs): `layout` nuevo (`gatsby-ssr.js`, tema, idioma, cabecera, pie) + hero de la home alimentado por el CMS con `.nx-media`. Se valida con `npm run build` y `gatsby serve` en local (Node 14) y con el deploy preview. Si algo no encaja (imágenes, SSR, hidratación), se descubre con una pantalla, no con doce.

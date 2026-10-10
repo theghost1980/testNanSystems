@@ -60,7 +60,7 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 |---|---|---|---|---|
 | R0 | Decisión (D Coral Editorial + detalles de A) y tokens | — | **hecho** | docs |
 | R0b | Muestras HTML de las 12 pantallas + catálogo de componentes + SPEC (generadas con IA, **revisadas y corregidas**: 208/208 combinaciones sin desborde horizontal; ver [redesign.md](redesign.md)) | — | **hecho** | fuera del repo (carpeta local) |
-| R1a | **Pieza vertical**: `layout` nuevo + hero de la home alimentado por el CMS con `.nx-media` + `gatsby-image`. Valida SSR (`gatsby-ssr.js`), tema, idioma, build y el comportamiento real de las imágenes antes de portar el resto | medio | pendiente | `feat/redesign-…` (por crear, desde `docs/project-documentation`) |
+| R1a | **Pieza vertical**: `layout` nuevo + hero de la home alimentado por el CMS con `.nx-media` + `gatsby-image`. Valida SSR (`gatsby-ssr.js`), tema, idioma, build y el comportamiento real de las imágenes antes de portar el resto | medio | pendiente | `feat/redesign-…` (por crear, desde `master` tras fusionar los docs) |
 | R1 | Base completa: variables CSS, fuentes, header/footer nuevos en `Layout`; **retirar `styles.css` y los imports de Bootstrap en el mismo cambio** (el reset de `.nx-root` es global y la regla vieja de `html, body` pisa el fondo) | medio | pendiente | idem |
 | R2 | Home | medio | pendiente | idem |
 | R3 | Páginas con contenido del CMS: blog, post, proyectos, biografía, portafolio, contacto y modal de cotización | medio | pendiente | idem |
