@@ -22,7 +22,7 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 | A1 | Formulario de cotización: `setOptionState`, título `undefined`, valores falsos, typo | bajo | **hecho en la rama** | `fix/portfolio-total-refactor-design-2026` |
 | A2 | Idioma regional (`en-US`, `es-VE`): `supportedLngs` o normalización | bajo-medio | **hecho en la rama** (falta comprobar el HTML del build) | `fix/portfolio-total-refactor-design-2026` |
 | A5 | Errores visibles en contacto/cotización/boletín; `response.ok`; helper de Netlify alineado | bajo | pendiente | — |
-| M1 | "Últimos posts" en orden `DESC` y enlace absoluto | bajo | pendiente | — |
+| M1 | "Últimos posts" en orden `DESC` y enlace absoluto | bajo | **hecho en la rama** | `fix/portfolio-total-refactor-design-2026` |
 | M3 | `gatsby-node.js`: manejo de errores y deduplicar por slug | bajo-medio | pendiente | — |
 | M5 | i18n: retirar backend sobrante y `wait`; `state` por defecto de `Button` (**esto último ya hecho con A1**) | bajo | parcial | — |
 

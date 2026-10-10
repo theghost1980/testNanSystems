@@ -41,7 +41,7 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 
 ---
 
-## 2026-10-10 (3.ª sesión) · Arreglos de código: A6, A1 y A2
+## 2026-10-10 (3.ª sesión) · Arreglos de código: A6, A1, A2 y M1
 
 **Rama:** `fix/portfolio-total-refactor-design-2026` (desde `master` en `b41fde4`, con los docs ya fusionados) · **Entorno:** Node 14.21.3, dev server local
 **Objetivo:** empezar el plan por orden de urgencia, un arreglo por paso, probado en local y con su propio commit.
@@ -66,7 +66,7 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 - **Prueba (envío simulado):** servicio "Computer-aided design (CAD)" como usuario de empresa con teléfono en blanco y horario elegido → payload correcto (`quote`, `phone: ""`, `callme`, `dateTime` del envío), 0 errores de JS. Como particular sin elegir horario → `companyUser: "It was a home user"`, `company: ""`, `job: ""`, `callme: ""`. Biografía muestra el título "About". La home ya no emite el aviso `Invalid prop state`.
 - **Sin tocar a propósito:** `key` que falta en la lista de Biografía (B1).
 
-### A2 · Idioma regional — este commit
+### A2 · Idioma regional — `d04ff32`
 - **Qué:** una línea en `src/i18n/config.js`: `supportedLngs: ["es", "en"]`. i18next guardaba el idioma tal cual lo detectaba (`en-US`, `es-VE`) y todo el código compara `i18n.language` con `"es"`/`"en"` exactos. Ahora un código regional se resuelve a `es` o `en`, y la caché de `localStorage.i18nextLng` se reescribe (`en-US` → `en`).
 - **Antes (home, mismo procedimiento):**
 
@@ -80,8 +80,16 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 - **Idiomas no soportados:** `fr-FR` guardado → resolvió a inglés porque i18next elige la mejor coincidencia de la lista de idiomas del navegador (aquí la segunda era `en-US`). Sin nada guardado, detecta `navigator.language`. Si un navegador solo ofrece un idioma no soportado, cae al de reserva (`es`).
 - **Por verificar:** el HTML estático (build) sigue generándose en el idioma de reserva (`es`); un visitante en inglés puede ver un parpadeo en español al hidratar. Se comprobará con `npm run build` al cerrar el hito.
 
+### M1 · "Últimos posts" de la home — este commit
+- **Qué:** en `src/pages/index.js` las dos consultas (ES y EN) ordenaban `datePublished` en `ASC` con `limit: 2`, así que la sección "Artículos recientes" mostraba los dos posts **más antiguos**. Pasan a `DESC`. De paso, el enlace pasa de relativo (`blog/${slug}`) a absoluto (`/blog/${slug}`).
+- **Antes → después (mismo procedimiento, ES y EN):** antes `when-we-talk-about-how-to-manage` (2020-12-09) y `testing-md-images` (2020-12-16); ahora `testing-the-automatic-build-on-netflify` (2021-04-24) y `triggering-a-deploy-on-netlify` (2020-12-21), en el orden correcto y traducidos. La página `/blog` ya ordenaba bien y no cambia.
+- **Prueba:** los enlaces apuntan a `/blog/<slug>` y las dos páginas de post cargan completas por URL directa (título, fecha, portada, 4 botones de compartir, contenido). El `state={{ fromPage: "home" }}` del `Link` se conserva.
+- **Contenido, no código:** los dos posts que ahora aparecen siguen siendo posts de prueba del CMS ("Testing the automatic Build on Netflify", "Triggering a Deploy on Netlify"). La sección luce mejor con posts reales.
+- **Limitación del entorno de pruebas:** en el panel de navegador de esta herramienta la ventana está oculta (`visibilityState: "hidden"`) y **las navegaciones por clic de Gatsby no terminan** (la URL cambia pero la vista no), incluso hacia enlaces que no se tocaron (`/blog` → `/contact`). Las cargas directas funcionan. Por eso el recorrido home → post por clic lo debe comprobar el dueño en su navegador.
+
 ### Hallazgos / sorpresas
 - Los mensajes de commit de dos párrafos se pegan en el asunto (visible en `git log --oneline`): de ahora en adelante, una línea.
+- El panel de pruebas oculto bloquea las transiciones de página de Gatsby (ver M1): las verificaciones se hacen por carga directa o con iframes; el clic real queda para el navegador del dueño.
 - Con el listado de idiomas del navegador, `supportedLngs` da mejor resultado que forzar un idioma fijo.
 
 ### Pendiente y abierto
@@ -90,7 +98,7 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 - Verificar con `npm run build` + `gatsby serve` antes de abrir el PR.
 
 ### Commits de la sesión
-- `0816500` A6 · `f0b4b4a` A1 · A2 pendiente de commit.
+- `0816500` A6 · `f0b4b4a` A1 · `d04ff32` A2 · M1 pendiente de commit.
 
 ---
 

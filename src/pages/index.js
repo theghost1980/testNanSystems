@@ -38,7 +38,7 @@ const Index = (props) => {
               {dataBlogList.edges.map((item) => {
                 return (
                   <Link
-                    to={`blog/${item.node.slug}`}
+                    to={`/blog/${item.node.slug}`}
                     state={{ fromPage: "home" }}
                     key={item.node.id}
                   >
@@ -176,7 +176,7 @@ export const data = graphql`
     }
     data_en: allDatoCmsBlogPost(
       filter: { locale: { eq: "en" } }
-      sort: { fields: datePublished, order: ASC }
+      sort: { fields: datePublished, order: DESC }
       limit: 2
     ) {
       edges {
@@ -201,7 +201,7 @@ export const data = graphql`
     }
     data_es: allDatoCmsBlogPost(
       filter: { locale: { eq: "es" } }
-      sort: { fields: datePublished, order: ASC }
+      sort: { fields: datePublished, order: DESC }
       limit: 2
     ) {
       edges {
