@@ -18,6 +18,7 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 
 | ID | Qué | Riesgo | Estado | Rama / PR |
 |---|---|---|---|---|
+| A6 | Las consultas de `portfolio.js` piden campos que la página no muestra y que Gatsby publica en el JSON de la página (`/page-data/…`). Pedir **solo lo que se muestra** y revisar ese contenido en DatoCMS. Detalle comunicado al dueño fuera del repo (el repo es público) | bajo | **pendiente · urgente** | `fix/…` |
 | A1 | Formulario de cotización: `setOptionState`, título `undefined`, valores falsos, typo | bajo | pendiente | — |
 | A2 | Idioma regional (`en-US`, `es-VE`): `supportedLngs` o normalización | bajo-medio | pendiente | — |
 | A5 | Errores visibles en contacto/cotización/boletín; `response.ok`; helper de Netlify alineado | bajo | pendiente | — |
@@ -31,8 +32,8 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 
 | ID | Qué | Riesgo | Estado | Rama / PR |
 |---|---|---|---|---|
-| A3 | `gatsby-plugin-react-helmet@3`, `lang`, SEO en páginas sin él, `robots.txt`, sitemap | bajo | pendiente | — |
-| A4 | Banner de cookies que realmente controle Google Analytics | medio | bloqueado: decisión con la clienta | — |
+| A3 | `gatsby-plugin-react-helmet@3`, `lang`, SEO en páginas sin él, `robots.txt`, sitemap. **R1 depende de esto o de `gatsby-ssr.js`**: `<body class="nx-root">`, `lang` y las fuentes deben estar en el HTML estático (ver SPEC del rediseño, k.5) | bajo | pendiente | — |
+| A4 | Banner de cookies que realmente controle Google Analytics. El banner del rediseño ya guarda la cookie `gatsby-gdpr-google-analytics`; falta decidir el modelo y configurar `gatsby-plugin-gdpr-cookies` (y retirar el plugin gtag) | medio | bloqueado: decisión con la clienta | — |
 
 ## Fase 3 · Despliegue
 
@@ -57,9 +58,10 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 
 | ID | Qué | Riesgo | Estado | Rama / PR |
 |---|---|---|---|---|
-| R0 | Decisión (D Coral Editorial + detalles de A) y tokens | — | **en curso** | docs |
-| R0b | Muestra HTML de la home en claro y oscuro (generada con IA y revisada) | — | pendiente | — |
-| R1 | Base: variables CSS, fuentes, header/footer nuevos en `Layout` | medio | pendiente | `feat/redesign-…` (por crear, desde `docs/project-documentation`) |
+| R0 | Decisión (D Coral Editorial + detalles de A) y tokens | — | **hecho** | docs |
+| R0b | Muestras HTML de las 12 pantallas + catálogo de componentes + SPEC (generadas con IA, **revisadas y corregidas**: 208/208 combinaciones sin desborde horizontal; ver [redesign.md](redesign.md)) | — | **hecho** | fuera del repo (carpeta local) |
+| R1a | **Pieza vertical**: `layout` nuevo + hero de la home alimentado por el CMS con `.nx-media` + `gatsby-image`. Valida SSR (`gatsby-ssr.js`), tema, idioma, build y el comportamiento real de las imágenes antes de portar el resto | medio | pendiente | `feat/redesign-…` (por crear, desde `docs/project-documentation`) |
+| R1 | Base completa: variables CSS, fuentes, header/footer nuevos en `Layout`; **retirar `styles.css` y los imports de Bootstrap en el mismo cambio** (el reset de `.nx-root` es global y la regla vieja de `html, body` pisa el fondo) | medio | pendiente | idem |
 | R2 | Home | medio | pendiente | idem |
 | R3 | Páginas con contenido del CMS: blog, post, proyectos, biografía, portafolio, contacto y modal de cotización | medio | pendiente | idem |
 | R4 | Legales, 404, QA responsive/accesibilidad, `prefers-reduced-motion` | bajo | pendiente | idem |
@@ -76,6 +78,12 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 | Consentimiento de GA (A4) | Qué modelo de cookies quiere la clienta | clienta |
 | Propuestas en el repo | ¿Guardar las PNG de D y A en `docs/assets/` (~1,9 MB y el repo es público)? | dueño |
 | Panel de Netlify | Completar los `TODO(tú)` de [deploy-netlify.md](deploy-netlify.md) | dueño |
+| Logo | El rediseño usa el wordmark de texto y deja de usar el logo gráfico (los engranajes) en cabecera y pie. ¿Se aprueba? | clienta |
+| Correo de contacto | El de las muestras (`contacto@…`) es de ejemplo; ¿cuál es el real y se guarda como campo de DatoCMS? | dueño + clienta |
+| Foto del hero | Sale de `InfoSite.carouselHome[0]`; hay que subir al CMS una imagen de al menos 1800×1200 con punto focal y texto alternativo | dueño + clienta |
+| Texto alternativo | Hoy el `alt` está vacío en todas las imágenes del CMS; el diseño usa el título como respaldo, pero conviene rellenarlo | clienta |
+| Cifra "+6 años" | La copia actual (2020) ya dice "más de 6 años": confirmar el número vigente | clienta |
+| Copia del banner de cookies | `cookies.title` trae "almacenamos/recuperamos/comercializamos" (42 caracteres seguidos): reescribir con espacios | dueño |
 
 ## Futuro (no antes de cerrar lo anterior)
 

@@ -127,3 +127,38 @@ Realista para el primer día de trabajo: **R0 a R2** (tokens, header/footer y ho
 - Rama de código aparte (`feat/redesign-…`), creada desde `docs/project-documentation`, para que los docs puedan fusionarse antes y el rediseño no llegue a producción sin aprobación.
 - Netlify: el preview del PR permite revisarlo sin tocar producción. Con 1 de 300 minutos usados hay margen (ver [deploy-netlify.md](deploy-netlify.md)).
 - Cuando haya una muestra HTML aceptada, se enlazará aquí y se decidirá si se guarda en `docs/assets/`.
+
+## Estado (2026-10-10, segunda sesión)
+
+**R0 y R0b están hechos.** La IA entregó un paquete (`nansystems-nx`, fuera del repo, ~860 KB) con:
+
+| Pieza | Contenido |
+|---|---|
+| `nx.css` | Todo el CSS: tokens claro/oscuro, reset acotado a `.nx-root` (`:where`, especificidad cero), componentes `nx-`, `.nx-prose` |
+| `nx.js` | Lógica de ejemplo con nombres de futuros hooks (`useTheme`, `useLang`, `useDialog`, `useFormState`, `useMarquee`…) |
+| 12 pantallas + `componentes.html` | Datos de ejemplo con la forma exacta del contrato del CMS; cada dato marcado `<!-- CMS: Modelo.campo -->` |
+| `SPEC.md` | Tokens, componentes, mapa pantalla→datos, imágenes por slot, claves i18n nuevas, mapa de portado, accesibilidad, presupuesto y supuestos |
+| `i18n/nx-new-keys.{es,en}.json` | 103 claves nuevas, mismas en ES y EN, sin pisar ninguna clave existente |
+
+### Revisión independiente
+Se revisó contra los datos reales (esquema de DatoCMS, consultas del repo) y en un navegador real, con las fuentes reales. **Se confirmó:** CSS bien acotado (4 `!important`, sin selectores globales), 189 claves `data-i18n` definidas en ES/EN, 38 de 39 referencias al CMS coinciden con campos reales, sin JavaScript y con el sistema en oscuro la página sale en oscuro, diálogos accesibles (foco atrapado, Esc, `inert`, foco devuelto).
+
+**Se corrigió** (en la carpeta del paquete; detalle en su `SPEC.md`, secciones k y l):
+- Errores de validación que reaparecían al reabrir un diálogo.
+- Cabecera que se salía a 320 px (WCAG 1.4.10), y rejillas de una columna que se ensanchaban con su contenido (post, catálogo, banner de cookies): resultado **208 de 208** combinaciones sin scroll horizontal (13 pantallas × 320/375/768/1440 × claro/oscuro × ES/EN).
+- Contratos de formularios: boletín conforme a Netlify Forms; campos de cotización y contacto con los nombres de las variables de EmailJS.
+- Consentimiento de cookies guardado en la cookie que lee `gatsby-plugin-gdpr-cookies`.
+
+**No verificado todavía:** `gatsby-image` con `.nx-media`, `data-sal` dentro de Gatsby, lectores de pantalla reales, Safari anterior a 15.4, envío real de EmailJS y Netlify, y la franja animada (el entorno de pruebas fuerza `prefers-reduced-motion`; la lógica se revisó por lectura).
+
+## Requisitos para portar (resumen; el detalle está en la SPEC del paquete, sección k)
+
+1. **Contratos que no se pueden romper:** formulario Netlify `newsletter` (campo `email`, honeypot `bot-field`, `static/forms.html` idéntico, comprobar `response.ok`); variables de las plantillas de EmailJS (cotización y contacto); cookie de consentimiento `gatsby-gdpr-google-analytics`.
+2. **SSR sin instalar nada:** `<body class="nx-root">`, `<html lang>`, fuentes y script de tema en el HTML estático con `gatsby-ssr.js` (o con `gatsby-plugin-react-helmet`, hallazgo A3). En React 17, `inert` se pasa como `inert=""`; los hooks que tocan `window` o `localStorage` van en `useEffect`.
+3. **CSS en un solo cambio:** `nx.css` entra y `styles.css` (con su regla `html, body { background … !important }`) y los imports de Bootstrap salen juntos; se migran todas las pantallas en la misma rama. No se publican migraciones a medias.
+4. **h1 del CMS:** convertir `h1` a `h2` en el contenido de las plantillas de post **y** de servicio.
+5. **Consultas:** pedir solo lo que se muestra (ver A6 del roadmap) y quitar las del carrusel viejo, iconos de red del CMS y logos que el diseño ya no usa.
+6. **Imágenes:** envolver `<Img fluid>` en `.nx-media` (ratio fijo, recorte por punto focal, texto alternativo del CMS o título como respaldo).
+
+## Siguiente paso: pieza vertical (R1a)
+Antes de portar las 11 pantallas restantes se construye una rebanada completa en una rama `feat/redesign-…` (desde `docs/project-documentation`): `layout` nuevo (`gatsby-ssr.js`, tema, idioma, cabecera, pie) + hero de la home alimentado por el CMS con `.nx-media`. Se valida con `npm run build` y `gatsby serve` en local (Node 14) y con el deploy preview. Si algo no encaja (imágenes, SSR, hidratación), se descubre con una pantalla, no con doce.

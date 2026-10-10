@@ -28,6 +28,7 @@ Esta carpeta **no se publica en el sitio web**: vive solo en el repositorio.
 - Los módulos de contenido (blog, proyectos, biografía, etc.) viven en DatoCMS.
 - Hay una auditoría completa y un plan por fases; ver [roadmap.md](roadmap.md).
 - Rediseño elegido como base: propuesta D (Coral Editorial); ver [redesign.md](redesign.md).
+- Muestras HTML de todas las pantallas y su SPEC: hechas y revisadas (fuera del repo). Siguiente: pieza vertical R1a en una rama aparte.
 
 ## Convenciones
 
