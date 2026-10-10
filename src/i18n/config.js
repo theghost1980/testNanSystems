@@ -10,6 +10,9 @@ i18next
   .use(initReactI18next)
   .init({
     fallbackLng: "es",
+    // Solo existen es y en. Con esto un navegador "en-US" o "es-VE" se resuelve
+    // a "en" / "es": el resto del código compara i18n.language con "es"/"en".
+    supportedLngs: ["es", "en"],
     resources: {
       es: {
         translations: require("../locales/es/translations.json"),

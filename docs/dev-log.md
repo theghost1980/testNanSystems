@@ -41,6 +41,59 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 
 ---
 
+## 2026-10-10 (3.ª sesión) · Arreglos de código: A6, A1 y A2
+
+**Rama:** `fix/portfolio-total-refactor-design-2026` (desde `master` en `b41fde4`, con los docs ya fusionados) · **Entorno:** Node 14.21.3, dev server local
+**Objetivo:** empezar el plan por orden de urgencia, un arreglo por paso, probado en local y con su propio commit.
+
+### Método
+- Cada paso: capturar el **estado "antes"** en el dev server → cambiar lo mínimo → capturar el "después" → actualizar roadmap y changelog → commit.
+- **Formularios sin enviar correos:** el `XMLHttpRequest` de la página se sustituye por una simulación que solo captura el payload de EmailJS; la petición real nunca sale.
+- **Mensajes de commit de una línea**; el detalle va aquí, en el dev-log (los mensajes de dos párrafos acababan pegados en el asunto por el entrecomillado del terminal).
+
+### A6 · Campos sin usar en el JSON público de portafolio — `0816500`
+- **Qué:** las dos consultas de `src/pages/portfolio.js` (ES y EN) pedían 4 campos que la página no muestra y Gatsby los publicaba en `/page-data/portfolio/page-data.json`. Se quitan de las consultas (32 líneas borradas, ninguna añadida).
+- **Antes → después (dev server):** JSON de 28.339 → 13.840 bytes (−51 %); los 22 registros siguen; esos campos ya no aparecen.
+- **La página no cambia:** 11 filas, 1 empleo actual, 8 enlaces "Visitar" y el acordeón funciona en ES y EN; sin errores de consola.
+- **Pendiente fuera del código:** publicar la rama; los deploys antiguos de Netlify siguen accesibles por su URL permanente; revisar el contenido correspondiente en DatoCMS.
+- **De paso, contenido:** en inglés la primera experiencia muestra el texto de relleno *"Place here all the accomplishments you had d…"*; en español solo 2 de 11 experiencias tienen "logros" (en inglés, las 11). Es contenido del CMS, no del código.
+
+### A1 · Formulario de cotización — `f0b4b4a`
+- **Archivos:** `quickQuote.js`, `button.js`, `templates/technology.js`, `pages/aboutNew.js`, `locales/{es,en}/translations.json`.
+- **Qué se arregló:** (1) `const [setOptionState] = useState(…)` tomaba el valor como si fuera la función: el `select` "cuándo llamarte" lanzaba un `TypeError` y nunca guardaba la opción; (2) el título llegaba como `"undefined"` (`technology.js` no pasaba `data`; `aboutNew.js` usaba `data.title` del `export const data` del módulo); (3) el estado inicial traía datos de prueba ("Charles Bronson", teléfono, empresa…) que viajaban si el usuario dejaba un campo en blanco; (4) typo `"t was a home user"`; (5) la fecha se calculaba al montar el formulario; (6) `Button` pasaba `""` como `state` del `Link` (aviso `Invalid prop state` de React).
+- **Cómo queda:** campos iniciales vacíos; `quote` = título del servicio (o `quickquote.title` si faltara); empresa y cargo vacíos si no es usuario de empresa; `dateTime` = momento del envío; `select` con `defaultValue=""`.
+- **Clave nueva:** `quickquote.title` ("Solicitar cotización" / "Request a quote"), idéntica a la del rediseño: no habrá conflicto al fusionar las claves nuevas.
+- **Prueba (envío simulado):** servicio "Computer-aided design (CAD)" como usuario de empresa con teléfono en blanco y horario elegido → payload correcto (`quote`, `phone: ""`, `callme`, `dateTime` del envío), 0 errores de JS. Como particular sin elegir horario → `companyUser: "It was a home user"`, `company: ""`, `job: ""`, `callme: ""`. Biografía muestra el título "About". La home ya no emite el aviso `Invalid prop state`.
+- **Sin tocar a propósito:** `key` que falta en la lista de Biografía (B1).
+
+### A2 · Idioma regional — este commit
+- **Qué:** una línea en `src/i18n/config.js`: `supportedLngs: ["es", "en"]`. i18next guardaba el idioma tal cual lo detectaba (`en-US`, `es-VE`) y todo el código compara `i18n.language` con `"es"`/`"en"` exactos. Ahora un código regional se resuelve a `es` o `en`, y la caché de `localStorage.i18nextLng` se reescribe (`en-US` → `en`).
+- **Antes (home, mismo procedimiento):**
+
+| Guardado | Menú | Carrusel | Post 1 | Selector | Testimonios |
+|---|---|---|---|---|---|
+| `en-US` | EN | **ES** | EN | **ES** | **0** |
+| `es-VE` | ES | ES | **EN** | ES | **0** |
+| `es` / `en` | OK | OK | OK | OK | 3 |
+
+- **Después:** `en-US`, `en-GB` → todo en inglés; `es-VE`, `es-ES` → todo en español; **3 testimonios** en todos los casos y el selector refleja el idioma. `/blog` con `es-VE` ya muestra los títulos en español. El selector alterna ES↔EN en ambos sentidos y guarda `es`/`en`.
+- **Idiomas no soportados:** `fr-FR` guardado → resolvió a inglés porque i18next elige la mejor coincidencia de la lista de idiomas del navegador (aquí la segunda era `en-US`). Sin nada guardado, detecta `navigator.language`. Si un navegador solo ofrece un idioma no soportado, cae al de reserva (`es`).
+- **Por verificar:** el HTML estático (build) sigue generándose en el idioma de reserva (`es`); un visitante en inglés puede ver un parpadeo en español al hidratar. Se comprobará con `npm run build` al cerrar el hito.
+
+### Hallazgos / sorpresas
+- Los mensajes de commit de dos párrafos se pegan en el asunto (visible en `git log --oneline`): de ahora en adelante, una línea.
+- Con el listado de idiomas del navegador, `supportedLngs` da mejor resultado que forzar un idioma fijo.
+
+### Pendiente y abierto
+- **Publicar el hito 1** (PR a `master` con "Create a merge commit"): A6 es una fuga; mejor no esperar al rediseño.
+- Siguientes arreglos de la Fase 1: M1 ("últimos posts"), A5 (errores visibles y `response.ok`), M3 (`gatsby-node.js`), M5 (resto), luego A3 (SEO, añade una dependencia).
+- Verificar con `npm run build` + `gatsby serve` antes de abrir el PR.
+
+### Commits de la sesión
+- `0816500` A6 · `f0b4b4a` A1 · A2 pendiente de commit.
+
+---
+
 ## 2026-10-10 (2.ª sesión) · Revisión del rediseño, contrato de datos y hallazgo A6
 
 **Rama:** `docs/project-documentation` · **Commit base:** `aa513b3`
