@@ -1,0 +1,84 @@
+# Roadmap
+
+Documento **vivo**. Cada mejora tiene un ID de la [auditoría](audit-2026-10.md) (o `R*` si es del [rediseño](redesign.md)).
+Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG.md).
+
+**Estados:** `pendiente` · `en curso` · `hecho` · `descartado` · `bloqueado` (con el motivo).
+**Riesgo para producción:** bajo / medio / alto, según la auditoría.
+
+## Reglas
+
+- Sin subir versiones mayores de Gatsby, React ni plugins (línea Gatsby 2.x).
+- Nada llega a `master` sin build local y revisión del preview (ver [workflow.md](workflow.md)).
+- Lo que depende de la clienta se marca `bloqueado` hasta que responda.
+
+---
+
+## Fase 1 · Bugs sin tocar dependencias
+
+| ID | Qué | Riesgo | Estado | Rama / PR |
+|---|---|---|---|---|
+| A1 | Formulario de cotización: `setOptionState`, título `undefined`, valores falsos, typo | bajo | pendiente | — |
+| A2 | Idioma regional (`en-US`, `es-VE`): `supportedLngs` o normalización | bajo-medio | pendiente | — |
+| A5 | Errores visibles en contacto/cotización/boletín; `response.ok`; helper de Netlify alineado | bajo | pendiente | — |
+| M1 | "Últimos posts" en orden `DESC` y enlace absoluto | bajo | pendiente | — |
+| M3 | `gatsby-node.js`: manejo de errores y deduplicar por slug | bajo-medio | pendiente | — |
+| M5 | i18n: retirar backend sobrante y `wait`; `state` por defecto de `Button` | bajo | pendiente | — |
+
+> A1, A2 y M1 tocan archivos que el rediseño reescribe (`index.js`, `testimonyFixed`, `quickQuote`, `button`). Decisión por defecto: resolverlos **dentro de la rama del rediseño** solo en los archivos que se reescriben de todos modos; el resto, en ramas `fix/` aparte.
+
+## Fase 2 · SEO y consentimiento
+
+| ID | Qué | Riesgo | Estado | Rama / PR |
+|---|---|---|---|---|
+| A3 | `gatsby-plugin-react-helmet@3`, `lang`, SEO en páginas sin él, `robots.txt`, sitemap | bajo | pendiente | — |
+| A4 | Banner de cookies que realmente controle Google Analytics | medio | bloqueado: decisión con la clienta | — |
+
+## Fase 3 · Despliegue
+
+| ID | Qué | Riesgo | Estado | Rama / PR |
+|---|---|---|---|---|
+| M2 | Confirmar Node de Netlify y alinear `.nvmrc`; `netlify.toml`; versionar lockfile | medio | pendiente (primero `TODO(tú)` de [deploy-netlify.md](deploy-netlify.md)) | — |
+| M7 | Cabeceras de seguridad (`_headers` o `netlify.toml`); CSP al final | medio | pendiente | — |
+| M6 | EmailJS: claves a variables de entorno, restringir dominios, antispam | bajo | pendiente | — |
+
+## Fase 4 · Limpieza
+
+| ID | Qué | Riesgo | Estado | Rama / PR |
+|---|---|---|---|---|
+| M4 | Retirar código muerto y páginas viejas (`/about`, `/singleventure`) con redirects | medio | pendiente | — |
+| B1 | Accesibilidad (teclado, `alt`, estructura de listas, un `<h1>`) | bajo | pendiente | — |
+| B2 | Navegación en un solo array; consultas sin uso del footer; variables sin uso | bajo | pendiente | — |
+| B3 | Fuentes fuera de `@import`, peso de imágenes, CSS de Bootstrap | bajo | pendiente | — |
+| B4 | Renombrar `mailChimpForm.js` / `NetlifyForm` / `.inputMailChimp` | bajo | pendiente | — |
+| B5 | `gatsby-browser.js`: evitar `window.onload =`, quitar comentarios | bajo | pendiente | — |
+
+## Rediseño (ver [redesign.md](redesign.md))
+
+| ID | Qué | Riesgo | Estado | Rama / PR |
+|---|---|---|---|---|
+| R0 | Decisión (D Coral Editorial + detalles de A) y tokens | — | **en curso** | docs |
+| R0b | Muestra HTML de la home en claro y oscuro (generada con IA y revisada) | — | pendiente | — |
+| R1 | Base: variables CSS, fuentes, header/footer nuevos en `Layout` | medio | pendiente | `feat/redesign-…` (por crear, desde `docs/project-documentation`) |
+| R2 | Home | medio | pendiente | idem |
+| R3 | Páginas con contenido del CMS: blog, post, proyectos, biografía, portafolio, contacto y modal de cotización | medio | pendiente | idem |
+| R4 | Legales, 404, QA responsive/accesibilidad, `prefers-reduced-motion` | bajo | pendiente | idem |
+| R5 | Revisión del preview con la clienta y merge | alto (publica) | bloqueado: aprobación de la clienta | — |
+
+## Decisiones abiertas
+
+| Tema | Pregunta | Quién |
+|---|---|---|
+| Boletín en el rediseño | ¿Pasa al pie o sigue como sección en la home? (los mocks D y A no lo muestran como sección) | dueño + clienta |
+| Textos del mock | "+6 años" y "Respuesta en 24 h" son afirmaciones comerciales: confirmar | clienta |
+| Servicios | Los títulos del mock no coinciden con los servicios del CMS (los slugs sugieren CAD, Red Hat e IoT inalámbrico); definir el contenido final | clienta |
+| Blog | Los posts del CMS son de prueba; sin posts reales, la sección "Artículos recientes" queda pobre | clienta |
+| Consentimiento de GA (A4) | Qué modelo de cookies quiere la clienta | clienta |
+| Propuestas en el repo | ¿Guardar las PNG de D y A en `docs/assets/` (~1,9 MB y el repo es público)? | dueño |
+| Panel de Netlify | Completar los `TODO(tú)` de [deploy-netlify.md](deploy-netlify.md) | dueño |
+
+## Futuro (no antes de cerrar lo anterior)
+
+- Migrar Gatsby 2 → versión soportada: implica `gatsby-image` → `gatsby-plugin-image`, `gatsby-source-datocms` mayor, React/Node modernos y revisar i18n. Proyecto aparte, con su propia rama larga y previews.
+- Tema oscuro opcional como `prefers-color-scheme` apoyado en las variables CSS del rediseño.
+- Migrar `emailjs-com` v2 a `@emailjs/browser`.
