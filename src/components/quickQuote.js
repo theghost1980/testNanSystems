@@ -9,40 +9,35 @@ const userId = "user_eI2TfwSXCTylXcY4axXJe";
 const serviceId = "nansystems.us";
 const templateId = "simple_quote21";
 
+// Los campos empiezan vacíos: lo que el usuario no rellena se envía vacío,
+// nunca con datos de prueba.
+const EMPTY_FORM = {
+  name: "",
+  email: "",
+  phone: "",
+  comments: "",
+  company: "",
+  job: "",
+  callme: "",
+};
+
 const QuickQuote = (props) => {
   const refForm = useRef(null);
 
   const { t } = useTranslation();
 
-  const [setOptionState] = useState("Not Set");
-
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
-  const _titleQuote = props.quote;
-  const _dateTime = new Date();
+  // Sin título (formulario abierto desde una página sin servicio) se usa un
+  // texto genérico: antes llegaba "undefined" en el correo.
+  const _titleQuote = props.quote || t("quickquote.title");
   const [companyUser, setcompanyUser] = useState(true);
-  const [data, setData] = useState({
-    quote: String(_titleQuote),
-    companyUser: companyUser,
-    name: "Charles Bronson",
-    email: "charles.bronson@gmail.com",
-    phone: "(+1)555-555-555",
-    comments:
-      "Ipsem Lorem I Will rock your world and revenge the good people of this world",
-    company: "Deadly Fists LLC.",
-    job: "Operation Manager",
-    callme: "Business Hours",
-    dateTime: String(_dateTime),
-  });
+  const [data, setData] = useState({ ...EMPTY_FORM });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "companyUser") {
-      setcompanyUser(!companyUser);
-      setData((prevState) => ({
-        ...prevState,
-        [name]: String(e.target.checked),
-      }));
+      setcompanyUser(e.target.checked);
     } else {
       setData((prevState) => ({
         ...prevState,
@@ -51,25 +46,8 @@ const QuickQuote = (props) => {
     }
   };
 
-  const handleSelectChange = (e) => {
-    setOptionState(e.target.value);
-    handleChange(e);
-  };
-
   const resetForm = () => {
-    setData({
-      quote: String(_titleQuote),
-      companyUser: companyUser,
-      name: "Charles Bronson",
-      email: "charles.bronson@gmail.com",
-      phone: "(+1)555-555-555",
-      comments:
-        "Ipsem Lorem I Will rock your world and revenge the good people of this world",
-      company: "Deadly Fists LLC.",
-      job: "Operation Manager",
-      callme: "Business Hours",
-      dateTime: String(_dateTime),
-    });
+    setData({ ...EMPTY_FORM });
     refForm.current.reset();
   };
 
@@ -84,17 +62,19 @@ const QuickQuote = (props) => {
 
     sendFeedback({
       reply_to: data.email,
-      quote: data.quote,
-      companyUser: `${
-        companyUser ? "It was a company User" : "t was a home user"
-      }`,
-      company: data.company,
-      job: data.job,
+      quote: _titleQuote,
+      companyUser: companyUser
+        ? "It was a company User"
+        : "It was a home user",
+      // Si no es usuario de empresa, empresa y cargo viajan vacíos.
+      company: companyUser ? data.company : "",
+      job: companyUser ? data.job : "",
       name: data.name,
       email: data.email,
       phone: data.phone,
       callme: data.callme,
-      dateTime: data.dateTime,
+      // La fecha es la del envío, no la de cuando se montó el formulario.
+      dateTime: new Date().toString(),
       comments: data.comments,
     });
   }
@@ -184,12 +164,13 @@ const QuickQuote = (props) => {
             <select
               id="test-callme"
               name="callme"
-              onChange={handleSelectChange}
+              defaultValue=""
+              onChange={handleChange}
               className="inputForm boldLblInputs"
               disabled={sending}
               form="form-Quote"
             >
-              <option value="" disabled selected>
+              <option value="" disabled>
                 {t("quickquote.call")}
               </option>
               <option value={t("quickquote.callB")}>

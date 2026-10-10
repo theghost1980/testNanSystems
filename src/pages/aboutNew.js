@@ -14,7 +14,9 @@ const AboutNew = (props) => {
 
   const _twitterHandle = "_MsLinda";
   const _url = props.location.href;
-  let _titlePost = data.title;
+  // Antes `data.title` apuntaba al `export const data = graphql...` del módulo
+  // (no a props.data) y daba `undefined`.
+  const _titlePost = t("menu.about");
   const _tags = ["NaNSYSTEMS", "SolutionsIT", "automation", "Niagara"];
 
   return (
@@ -86,7 +88,7 @@ const AboutNew = (props) => {
           value={t("button.getquote")}
           type="btnFilled"
           action="quote"
-          data={{ title: data.title }}
+          data={{ title: _titlePost }}
         />
       </div>
     </Layout>

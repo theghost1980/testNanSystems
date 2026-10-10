@@ -19,12 +19,12 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 | ID | Qué | Riesgo | Estado | Rama / PR |
 |---|---|---|---|---|
 | A6 | Las consultas de `portfolio.js` piden campos que la página no muestra y que Gatsby publica en el JSON de la página (`/page-data/…`). Pedir **solo lo que se muestra** y revisar ese contenido en DatoCMS. Detalle comunicado al dueño fuera del repo (el repo es público) | bajo | **hecho en la rama** (falta publicar: PR → merge → deploy) | `fix/portfolio-total-refactor-design-2026` |
-| A1 | Formulario de cotización: `setOptionState`, título `undefined`, valores falsos, typo | bajo | pendiente | — |
+| A1 | Formulario de cotización: `setOptionState`, título `undefined`, valores falsos, typo | bajo | **hecho en la rama** | `fix/portfolio-total-refactor-design-2026` |
 | A2 | Idioma regional (`en-US`, `es-VE`): `supportedLngs` o normalización | bajo-medio | pendiente | — |
 | A5 | Errores visibles en contacto/cotización/boletín; `response.ok`; helper de Netlify alineado | bajo | pendiente | — |
 | M1 | "Últimos posts" en orden `DESC` y enlace absoluto | bajo | pendiente | — |
 | M3 | `gatsby-node.js`: manejo de errores y deduplicar por slug | bajo-medio | pendiente | — |
-| M5 | i18n: retirar backend sobrante y `wait`; `state` por defecto de `Button` | bajo | pendiente | — |
+| M5 | i18n: retirar backend sobrante y `wait`; `state` por defecto de `Button` (**esto último ya hecho con A1**) | bajo | parcial | — |
 
 > A1, A2 y M1 tocan archivos que el rediseño reescribe (`index.js`, `testimonyFixed`, `quickQuote`, `button`). Decisión por defecto: resolverlos **dentro de la rama del rediseño** solo en los archivos que se reescriben de todos modos; el resto, en ramas `fix/` aparte.
 
