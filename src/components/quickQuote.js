@@ -28,6 +28,7 @@ const QuickQuote = (props) => {
 
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState(false);
   // Sin título (formulario abierto desde una página sin servicio) se usa un
   // texto genérico: antes llegaba "undefined" en el correo.
   const _titleQuote = props.quote || t("quickquote.title");
@@ -48,6 +49,7 @@ const QuickQuote = (props) => {
 
   const resetForm = () => {
     setData({ ...EMPTY_FORM });
+    setError(false);
     refForm.current.reset();
   };
 
@@ -58,6 +60,7 @@ const QuickQuote = (props) => {
 
   function handleSubmit(event) {
     event.preventDefault();
+    setError(false);
     setSending(true);
 
     sendFeedback({
@@ -92,12 +95,15 @@ const QuickQuote = (props) => {
       .then((res) => {
         messageSentSuccess();
       })
-      .catch((err) =>
+      .catch((err) => {
         console.error(
           "Oh well, you failed. Here some thoughts on the error that occured:",
           err,
-        ),
-      );
+        );
+        // Antes `sending` se quedaba en true: formulario bloqueado para siempre.
+        setSending(false);
+        setError(true);
+      });
   }
 
   return (
@@ -227,6 +233,11 @@ const QuickQuote = (props) => {
           </div>
         </div>
         <div className="btnCont">
+          {error && !sending && (
+            <p className="divErrorSubcriptions" role="alert">
+              {t("quickquote.errorTitle")} {t("quickquote.errorText")}
+            </p>
+          )}
           {!sending && (
             <div className="btnRowCont">
               <input

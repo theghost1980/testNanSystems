@@ -61,7 +61,9 @@
       "inputFeedback": "comentarios/sugerencias acá por favor",
       "sending": "Enviando Correo. Por favor Espere!",
       "sentOne": "Correo Enviado!",
-      "sentTwo": "Gracias. Responderé a la brevedad posible."
+      "sentTwo": "Gracias. Responderé a la brevedad posible.",
+      "errorTitle": "No se pudo enviar el mensaje.",
+      "errorText": "Inténtalo de nuevo en unos minutos o escríbenos directamente por correo."
     },
     "tos": {
       "l1": "Términos y condiciones de uso del sitio web",
@@ -109,7 +111,8 @@
     },
     "button": {
       "readmore": "Leer Más",
-      "getquote": "Cotizar por Email"
+      "getquote": "Cotizar por Email",
+      "retry": "Reintentar"
     },
     "blogpost": {
       "categories": "Categorías: "
@@ -120,7 +123,8 @@
       "emailhere": " email acá por favor",
       "thanks": "Grazie, Gracias, Shukran, 감사합니다!",
       "error": "Si el error persiste,",
-      "error2": "contáctenos"
+      "error2": "contáctenos",
+      "errorTitle": "No se pudo completar la suscripción."
     },
     "quickquote": {
       "companyUser": "Trabajador/Empleado",
@@ -147,7 +151,9 @@
       "ourobots": "Nuestros robots están haciendo del mundo un lugar mejor :D",
       "sent": "Mensaje enviado. Nuestros robots están felices de trabajar para usted!",
       "wewill": "Le responderemos lo antes posible. Por favor, añada nuestro correo electrónico a sus contactos seguros",
-      "title": "Solicitar cotización"
+      "title": "Solicitar cotización",
+      "errorTitle": "No se pudo enviar la solicitud.",
+      "errorText": "Inténtalo de nuevo o escríbenos por correo."
     },
     "carousel": {
       "tellme": "Más"

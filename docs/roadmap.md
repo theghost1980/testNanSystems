@@ -21,7 +21,7 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 | A6 | Las consultas de `portfolio.js` piden campos que la página no muestra y que Gatsby publica en el JSON de la página (`/page-data/…`). Pedir **solo lo que se muestra** y revisar ese contenido en DatoCMS. Detalle comunicado al dueño fuera del repo (el repo es público) | bajo | **hecho en la rama** (falta publicar: PR → merge → deploy) | `fix/portfolio-total-refactor-design-2026` |
 | A1 | Formulario de cotización: `setOptionState`, título `undefined`, valores falsos, typo | bajo | **hecho en la rama** | `fix/portfolio-total-refactor-design-2026` |
 | A2 | Idioma regional (`en-US`, `es-VE`): `supportedLngs` o normalización | bajo-medio | **hecho en la rama** (falta comprobar el HTML del build) | `fix/portfolio-total-refactor-design-2026` |
-| A5 | Errores visibles en contacto/cotización/boletín; `response.ok`; helper de Netlify alineado | bajo | pendiente | — |
+| A5 | Errores visibles en contacto/cotización/boletín; `response.ok`; helper de Netlify alineado | bajo | **hecho en la rama** (falta probar el boletín real en el deploy preview) | `fix/portfolio-total-refactor-design-2026` |
 | M1 | "Últimos posts" en orden `DESC` y enlace absoluto | bajo | **hecho en la rama** | `fix/portfolio-total-refactor-design-2026` |
 | M3 | `gatsby-node.js`: manejo de errores y deduplicar por slug | bajo-medio | pendiente | — |
 | M5 | i18n: retirar backend sobrante y `wait`; `state` por defecto de `Button` (**esto último ya hecho con A1**) | bajo | parcial | — |

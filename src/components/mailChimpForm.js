@@ -25,7 +25,7 @@ const NetlifyForm = (props) => {
     e.preventDefault();
 
     try {
-      await fetch("/?no-cache=1", {
+      const response = await fetch("/?no-cache=1", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: encode({
@@ -33,6 +33,12 @@ const NetlifyForm = (props) => {
           email: data.email,
         }),
       });
+
+      // fetch solo rechaza ante fallos de red: un 4xx/5xx de Netlify llegaba
+      // aquí como si fuera un éxito y se mostraba "gracias".
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
 
       setData({
         ...data,
@@ -44,6 +50,14 @@ const NetlifyForm = (props) => {
         result: { result: "error", msg: error.message },
       });
     }
+  };
+
+  // Vuelve al formulario conservando el correo escrito.
+  const _handleRetry = () => {
+    setData({
+      ...data,
+      result: { result: "empty", msg: "" },
+    });
   };
 
   const _handleChange = (event) => {
@@ -122,11 +136,19 @@ const NetlifyForm = (props) => {
     <div className="coloredScreenBGFixed">
       <div className="subcriptionCont">
         <img src={imgSubcription} alt="error" className="imgSubscriptions" />
-        <div className="divErrorSubcriptions">
+        <div className="divErrorSubcriptions" role="alert">
+          <p>{t("subscribe.errorTitle")}</p>
           <p>
             {t("subscribe.error")}{" "}
             <a href="/contact">{t("subscribe.error2")}</a>.
           </p>
+          <button
+            type="button"
+            className="btnSubscribe xtraSubscribeBtn"
+            onClick={_handleRetry}
+          >
+            {t("button.retry")}
+          </button>
         </div>
         <div
           className="btnSubscribeMini positionAbs1 "

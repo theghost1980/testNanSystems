@@ -61,7 +61,9 @@
       "inputFeedback": "feedback/comments here please",
       "sending": "Sending Email. Please Wait!",
       "sentOne": "Email Sent!",
-      "sentTwo": "Thank you. I will replay as soon as possible."
+      "sentTwo": "Thank you. I will reply as soon as possible.",
+      "errorTitle": "The message could not be sent.",
+      "errorText": "Please try again in a few minutes or email us directly."
     },
     "tos": {
       "l1": "Website Terms and Conditions of Use",
@@ -109,7 +111,8 @@
     },
     "button": {
       "readmore": "Read More",
-      "getquote": "Get quote by Email"
+      "getquote": "Get quote by Email",
+      "retry": "Try again"
     },
     "blogpost": {
       "categories": "Categories: "
@@ -120,7 +123,8 @@
       "emailhere": " email here please",
       "thanks": "Grazie, Gracias, Shukran, 감사합니다!",
       "error": "If error persists, ",
-      "error2": "contact us"
+      "error2": "contact us",
+      "errorTitle": "The subscription could not be completed."
     },
     "quickquote": {
       "companyUser": "Company User",
@@ -147,7 +151,9 @@
       "ourobots": "Our Robots are making the world a better place :D",
       "sent": "Message Sent. Our Robots are happy to work for you!",
       "wewill": "We will answer you as soon as possible. Please add our email to your safe contacts",
-      "title": "Request a quote"
+      "title": "Request a quote",
+      "errorTitle": "The request could not be sent.",
+      "errorText": "Please try again or email us directly."
     },
     "carousel": {
       "tellme": "More"

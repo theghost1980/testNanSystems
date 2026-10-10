@@ -41,7 +41,7 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 
 ---
 
-## 2026-10-10 (3.ª sesión) · Arreglos de código: A6, A1, A2 y M1
+## 2026-10-10 (3.ª sesión) · Arreglos de código: A6, A1, A2, M1 y A5
 
 **Rama:** `fix/portfolio-total-refactor-design-2026` (desde `master` en `b41fde4`, con los docs ya fusionados) · **Entorno:** Node 14.21.3, dev server local
 **Objetivo:** empezar el plan por orden de urgencia, un arreglo por paso, probado en local y con su propio commit.
@@ -80,12 +80,21 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 - **Idiomas no soportados:** `fr-FR` guardado → resolvió a inglés porque i18next elige la mejor coincidencia de la lista de idiomas del navegador (aquí la segunda era `en-US`). Sin nada guardado, detecta `navigator.language`. Si un navegador solo ofrece un idioma no soportado, cae al de reserva (`es`).
 - **Por verificar:** el HTML estático (build) sigue generándose en el idioma de reserva (`es`); un visitante en inglés puede ver un parpadeo en español al hidratar. Se comprobará con `npm run build` al cerrar el hito.
 
-### M1 · "Últimos posts" de la home — este commit
+### M1 · "Últimos posts" de la home — `72cf6b0`
 - **Qué:** en `src/pages/index.js` las dos consultas (ES y EN) ordenaban `datePublished` en `ASC` con `limit: 2`, así que la sección "Artículos recientes" mostraba los dos posts **más antiguos**. Pasan a `DESC`. De paso, el enlace pasa de relativo (`blog/${slug}`) a absoluto (`/blog/${slug}`).
 - **Antes → después (mismo procedimiento, ES y EN):** antes `when-we-talk-about-how-to-manage` (2020-12-09) y `testing-md-images` (2020-12-16); ahora `testing-the-automatic-build-on-netflify` (2021-04-24) y `triggering-a-deploy-on-netlify` (2020-12-21), en el orden correcto y traducidos. La página `/blog` ya ordenaba bien y no cambia.
 - **Prueba:** los enlaces apuntan a `/blog/<slug>` y las dos páginas de post cargan completas por URL directa (título, fecha, portada, 4 botones de compartir, contenido). El `state={{ fromPage: "home" }}` del `Link` se conserva.
 - **Contenido, no código:** los dos posts que ahora aparecen siguen siendo posts de prueba del CMS ("Testing the automatic Build on Netflify", "Triggering a Deploy on Netlify"). La sección luce mejor con posts reales.
 - **Limitación del entorno de pruebas:** en el panel de navegador de esta herramienta la ventana está oculta (`visibilityState: "hidden"`) y **las navegaciones por clic de Gatsby no terminan** (la URL cambia pero la vista no), incluso hacia enlaces que no se tocaron (`/blog` → `/contact`). Las cargas directas funcionan. Por eso el recorrido home → post por clic lo debe comprobar el dueño en su navegador.
+
+### A5 · Errores visibles en los formularios — este commit
+- **Archivos:** `src/pages/contact.js`, `src/components/quickQuote.js`, `src/components/mailChimpForm.js`, `static/forms.html`, `src/locales/{es,en}/translations.json`.
+- **Contacto y cotización (EmailJS):** si el envío falla, antes solo había `console.error` y la pantalla se quedaba en "Enviando…" con los campos bloqueados. Ahora se vuelve a mostrar el formulario con un aviso (`role="alert"`, mismos estilos `divErrorSubcriptions` ya existentes, sin CSS nuevo), los campos siguen editables y **el texto escrito se conserva**; el reintento es volver a pulsar "Enviar". El aviso se limpia al reenviar o al cancelar.
+- **Boletín (Netlify Forms):** `fetch` solo rechaza ante fallos de red, así que una respuesta 4xx/5xx se mostraba como "gracias". Ahora `if (!response.ok) throw …` lleva a la vista de error, que muestra un título (`subscribe.errorTitle`), el texto de contacto de siempre y un botón **Reintentar** que vuelve al formulario con el correo conservado.
+- **`static/forms.html`:** ahora declara también `data-netlify-honeypot="bot-field"` y el campo `bot-field`, igual que el formulario real. Netlify actualizará la definición del formulario `newsletter` en el próximo deploy (mismo nombre; no se pierden envíos).
+- **Claves nuevas (mismos textos que el rediseño):** `contact.errorTitle/errorText`, `quickquote.errorTitle/errorText`, `subscribe.errorTitle`, `button.retry`. De paso se corrige el typo inglés `contact.sentTwo` ("replay" → "reply").
+- **Prueba en local (sin envíos reales):** EmailJS simulado (`XMLHttpRequest`) y `fetch` simulado. Contacto: fallo → aviso, campos libres, texto conservado; reintento → "enviado". Cotización: ídem, el aviso sale en español con `i18nextLng=es`. Boletín: respuesta 500 → error + Reintentar (correo conservado); fallo de red → error; éxito → "gracias"; la petición sigue siendo `form-name=newsletter&email=…`. 0 errores de JS.
+- **Ojo en local:** el dev server responde **404** a `POST /?no-cache=1`, así que en `localhost` el boletín ahora muestra el error (antes mostraba "gracias" aunque no se enviara nada). Es lo correcto. **Hay que probarlo de verdad en el deploy preview** (Netlify procesa el formulario) y ver el envío en Netlify → Forms; si un envío válido saliera como error, hay que ajustar la comprobación (p. ej. aceptar la redirección de Netlify).
 
 ### Hallazgos / sorpresas
 - Los mensajes de commit de dos párrafos se pegan en el asunto (visible en `git log --oneline`): de ahora en adelante, una línea.
@@ -93,12 +102,29 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 - Con el listado de idiomas del navegador, `supportedLngs` da mejor resultado que forzar un idioma fijo.
 
 ### Pendiente y abierto
-- **Publicar el hito 1** (PR a `master` con "Create a merge commit"): A6 es una fuga; mejor no esperar al rediseño.
-- Siguientes arreglos de la Fase 1: M1 ("últimos posts"), A5 (errores visibles y `response.ok`), M3 (`gatsby-node.js`), M5 (resto), luego A3 (SEO, añade una dependencia).
-- Verificar con `npm run build` + `gatsby serve` antes de abrir el PR.
+- **Publicar el hito 1** (PR a `master` con "Create a merge commit", no squash): A6 es una fuga; mejor no esperar al rediseño. El rediseño no se fusiona sin aprobación de la clienta.
+- Fase 1 restante: M3 (`gatsby-node.js`), M5 (resto de i18n), luego A3 (SEO; añade una dependencia). B1 incluye el `key` que falta en la lista de Biografía (`aboutNew.js`).
+- Sin verificar todavía con **build real**: el HTML estático de A2 (idioma de reserva `es` y posible parpadeo), que A6 también esté limpio en `public/page-data/portfolio/`, y `public/forms.html`.
+- Contenido por completar en DatoCMS: texto de relleno en inglés de la primera experiencia del portafolio; "logros" en español (2 de 11); posts de prueba en la home.
+
+### Próximos pasos (detalle para retomar sin contexto)
+**Paso siguiente = M3 + verificación del build (cierre del hito 1).**
+1. **Pedir al dueño que pare el dev server** (`Ctrl+C`): `develop` y `build` comparten `.cache` y chocan. Todo con Node 14.21.3.
+2. **Medir el estado actual con un build** (antes de tocar `gatsby-node.js`): `npm run build`, guardar la salida (nº de páginas creadas, avisos) y la lista de rutas (`public/**/index.html`). Comprobar en `public/`: (a) `index.html` → `lang`/idioma del HTML estático y contenido en español de reserva (A2); (b) `page-data/portfolio/page-data.json` sin los campos retirados en A6; (c) `forms.html` con el honeypot (A5). Servir con `npx gatsby serve` (puerto 9000) y abrir `/`, `/blog`, un post y un servicio.
+3. **M3 en `gatsby-node.js`:** (a) `return graphql(…).then(result => …)` en vez de `new Promise`; (b) si `result.errors`, `reporter.panicOnBuild(...)` con un mensaje claro y `return`; (c) crear **una sola vez** cada ruta (los slugs son iguales en `en` y `es`: usar un `Set` por tipo), manteniendo las rutas idénticas (`blog/${slug}`, `/${slug}`) y el contexto `{ slug }` (las plantillas solo usan `$slug`; `locale` del contexto no se usa); (d) `reporter.warn` si un slug de tecnología coincide con una ruta fija (`blog`, `contact`, `about`, `aboutNew`, `portfolio`, `ventures`, `tos`, `privacy`, `credits`). Opcional: en `gatsby-config.js`, fallar con un mensaje claro si falta `process.env.api_key` (hoy se convierte en el texto "undefined").
+4. **Verificar M3:** rebuild y comparar con el paso 2: **mismo conjunto de rutas**, sin avisos nuevos, `public/blog/<slug>/index.html` y `public/<slug>/index.html` presentes. Probar el camino de error con una `api_key` inválida solo si es seguro (el mensaje debe ser claro).
+5. **Documentar y commitear:** M3 en roadmap/CHANGELOG/dev-log (con los resultados del build) y commit de una línea, p. ej. `fix: M3 gatsby-node reports query errors and creates each page once`.
+6. **Después:** PR del hito 1 a `master` (merge commit); en el **deploy preview** probar a mano el boletín real (ver Netlify → Forms), contacto y cotización (un envío de prueba real), el clic home → post, `es-VE`/`en-US` y la home en general. Luego M5, A3 y R1a (ver [roadmap.md](roadmap.md) y [redesign.md](redesign.md)).
+
+### Convenciones de esta sesión (para no perderlas)
+- Commits **de una línea** (`tipo: ID descripción`); el detalle va en este dev-log. Los commits los hace el dueño; antes de cambiar código se avisa del alcance.
+- Cada paso: estado "antes" → cambio mínimo → estado "después" → roadmap/CHANGELOG/dev-log → commit.
+- Herramientas de prueba usadas: sondas con `iframe` (cargar `/` con distinto `localStorage.i18nextLng`), `XMLHttpRequest`/`fetch` simulados para formularios, y consultas al GraphQL local (`/___graphql`). El panel de pruebas está oculto: las navegaciones por clic de Gatsby no terminan y `requestAnimationFrame` no corre; usar cargas directas.
+- El repo es público: nada de datos sensibles ni detalles de fugas en `docs/`.
+- El paquete del rediseño vive **fuera del repo** (`Refactor-Sites2026/nanasystems/nansystems-nx/nx-site`, con su `SPEC.md`).
 
 ### Commits de la sesión
-- `0816500` A6 · `f0b4b4a` A1 · `d04ff32` A2 · M1 pendiente de commit.
+- `0816500` A6 · `f0b4b4a` A1 · `d04ff32` A2 · `72cf6b0` M1 · A5 pendiente de commit.
 
 ---
 

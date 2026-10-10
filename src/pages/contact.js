@@ -19,6 +19,7 @@ class Contact extends React.Component {
       email: "",
       sent: false,
       sending: false,
+      error: false,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
@@ -80,6 +81,15 @@ class Contact extends React.Component {
                 </div>
               </div>
               <div className="btnCont">
+                {this.state.error && !this.state.sending && (
+                  <div className="sendingEmailCont">
+                    <p className="divErrorSubcriptions" role="alert">
+                      {this.props.t("contact.errorTitle")}
+                      <br></br>
+                      {this.props.t("contact.errorText")}
+                    </p>
+                  </div>
+                )}
                 {!this.state.sending && !this.state.sent && (
                   <div className="btnRowCont">
                     <input
@@ -142,10 +152,11 @@ class Contact extends React.Component {
       email: "",
       feedback: "",
       sent: false,
+      error: false,
     });
   };
   sendingMessage() {
-    this.setState({ sending: true });
+    this.setState({ sending: true, error: false });
   }
   messageSentSuccess() {
     this.setState({ sending: false });
@@ -170,12 +181,14 @@ class Contact extends React.Component {
       .then((res) => {
         this.messageSentSuccess();
       })
-      .catch((err) =>
+      .catch((err) => {
         console.error(
           "Oh well, you failed. Here some thoughts on the error that occured:",
           err,
-        ),
-      );
+        );
+        // Antes la pantalla se quedaba en "Enviando…" para siempre.
+        this.setState({ sending: false, error: true });
+      });
   }
 }
 
