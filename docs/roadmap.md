@@ -25,7 +25,7 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 | A5 | Errores visibles en contacto/cotización/boletín; `response.ok`; helper de Netlify alineado | bajo | **hecho en la rama** (falta probar el boletín real en el deploy preview) | `fix/portfolio-total-refactor-design-2026` |
 | M1 | "Últimos posts" en orden `DESC` y enlace absoluto | bajo | **hecho en la rama** | `fix/portfolio-total-refactor-design-2026` |
 | M3 | `gatsby-node.js`: manejo de errores y deduplicar por slug | bajo-medio | **hecho en la rama** (build comparado con la línea base: mismas 20 rutas) | `fix/portfolio-total-refactor-design-2026` |
-| M5 | i18n: retirar backend sobrante y `wait`; `state` por defecto de `Button` (**esto último ya hecho con A1**) | bajo | parcial | — |
+| M5 | i18n: retirar backend sobrante, `wait` y el parche `i18next.languages`; `state` por defecto de `Button` (**ya hecho con A1**) | bajo | **hecho en la rama** (código, probado con build). Falta solo quitar `i18next-http-backend` de `package.json` (pide OK del dueño) | `fix/portfolio-total-refactor-design-2026` |
 
 > A1, A2 y M1 tocan archivos que el rediseño reescribe (`index.js`, `testimonyFixed`, `quickQuote`, `button`). Decisión por defecto: resolverlos **dentro de la rama del rediseño** solo en los archivos que se reescriben de todos modos; el resto, en ramas `fix/` aparte.
 

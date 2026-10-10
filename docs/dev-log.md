@@ -41,7 +41,7 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 
 ---
 
-## 2026-10-10 (3.ª sesión) · Arreglos de código: A6, A1, A2, M1, A5, A7 y M3
+## 2026-10-10 (3.ª sesión) · Arreglos de código: A6, A1, A2, M1, A5, A7, M3 y M5
 
 **Rama:** `fix/portfolio-total-refactor-design-2026` (desde `master` en `b41fde4`, con los docs ya fusionados) · **Entorno:** Node 14.21.3, dev server local
 **Objetivo:** empezar el plan por orden de urgencia, un arreglo por paso, probado en local y con su propio commit.
@@ -114,6 +114,15 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 - **Lo que no se probó:** el camino de error con el CMS real. Una `api_key` inválida falla antes, en el plugin de DatoCMS (`sourceNodes`), así que no ejercita este código; el camino de `result.errors` solo se ha probado simulado.
 - **Opcional que se deja fuera:** fallar con un mensaje claro en `gatsby-config.js` si falta `api_key` (hoy el plugin recibe el texto `"undefined"`). Toca la configuración y no hace falta para M3; queda como idea suelta.
 
+### M5 · i18n: backend, `wait` y parche de idiomas — este commit
+- **Archivo:** `src/i18n/config.js` (único cambio de código; `package.json` **sin tocar** todavía).
+- **Qué se quitó y por qué:** (1) `import Backend from "i18next-http-backend"` y `.use(Backend)`: con `resources` en línea y sin `partialBundledLanguages`, i18next no pide nada al servidor (antes tampoco: 0 peticiones a `locales`/`translations`); (2) `react.wait: true`, opción antigua de react-i18next que provocaba el aviso `It seems you are still using the old wait option` en la consola de **cada página** (varias veces) y en el build; se deja `useSuspense: false`; (3) `i18next.languages = ["es","en"]`: se ejecutaba tras `init` y la lista se recalcula sola en cada `changeLanguage`; nadie más en el código leía `i18n.languages`.
+- **Antes (build de producción, línea base):** aviso de `wait` en consola y en el build; JS referenciado por `index.html` = **536.357 bytes**; 0 peticiones de traducciones.
+- **Después (build de producción):** build sin el aviso (38 s → 34 s, sin significado: caché); en una pestaña nueva la consola **no** tiene ningún aviso de i18next; JS = **520.746 bytes (−15.611, −2,9 %)**, todo en el chunk `commons`; mismas **20 rutas + `404.html`** y 21 `page-data` idénticos a la línea base.
+- **Prueba de idioma (producción, `gatsby serve`):** guardado `en-US`, `en-GB`, `en` → inglés, icono derecho; `es-VE`, `es-ES`, `es` → español, icono izquierdo; `fr-FR` y "sin valor" → inglés (la lista del navegador del panel es `en-US`; igual que con A2). Clic del selector `es → en → es`: menú, icono y `localStorage.i18nextLng` cambian en ambos sentidos. Páginas `/blog/<post>`, `/computer-aided-design-cad`, `/blog`, `/portfolio`, `/contact`, `/aboutNew` cargan en ES y EN con el título correcto y **los mismos tamaños de texto** que antes (p. ej. post 2.295/2.200 caracteres ES/EN).
+- **No se pudo probar:** un navegador cuya **única** lengua no esté soportada (cae a `es` por `fallbackLng`; no se puede fijar `navigator.languages` aquí).
+- **Pendiente de M5 — necesita OK del dueño:** desinstalar `i18next-http-backend` (`npm uninstall i18next-http-backend`). Toca solo `package.json` (la línea `"i18next-http-backend": "^1.0.21"`), porque **`package-lock.json` está en `.gitignore`**: Netlify resuelve las versiones desde `package.json` en cada build (tema de M2). Es una dependencia que ya nadie importa, así que el riesgo es muy bajo; mientras no se haga, sigue instalada sin usarse.
+
 ### Hallazgos / sorpresas
 - Los mensajes de commit de dos párrafos se pegan en el asunto (visible en `git log --oneline`): de ahora en adelante, una línea.
 - El panel de pruebas oculto bloquea las transiciones de página de Gatsby (ver M1): las verificaciones se hacen por carga directa o con iframes; el clic real queda para el navegador del dueño.
@@ -136,16 +145,16 @@ Dos `npm run build` seguidos (Node 14.21.3) terminaron sin errores: ~100 s el pr
 
 ### Estado real al compactar (leer primero)
 - **A5 sigue con el mensaje equivocado en el historial:** `092d9a4` se llama `fix: M3 gatsby-node reports query errors and creates each page once` pero contiene los cambios de **A5** (contacto, cotización, boletín, `forms.html`, traducciones); `gatsby-node.js` **no** se ha tocado. El dueño no lo corrigió con `--amend` (hizo `db8158e` con los docs de A5 encima). La rama no está publicada, así que aún se puede reescribir; si no, **dejarlo y aclararlo en la descripción del PR** (se fusiona con merge commit, el historial se conserva). **Para que no haya dos commits "M3", el commit real de M3 debe llevar otro texto** (ver abajo).
-- **Hecho y listo para commit:** M3 (`gatsby-node.js`, probado con build real) con sus docs.
-- **Commiteado:** A7 = `c59773b` (el asunto quedó con una comilla de cierre sobrante, cosmético).
-- **Sin hacer todavía:** M5, A3, y el cierre del hito 1.
+- **Hecho y listo para commit:** M5 (`src/i18n/config.js`, probado con build de producción) con sus docs.
+- **Commiteado:** A7 = `c59773b` (el asunto quedó con una comilla de cierre sobrante, cosmético) y M3 = `3c0f244`.
+- **Sin hacer todavía:** quitar la dependencia `i18next-http-backend` de `package.json` (espera OK del dueño), A3 y el cierre del hito 1.
 - **Decisión del dueño: todavía NO se hace el PR** del hito 1 a `master`. Se sigue acumulando en la rama; el PR se hará cuando el dueño lo pida (ver el último paso).
 
 ### Próximos pasos (detalle para retomar sin contexto)
-**Orden: M3 (hecho, a falta del commit) → M5 → A3 → (cuando el dueño lo decida) PR del hito 1 → R1a.** Comprobar siempre que no hay `develop` ni `gatsby serve` abiertos antes de `npm run build` (comparten `.cache`); todo con Node 14.21.3. Línea base de rutas y método de comparación: ver "Verificación del build de producción" y la sección M3 (listas de `public/**/index.html` y comparación de `page-data`).
+**Orden: M5 (código hecho, a falta del commit) → quitar `i18next-http-backend` (con OK) → A3 → (cuando el dueño lo decida) PR del hito 1 → R1a.** Comprobar siempre que no hay `develop` ni `gatsby serve` abiertos antes de `npm run build` (comparten `.cache`); todo con Node 14.21.3. Línea base de rutas y método de comparación: ver "Verificación del build de producción" y la sección M3 (listas de `public/**/index.html` y comparación de `page-data`).
 
-1. **M5 · i18n (`src/i18n/config.js`, `package.json`):** (a) quitar `import Backend from "i18next-http-backend"` y `.use(Backend)`: los textos ya van en línea (`resources`), el backend nunca se usa; (b) quitar `react: { wait: true }` (opción antigua; el build imprime `It seems you are still using the old wait option`); dejar `useSuspense: false`; (c) valorar quitar `i18next.languages = ["es","en"]` ahora que existe `supportedLngs`; **solo si** el comportamiento de idioma queda igual en producción (probar `en-US`, `es-VE`, `fr-FR`, `en`, `es`, sin valor guardado; selector en ambos sentidos); si cambia algo, dejarlo; (d) desinstalar la dependencia `i18next-http-backend` (toca `package.json` y `package-lock.json`: **avisar al dueño antes**, sin cambiar versiones de nada más). Verificar con **build de producción** (no solo `develop`), igual que A2/A7. Commit: `fix: M5 remove the unused i18n backend and the old wait option`.
-2. **A3 · SEO** (añade `gatsby-plugin-react-helmet@3` y `react-helmet`: **pedir confirmación** por la dependencia nueva): `lang` y `<title>` en el HTML estático, descripción, `robots.txt`, sitemap si procede. Es prerrequisito de R1a (`<body class="nx-root">`, `lang` y fuentes en el HTML estático).
+1. **M5 (hecho, falta el commit):** ver la sección M5. Commit: `fix: M5 remove the unused i18n backend, the old wait option and the languages patch`. **Después, con OK del dueño:** `npm uninstall i18next-http-backend` (solo cambia la línea de `package.json`; `package-lock.json` está en `.gitignore`), un build de comprobación y commit `chore: M5 remove the unused i18next-http-backend dependency`.
+2. **A3 · SEO.** Estado real: las páginas **ya** usan `HelmetDatoCms` (de `gatsby-source-datocms`, basado en `react-helmet`, que ya está instalado y en `package.json`), pero falta `gatsby-plugin-react-helmet`, así que `<title>`, descripción y metaetiquetas **no salen en el HTML estático** (solo aparecen tras hidratar). Plan: (a) añadir `gatsby-plugin-react-helmet` en `package.json` y en `gatsby-config.js` (**una dependencia nueva: pedir confirmación**; versión compatible con Gatsby 2, la `3.x`); (b) comprobar que `public/*/index.html` trae `<title>`, `<meta name="description">` y Open Graph de DatoCMS; (c) `lang` en `<html>`: hay que decidir cómo, porque el HTML se genera siempre en español y el idioma real se decide en el navegador (probable: `gatsby-ssr.js` con `setHtmlAttributes({ lang: "es" })` y actualizar `document.documentElement.lang` al cambiar de idioma; tener en cuenta el hallazgo de A7 sobre la hidratación); (d) páginas sin SEO de DatoCMS (`404`, `tos`, `privacy`, `credits`, `ventures`, `aboutNew`…): título y descripción mínimos; (e) `static/robots.txt` y, si procede, sitemap (`gatsby-plugin-sitemap@2`: otra dependencia, preguntar). Es prerrequisito de R1a (`<body class="nx-root">`, `lang` y fuentes en el HTML estático).
 3. **Extras pequeños, a elección del dueño:** B1 (`key` que falta en la lista de `aboutNew.js` y otros ítems de accesibilidad); fallar con mensaje claro si falta `api_key` en `gatsby-config.js`.
 4. **Cuando el dueño decida publicar el hito 1:** PR a `master` con "Create a merge commit" (no squash) y mencionar en la descripción que `092d9a4` es A5 aunque se llame M3; en el **deploy preview** probar a mano el boletín real (Netlify → Forms), contacto y cotización (un envío de prueba real), el clic home → post, `es-VE`/`en-US`, el icono del selector y la home. Después, R1a (ver [roadmap.md](roadmap.md) y [redesign.md](redesign.md)).
 
@@ -157,7 +166,7 @@ Dos `npm run build` seguidos (Node 14.21.3) terminaron sin errores: ~100 s el pr
 - El paquete del rediseño vive **fuera del repo** (`Refactor-Sites2026/nanasystems/nansystems-nx/nx-site`, con su `SPEC.md`).
 
 ### Commits de la sesión
-- `0816500` A6 · `f0b4b4a` A1 · `d04ff32` A2 · `72cf6b0` M1 · `092d9a4` A5 (con el mensaje de M3 por error) · `db8158e` docs de A5 y de la verificación del build · `c59773b` A7 · M3 = el commit siguiente (`fix: M3 gatsby-node stops the build on query errors and creates each page once`).
+- `0816500` A6 · `f0b4b4a` A1 · `d04ff32` A2 · `72cf6b0` M1 · `092d9a4` A5 (con el mensaje de M3 por error) · `db8158e` docs de A5 y de la verificación del build · `c59773b` A7 · `3c0f244` M3 · M5 = el commit siguiente (`fix: M5 remove the unused i18n backend, the old wait option and the languages patch`).
 
 ---
 
