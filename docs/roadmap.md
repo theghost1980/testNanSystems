@@ -24,7 +24,7 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 | A7 | El icono del selector de idioma mostraba "ES" aunque el sitio estuviera en inglés (solo en el build de producción; **ya ocurría en la web publicada**). Causa: el HTML estático sale en español y la hidratación de React corrige el texto pero no atributos (`class`, `src`, `title`). `Selector` ahora renderiza "es" en el primer render y aplica `i18n.language` justo después de montar | bajo | **hecho en la rama** (probado con build de producción) | `fix/portfolio-total-refactor-design-2026` |
 | A5 | Errores visibles en contacto/cotización/boletín; `response.ok`; helper de Netlify alineado | bajo | **hecho en la rama** (falta probar el boletín real en el deploy preview) | `fix/portfolio-total-refactor-design-2026` |
 | M1 | "Últimos posts" en orden `DESC` y enlace absoluto | bajo | **hecho en la rama** | `fix/portfolio-total-refactor-design-2026` |
-| M3 | `gatsby-node.js`: manejo de errores y deduplicar por slug | bajo-medio | pendiente | — |
+| M3 | `gatsby-node.js`: manejo de errores y deduplicar por slug | bajo-medio | **hecho en la rama** (build comparado con la línea base: mismas 20 rutas) | `fix/portfolio-total-refactor-design-2026` |
 | M5 | i18n: retirar backend sobrante y `wait`; `state` por defecto de `Button` (**esto último ya hecho con A1**) | bajo | parcial | — |
 
 > A1, A2 y M1 tocan archivos que el rediseño reescribe (`index.js`, `testimonyFixed`, `quickQuote`, `button`). Decisión por defecto: resolverlos **dentro de la rama del rediseño** solo en los archivos que se reescriben de todos modos; el resto, en ramas `fix/` aparte.
