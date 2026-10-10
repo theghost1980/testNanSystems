@@ -18,7 +18,7 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 
 | ID | Qué | Riesgo | Estado | Rama / PR |
 |---|---|---|---|---|
-| A6 | Las consultas de `portfolio.js` piden campos que la página no muestra y que Gatsby publica en el JSON de la página (`/page-data/…`). Pedir **solo lo que se muestra** y revisar ese contenido en DatoCMS. Detalle comunicado al dueño fuera del repo (el repo es público) | bajo | **pendiente · urgente** | `fix/…` |
+| A6 | Las consultas de `portfolio.js` piden campos que la página no muestra y que Gatsby publica en el JSON de la página (`/page-data/…`). Pedir **solo lo que se muestra** y revisar ese contenido en DatoCMS. Detalle comunicado al dueño fuera del repo (el repo es público) | bajo | **hecho en la rama** (falta publicar: PR → merge → deploy) | `fix/portfolio-total-refactor-design-2026` |
 | A1 | Formulario de cotización: `setOptionState`, título `undefined`, valores falsos, typo | bajo | pendiente | — |
 | A2 | Idioma regional (`en-US`, `es-VE`): `supportedLngs` o normalización | bajo-medio | pendiente | — |
 | A5 | Errores visibles en contacto/cotización/boletín; `response.ok`; helper de Netlify alineado | bajo | pendiente | — |
