@@ -41,7 +41,7 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 
 ---
 
-## 2026-10-10 (3.ª sesión) · Arreglos de código: A6, A1, A2, M1 y A5
+## 2026-10-10 (3.ª sesión) · Arreglos de código: A6, A1, A2, M1, A5 y A7
 
 **Rama:** `fix/portfolio-total-refactor-design-2026` (desde `master` en `b41fde4`, con los docs ya fusionados) · **Entorno:** Node 14.21.3, dev server local
 **Objetivo:** empezar el plan por orden de urgencia, un arreglo por paso, probado en local y con su propio commit.
@@ -87,7 +87,7 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 - **Contenido, no código:** los dos posts que ahora aparecen siguen siendo posts de prueba del CMS ("Testing the automatic Build on Netflify", "Triggering a Deploy on Netlify"). La sección luce mejor con posts reales.
 - **Limitación del entorno de pruebas:** en el panel de navegador de esta herramienta la ventana está oculta (`visibilityState: "hidden"`) y **las navegaciones por clic de Gatsby no terminan** (la URL cambia pero la vista no), incluso hacia enlaces que no se tocaron (`/blog` → `/contact`). Las cargas directas funcionan. Por eso el recorrido home → post por clic lo debe comprobar el dueño en su navegador.
 
-### A5 · Errores visibles en los formularios — este commit
+### A5 · Errores visibles en los formularios — `092d9a4` (mensaje equivocado) y `db8158e` (docs)
 - **Archivos:** `src/pages/contact.js`, `src/components/quickQuote.js`, `src/components/mailChimpForm.js`, `static/forms.html`, `src/locales/{es,en}/translations.json`.
 - **Contacto y cotización (EmailJS):** si el envío falla, antes solo había `console.error` y la pantalla se quedaba en "Enviando…" con los campos bloqueados. Ahora se vuelve a mostrar el formulario con un aviso (`role="alert"`, mismos estilos `divErrorSubcriptions` ya existentes, sin CSS nuevo), los campos siguen editables y **el texto escrito se conserva**; el reintento es volver a pulsar "Enviar". El aviso se limpia al reenviar o al cancelar.
 - **Boletín (Netlify Forms):** `fetch` solo rechaza ante fallos de red, así que una respuesta 4xx/5xx se mostraba como "gracias". Ahora `if (!response.ok) throw …` lleva a la vista de error, que muestra un título (`subscribe.errorTitle`), el texto de contacto de siempre y un botón **Reintentar** que vuelve al formulario con el correo conservado.
@@ -95,6 +95,15 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 - **Claves nuevas (mismos textos que el rediseño):** `contact.errorTitle/errorText`, `quickquote.errorTitle/errorText`, `subscribe.errorTitle`, `button.retry`. De paso se corrige el typo inglés `contact.sentTwo` ("replay" → "reply").
 - **Prueba en local (sin envíos reales):** EmailJS simulado (`XMLHttpRequest`) y `fetch` simulado. Contacto: fallo → aviso, campos libres, texto conservado; reintento → "enviado". Cotización: ídem, el aviso sale en español con `i18nextLng=es`. Boletín: respuesta 500 → error + Reintentar (correo conservado); fallo de red → error; éxito → "gracias"; la petición sigue siendo `form-name=newsletter&email=…`. 0 errores de JS.
 - **Ojo en local:** el dev server responde **404** a `POST /?no-cache=1`, así que en `localhost` el boletín ahora muestra el error (antes mostraba "gracias" aunque no se enviara nada). Es lo correcto. **Hay que probarlo de verdad en el deploy preview** (Netlify procesa el formulario) y ver el envío en Netlify → Forms; si un envío válido saliera como error, hay que ajustar la comprobación (p. ej. aceptar la redirección de Netlify).
+
+### A7 · Icono del selector de idioma — este commit
+- **Archivo:** `src/components/selector.js` (único cambio de código).
+- **Antes (producción, también en la web publicada):** con el sitio en inglés el menú dice "Home" pero el icono sigue en "ES" (`selectorLeft`, `title="Cambia el Idioma"`). En el dev server no se ve.
+- **Causa real (corrige la hipótesis inicial):** el HTML estático se genera en español. Al hidratar, el primer render del cliente ya tiene el idioma real (`en`: con recursos en línea y detector síncrono, `i18n.language` ya está fijado al cargar el módulo). React 17 **corrige el texto** que no coincide pero **no los atributos** (`class`, `src`, `title`), así que el menú sale bien y el icono queda con los atributos del HTML estático. El dev server usa `render` (no hidrata), por eso no lo mostraba. Un primer intento, derivar el icono solo de `i18n.language` sin `useState`, **no arregló nada** en producción (los 5 casos seguían en `selectorLeft`): lo descubrió el build, no el dev server.
+- **Cambio:** el primer render usa siempre `es` (igual que el HTML estático) y, tras montar (`useEffect` → `mounted`), el icono, la posición y el `title` salen de `i18n.language`; el clic llama a `i18n.changeLanguage(...)`. Se eliminan el estado de idioma y la llamada a `changeLanguage` al montar.
+- **Después (build de producción servido con `gatsby serve`):** `en-US`, `es-VE`, `en`, `es` y sin valor guardado (el navegador del panel es `en-US` → `en`): clase, `title` y menú coinciden en los cinco; el `src` de la bandera cambia entre `en` y `es`. Clic de `es` → `en` → `es`: el icono, el menú y `localStorage.i18nextLng` cambian en ambos sentidos. HTML estático sin cambios (`selectorLeft`, español de reserva). 20 `index.html` + `404.html`, igual que la línea base; 0 errores de consola.
+- **Alcance de la prueba:** solo se inspeccionó el selector de escritorio (el del menú móvil usa el mismo componente). Un `fr-FR` guardado ya se había comprobado con A2 en el dev server.
+- **Aviso para el rediseño (R1a):** lo mismo puede ocurrir con **cualquier atributo que dependa del idioma en el primer render** (`alt`, `title`, `aria-label`, `href`, `class`, imágenes del CMS por idioma): el HTML estático sale en español y la hidratación no los corrige. No se ha auditado el resto del sitio; al portar el `layout` hay que usar el mismo patrón (primer render = HTML estático, idioma real al montar) o generar HTML por idioma.
 
 ### Hallazgos / sorpresas
 - Los mensajes de commit de dos párrafos se pegan en el asunto (visible en `git log --oneline`): de ahora en adelante, una línea.
@@ -104,7 +113,7 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 ### Pendiente y abierto
 - **Publicar el hito 1** (PR a `master` con "Create a merge commit", no squash): A6 es una fuga; mejor no esperar al rediseño. El rediseño no se fusiona sin aprobación de la clienta.
 - Fase 1 restante: M3 (`gatsby-node.js`), M5 (resto de i18n), luego A3 (SEO; añade una dependencia). B1 incluye el `key` que falta en la lista de Biografía (`aboutNew.js`).
-- Sin verificar todavía con **build real**: el HTML estático de A2 (idioma de reserva `es` y posible parpadeo), que A6 también esté limpio en `public/page-data/portfolio/`, y `public/forms.html`.
+- ~~Sin verificar con build real~~ → verificado después (ver "Verificación del build de producción"): HTML estático de A2, `page-data` de A6 y `forms.html` de A5. Sigue pendiente el **parpadeo** de idioma al hidratar (el HTML sale en español): se resuelve mejor con A3/R1a.
 - Contenido por completar en DatoCMS: texto de relleno en inglés de la primera experiencia del portafolio; "logros" en español (2 de 11); posts de prueba en la home.
 
 ### Verificación del build de producción (línea base, tras A5)
@@ -114,23 +123,22 @@ Dos `npm run build` seguidos (Node 14.21.3) terminaron sin errores: ~100 s el pr
 - **A5:** `public/forms.html` lleva el honeypot.
 - **A2/M1 (producción):** `en-US`, `es-VE`, `es`, `en` y "sin nada guardado" resuelven bien el menú, el carrusel, los 2 posts más recientes (traducidos) y los 3 testimonios. El HTML estático sale en español de reserva (`Inicio`, carrusel en español) y sin `lang` ni `<title>` (A3).
 - **Avisos del build, inofensivos:** `'WMIC' is not recognized` (Windows 11 ya no trae WMIC; lo usa Gatsby al detectar el sistema) y `isModuleDeclaration has been deprecated` de Babel. `public/` conserva JS viejo sin referenciar de builds anteriores (la carpeta está ignorada por git y Netlify construye desde cero).
-- **Hallazgo nuevo A7:** en el build de producción el **icono del selector de idioma muestra "ES" aunque el sitio esté en inglés** (menú "Home"). Comprobado también en la web publicada (`nansystems.us` con `i18nextLng=en`), así que **ya estaba así**: solo se ve con render en servidor (el dev server no lo muestra). Causa: `components/selector.js` hace `useState(i18n.language)`; en el HTML estático y en la hidratación i18next aún no ha terminado de arrancar (el valor es `undefined`), y además el `useEffect` llama a `i18n.changeLanguage(undefined)`. El estado nunca se sincroniza.
+- **Hallazgo nuevo A7:** en el build de producción el **icono del selector de idioma muestra "ES" aunque el sitio esté en inglés** (menú "Home"). Comprobado también en la web publicada (`nansystems.us` con `i18nextLng=en`), así que **ya estaba así**: solo se ve con el HTML estático hidratado (el dev server no lo muestra). La causa inicial que anoté aquí (i18next sin arrancar) **era incorrecta**; la real es la hidratación sin corrección de atributos, ver la sección A7.
 
 ### Estado real al compactar (leer primero)
-- **A5 está commiteado con el mensaje equivocado:** `092d9a4` se llama `fix: M3 gatsby-node reports query errors and creates each page once` pero contiene los cambios de **A5** (contacto, cotización, boletín, `forms.html`, traducciones); `gatsby-node.js` **no** se ha tocado. La rama no está publicada, así que se corrige con: `git commit --amend -m "fix: A5 show errors and retry in the contact, quote and newsletter forms"`.
-- **Sin hacer todavía:** A7, M3, M5, A3.
+- **A5 sigue con el mensaje equivocado en el historial:** `092d9a4` se llama `fix: M3 gatsby-node reports query errors and creates each page once` pero contiene los cambios de **A5** (contacto, cotización, boletín, `forms.html`, traducciones); `gatsby-node.js` **no** se ha tocado. El dueño no lo corrigió con `--amend` (hizo `db8158e` con los docs de A5 encima). La rama no está publicada, así que aún se puede reescribir; si no, **dejarlo y aclararlo en la descripción del PR** (se fusiona con merge commit, el historial se conserva). **Para que no haya dos commits "M3", el commit real de M3 debe llevar otro texto** (ver abajo).
+- **Hecho y listo para commit:** A7 (`selector.js`, probado con build de producción) con sus docs.
+- **Sin hacer todavía:** M3, M5, A3.
 
 ### Próximos pasos (detalle para retomar sin contexto)
-**Orden corregido: 0) arreglar el mensaje del commit de A5 → A7 (selector de idioma) → M3 → cierre del hito 1. Los pasos 1 y 2 de abajo son los de M3; el 2 (medir con un build) ya está hecho: ver la línea base.**
-
-**A7 — `src/components/selector.js`:** quitar `useState`/`useEffect` y derivar todo de `i18n.language`: `const lang = i18n.language === "en" ? "en" : "es"`; el clic hace `i18n.changeLanguage(lang === "es" ? "en" : "es")`; el icono, la posición (`selectorLeft`/`selectorRight`) y el `title` usan `lang`. `useTranslation()` ya re-renderiza al cambiar el idioma, así que no hace falta más. Probar en **dev** (clic en ambos sentidos, persistencia en `localStorage.i18nextLng`) y en **producción** (`npm run build` + `gatsby serve`, y sondas con `en-US`, `es-VE`, `en`, `es`, sin nada guardado): el icono debe coincidir con el idioma y el HTML estático seguir en español. Commit sugerido: `fix: A7 language selector icon follows the active language`. Documentar en roadmap, CHANGELOG y este dev-log.
+**Orden: A7 (hecho, a falta del commit) → M3 → cierre del hito 1 (PR) → M5 → A3 → R1a. El paso 2 de M3 (medir con un build) ya está hecho: ver la línea base.**
 
 **M3 y cierre del hito 1:**
-1. **Pedir al dueño que pare el dev server** (`Ctrl+C`): `develop` y `build` comparten `.cache` y chocan. Todo con Node 14.21.3.
+1. **Comprobar que no hay dev server ni `gatsby serve` abiertos** (`develop` y `build` comparten `.cache` y chocan). Todo con Node 14.21.3.
 2. **[YA HECHO: ver "línea base" arriba; al terminar M3 repetir el build y comparar]** Medir el estado actual con un build (antes de tocar `gatsby-node.js`): `npm run build`, guardar la salida (nº de páginas creadas, avisos) y la lista de rutas (`public/**/index.html`). Comprobar en `public/`: (a) `index.html` → `lang`/idioma del HTML estático y contenido en español de reserva (A2); (b) `page-data/portfolio/page-data.json` sin los campos retirados en A6; (c) `forms.html` con el honeypot (A5). Servir con `npx gatsby serve` (puerto 9000) y abrir `/`, `/blog`, un post y un servicio.
 3. **M3 en `gatsby-node.js`:** (a) `return graphql(…).then(result => …)` en vez de `new Promise`; (b) si `result.errors`, `reporter.panicOnBuild(...)` con un mensaje claro y `return`; (c) crear **una sola vez** cada ruta (los slugs son iguales en `en` y `es`: usar un `Set` por tipo), manteniendo las rutas idénticas (`blog/${slug}`, `/${slug}`) y el contexto `{ slug }` (las plantillas solo usan `$slug`; `locale` del contexto no se usa); (d) `reporter.warn` si un slug de tecnología coincide con una ruta fija (`blog`, `contact`, `about`, `aboutNew`, `portfolio`, `ventures`, `tos`, `privacy`, `credits`). Opcional: en `gatsby-config.js`, fallar con un mensaje claro si falta `process.env.api_key` (hoy se convierte en el texto "undefined").
 4. **Verificar M3:** rebuild y comparar con el paso 2: **mismo conjunto de rutas**, sin avisos nuevos, `public/blog/<slug>/index.html` y `public/<slug>/index.html` presentes. Probar el camino de error con una `api_key` inválida solo si es seguro (el mensaje debe ser claro).
-5. **Documentar y commitear:** M3 en roadmap/CHANGELOG/dev-log (con los resultados del build) y commit de una línea, p. ej. `fix: M3 gatsby-node reports query errors and creates each page once`.
+5. **Documentar y commitear:** M3 en roadmap/CHANGELOG/dev-log (con los resultados del build) y commit de una línea con texto distinto al de `092d9a4`: `fix: M3 gatsby-node stops the build on query errors and creates each page once`.
 6. **Después:** PR del hito 1 a `master` (merge commit); en el **deploy preview** probar a mano el boletín real (ver Netlify → Forms), contacto y cotización (un envío de prueba real), el clic home → post, `es-VE`/`en-US` y la home en general. Luego M5, A3 y R1a (ver [roadmap.md](roadmap.md) y [redesign.md](redesign.md)).
 
 ### Convenciones de esta sesión (para no perderlas)
@@ -141,7 +149,7 @@ Dos `npm run build` seguidos (Node 14.21.3) terminaron sin errores: ~100 s el pr
 - El paquete del rediseño vive **fuera del repo** (`Refactor-Sites2026/nanasystems/nansystems-nx/nx-site`, con su `SPEC.md`).
 
 ### Commits de la sesión
-- `0816500` A6 · `f0b4b4a` A1 · `d04ff32` A2 · `72cf6b0` M1 · A5 = `092d9a4` (mensaje a corregir con `--amend`, ver "Estado real al compactar"). Los cambios de docs de la verificación del build (esta sección) van sin commit hasta el siguiente.
+- `0816500` A6 · `f0b4b4a` A1 · `d04ff32` A2 · `72cf6b0` M1 · `092d9a4` A5 (con el mensaje de M3 por error) · `db8158e` docs de A5 y de la verificación del build · A7 = el commit siguiente (`fix: A7 language selector icon follows the active language`).
 
 ---
 

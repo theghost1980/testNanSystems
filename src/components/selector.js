@@ -6,27 +6,26 @@ import { useTranslation } from "react-i18next";
 
 const Selector = (props) => {
   const { i18n } = useTranslation();
-  const [selectedLang, setSelectedLang] = useState(i18n.language);
   const _classMobile = props.classMobile || "";
-
-  useEffect(() => {
-    i18n.changeLanguage(selectedLang);
-  }, [selectedLang, i18n]);
+  // El HTML estático se genera en español y la hidratación de React corrige el
+  // texto pero no atributos (class, src, title): el primer render debe coincidir
+  // con ese HTML y el idioma real se aplica justo después de montar.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const lang = mounted && i18n.language === "en" ? "en" : "es";
 
   return (
     <div
       className={`selectorCont ${_classMobile}`}
-      onClick={() => setSelectedLang(selectedLang === "es" ? "en" : "es")}
+      onClick={() => i18n.changeLanguage(lang === "es" ? "en" : "es")}
     >
       <img
-        src={selectedLang === "en" ? iconSystemsEN : iconSystemsES}
+        src={lang === "en" ? iconSystemsEN : iconSystemsES}
         alt="click to slide"
         className={`iconSelector ${
-          selectedLang === "en" ? "selectorRight" : "selectorLeft"
+          lang === "en" ? "selectorRight" : "selectorLeft"
         }`}
-        title={
-          selectedLang === "en" ? "Change the language" : "Cambia el Idioma"
-        }
+        title={lang === "en" ? "Change the language" : "Cambia el Idioma"}
       />
     </div>
   );
