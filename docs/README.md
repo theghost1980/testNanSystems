@@ -29,6 +29,7 @@ Esta carpeta **no se publica en el sitio web**: vive solo en el repositorio.
 - Hay una auditoría completa y un plan por fases; ver [roadmap.md](roadmap.md).
 - Rediseño elegido como base: propuesta D (Coral Editorial); ver [redesign.md](redesign.md).
 - Muestras HTML de todas las pantallas y su SPEC: hechas y revisadas (fuera del repo). Siguiente: pieza vertical R1a en una rama aparte.
+- Arreglos de código hechos en la rama `fix/portfolio-total-refactor-design-2026` (aún **no** en `master`): A6, A1, A2, M1, A5, A7, M3 y M5. Pendiente para la próxima sesión: resto de M5 (dependencia), A3 (SEO), PR del hito 1 y R1a. Ver [roadmap.md](roadmap.md) y [dev-log.md](dev-log.md).
 
 ## Convenciones
 

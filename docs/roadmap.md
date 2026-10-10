@@ -16,16 +16,27 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 
 ## Fase 1 · Bugs sin tocar dependencias
 
+> **Progreso (cierre de la 3.ª sesión, 2026-10-10):** hechos en la rama `fix/portfolio-total-refactor-design-2026`, todos con build de producción comprobado: **A6, A1, A2, M1, A5, A7, M3 y M5** (código). **Nada de esto está en `master` todavía**: el PR del hito 1 se hará cuando el dueño lo pida (no antes).
+>
+> **Para la próxima sesión (en este orden):**
+> 1. Quitar `i18next-http-backend` de `package.json` (resto de M5; pide OK del dueño).
+> 2. **A3** (SEO en el HTML estático; añade `gatsby-plugin-react-helmet`: pedir OK). Prerrequisito de R1a.
+> 3. Extras a elección: B1 (`key` en `aboutNew.js`), fallo claro si falta `api_key`.
+> 4. PR del hito 1 y prueba manual en el deploy preview (boletín real, contacto, cotización, clic home → post, `es-VE`/`en-US`).
+> 5. R1a (pieza vertical del rediseño, en rama aparte desde `master`).
+>
+> Detalle y método de prueba en el [dev-log](dev-log.md) (sección "Próximos pasos").
+
 | ID | Qué | Riesgo | Estado | Rama / PR |
 |---|---|---|---|---|
-| A6 | Las consultas de `portfolio.js` piden campos que la página no muestra y que Gatsby publica en el JSON de la página (`/page-data/…`). Pedir **solo lo que se muestra** y revisar ese contenido en DatoCMS. Detalle comunicado al dueño fuera del repo (el repo es público) | bajo | **hecho en la rama** (falta publicar: PR → merge → deploy) | `fix/portfolio-total-refactor-design-2026` |
-| A1 | Formulario de cotización: `setOptionState`, título `undefined`, valores falsos, typo | bajo | **hecho en la rama** | `fix/portfolio-total-refactor-design-2026` |
-| A2 | Idioma regional (`en-US`, `es-VE`): `supportedLngs` o normalización | bajo-medio | **hecho en la rama** (falta comprobar el HTML del build) | `fix/portfolio-total-refactor-design-2026` |
-| A7 | El icono del selector de idioma mostraba "ES" aunque el sitio estuviera en inglés (solo en el build de producción; **ya ocurría en la web publicada**). Causa: el HTML estático sale en español y la hidratación de React corrige el texto pero no atributos (`class`, `src`, `title`). `Selector` ahora renderiza "es" en el primer render y aplica `i18n.language` justo después de montar | bajo | **hecho en la rama** (probado con build de producción) | `fix/portfolio-total-refactor-design-2026` |
-| A5 | Errores visibles en contacto/cotización/boletín; `response.ok`; helper de Netlify alineado | bajo | **hecho en la rama** (falta probar el boletín real en el deploy preview) | `fix/portfolio-total-refactor-design-2026` |
-| M1 | "Últimos posts" en orden `DESC` y enlace absoluto | bajo | **hecho en la rama** | `fix/portfolio-total-refactor-design-2026` |
-| M3 | `gatsby-node.js`: manejo de errores y deduplicar por slug | bajo-medio | **hecho en la rama** (build comparado con la línea base: mismas 20 rutas) | `fix/portfolio-total-refactor-design-2026` |
-| M5 | i18n: retirar backend sobrante, `wait` y el parche `i18next.languages`; `state` por defecto de `Button` (**ya hecho con A1**) | bajo | **hecho en la rama** (código, probado con build). Falta solo quitar `i18next-http-backend` de `package.json` (pide OK del dueño) | `fix/portfolio-total-refactor-design-2026` |
+| A6 | Las consultas de `portfolio.js` piden campos que la página no muestra y que Gatsby publica en el JSON de la página (`/page-data/…`). Pedir **solo lo que se muestra** y revisar ese contenido en DatoCMS. Detalle comunicado al dueño fuera del repo (el repo es público) | bajo | **hecho en la rama** `0816500` (falta publicar: PR → merge → deploy) | `fix/portfolio-total-refactor-design-2026` |
+| A1 | Formulario de cotización: `setOptionState`, título `undefined`, valores falsos, typo | bajo | **hecho en la rama** `f0b4b4a` | `fix/portfolio-total-refactor-design-2026` |
+| A2 | Idioma regional (`en-US`, `es-VE`): `supportedLngs` o normalización | bajo-medio | **hecho en la rama** `d04ff32` (HTML del build comprobado) | `fix/portfolio-total-refactor-design-2026` |
+| A7 | El icono del selector de idioma mostraba "ES" aunque el sitio estuviera en inglés (solo en el build de producción; **ya ocurría en la web publicada**). Causa: el HTML estático sale en español y la hidratación de React corrige el texto pero no atributos (`class`, `src`, `title`). `Selector` ahora renderiza "es" en el primer render y aplica `i18n.language` justo después de montar | bajo | **hecho en la rama** `c59773b` (probado con build de producción) | `fix/portfolio-total-refactor-design-2026` |
+| A5 | Errores visibles en contacto/cotización/boletín; `response.ok`; helper de Netlify alineado | bajo | **hecho en la rama** `092d9a4` (este commit se llama "M3" por error) y `db8158e` (docs); falta probar el boletín real en el deploy preview | `fix/portfolio-total-refactor-design-2026` |
+| M1 | "Últimos posts" en orden `DESC` y enlace absoluto | bajo | **hecho en la rama** `72cf6b0` | `fix/portfolio-total-refactor-design-2026` |
+| M3 | `gatsby-node.js`: manejo de errores y deduplicar por slug | bajo-medio | **hecho en la rama** `3c0f244` (build comparado con la línea base: mismas 20 rutas) | `fix/portfolio-total-refactor-design-2026` |
+| M5 | i18n: retirar backend sobrante, `wait` y el parche `i18next.languages`; `state` por defecto de `Button` (**ya hecho con A1**) | bajo | **hecho en la rama** `6ef3025` (código, probado con build). Falta solo quitar `i18next-http-backend` de `package.json` (pide OK del dueño) | `fix/portfolio-total-refactor-design-2026` |
 
 > A1, A2 y M1 tocan archivos que el rediseño reescribe (`index.js`, `testimonyFixed`, `quickQuote`, `button`). Decisión por defecto: resolverlos **dentro de la rama del rediseño** solo en los archivos que se reescriben de todos modos; el resto, en ramas `fix/` aparte.
 
