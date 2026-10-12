@@ -8,7 +8,8 @@ import Testimonials from "../components/testimonials";
 import Media from "../components/media";
 import Icon from "../components/icons";
 import { useNx } from "../hooks/useNx";
-import { formatDate } from "../utils/content";
+import PostMeta from "../components/postMeta";
+import { readMinutes } from "../utils/content";
 import { TECH_CAREER_START_YEAR } from "../config/site";
 
 const Home = ({ data }) => {
@@ -89,17 +90,7 @@ const Home = ({ data }) => {
                   className="nx-post__thumb nx-media--md nx-media--blur"
                 />
                 <div className="nx-post__body">
-                  <span className="nx-mono">
-                    <time dateTime={String(node.datePublished).slice(0, 10)}>
-                      {formatDate(node.datePublished, L)}
-                    </time>
-                    {node.contentNode && node.contentNode.childMarkdownRemark && (
-                      <>
-                        {" · "}
-                        {node.contentNode.childMarkdownRemark.timeToRead} {t("blog.readTime")}
-                      </>
-                    )}
-                  </span>
+                  <PostMeta date={node.datePublished} minutes={readMinutes(node)} />
                   <h3 className="nx-post__title">{node.title}</h3>
                 </div>
               </Link>

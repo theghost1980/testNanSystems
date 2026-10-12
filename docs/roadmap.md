@@ -18,11 +18,11 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 
 > **Progreso (2026-10-12):** la Fase 1 de código está **fusionada en `master`** (PR #2, con **squash**: commit `2de51ed`). Los commits individuales, y los hashes que citan estos docs, viven en la rama `fix/portfolio-total-refactor-design-2026`: **no borrarla**. Hechos: A6, A1, A2, M1, A5, A7, M3, M5, A3, M9, A8 (con el antiabuso de los formularios) y el `key` de `aboutNew` (B1 parcial).
 >
-> **Rediseño en curso** en la rama `feat/redesign-coral-editorial` (desde `master`; **no se fusiona hasta que la clienta apruebe**). **R1a, R1 y R2 hechos en la rama:** `Layout` nuevo (cabecera, pie, banda de cotización, diálogos de cotización y boletín) y home completa con datos del CMS; las demás páginas se ven sin estilos hasta R3 (ver [dev-log](dev-log.md)).
+> **Rediseño en curso** en la rama `feat/redesign-coral-editorial` (desde `master`; **no se fusiona hasta que la clienta apruebe**). **R1a, R1 y R2 hechos en la rama:** `Layout` nuevo (cabecera, pie, banda de cotización, diálogos de cotización y boletín) y home completa con datos del CMS. **R3 en curso:** hechos blog, post y servicios (y el logo con engranajes); biografía, portafolio, proyectos y contacto se ven sin estilos hasta portarlos (ver [dev-log](dev-log.md)).
 >
 > **Siguiente (en este orden):**
 > 1. **Comprobar producción tras el merge** (`nansystems.us`): home en ES y EN, `/sitemap.xml` y `/robots.txt` con 200, un envío real de contacto, de cotización y de boletín (llegan a Netlify → Forms y las notificaciones por correo funcionan), ninguna llamada a `emailjs.com`, y confirmar el dominio canónico (con o sin `www`).
-> 2. **Revisión del dueño en local** del inicio (escritorio, tableta, tema oscuro) y confirmación con la clienta de la cifra "+11" y los textos. Luego **R3**: blog y post, servicios, biografía, portafolio, proyectos y contacto; después R4.
+> 2. **Revisión del dueño en local** del inicio (escritorio, tableta, tema oscuro) y confirmación con la clienta de la cifra "+11" y los textos. Luego **R3** (quedan biografía, portafolio, proyectos y contacto); después R4.
 > 3. A4: evaluar si compensa seguir con Google Analytics (decisión del dueño; hasta entonces no se toca).
 > 4. Avisar a la clienta de que contacto y cotización estuvieron caídos en producción (EmailJS), y revisar el contenido de DatoCMS y los deploys antiguos de Netlify (A6).
 >
@@ -79,7 +79,7 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 | R1a | **Pieza vertical**: `layout` nuevo + hero de la home alimentado por el CMS con `.nx-media` + `gatsby-image`. Valida SSR (`gatsby-ssr.js`), tema, idioma, build y el comportamiento real de las imágenes antes de portar el resto. **Hecha en local (2026-10-12):** fuentes autoalojadas, `Layout`/cabecera/pie/banda/diálogos, `Media` y home; el hero es un archivo local y no del CMS (ver dev-log). Falta la revisión visual del dueño | medio | **hecha en la rama** (pendiente de revisión y preview) | `feat/redesign-coral-editorial` (desde `master`) |
 | R1 | Base completa: variables CSS, fuentes, header/footer nuevos en `Layout`; **retirar `styles.css` y los imports de Bootstrap en el mismo cambio** (el reset de `.nx-root` es global y la regla vieja de `html, body` pisa el fondo) | medio | **hecha en la rama**, salvo borrar `styles.css` (referencia hasta terminar R3) y desinstalar `bootstrap`/`react-bootstrap` (lo hace el dueño) | idem |
 | R2 | Home | medio | **hecha en la rama** (hero, franja, servicios, testimonios y artículos con datos del CMS); la cifra "+11" y los textos esperan confirmación de la clienta | idem |
-| R3 | Páginas con contenido del CMS: blog, post, proyectos, biografía, portafolio, contacto y modal de cotización | medio | pendiente | idem |
+| R3 | Páginas con contenido del CMS: blog, post, proyectos, biografía, portafolio, contacto y modal de cotización | medio | **en curso en la rama:** hechos blog, post y servicios (y el modal de cotización, en R1a); faltan biografía, portafolio, proyectos y contacto | idem |
 | R4 | Legales, 404, QA responsive/accesibilidad, `prefers-reduced-motion` | bajo | pendiente | idem |
 | R5 | Revisión del preview con la clienta y merge | alto (publica) | bloqueado: aprobación de la clienta | — |
 

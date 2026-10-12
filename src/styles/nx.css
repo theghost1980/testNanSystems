@@ -270,7 +270,7 @@
 .nx-link:hover { text-decoration-thickness: 2.5px; }
 .nx-link svg { display: inline-block; vertical-align: -3px; }
 .nx-link-more {
-  display: inline-flex; align-items: center; gap: 6px; min-height: 44px;
+  display: inline-flex; align-items: center; gap: 6px; min-height: 44px; justify-self: start;
   font-weight: 600; border-bottom: 2px solid var(--coral); padding-bottom: 2px;
 }
 .nx-link-more:hover, .nx-link-more.nx-is-hover { color: var(--brand-blue-text); }
@@ -343,7 +343,12 @@
 .nx-logo { display: inline-flex; align-items: center; gap: 2px; font-size: clamp(18px, 5vw, 22px); letter-spacing: -0.02em; min-height: 44px; }
 .nx-logo__light { font-weight: 400; }
 .nx-logo__bold { font-weight: 800; }
-.nx-logo__dot { width: 10px; height: 10px; border-radius: 50%; background: var(--coral); margin-left: 4px; }
+.nx-logo__gears { flex: none; width: 1.5em; height: 1.25em; margin-left: 5px; overflow: visible; }
+.nx-logo__gear { transition: transform 0.45s cubic-bezier(0.3, 1.3, 0.5, 1); }
+.nx-logo__gear--big { fill: var(--coral); transform-origin: 12.5px 13px; }
+.nx-logo__gear--small { fill: currentColor; transform-origin: 27px 21.5px; }
+.nx-logo:hover .nx-logo__gear--big, .nx-logo:focus-visible .nx-logo__gear--big { transform: rotate(45deg); }
+.nx-logo:hover .nx-logo__gear--small, .nx-logo:focus-visible .nx-logo__gear--small { transform: rotate(-60deg); }
 .nx-nav { display: none; }
 .nx-nav__list { display: flex; gap: 6px; }
 .nx-nav__link {
@@ -384,6 +389,7 @@
   .nx-header__inner { gap: 4px; }
   .nx-header__actions { gap: 2px; }
   .nx-logo { font-size: 16px; min-width: 0; }
+  .nx-logo__gears { width: 1.3em; height: 1.08em; margin-left: 3px; }
   .nx-header__actions [data-nx-lang-toggle] { padding-inline: 4px; }
 }
 

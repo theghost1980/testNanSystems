@@ -20,6 +20,30 @@ export const focalToPosition = (fp) => {
 export const altFor = (image, fallback) =>
   (image && image.alt) || fallback || "";
 
+// Minutos de lectura de un BlogPost (`timeToRead` no es campo del registro: se pide por
+// contentNode.childMarkdownRemark). 0 si no hay contenido.
+export const readMinutes = (node) =>
+  (node &&
+    node.contentNode &&
+    node.contentNode.childMarkdownRemark &&
+    node.contentNode.childMarkdownRemark.timeToRead) ||
+  0;
+
+// HTML crudo del CMS (remark sin plugins) → listo para `.nx-prose` (SPEC j.3 y j.4):
+// - un solo h1 por página: los h1 del contenido bajan a h2 (el estilo ya los iguala);
+// - las celdas de cabecera de tabla reciben scope="col" (remark GFM no lo pone);
+// - los bloques `pre` y las tablas se desplazan en horizontal (CSS): con tabindex="0" se pueden
+//   recorrer con el teclado.
+export const prepareCmsHtml = (html) =>
+  String(html || "")
+    .replace(/<(\/?)h1(\s[^>]*)?>/g, "<$1h2$2>")
+    .replace(/<th(\s[^>]*)?>/g, (m, attrs = "") =>
+      /\sscope=/.test(attrs) ? m : `<th scope="col"${attrs}>`
+    )
+    .replace(/<(pre|table)(\s[^>]*)?>/g, (m, tag, attrs = "") =>
+      /\stabindex=/.test(attrs) ? m : `<${tag} tabindex="0"${attrs}>`
+    );
+
 // Fecha absoluta por idioma (más estable que "hace 3 meses" para SEO y traducción).
 // Zona UTC para que el día no se mueva.
 export const formatDate = (iso, lang) => {

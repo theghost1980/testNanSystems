@@ -41,6 +41,56 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 
 ---
 
+## 2026-10-12 (6.ª sesión) · R3 (parte 1): logo con engranajes, blog, post y servicios
+
+**Rama:** `feat/redesign-coral-editorial` (sobre `3eb7951`, el commit de R1a pasos 2 y 3) · **Entorno:** Node 14.21.3
+**Objetivo:** el dueño revisó la home ("todo funciona y se va viendo mejor") y pidió seguir; además, recuperar de forma opcional la "ruedita" del logo anterior.
+
+### Hecho
+- **Logo con engranajes** (`src/components/header.js`, `nx.css`): el punto coral se sustituye por los dos engranajes del logo anterior, dibujados como SVG propio (grande de 8 dientes en coral, pequeño de 6 en el color del texto, engranados). Al pasar el mouse o enfocar el logo giran un diente en sentidos contrarios (45° y −60°, solo `transform`); con `prefers-reduced-motion` no se mueven (regla general de `nx.css`). Es un dibujo nuevo, no el PNG viejo (que era azul y verde agua): se ve igual de bien en claro y oscuro y no pesa. Los paths los genera un script (no hay archivo en el repo): si hay que cambiar dientes o proporciones, se regeneran.
+- **Blog** (`src/pages/blog.js`): cabecera con `h1`, texto de introducción y la cita (`blog.quote`); tarjetas `nx-post-card` con la primera destacada (dos columnas desde 768 px), portada 16:10 con punto focal, hasta 3 pastillas, fecha absoluta por idioma y minutos de lectura. Consulta mínima (se quitaron `blogImg*`, `locale` y `fromNow`), orden descendente, `sizes` real por hueco y estado vacío (`blog.empty`). Los títulos de las tarjetas son `h2` (el `h3` de la muestra saltaba un nivel).
+- **Post** (`src/templates/blogpost.js`): `nx-article` con enlace "Volver al blog", pastillas, `h1`, meta, portada 2:1 (`priority`, sin lazy), contenido en `.nx-prose--lg`, categorías al pie y compartir. Si el artículo no existe en el idioma elegido muestra el otro (antes habría roto la página).
+- **Servicio** (`src/templates/technology.js`): etiqueta "Servicio · `shortTitle`", `h1`, descripción corta, pastillas, botón coral "Cotizar este servicio" (abre la cotización con el título precargado), portada 3:2, contenido y compartir. Mismo respaldo de idioma.
+- **Piezas compartidas nuevas:** `postMeta` (fecha + minutos; la home ahora lo usa también), `pills`, `share`; en `utils/content.js`: `readMinutes` y `prepareCmsHtml`; `Media` acepta `sizes` también para imágenes del CMS; iconos `back` y `whatsapp`; `SHARE_VIA_HANDLE` en `config/site.js`.
+- **`prepareCmsHtml`** (SPEC j.3 y j.4) se aplica al HTML del CMS en post y servicio: baja los `h1` del contenido a `h2` (un solo `h1` por página), añade `scope="col"` a las cabeceras de tabla y `tabindex="0"` a los `pre` y tablas (se desplazan en horizontal: así se pueden recorrer con el teclado).
+- **Arreglo de CSS:** el borde coral de `.nx-link-more` se estiraba a todo el ancho cuando el enlace estaba en una rejilla (`justify-self: start`).
+
+### Decisiones
+- **Compartir con enlaces normales, no con `react-share`:** la muestra del diseño ya usa `<a class="nx-share__btn">`; cada enlace abre la red en una pestaña nueva (`noopener noreferrer`), con nombre accesible "Compartir en X (se abre en una pestaña nueva)". Se evita un SDK con ventanas emergentes y botones sin enlace real, y la URL sale de `siteUrl` + ruta, igual en el HTML estático y en el navegador (antes salía de `location.href`, que no existe al generar el HTML). `react-share` **sigue en uso** por `aboutNew.js` y `singleventure.js` hasta portarlas; después: `npm uninstall react-share` y borrar `src/components/shareButton.js`.
+- **El logo gráfico vuelve en versión engranajes** aunque la SPEC lo había dejado como solo texto: lo pidió el dueño, es decorativo (el nombre accesible lo da el enlace) y no cambia el contrato del logo.
+- **`SHARE_VIA_HANDLE = "_MsLinda"`** es el usuario que ya tenía el botón anterior; hay que confirmar con la clienta si sigue siendo suyo.
+
+### Hallazgos / sorpresas
+- **El build falló por un `\r` dentro de un string:** el script que incrustó los paths en `header.js` leyó la salida de Python en Windows (CRLF) y dejó un retorno de carro al final de cada cadena; Babel: `Unterminated string constant`. Lección: al generar código desde la salida de otro programa, limpiar `\r`. Parecido: `\s` dentro de una plantilla de JS (`` `\s…` ``) pierde la barra; en regex usar el literal `/\s…/`.
+- **`useDialog` solo funciona dentro de `Layout`** (el proveedor vive ahí): una página o plantilla no puede llamarlo directamente; el botón de cotización del servicio es un componente hijo (`QuoteButton`).
+- En los datos reales: los 5 artículos tienen portada, alt vacío (el respaldo es el título) y 3 categorías; las portadas se ven bien recortadas a 16:10 con el centro por defecto (sin punto focal en el CMS todavía).
+
+### Verificación (build de producción, `gatsby serve`)
+- Build limpio: 21 páginas. Blog: 5 tarjetas en orden descendente, portadas con relación 1,6, `sizes` correcto, fechas y minutos por idioma; la destacada ocupa dos columnas desde 768 px (7fr/5fr) y las demás van a 2 columnas; sin errores en consola.
+- Post y servicio: un solo `h1`, 0 `h1` dentro del contenido, enlaces de compartir bien formados, portada con `loading="eager"`, etiqueta del grupo "Compartir…" por página.
+- **Sin desborde de página** en blog, dos posts y un servicio a 320, 375, 768, 1024 y 1440 px (el único elemento que sobresale es el `<code>` de un `pre` que se desplaza dentro de su caja, como debe).
+- Cotización desde el servicio: abre con "Servicio: <título>", foco dentro del diálogo, Esc cierra, el foco vuelve al botón y el resto de la página recupera `inert`.
+- Tema oscuro del blog y logo con engranajes en claro y oscuro revisados en la primera pintura. La revisión visual completa sigue siendo del dueño.
+
+### Pendiente y abierto
+- Lo de la 5.ª sesión sigue abierto (confirmaciones con la clienta, kit de imágenes en DatoCMS con punto focal y alt, producción tras el merge del PR #2, A4, dominio canónico).
+- Confirmar `SHARE_VIA_HANDLE`.
+- Los posts no tienen punto focal ni alt en el CMS: se ven con el centro y el título como texto alternativo hasta subir el kit.
+
+### Estado al cerrar el bloque (leer primero)
+- **Rama `feat/redesign-coral-editorial`**. Hecho en el árbol de trabajo y **sin commitear** (lo hace el dueño): logo con engranajes, blog, post, servicios y las piezas compartidas. Commit propuesto: `feat: R3 gears logo, blog, post and service pages for the redesign`. `docs/images_new` no se añade nunca.
+- **Siguen sin portar** (se ven sin estilos nuevos dentro del `Layout`): biografía (`aboutNew.js`), portafolio, proyectos, contacto; legales y 404 en R4. `react-share` y `shareButton.js` se retiran cuando `aboutNew.js` y `singleventure.js` dejen de usarlos.
+
+### Próximos pasos
+1. **Biografía** (`src/pages/aboutNew.js`): tarjetas `aboutarea` 1:1 con `Media`, `itemAboutus` alternados con acordeón "Leer más" (`content` por fin se muestra), `welcomeNode` en `.nx-prose--lg` con `prepareCmsHtml`; sin `Sharebuttons` (si la muestra lo lleva, usar `Share` con `labelKey="about.share"`).
+2. **Portafolio**, **Proyectos** (diálogo "Leer más" que encadena con la cotización) y **Contacto** (reutilizar `submitNetlifyForm("contact", …)`, `HoneypotField` y `FormErrorText`), según la sección "Próximos pasos" de la 5.ª sesión.
+3. R4 y el PR en borrador para el primer preview; limpieza final (incluida `react-share` y `styles.css`).
+
+### Commits de la sesión
+- `3eb7951` R1a pasos 2 y 3 (del cierre de la 5.ª sesión) · pendiente del dueño, propuesto: `feat: R3 gears logo, blog, post and service pages for the redesign`
+
+---
+
 ## 2026-10-12 (5.ª sesión) · Rediseño: decisiones, análisis de migración y R1a paso 1
 
 **Rama:** `feat/redesign-coral-editorial` (desde `master` en `2de51ed`, el squash del PR #2) · **Entorno:** Node 14.21.3
@@ -137,7 +187,8 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 **Cómo verificar (lo que funciona en este entorno):** `npm run build` + `npx gatsby serve -p 9000`; iframes del ancho real (320, 375, 768, 1024, 1280, 1440…) para medir desbordes y comportamiento; `fetch` simulado dentro del iframe para los formularios; sondas de DOM para `aria-*`, foco e `inert`. Las capturas del panel solo son fiables en la primera pintura de una carga nueva (con scroll salen en blanco). No eliminar con `.remove()` nodos que gestiona React (usar `style.display = "none"`).
 
 ### Commits de la sesión
-- `3727028` R1a paso 1 (fuentes y CSS inertes) · pendiente del dueño, propuesto: `feat: R1a new layout, dialogs and home for the redesign`
+- `3727028` R1a paso 1 (fuentes y CSS inertes)
+- `3eb7951` R1a pasos 2 y 3 (`feat: R1a new layout, dialogs and home for the redesign`)
 
 ---
 

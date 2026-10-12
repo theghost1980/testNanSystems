@@ -187,6 +187,12 @@ La clienta dio **carta abierta** para el rediseño. Se trabaja en la rama `feat/
 - **Paso 3 (hecho):** home completa: hero (imagen local, cifra "+11", tarjeta de cotización), franja de tecnologías, servicios, testimonios y artículos recientes con datos del CMS, todo a través del componente `Media`.
 - **Paso 4 (parcial):** verificado con el build de producción por mediciones del DOM (sin desborde de 320 a 1920 px, comportamiento de menú, idioma, tema y diálogos, 15 rutas sin errores); la revisión visual completa la hace el dueño en su navegador porque las capturas del entorno no son fiables al desplazarse. **Pendiente:** PR en borrador para el primer preview cuando haya bastantes pantallas.
 
+### Avance de R3 (2026-10-12)
+- **Hechos:** blog, post y servicio (`nx-post-card`, `nx-article`, portadas 16:10, 2:1 y 3:2 con `Media`), con `prepareCmsHtml` aplicado al contenido del CMS (SPEC j.3 y j.4). **Faltan:** biografía, portafolio, proyectos y contacto; luego R4.
+- **Compartir sin `react-share`:** enlaces normales a cada red (como en la muestra), con la URL de `siteUrl` + ruta. La SPEC pedía `react-share`; se cambia porque la muestra ya usa `<a>` y así no hay SDK ni ventanas emergentes. `react-share` se desinstala cuando se porten `aboutNew.js` y `singleventure.js`.
+- **Logo:** vuelven los engranajes del logo anterior (SVG propio, coral y color del texto) en lugar del punto; la SPEC los había descartado en favor de solo texto, pero el dueño pidió recuperarlos.
+- **Títulos de tarjeta del blog en `h2`** (la muestra usaba `h3` bajo el `h1`, saltando un nivel).
+
 ### Decisiones tomadas al portar la home (2026-10-12)
 - **El hero es un archivo local**, no `carouselHome[0]` del CMS: el carrusel antiguo trae fotos de 2020 y siempre ganaría. Cambiar a la fuente del CMS es una línea en `src/components/hero.js`.
 - **La cifra "+11 años"** sale de `TECH_CAREER_START_YEAR = 2015` en `src/config/site.js`, no del primer empleo (2008 es coordinación de recursos humanos). Pendiente de confirmar con la clienta.

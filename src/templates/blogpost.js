@@ -1,51 +1,63 @@
 import React from "react";
-import { graphql } from "gatsby";
-import Layout from "../components/layout";
-import Img from "gatsby-image";
-import Sharebuttons from "../components/shareButton";
-import { useTranslation } from "react-i18next";
+import { graphql, Link } from "gatsby";
 import { HelmetDatoCms } from "gatsby-source-datocms";
+import Layout from "../components/layout";
+import Media from "../components/media";
+import Icon from "../components/icons";
+import Pills from "../components/pills";
+import PostMeta from "../components/postMeta";
+import Share from "../components/share";
+import { useNx } from "../hooks/useNx";
+import { parseCategories, prepareCmsHtml, readMinutes } from "../utils/content";
 
-const Blogpost = (props) => {
-  const { t, i18n } = useTranslation();
-  const _lang = i18n.language;
-  const dataPost = _lang === "es" ? props.data.post_es : props.data.post_en;
-  const _twitterHandle = "_MsLinda";
-  const _url = props.location.href;
-  const _titlePost = dataPost.title;
-  const _tags = dataPost.categories;
+const Blogpost = ({ data, location }) => {
+  const { t, lang } = useNx();
+  const L = lang === "en" ? "en" : "es";
+  // Si el artículo no existe en el idioma elegido se muestra el otro, nunca una página rota.
+  const post = data[`post_${L}`] || data.post_es || data.post_en;
+  const cats = parseCategories(post.categories);
+  const md = post.contentNode && post.contentNode.childMarkdownRemark;
 
   return (
     <Layout>
-      <HelmetDatoCms seo={dataPost.seoMetaTags} />
-      <div className="postCont">
-        <div className="imgPostCont">
-          <Img fluid={dataPost.coverImage.fluid} className="coverImgPost" />
-        </div>
-        <Sharebuttons
-          url={_url}
-          title={_titlePost}
-          twitterHandle={_twitterHandle}
-          tags={_tags}
-          sizeAll={"35"}
+      <HelmetDatoCms seo={post.seoMetaTags} />
+      <article className="nx-article nx-section nx-section--tight nx-container">
+        <header className="nx-article__head">
+          <Link className="nx-link-more" to="/blog">
+            <Icon name="back" size={18} /> <span>{t("blog.back")}</span>
+          </Link>
+          <Pills items={cats} />
+          <h1 className="nx-h1">{post.title}</h1>
+          <p className="nx-article__meta">
+            <PostMeta date={post.datePublished} minutes={readMinutes(post)} />
+          </p>
+        </header>
+        <Media
+          image={post.coverImage}
+          fallbackAlt={post.title}
+          ratio="2x1"
+          sizes="(min-width: 1320px) 1256px, 100vw"
+          priority
+          className="nx-media--card nx-media--blur"
         />
-        <div className="textPostCont">
-          <h2 className="centeredTitle titlePost">{dataPost.title}</h2>
-          <p className="datePostText centeredTitle">{dataPost.datePublished}</p>
-          <hr className="hrsinglePost" />
+        {md && (
           <div
-            className="textParaPost"
-            dangerouslySetInnerHTML={{
-              __html: dataPost.contentNode.childMarkdownRemark.html,
-            }}
+            className="nx-prose nx-prose--lg"
+            dangerouslySetInnerHTML={{ __html: prepareCmsHtml(md.html) }}
           />
-          <div className="postCatCont">
-            <p className="textParaPost smalltext">
-              {t("blogpost.categories")} {dataPost.categories}.
-            </p>
-          </div>
-        </div>
-      </div>
+        )}
+        <footer className="nx-article__footer">
+          {cats.length > 0 && (
+            <>
+              <p>
+                <span className="nx-mono">{t("blogpost.categories")}</span>
+              </p>
+              <Pills items={cats} />
+            </>
+          )}
+          <Share path={location.pathname} title={post.title} categories={post.categories} />
+        </footer>
+      </article>
     </Layout>
   );
 };
@@ -53,44 +65,38 @@ const Blogpost = (props) => {
 export default Blogpost;
 
 export const data = graphql`
+  fragment NxPostFull on DatoCmsBlogPost {
+    slug
+    title
+    datePublished
+    categories
+    seoMetaTags {
+      ...GatsbyDatoCmsSeoMetaTags
+    }
+    contentNode {
+      childMarkdownRemark {
+        html
+        timeToRead
+      }
+    }
+    coverImage {
+      alt
+      focalPoint {
+        x
+        y
+      }
+      fluid(maxWidth: 1256) {
+        ...GatsbyDatoCmsFluid
+      }
+    }
+  }
+
   query PostQuery($slug: String!) {
     post_en: datoCmsBlogPost(slug: { eq: $slug }, locale: { eq: "en" }) {
-      contentNode {
-        childMarkdownRemark {
-          html
-        }
-      }
-      slug
-      title
-      seoMetaTags {
-        ...GatsbyDatoCmsSeoMetaTags
-      }
-      datePublished(formatString: "YYYY:MM:DD")
-      coverImage {
-        fluid {
-          ...GatsbyDatoCmsFluid
-        }
-      }
-      categories
+      ...NxPostFull
     }
     post_es: datoCmsBlogPost(slug: { eq: $slug }, locale: { eq: "es" }) {
-      contentNode {
-        childMarkdownRemark {
-          html
-        }
-      }
-      slug
-      title
-      seoMetaTags {
-        ...GatsbyDatoCmsSeoMetaTags
-      }
-      datePublished(formatString: "YYYY:MM:DD")
-      coverImage {
-        fluid {
-          ...GatsbyDatoCmsFluid
-        }
-      }
-      categories
+      ...NxPostFull
     }
   }
 `;

@@ -7,3 +7,7 @@
 // habla de automatización e IT. Coincide con el "más de 6 años" que decía la web
 // en 2020.
 export const TECH_CAREER_START_YEAR = 2015;
+
+// Usuario de X que se menciona al compartir un artículo ("via"). Era el que ya tenía el
+// botón de compartir anterior; confirmar con la clienta si sigue siendo suyo.
+export const SHARE_VIA_HANDLE = "_MsLinda";

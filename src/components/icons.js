@@ -4,6 +4,7 @@ import React from "react";
 // Los iconos sociales de la muestra van rellenos (fill) salvo Instagram.
 const PATHS = {
   arrow: <path d="M5 12h14M13 6l6 6-6 6" />,
+  back: <path d="M19 12H5M11 18l-6-6 6-6" />,
   close: <path d="M6 6l12 12M18 6L6 18" />,
   check: <path d="M20 6L9 17l-5-5" />,
   menu: <path d="M4 7h16M4 12h16M4 17h16" />,
@@ -43,6 +44,12 @@ const PATHS = {
     </>
   ),
   x: <path d="M4 4l16 16M20 4L4 20" />,
+  whatsapp: (
+    <>
+      <path d="M4 20l1.3-3.8A8 8 0 1 1 8.2 19z" />
+      <path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 1a4 4 0 0 1-2-2l1-1-1-2z" fill="currentColor" stroke="none" />
+    </>
+  ),
 };
 
 const Icon = ({ name, size = 20, className = "" }) => (
@@ -71,6 +78,7 @@ export const socialIconName = (value) => {
   if (v.includes("linkedin")) return "linkedin";
   if (v.includes("instagram")) return "instagram";
   if (v === "x" || v.includes("twitter") || v.includes("x.com")) return "x";
+  if (v.includes("whatsapp")) return "whatsapp";
   return "external";
 };
 

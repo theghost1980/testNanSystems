@@ -32,7 +32,8 @@ const Media = ({
   const { t } = useNx();
   const [failed, setFailed] = useState(false);
 
-  const fluid = image && image.fluid;
+  // `sizes` sobrescribe el del fragmento (que asume 100vw) con el ancho real del slot.
+  const fluid = image && image.fluid ? (sizes ? { ...image.fluid, sizes } : image.fluid) : null;
   const point = focal || (image && image.focalPoint);
   const text = alt !== undefined ? alt : altFor(image, fallbackAlt);
   const missing = failed || (!fluid && !src);

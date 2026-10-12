@@ -1,60 +1,78 @@
 import React from "react";
 import { graphql } from "gatsby";
-import Layout from "../components/layout";
-import Img from "gatsby-image";
-import Sharebuttons from "../components/shareButton";
-import Button from "../components/button";
-import { useTranslation } from "react-i18next";
 import { HelmetDatoCms } from "gatsby-source-datocms";
+import Layout from "../components/layout";
+import Media from "../components/media";
+import Pills from "../components/pills";
+import Share from "../components/share";
+import { useDialog } from "../hooks/useDialog";
+import { useNx } from "../hooks/useNx";
+import { parseCategories, prepareCmsHtml } from "../utils/content";
 
-const Technology = (props) => {
-  const { t, i18n } = useTranslation();
-  const _lang = i18n.language;
-  const dataTech = _lang === "es" ? props.data.tech_es : props.data.tech_en;
-  const _twitterHandle = "_MsLinda";
-  const _url = props.location.href;
-  const _titlePost = dataTech.title;
-  const _tags = dataTech.categories;
+// Va dentro de <Layout>: el proveedor de diálogos vive ahí.
+const QuoteButton = ({ title }) => {
+  const { t } = useNx();
+  const { open } = useDialog();
+  return (
+    <button className="nx-btn nx-btn--coral" type="button" onClick={() => open("nx-quote", title)}>
+      {t("technology.quote")}
+    </button>
+  );
+};
+
+const Technology = ({ data, location }) => {
+  const { t, lang } = useNx();
+  const L = lang === "en" ? "en" : "es";
+  // Si el servicio no existe en el idioma elegido se muestra el otro, nunca una página rota.
+  const tech = data[`tech_${L}`] || data.tech_es || data.tech_en;
+  const cats = parseCategories(tech.categories);
+  const short = tech.shortDescriptionNode && tech.shortDescriptionNode.childMarkdownRemark;
+  const content = tech.contentNode && tech.contentNode.childMarkdownRemark;
 
   return (
     <Layout>
-      <HelmetDatoCms seo={dataTech.seoMetaTags} />
-      <div className="singleVentureCont">
-        <div className="rowTop">
-          <div className="width50">
-            <h1 className="titleItemVenture">{dataTech.title}</h1>
+      <HelmetDatoCms seo={tech.seoMetaTags} />
+      <article className="nx-article nx-section nx-section--tight nx-container">
+        <header className="nx-article__head">
+          <span className="nx-mono">
+            {t("technology.service")}
+            {tech.shortTitle ? ` · ${tech.shortTitle}` : ""}
+          </span>
+          <h1 className="nx-h1">{tech.title}</h1>
+          {short && (
             <div
-              className="descItemVenture"
-              dangerouslySetInnerHTML={{
-                __html: dataTech.shortDescriptionNode.childMarkdownRemark.html,
-              }}
+              className="nx-prose nx-prose--lg"
+              dangerouslySetInnerHTML={{ __html: prepareCmsHtml(short.html) }}
             />
-            <Button
-              value={t("button.getquote")}
-              type="btnFilled"
-              action="quote"
-              data={{ title: dataTech.title }}
-            />
-            <Sharebuttons
-              url={_url}
-              title={_titlePost}
-              twitterHandle={_twitterHandle}
-              tags={_tags}
-              sizeAll={"35"}
-              align="alignLeftSB"
-            />
+          )}
+          <Pills items={cats} />
+          <div className="nx-form__actions">
+            <QuoteButton title={tech.title} />
           </div>
-          <div className="width50">
-            <Img fluid={dataTech.coverImage.fluid} className="shadow" />
-          </div>
-        </div>
-        <div
-          className="ventureContent"
-          dangerouslySetInnerHTML={{
-            __html: dataTech.contentNode.childMarkdownRemark.html,
-          }}
+        </header>
+        <Media
+          image={tech.coverImage}
+          fallbackAlt={tech.title}
+          ratio="3x2"
+          sizes="(min-width: 1320px) 1256px, 100vw"
+          priority
+          className="nx-media--card nx-media--blur"
         />
-      </div>
+        {content && (
+          <div
+            className="nx-prose nx-prose--lg"
+            dangerouslySetInnerHTML={{ __html: prepareCmsHtml(content.html) }}
+          />
+        )}
+        <footer className="nx-article__footer">
+          <Share
+            path={location.pathname}
+            title={tech.title}
+            categories={tech.categories}
+            labelKey="about.share"
+          />
+        </footer>
+      </article>
     </Layout>
   );
 };
@@ -62,52 +80,42 @@ const Technology = (props) => {
 export default Technology;
 
 export const data = graphql`
+  fragment NxTechFull on DatoCmsTechnology {
+    slug
+    title
+    shortTitle
+    categories
+    seoMetaTags {
+      ...GatsbyDatoCmsSeoMetaTags
+    }
+    shortDescriptionNode {
+      childMarkdownRemark {
+        html
+      }
+    }
+    contentNode {
+      childMarkdownRemark {
+        html
+      }
+    }
+    coverImage {
+      alt
+      focalPoint {
+        x
+        y
+      }
+      fluid(maxWidth: 1256) {
+        ...GatsbyDatoCmsFluid
+      }
+    }
+  }
+
   query TechQuery($slug: String!) {
     tech_en: datoCmsTechnology(slug: { eq: $slug }, locale: { eq: "en" }) {
-      contentNode {
-        childMarkdownRemark {
-          html
-        }
-      }
-      shortDescriptionNode {
-        childMarkdownRemark {
-          html
-        }
-      }
-      slug
-      title
-      seoMetaTags {
-        ...GatsbyDatoCmsSeoMetaTags
-      }
-      coverImage {
-        fluid {
-          ...GatsbyDatoCmsFluid
-        }
-      }
-      categories
+      ...NxTechFull
     }
     tech_es: datoCmsTechnology(slug: { eq: $slug }, locale: { eq: "es" }) {
-      contentNode {
-        childMarkdownRemark {
-          html
-        }
-      }
-      shortDescriptionNode {
-        childMarkdownRemark {
-          html
-        }
-      }
-      slug
-      title
-      seoMetaTags {
-        ...GatsbyDatoCmsSeoMetaTags
-      }
-      coverImage {
-        fluid {
-          ...GatsbyDatoCmsFluid
-        }
-      }
-      categories
+      ...NxTechFull
     }
   }
 `;
