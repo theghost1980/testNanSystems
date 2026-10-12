@@ -41,7 +41,7 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 
 ---
 
-## 2026-10-12 (4.ª sesión) · Cierre de M5 y A3 (SEO, sitemap y `robots.txt`)
+## 2026-10-12 (4.ª sesión) · Cierre de M5, A3 (SEO, sitemap y `robots.txt`) y B1 parcial
 
 **Rama:** `fix/portfolio-total-refactor-design-2026` (sobre `c75189b`) · **Entorno:** Node 14.21.3
 **Objetivo:** hacer los dos primeros pasos de "Próximos pasos" de la 3.ª sesión, con el OK del dueño en cada dependencia.
@@ -71,6 +71,15 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 - **No se pudo comprobar desde este entorno (sin salida a internet):** el dominio canónico (con o sin `www`; se usó el que el propio sitio publica en `tos`/`privacy`) ni si Netlify redirige `/blog/<slug>` a `/blog/<slug>/`.
 - **Por verificar en el deploy preview / Search Console:** (a) `/sitemap.xml` y `/robots.txt` responden 200; (b) las URLs de posts y servicios salen **sin barra final** en el sitemap (sus rutas las crea `gatsby-node.js` como `blog/<slug>` y `/<slug>`, mientras que las páginas de `src/pages` llevan barra). Si Netlify las redirige con 301, Search Console avisará de "redirección en el sitemap": se arreglaría con la opción `serialize` del plugin añadiendo la barra final; no se hizo para no cambiar algo sin poder verlo.
 
+### B1 (parcial) · `key` que faltaba en `aboutNew.js`
+- **Antes (dev server):** `Warning: Each child in a list should have a unique "key" prop. Check the render method of AboutNew … at li` al cargar `/aboutNew/`. Es la lista `aboutarea.map(...)` (las tarjetas con imagen); la otra lista de la página (`itemAboutus`) ya tenía `key={venture.id}`.
+- **Cambio:** `id` añadido a `aboutarea` en las dos consultas (ES y EN) y `<li key={aboutItem.id}>`. El `id` es estable y distinto por idioma (`DatoCmsItemsabout-<n>-<es|en>`). Alternativa descartada: usar `title` como clave (podría repetirse si el CMS cambia).
+- **Después:** 0 avisos en ES y EN con las mismas 3 tarjetas (ES: "Conservación de Energia", "Diseño Electromecánico", "Desarrollo Web"; EN: "Energy Conservation", "Electromechanical Design", "Web Development"). **Control:** restaurando temporalmente la versión sin `key`, el mismo método de captura detectó 1 aviso; con el arreglo, 0. Así el "0" no es un falso negativo del método.
+- **Método de captura (útil para otras pruebas):** el panel de pruebas no permite ver la consola de un `iframe` con `src`; se baja el HTML con `fetch`, se crea un `iframe`, se sustituye `contentWindow.console.error` y se escribe el HTML con `document.open()/write()/close()`. La consola general del panel conserva mensajes de cargas anteriores y no sirve para comparar antes/después.
+- **Barrido de otras páginas (dev server, ES y EN):** `/`, `/blog/`, `/portfolio/`, `/contact/`, `/ventures/`, `/aboutNew/`, `/tos/`, `/credits/`, un post y un servicio: todas renderizan y 0 avisos de React. `/about/` (vieja) en ES: 0 avisos. `/singleventure` no se probó (necesita estado de navegación).
+- **Build:** mismas 20 rutas + `404.html`; solo cambia el `page-data` de `aboutNew` (el `id`); JS de la home 521.004 bytes (igual); `sitemap.xml` y `robots.txt` intactos.
+- **Lo que queda de B1 (no se toca aquí):** el dev server imprime avisos `jsx-a11y` de ESLint en `button`, `footer`, `header`, `mailChimpForm`, `selector`, `quickQuote`, `about`, `index` y `portfolio`: elementos no nativos (`div`/`img`) con `onClick` sin soporte de teclado, `onMouseOver` sin `onFocus`, un `onChange` en un `select`; además de algunos `no-unused-vars` (`_lang` en `footer`, `blogImg` en `blog`). Arreglarlo cambia el marcado y el comportamiento con teclado de botones del sitio: **mejor hacerlo con el rediseño** (R1-R3), que reescribe esos componentes, que como parche suelto ahora.
+
 ### Decisiones
 - `lang` estático `es` + ajuste en el cliente (en vez de generar HTML por idioma): coherente con A7 (HTML estático en español, idioma real al montar).
 - **Sitemap y `robots.txt` van juntos:** un `robots.txt` de "permitir todo" solo tiene sentido para declarar el sitemap; el dueño aprobó la dependencia.
@@ -82,17 +91,17 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 - El `<title>` de `aboutNew` es "NaNSYSTEMS.us" en ambos idiomas: es lo que tiene DatoCMS en ese modelo (contenido, no código).
 
 ### Pendiente y abierto
-- Extras (B1, fallo claro si falta `api_key`), PR del hito 1 (cuando lo pida) y R1a. M8 (vulnerabilidades) al final.
+- Fallo claro si falta `api_key` (único extra pendiente de la Fase 1; el resto de B1 va con el rediseño), PR del hito 1 (cuando lo pida) y R1a. M8 (vulnerabilidades) al final.
 - **Dominio canónico:** confirmar con o sin `www` (cambiar `siteUrl` y `static/robots.txt` si fuera con `www`).
 - En el **deploy preview** del hito 1, además de lo ya listado: ver el `<title>` y `lang` en el código fuente de la página (Ver código fuente, no Inspeccionar), que la pestaña cambie de título al pulsar el selector y que `/sitemap.xml` y `/robots.txt` respondan 200.
 
 ### Próximos pasos
-1. Extras a elección: B1 (`key` en `aboutNew.js`), fallo claro si falta `api_key`.
+1. Último extra de la Fase 1: fallo claro si falta `api_key` en `gatsby-config.js` (hoy el plugin de DatoCMS recibe el texto `"undefined"`).
 2. Cuando el dueño lo pida: PR del hito 1 (merge commit; aclarar en la descripción que `092d9a4` es A5 aunque se llame M3) y prueba en el deploy preview. Después R1a.
 3. Al final: M8 (vulnerabilidades de `npm audit`).
 
 ### Commits de la sesión
-- `34630bb` M5 (desinstalar `i18next-http-backend`) · `441bc68` A3 (react-helmet, `lang`, títulos y detección de idioma) · sitemap y `robots.txt`: pendiente del dueño, propuesto `feat: A3 add sitemap and robots.txt`
+- `34630bb` M5 (desinstalar `i18next-http-backend`) · `441bc68` A3 (react-helmet, `lang`, títulos y detección de idioma) · `6283b9d` sitemap y `robots.txt` · B1 parcial: pendiente del dueño, propuesto `fix: B1 add the missing key to the aboutNew card list`
 
 ---
 

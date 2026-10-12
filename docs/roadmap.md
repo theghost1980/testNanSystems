@@ -19,7 +19,7 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 > **Progreso (4.ª sesión, 2026-10-12):** hechos en la rama `fix/portfolio-total-refactor-design-2026`, todos con build de producción comprobado: **A6, A1, A2, M1, A5, A7, M3, M5 y A3** (A3 completo, con sitemap y `robots.txt`). **Nada de esto está en `master` todavía**: el PR del hito 1 se hará cuando el dueño lo pida (no antes).
 >
 > **Siguiente (en este orden):**
-> 1. Extras a elección: B1 (`key` en `aboutNew.js`), fallo claro si falta `api_key`.
+> 1. Extra que queda: fallo claro si falta `api_key` (B1 ya tiene hecho el `key` de `aboutNew.js`; el resto de B1 es accesibilidad de teclado y va con el rediseño).
 > 2. PR del hito 1 y prueba manual en el deploy preview (boletín real, contacto, cotización, clic home → post, `es-VE`/`en-US`, título de la pestaña al cambiar de idioma, y que `/sitemap.xml` y `/robots.txt` respondan 200).
 > 3. R1a (pieza vertical del rediseño, en rama aparte desde `master`; el prerrequisito A3 ya está cumplido).
 > 4. Al final: bajar las vulnerabilidades de `npm audit` (M8).
@@ -60,7 +60,7 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 | ID | Qué | Riesgo | Estado | Rama / PR |
 |---|---|---|---|---|
 | M4 | Retirar código muerto y páginas viejas (`/about`, `/singleventure`) con redirects (al hacerlo, quitarlas también de `exclude` del sitemap en `gatsby-config.js`) | medio | pendiente | — |
-| B1 | Accesibilidad (teclado, `alt`, estructura de listas, un `<h1>`) | bajo | pendiente | — |
+| B1 | Accesibilidad (teclado, `alt`, estructura de listas, un `<h1>`) | bajo | **parcial**: el `key` que faltaba en la lista de `aboutNew.js` está hecho en la rama (commit pendiente del dueño). Falta el grueso: el dev server muestra avisos `jsx-a11y` de ESLint (elementos no nativos con `onClick` sin soporte de teclado, `onMouseOver` sin `onFocus`) en `button`, `footer`, `header`, `mailChimpForm`, `selector`, `quickQuote`, `about`, `index` y `portfolio`, más `alt` vacíos y estructura de encabezados | `fix/portfolio-total-refactor-design-2026` |
 | B2 | Navegación en un solo array; consultas sin uso del footer; variables sin uso | bajo | pendiente | — |
 | B3 | Fuentes fuera de `@import`, peso de imágenes, CSS de Bootstrap | bajo | pendiente | — |
 | B4 | Renombrar `mailChimpForm.js` / `NetlifyForm` / `.inputMailChimp` | bajo | pendiente | — |

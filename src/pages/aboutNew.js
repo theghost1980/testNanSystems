@@ -45,7 +45,7 @@ const AboutNew = (props) => {
         <ul className="ulAboutUsCards">
           {dataVenture.aboutarea.map((aboutItem) => {
             return (
-              <li>
+              <li key={aboutItem.id}>
                 <div className="cardAboutUs">
                   <Img fluid={aboutItem.image.fluid} className="imgCard" />
                   <h3 className="titleItemVenture">{aboutItem.title}</h3>
@@ -116,6 +116,7 @@ export const data = graphql`
         ...GatsbyDatoCmsSeoMetaTags
       }
       aboutarea {
+        id
         title
         image {
           fluid {
@@ -158,6 +159,7 @@ export const data = graphql`
         ...GatsbyDatoCmsSeoMetaTags
       }
       aboutarea {
+        id
         title
         image {
           fluid {
