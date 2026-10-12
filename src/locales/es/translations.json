@@ -101,7 +101,7 @@
       "l2": "1. Términos",
       "l3": "Al acceder a este sitio web, al que se puede acceder desde https://nansystems.us, usted acepta estar obligado por estos Términos y Condiciones de Uso del sitio web y acepta que es responsable del acuerdo con cualquier ley local aplicable. Si no está de acuerdo con alguno de estos términos, se le prohíbe acceder a este sitio. El material contenido en este sitio web está protegido por la ley de derechos de autor y de marca registrada.",
       "l4": "2. Licencia de uso",
-      "l5": "Se concede permiso para descargar temporalmente una copia de los materiales en el sitio web de NaNSYSTEMS para su visualización transitoria personal y no comercial. Esta es la concesión de una licencia, no una transferencia de título, y bajo esta licencia no puede:'Al acceder a este sitio Web, accesible desde https://nansystems.us, usted está aceptando estar obligado por estos Términos y Condiciones de Uso del sitio Web y acepta que es responsable del acuerdo con cualquier ley local aplicable. Si no está de acuerdo con alguno de estos términos, se le prohíbe acceder a este sitio. El material contenido en este sitio web está protegido por la ley de derechos de autor y de marca comercial'.",
+      "l5": "Se concede permiso para descargar temporalmente una copia de los materiales en el sitio web de NaNSYSTEMS para su visualización transitoria personal y no comercial. Esta es la concesión de una licencia, no una transferencia de título, y bajo esta licencia no puede:",
       "l6": "modificar o copiar los materiales;",
       "l7": "utilizar los materiales para cualquier propósito comercial o para cualquier exhibición pública;",
       "l8": "intentar hacer ingeniería inversa de cualquier software contenido en el sitio web de NaNSYSTEMS;",
@@ -277,7 +277,8 @@
       "code": "ERROR 404",
       "title": "Esta página no existe",
       "text": "La dirección puede haber cambiado o nunca existió. Nuestros robots ya lo están revisando.",
-      "back": "Volver al inicio"
+      "back": "Volver al inicio",
+      "alt": "Cable de red desconectado sobre una superficie clara"
     },
     "credits": {
       "intro": "Recursos de terceros utilizados en este sitio."

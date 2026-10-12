@@ -20,3 +20,7 @@ export const SHARE_VIA_HANDLE = "_MsLinda";
 // sitio en Netlify, también para Deploy Previews) y se fija al construir. Sin ella no se muestra
 // ninguna dirección. No escribir el correo en el repositorio: es público.
 export const CONTACT_EMAIL = process.env.GATSBY_CONTACT_EMAIL || "";
+
+// Fecha de los textos legales (términos y privacidad): la de "Esta política es efectiva a partir del
+// 19 de diciembre de 2020". Actualizar si se revisan.
+export const LEGAL_UPDATED = "2020-12-19";

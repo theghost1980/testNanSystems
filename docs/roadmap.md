@@ -18,11 +18,11 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 
 > **Progreso (2026-10-12):** la Fase 1 de código está **fusionada en `master`** (PR #2, con **squash**: commit `2de51ed`). Los commits individuales, y los hashes que citan estos docs, viven en la rama `fix/portfolio-total-refactor-design-2026`: **no borrarla**. Hechos: A6, A1, A2, M1, A5, A7, M3, M5, A3, M9, A8 (con el antiabuso de los formularios) y el `key` de `aboutNew` (B1 parcial).
 >
-> **Rediseño en curso** en la rama `feat/redesign-coral-editorial` (desde `master`; **no se fusiona hasta que la clienta apruebe**). **R1a, R1 y R2 hechos en la rama:** `Layout` nuevo (cabecera, pie, banda de cotización, diálogos de cotización y boletín) y home completa con datos del CMS. **R3 hecho en la rama:** blog, post, servicios, biografía, portafolio, proyectos y contacto (y el logo con engranajes); solo las legales y la 404 siguen con el marcado viejo hasta R4 (ver [dev-log](dev-log.md)).
+> **Rediseño en curso** en la rama `feat/redesign-coral-editorial` (desde `master`; **no se fusiona hasta que la clienta apruebe**). **R1a, R1 y R2 hechos en la rama:** `Layout` nuevo (cabecera, pie, banda de cotización, diálogos de cotización y boletín) y home completa con datos del CMS. **R3 y R4 hechos en la rama:** blog, post, servicios, biografía, portafolio, proyectos, contacto, legales, créditos y 404 (y el logo con engranajes); falta la revisión visual final del dueño (ver [dev-log](dev-log.md)).
 >
 > **Siguiente (en este orden):**
 > 1. **Comprobar producción tras el merge** (`nansystems.us`): home en ES y EN, `/sitemap.xml` y `/robots.txt` con 200, un envío real de contacto, de cotización y de boletín (llegan a Netlify → Forms y las notificaciones por correo funcionan), ninguna llamada a `emailjs.com`, y confirmar el dominio canónico (con o sin `www`).
-> 2. **Revisión del dueño en local** del inicio (escritorio, tableta, tema oscuro) y confirmación con la clienta de la cifra "+11" y los textos. Luego **R4** (legales, 404 y QA), el PR en borrador y la limpieza.
+> 2. **Revisión del dueño en local** del inicio (escritorio, tableta, tema oscuro) y confirmación con la clienta de la cifra "+11" y los textos. Luego el PR en borrador para el primer preview y la limpieza.
 > 3. A4: evaluar si compensa seguir con Google Analytics (decisión del dueño; hasta entonces no se toca).
 > 4. Avisar a la clienta de que contacto y cotización estuvieron caídos en producción (EmailJS), y revisar el contenido de DatoCMS y los deploys antiguos de Netlify (A6).
 >
@@ -80,7 +80,7 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 | R1 | Base completa: variables CSS, fuentes, header/footer nuevos en `Layout`; **retirar `styles.css` y los imports de Bootstrap en el mismo cambio** (el reset de `.nx-root` es global y la regla vieja de `html, body` pisa el fondo) | medio | **hecha en la rama**, salvo borrar `styles.css` (referencia hasta terminar R3) y desinstalar `bootstrap`/`react-bootstrap` (lo hace el dueño) | idem |
 | R2 | Home | medio | **hecha en la rama** (hero, franja, servicios, testimonios y artículos con datos del CMS); la cifra "+11" y los textos esperan confirmación de la clienta | idem |
 | R3 | Páginas con contenido del CMS: blog, post, proyectos, biografía, portafolio, contacto y modal de cotización | medio | **hecha en la rama:** blog, post, servicios, biografía, portafolio, proyectos y contacto (y el modal de cotización, en R1a); el contenido de relleno del CMS se oculta en código y hay que completarlo (ver [dev-log](dev-log.md)) | idem |
-| R4 | Legales, 404, QA responsive/accesibilidad, `prefers-reduced-motion` | bajo | pendiente | idem |
+| R4 | Legales, 404, QA responsive/accesibilidad, `prefers-reduced-motion` | bajo | **hecho en la rama** (legales, créditos, 404 y comprobaciones automáticas); falta la revisión visual final del dueño | idem |
 | R5 | Revisión del preview con la clienta y merge | alto (publica) | bloqueado: aprobación de la clienta | — |
 
 ## Decisiones abiertas

@@ -188,8 +188,9 @@ La clienta dio **carta abierta** para el rediseño. Se trabaja en la rama `feat/
 - **Paso 4 (parcial):** verificado con el build de producción por mediciones del DOM (sin desborde de 320 a 1920 px, comportamiento de menú, idioma, tema y diálogos, 15 rutas sin errores); la revisión visual completa la hace el dueño en su navegador porque las capturas del entorno no son fiables al desplazarse. **Pendiente:** PR en borrador para el primer preview cuando haya bastantes pantallas.
 
 ### Avance de R3 (2026-10-12)
-- **Hechos:** blog, post, servicio, biografía, portafolio, proyectos y contacto (`nx-post-card`, `nx-article`, `nx-feature`, `nx-row--exp`, `nx-venture`, formulario de contacto), con `prepareCmsHtml` aplicado al contenido del CMS (SPEC j.3 y j.4). **Falta:** R4 (legales, 404, QA).
+- **Hechos:** blog, post, servicio, biografía, portafolio, proyectos y contacto (`nx-post-card`, `nx-article`, `nx-feature`, `nx-row--exp`, `nx-venture`, formulario de contacto), con `prepareCmsHtml` aplicado al contenido del CMS (SPEC j.3 y j.4), y **R4**: términos, privacidad, créditos y 404. **Falta:** la revisión visual final, el PR en borrador y la limpieza.
 - **El relleno del CMS no se publica** (`isPlaceholder`/`usefulBlocks` en `utils/content.js`): "Lorem ipsum", "Ipsem Lorem" y la nota interna de los logros se tratan como vacíos. El diseño asume campos con texto real: hay que completarlos en DatoCMS (lista en el [dev-log](dev-log.md)).
+- **404 con la imagen local** (`404-cable-desconectado.jpg`), no con `InfoSite.notFoundImg` del CMS; **créditos** con el nombre sacado del dominio porque los logos del CMS no tienen leyenda; **`tos.l5` corregido** (frase duplicada pegada al final).
 - **Menú de escritorio desde 1100 px** (la SPEC decía 960): con los textos en español la cabecera no cabía entre 960 y 1099 px.
 - **Proyectos:** las tarjetas sin texto real ofrecen "Cotizar por Email" en lugar de "Leer más" (decisión nueva, no estaba en la muestra); el diálogo de detalle encadena con la cotización.
 - **Sin `data-sal`** en las páginas portadas (decorativo y puede dejar contenido invisible); `gatsby-plugin-scroll-reveal` queda como candidato a retirar.

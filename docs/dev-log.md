@@ -112,18 +112,39 @@ El dueño revisó el sitio en su navegador y pidió tres cambios (capturas de la
 - Título de 100 caracteres sobre la imagen a 768, 900, 1099, 1100, 1440 y 1920 px: cabe dentro de la portada en todos y no hay desborde de página; a 375 px sigue apilado. Captura del post a 1024 px y del diálogo de cotización con scroll a 800 × 560 px (la barra es una píldora delgada, ya no el bloque gris); tarjeta de redes a 375, 1024 y 1440 px (145 px, alineada con el formulario).
 - Mientras compilé había un `npm run develop` en el puerto 8000 (el del dueño): comparten `.cache`; si ese servidor se comporta raro, reiniciarlo.
 
+### Hecho (parte 4: R4, legales, créditos y 404)
+- **Términos** (`src/pages/tos.js`): cabecera con la fecha de los textos (`legalHead.js`, `LEGAL_UPDATED` en `config/site.js`), índice con enlaces a las nueve secciones (`#t1`…`#t9`; `scroll-margin-top` para que no queden bajo la cabecera fija) y el texto en `.nx-prose--lg` en una columna de 880 px. **Se corrige `tos.l5`** (en español e inglés traía pegada al final una frase duplicada entre comillas, un error de copia).
+- **Privacidad** (`privacy.js`): misma cabecera y lectura larga.
+- **Créditos** (`credits.js`): los 13 logos del CMS (sin leyenda) en tarjetas 1:1 con el logo entero sobre blanco (`Media fit="contain"`); como no hay leyenda, el nombre es el dominio del enlace y el enlace "Ver recurso" lleva un nombre accesible completo. El texto largo de la página anterior se sustituye por `credits.intro`.
+- **404** (`404.js`): la imagen de concepto local (`404-cable-desconectado.jpg`, 800 × 800) con su texto alternativo (`notfound.alt`, clave nueva), código, título, texto y los botones "Volver al inicio" y "Contacto". **Ya no usa `InfoSite.notFoundImg` del CMS** (ese campo queda sin uso).
+- **Títulos de pestaña** de las cuatro páginas con las claves `meta.*` (antes mezclaban claves viejas y texto fijo en inglés).
+- **`prepareCmsHtml` da `alt=""` a las imágenes sin `alt`** del texto del CMS (la auditoría encontró 3 en un post y 1 en un servicio): una imagen decorativa declarada es mejor que un atributo ausente, con el que los lectores de pantalla leen el nombre del archivo. Si el editor escribe el texto alternativo en el Markdown (`![descripción](url)`), se respeta.
+
+### Verificación (parte 4)
+- Build limpio de 20 páginas **desde una copia aislada del repo** (ver la nota de abajo). Barrido de 168 combinaciones (12 rutas × 7 anchos de 320 a 1920 px × español e inglés): 0 desbordes y exactamente un `h1` en cada una.
+- Auditoría de DOM sobre todas las rutas: imágenes con `alt`, enlaces y botones con nombre accesible, sin `id` repetidos ni saltos de encabezado, enlaces `_blank` con `noopener`, campos con etiqueta, un solo `header`/`main`/`footer` y todos los `nav` con nombre; el único hallazgo (imágenes del texto del CMS sin `alt`) quedó corregido y se comprobó en el HTML generado de los 5 posts y los 3 servicios.
+- Términos: nueve secciones con ancla y enlaces del índice válidos, `tos.l5` ya sin la frase duplicada, fecha "Last updated: December 19, 2020". Créditos: 13 tarjetas, 13 imágenes cargadas (carga diferida), enlaces con nombre "View resource: npmjs.com (opens in a new tab)". 404: imagen cargada con su texto alternativo y sin banda de cotización.
+
+### Para avisar a la clienta (legales y créditos)
+- **La política de privacidad es de 2020 (GetTerms) y no menciona Google Analytics, cookies ni Netlify Forms** (donde caen los formularios). Conviene que la revise ella o su asesor antes de publicar el rediseño. No es asesoría legal.
+- **Créditos:** "emailjs.com" sigue en la lista y el sitio ya no usa EmailJS (A8); revisar también "equalweb.com" (widget de accesibilidad) y añadir los créditos nuevos si hacen falta (por ejemplo las fuentes autoalojadas, con licencia OFL, o las imágenes de concepto).
+- Los créditos no tienen leyenda en el CMS; si se escribe una, sustituye al dominio.
+
+### Nota de entorno (builds en copia aislada)
+El dueño tiene `npm run develop` abierto en el puerto 8000 mientras trabajamos. Un `npm run build` en la misma carpeta comparte `.cache` con ese servidor y lo descuadra (llegó a redirigir `/tos/` al inicio). Desde esta parte los builds se hacen en una **copia** del repo en la carpeta temporal de la sesión (`robocopy` sin `node_modules`, `.cache`, `public`, `.git` ni `docs`, y `node_modules` enlazado con una unión de carpeta) y se sirve con `gatsby serve -p 9000`. Si el servidor de desarrollo se comporta raro, basta con reiniciarlo.
+
 ### Pendiente y abierto
 - Lo de la 5.ª sesión sigue abierto (confirmaciones con la clienta, kit de imágenes en DatoCMS con punto focal y alt, producción tras el merge del PR #2, A4, dominio canónico).
 - Confirmar con la clienta: `SHARE_VIA_HANDLE` (`_MsLinda`), la cifra de años (`TECH_CAREER_START_YEAR`, ahora también en el texto del portafolio) y completar el contenido del CMS de la lista de arriba.
 - Decidir si `GATSBY_CONTACT_EMAIL` queda definida en Netlify (se mostraría en la página de contacto).
 
 ### Estado al cerrar el bloque (leer primero)
-- **Rama `feat/redesign-coral-editorial`**. R3 completo. Las partes 1 y 2 ya están commiteadas (`a388284` y `82bb814`: **biografía, portafolio, proyectos, contacto, cabecera a 1100 px, traducciones, M4 parcial**); la parte 3 (**barras de desplazamiento, tarjeta de redes y título del post sobre la imagen**) está **sin commitear** (lo hace el dueño). Commit propuesto: `feat: R3 polish scrollbars, contact card and post cover`. `docs/images_new` no se añade nunca.
-- **Faltan:** R4 (legales `tos`/`privacy`/`credits` y 404 siguen con el marcado viejo dentro del `Layout`, `prefers-reduced-motion` ya cubierto en `nx.css`, QA final), el PR en borrador y la limpieza.
+- **Rama `feat/redesign-coral-editorial`**. R3 y R4 completos. Las partes 1 a 3 ya están commiteadas (`a388284`, `82bb814` y `d6876d8`); la parte 4 (**términos, privacidad, créditos y 404**) está **sin commitear** (lo hace el dueño). Commit propuesto: `feat: R4 legal, credits and 404 pages for the redesign`. `docs/images_new` no se añade nunca.
+- **Faltan:** la revisión visual final del dueño (todas las pantallas, claro y oscuro), el PR en borrador y la limpieza. R4 (legales, créditos y 404) está hecho en el árbol de trabajo (parte 4, sin commitear); `prefers-reduced-motion` ya está cubierto en `nx.css`.
 - **Acción del dueño:** `npm uninstall react-share` (ya nadie lo importa) y, antes, `npm uninstall bootstrap react-bootstrap` si no se hizo.
 
 ### Próximos pasos
-1. **R4:** legales (`tos`, `privacy`, `credits`: lectura larga de 880 px con `.nx-prose`, `Credit.image` 1:1 `contain`; ver las muestras `terminos.html`, `privacidad.html`, `creditos.html`) y 404 (`src/media-imgs/redesign/404-cable-desconectado.jpg` y claves `notfound.*`; muestra `404.html`). Después QA a 375/768/1440 px en claro y oscuro y en `es`, `es-VE` y `en-US`.
+1. **QA final del dueño** a 375/768/1440 px en claro y oscuro y en `es`, `es-VE` y `en-US` (las comprobaciones automáticas ya están hechas; falta la mirada humana, sobre todo de las imágenes del CMS con otros posts).
 2. **PR en borrador** contra `master` para el primer preview (nunca fusionarlo antes de la aprobación de la clienta); revisar en el preview el formulario de contacto y la cotización con envío real a Netlify.
 3. **Limpieza final:** borrar `src/styles/styles.css` y lo que solo ella usa (`media-imgs` de fondos), M4 (`confettiAnimation`, `teamlist`, `blogList`, `commentsForm`, `pages/about.js` y su `exclude` del sitemap), `react-cookie-consent`/GA según A4, `gatsby-plugin-scroll-reveal` (ya sin uso en las páginas portadas) y repetir el análisis de [dependency-audit.md](dependency-audit.md).
 
@@ -131,7 +152,8 @@ El dueño revisó el sitio en su navegador y pidió tres cambios (capturas de la
 - `3eb7951` R1a pasos 2 y 3 (del cierre de la 5.ª sesión).
 - `a388284` Parte 1 (logo con engranajes, blog, post y servicios).
 - `82bb814` Parte 2 (biografía, portafolio, proyectos y contacto).
-- Parte 3 (ajustes de la revisión del dueño): pendiente del dueño, propuesto: `feat: R3 polish scrollbars, contact card and post cover`
+- `d6876d8` Parte 3 (ajustes de la revisión del dueño).
+- Parte 4 (R4: legales, créditos y 404): pendiente del dueño, propuesto: `feat: R4 legal, credits and 404 pages for the redesign`
 
 ---
 

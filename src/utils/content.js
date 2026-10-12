@@ -61,9 +61,14 @@ export const usefulBlocks = (blocks, title) => {
 // - un solo h1 por página: los h1 del contenido bajan a h2 (el estilo ya los iguala);
 // - las celdas de cabecera de tabla reciben scope="col" (remark GFM no lo pone);
 // - los bloques `pre` y las tablas se desplazan en horizontal (CSS): con tabindex="0" se pueden
-//   recorrer con el teclado.
+//   recorrer con el teclado;
+// - las imágenes sin `alt` (las que el editor no describió) reciben alt="" (decorativa): mejor
+//   que no tener el atributo, que los lectores de pantalla resuelven leyendo el nombre del archivo.
 export const prepareCmsHtml = (html) =>
   String(html || "")
+    .replace(/<img(\s[^>]*)?>/g, (m, attrs = "") =>
+      /\salt(=|\s|\/|$)/.test(attrs) ? m : `<img alt=""${attrs}>`
+    )
     .replace(/<(\/?)h1(\s[^>]*)?>/g, "<$1h2$2>")
     .replace(/<th(\s[^>]*)?>/g, (m, attrs = "") =>
       /\sscope=/.test(attrs) ? m : `<th scope="col"${attrs}>`

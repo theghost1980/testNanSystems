@@ -24,6 +24,7 @@ const Media = ({
   alt,
   fallbackAlt,
   focal,
+  fit = "cover",
   ratio = "3x2",
   className = "",
   priority = false,
@@ -51,7 +52,12 @@ const Media = ({
           alt={text}
           loading={priority ? "eager" : "lazy"}
           fadeIn={false}
-          imgStyle={{ objectPosition: position }}
+          imgStyle={
+            fit === "contain"
+              ? // Logos: se ven enteros, centrados y con margen sobre fondo blanco.
+                { objectFit: "contain", padding: "12%", boxSizing: "border-box", background: "#fff" }
+              : { objectPosition: position }
+          }
         />
       ) : src ? (
         <img
