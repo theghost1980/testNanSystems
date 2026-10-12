@@ -41,6 +41,36 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 
 ---
 
+## 2026-10-12 (4.ª sesión) · Cierre de M5: desinstalar `i18next-http-backend`
+
+**Rama:** `fix/portfolio-total-refactor-design-2026` (sobre `c75189b`) · **Entorno:** Node 14.21.3
+**Objetivo:** hacer el primer paso de "Próximos pasos" de la 3.ª sesión, con el OK del dueño.
+
+### Hecho
+- `npm uninstall i18next-http-backend`: `package.json` pierde una línea (`"i18next-http-backend": "^1.0.21"`); npm retira 6 paquetes en total (la dependencia y las suyas). `package-lock.json` no cambia porque está en `.gitignore`.
+- **Antes de desinstalar:** sin `develop` ni `serve` abiertos (puertos 8000 y 9000 libres); lista de rutas y MD5 de los `page-data.json` de `public/` (último build, el de M5) guardados como línea base.
+- **Build de comprobación** (`npm run build`, ~128 s, sin errores): `SitePage` y 21 consultas de página OK, 21 HTML estáticos.
+
+### Resultado (frente a la línea base)
+- **Rutas:** idénticas (20 `index.html` + `404.html`).
+- **`page-data`:** los 21 `page-data.json` tienen el mismo MD5.
+- **JS de la home:** 520.746 bytes, exactamente igual que tras M5 (el bundler ya había descartado el módulo al dejar de importarse; la desinstalación solo limpia `package.json` y `node_modules`).
+- **Avisos del build:** solo los de siempre (`WMIC` y `isModuleDeclaration` de Babel).
+
+### Decisiones
+- No se prueba nada en el navegador: el cambio no altera ni una línea de `src/` y el resultado del build es byte a byte el mismo. El comportamiento de idioma ya se comprobó con M5.
+
+### Pendiente y abierto
+- Sin cambios respecto a la 3.ª sesión: A3, extras (B1, `api_key`), PR del hito 1 (cuando el dueño lo pida) y R1a.
+
+### Próximos pasos
+1. **A3 · SEO**, tal como está detallado en "Próximos pasos" de la 3.ª sesión (añade `gatsby-plugin-react-helmet@3`, `robots.txt` y decisión sobre `lang`; pedir OK antes de instalar).
+
+### Commits de la sesión
+- Pendiente del dueño: `chore: M5 remove the unused i18next-http-backend dependency`
+
+---
+
 ## 2026-10-10 (3.ª sesión) · Arreglos de código: A6, A1, A2, M1, A5, A7, M3 y M5
 
 **Rama:** `fix/portfolio-total-refactor-design-2026` (desde `master` en `b41fde4`, con los docs ya fusionados) · **Entorno:** Node 14.21.3, dev server local
@@ -121,7 +151,7 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 - **Después (build de producción):** build sin el aviso (38 s → 34 s, sin significado: caché); en una pestaña nueva la consola **no** tiene ningún aviso de i18next; JS = **520.746 bytes (−15.611, −2,9 %)**, todo en el chunk `commons`; mismas **20 rutas + `404.html`** y 21 `page-data` idénticos a la línea base.
 - **Prueba de idioma (producción, `gatsby serve`):** guardado `en-US`, `en-GB`, `en` → inglés, icono derecho; `es-VE`, `es-ES`, `es` → español, icono izquierdo; `fr-FR` y "sin valor" → inglés (la lista del navegador del panel es `en-US`; igual que con A2). Clic del selector `es → en → es`: menú, icono y `localStorage.i18nextLng` cambian en ambos sentidos. Páginas `/blog/<post>`, `/computer-aided-design-cad`, `/blog`, `/portfolio`, `/contact`, `/aboutNew` cargan en ES y EN con el título correcto y **los mismos tamaños de texto** que antes (p. ej. post 2.295/2.200 caracteres ES/EN).
 - **No se pudo probar:** un navegador cuya **única** lengua no esté soportada (cae a `es` por `fallbackLng`; no se puede fijar `navigator.languages` aquí).
-- **Pendiente de M5 — necesita OK del dueño:** desinstalar `i18next-http-backend` (`npm uninstall i18next-http-backend`). Toca solo `package.json` (la línea `"i18next-http-backend": "^1.0.21"`), porque **`package-lock.json` está en `.gitignore`**: Netlify resuelve las versiones desde `package.json` en cada build (tema de M2). Es una dependencia que ya nadie importa, así que el riesgo es muy bajo; mientras no se haga, sigue instalada sin usarse.
+- **Pendiente de M5 — necesita OK del dueño** *(hecho en la 4.ª sesión, ver arriba)*: desinstalar `i18next-http-backend` (`npm uninstall i18next-http-backend`). Toca solo `package.json` (la línea `"i18next-http-backend": "^1.0.21"`), porque **`package-lock.json` está en `.gitignore`**: Netlify resuelve las versiones desde `package.json` en cada build (tema de M2). Es una dependencia que ya nadie importa, así que el riesgo es muy bajo; mientras no se haga, sigue instalada sin usarse.
 
 ### Hallazgos / sorpresas
 - Los mensajes de commit de dos párrafos se pegan en el asunto (visible en `git log --oneline`): de ahora en adelante, una línea.

@@ -16,14 +16,13 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 
 ## Fase 1 · Bugs sin tocar dependencias
 
-> **Progreso (cierre de la 3.ª sesión, 2026-10-10):** hechos en la rama `fix/portfolio-total-refactor-design-2026`, todos con build de producción comprobado: **A6, A1, A2, M1, A5, A7, M3 y M5** (código). **Nada de esto está en `master` todavía**: el PR del hito 1 se hará cuando el dueño lo pida (no antes).
+> **Progreso (4.ª sesión, 2026-10-12):** hechos en la rama `fix/portfolio-total-refactor-design-2026`, todos con build de producción comprobado: **A6, A1, A2, M1, A5, A7, M3 y M5** (código y dependencia). **Nada de esto está en `master` todavía**: el PR del hito 1 se hará cuando el dueño lo pida (no antes).
 >
-> **Para la próxima sesión (en este orden):**
-> 1. Quitar `i18next-http-backend` de `package.json` (resto de M5; pide OK del dueño).
-> 2. **A3** (SEO en el HTML estático; añade `gatsby-plugin-react-helmet`: pedir OK). Prerrequisito de R1a.
-> 3. Extras a elección: B1 (`key` en `aboutNew.js`), fallo claro si falta `api_key`.
-> 4. PR del hito 1 y prueba manual en el deploy preview (boletín real, contacto, cotización, clic home → post, `es-VE`/`en-US`).
-> 5. R1a (pieza vertical del rediseño, en rama aparte desde `master`).
+> **Siguiente (en este orden):**
+> 1. **A3** (SEO en el HTML estático; añade `gatsby-plugin-react-helmet`: pedir OK). Prerrequisito de R1a.
+> 2. Extras a elección: B1 (`key` en `aboutNew.js`), fallo claro si falta `api_key`.
+> 3. PR del hito 1 y prueba manual en el deploy preview (boletín real, contacto, cotización, clic home → post, `es-VE`/`en-US`).
+> 4. R1a (pieza vertical del rediseño, en rama aparte desde `master`).
 >
 > Detalle y método de prueba en el [dev-log](dev-log.md) (sección "Próximos pasos").
 
@@ -36,7 +35,7 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 | A5 | Errores visibles en contacto/cotización/boletín; `response.ok`; helper de Netlify alineado | bajo | **hecho en la rama** `092d9a4` (este commit se llama "M3" por error) y `db8158e` (docs); falta probar el boletín real en el deploy preview | `fix/portfolio-total-refactor-design-2026` |
 | M1 | "Últimos posts" en orden `DESC` y enlace absoluto | bajo | **hecho en la rama** `72cf6b0` | `fix/portfolio-total-refactor-design-2026` |
 | M3 | `gatsby-node.js`: manejo de errores y deduplicar por slug | bajo-medio | **hecho en la rama** `3c0f244` (build comparado con la línea base: mismas 20 rutas) | `fix/portfolio-total-refactor-design-2026` |
-| M5 | i18n: retirar backend sobrante, `wait` y el parche `i18next.languages`; `state` por defecto de `Button` (**ya hecho con A1**) | bajo | **hecho en la rama** `6ef3025` (código, probado con build). Falta solo quitar `i18next-http-backend` de `package.json` (pide OK del dueño) | `fix/portfolio-total-refactor-design-2026` |
+| M5 | i18n: retirar backend sobrante, `wait` y el parche `i18next.languages`; `state` por defecto de `Button` (**ya hecho con A1**) | bajo | **hecho en la rama** `6ef3025` (código, probado con build) y desinstalado `i18next-http-backend` de `package.json` (commit del dueño tras la 4.ª sesión; build idéntico) | `fix/portfolio-total-refactor-design-2026` |
 
 > A1, A2 y M1 tocan archivos que el rediseño reescribe (`index.js`, `testimonyFixed`, `quickQuote`, `button`). Decisión por defecto: resolverlos **dentro de la rama del rediseño** solo en los archivos que se reescriben de todos modos; el resto, en ramas `fix/` aparte.
 

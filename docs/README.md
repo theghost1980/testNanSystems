@@ -20,7 +20,7 @@ Esta carpeta **no se publica en el sitio web**: vive solo en el repositorio.
 | [CHANGELOG.md](CHANGELOG.md) | Registro de cambios realizados | **Vivo** |
 | [dev-log.md](dev-log.md) | Bitácora de cada sesión: hecho, decisiones, pendiente y próximos pasos | **Vivo** |
 
-## Estado actual (2026-10-10)
+## Estado actual (2026-10-12)
 
 - Stack instalado: Gatsby 2.32.13, React 17.0.2, gatsby-source-datocms 2.6.18, sharp 0.27.2.
 - Node para desarrollo local: **14.21.3** (npm 6.14.18).
@@ -29,7 +29,7 @@ Esta carpeta **no se publica en el sitio web**: vive solo en el repositorio.
 - Hay una auditoría completa y un plan por fases; ver [roadmap.md](roadmap.md).
 - Rediseño elegido como base: propuesta D (Coral Editorial); ver [redesign.md](redesign.md).
 - Muestras HTML de todas las pantallas y su SPEC: hechas y revisadas (fuera del repo). Siguiente: pieza vertical R1a en una rama aparte.
-- Arreglos de código hechos en la rama `fix/portfolio-total-refactor-design-2026` (aún **no** en `master`): A6, A1, A2, M1, A5, A7, M3 y M5. Pendiente para la próxima sesión: resto de M5 (dependencia), A3 (SEO), PR del hito 1 y R1a. Ver [roadmap.md](roadmap.md) y [dev-log.md](dev-log.md).
+- Arreglos de código hechos en la rama `fix/portfolio-total-refactor-design-2026` (aún **no** en `master`): A6, A1, A2, M1, A5, A7, M3 y M5 (ya sin la dependencia sobrante). Pendiente: A3 (SEO), PR del hito 1 y R1a. Ver [roadmap.md](roadmap.md) y [dev-log.md](dev-log.md).
 
 ## Convenciones
 
