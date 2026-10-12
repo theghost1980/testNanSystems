@@ -34,11 +34,18 @@
       "ariaClose": "Close"
     },
     "footer": {
-      "copy": "Copyright ©2020 with ",
+      "copy": "Made with ",
       "by": " by ",
       "terms": "Terms of Service",
       "contactme": "Contact me over Social Media",
-      "ourserv": "Our Services"
+      "ourserv": "Our Services",
+      "desc": "Automation and IT by Ana Echeverría. Español · English.",
+      "legal": "Legal",
+      "privacy": "Privacy",
+      "credits": "Credits",
+      "newsletterText": "Technical articles and project news, once a month and no spam.",
+      "rights": "All rights reserved",
+      "social": "Social media"
     },
     "home": {
       "latest": "Lastest Articles",
@@ -53,10 +60,23 @@
       "until": "Until",
       "actual": "Actual Job",
       "visit": "Visit Company Web Site",
-      "salary": "Wage: $"
+      "salary": "Wage: $",
+      "description": "Job description",
+      "responsibilities": "Responsibilities",
+      "tasks": "Day-to-day tasks",
+      "accomplishments": "Accomplishments",
+      "empty": "No work experience has been published yet.",
+      "present": "Present"
     },
     "blog": {
-      "quote": "Writing a book is an adventure to begin with, it is a toy and an amusement, then it becomes a mistress, and then it becomes a master, and then a tyrant. The last phase is that just as you are about to be reconciled to your servitude, you kill the monster, and fling him out to the public."
+      "quote": "Writing a book is an adventure to begin with, it is a toy and an amusement, then it becomes a mistress, and then it becomes a master, and then a tyrant. The last phase is that just as you are about to be reconciled to your servitude, you kill the monster, and fling him out to the public.",
+      "all": "Go to the blog",
+      "empty": "There are no articles yet.",
+      "readTime": "min read",
+      "published": "Published on",
+      "back": "Back to the blog",
+      "share": "Share this article",
+      "intro": "Technical notes on automation, infrastructure and design."
     },
     "contact": {
       "name": "Name",
@@ -72,7 +92,9 @@
       "sentTwo": "Thank you. I will reply as soon as possible.",
       "errorTitle": "The message could not be sent.",
       "errorText": "Please try again in a few minutes or email us directly.",
-      "errorTextWithEmail": "Please try again in a few minutes or email us directly at"
+      "errorTextWithEmail": "Please try again in a few minutes or email us directly at",
+      "intro": "Write to us and we will reply as soon as possible.",
+      "message": "Message"
     },
     "tos": {
       "l1": "Website Terms and Conditions of Use",
@@ -121,7 +143,13 @@
     "button": {
       "readmore": "Read More",
       "getquote": "Get quote by Email",
-      "retry": "Try again"
+      "retry": "Try again",
+      "quote": "Get a quote",
+      "close": "Close",
+      "sendAnother": "Send another message",
+      "details": "Show details",
+      "hideDetails": "Hide details",
+      "viewResource": "View resource"
     },
     "blogpost": {
       "categories": "Categories: "
@@ -133,7 +161,8 @@
       "thanks": "Grazie, Gracias, Shukran, 감사합니다!",
       "error": "If error persists, ",
       "error2": "contact us",
-      "errorTitle": "The subscription could not be completed."
+      "errorTitle": "The subscription could not be completed.",
+      "text": "Technical articles and project news, once a month and no spam."
     },
     "quickquote": {
       "companyUser": "Company User",
@@ -163,7 +192,8 @@
       "title": "Request a quote",
       "errorTitle": "The request could not be sent.",
       "errorText": "Please try again or email us directly.",
-      "errorTextWithEmail": "Please try again or email us at"
+      "errorTextWithEmail": "Please try again or email us at",
+      "service": "Service"
     },
     "carousel": {
       "tellme": "More"
@@ -171,6 +201,103 @@
     "cookies": {
       "title": "This website uses cookies to enhance the user experience. We don't store/retrieve/commerce personal information of any kind. The user's data is used within NANSYSTEMS with the user's consent.",
       "sub_title": "Our robots are working to make the world a better place.",
-      "msg": "I Understand"
+      "msg": "I Understand",
+      "reject": "Decline"
+    },
+    "a11y": {
+      "skip": "Skip to content",
+      "logo": "NaNSYSTEMS, go to home",
+      "themeDark": "Switch to dark mode",
+      "themeLight": "Switch to light mode",
+      "langToggle": "Cambiar idioma a Español",
+      "menuOpen": "Open menu",
+      "menuClose": "Close menu",
+      "closeDialog": "Close dialog",
+      "pauseMarquee": "Pause the technologies ticker",
+      "marquee": "Technologies we work with",
+      "footerNav": "Footer",
+      "mainNav": "Main",
+      "shareOn": "Share on",
+      "a11yWidget": "Accessibility options",
+      "externalLink": "(opens in a new tab)",
+      "readMoreAbout": "Read more about"
+    },
+    "hero": {
+      "l1": "Smart buildings,",
+      "accent": "simple",
+      "box": "operations.",
+      "lead": "Building automation, IT infrastructure and technical design, led by Ana Echeverría.",
+      "fig": "FIG. 01 — BUILDING AUTOMATION",
+      "chip": "Medium and large projects",
+      "statText": "years solving automation and IT projects.",
+      "cta": "Let’s talk about your project",
+      "photoFallback": "PHOTO: TECHNICAL ROOM",
+      "alt": "Technician, seen from behind, reviewing a tidy control cabinet in a building's technical room"
+    },
+    "marquee": {
+      "networks": "NETWORKS"
+    },
+    "services": {
+      "title": "What we do",
+      "all": "All projects",
+      "empty": "No services have been published yet."
+    },
+    "testimony": {
+      "title": "What people say about us",
+      "empty": "No testimonials have been published yet.",
+      "profile": "View profile"
+    },
+    "cta": {
+      "t1": "Shall we talk about your",
+      "t2": "next",
+      "t3": "project?",
+      "text": "Tell us what you need and get a quote by email. Our robots are happy to work for you."
+    },
+    "about": {
+      "areas": "Areas of work",
+      "share": "Share this page"
+    },
+    "ventures": {
+      "dialogTitle": "Project details",
+      "empty": "No projects have been published yet."
+    },
+    "technology": {
+      "quote": "Get a quote for this service",
+      "service": "Service"
+    },
+    "form": {
+      "required": "This field is required.",
+      "invalidEmail": "Enter a valid email address.",
+      "errorsTitle": "Please review these fields:",
+      "requiredNote": "Fields marked with * are required."
+    },
+    "notfound": {
+      "code": "ERROR 404",
+      "title": "This page does not exist",
+      "text": "The address may have changed or never existed. Our robots are already looking into it.",
+      "back": "Back to home"
+    },
+    "credits": {
+      "intro": "Third-party resources used on this website."
+    },
+    "legal": {
+      "updated": "Last updated",
+      "toc": "Contents"
+    },
+    "meta": {
+      "home": "NaNSYSTEMS · Building automation and IT infrastructure",
+      "about": "About · NaNSYSTEMS",
+      "portfolio": "Portfolio · NaNSYSTEMS",
+      "blog": "Blog · NaNSYSTEMS",
+      "ventures": "Ventures · NaNSYSTEMS",
+      "contact": "Contact · NaNSYSTEMS",
+      "notfound": "Page not found · NaNSYSTEMS",
+      "tos": "Terms of Service · NaNSYSTEMS",
+      "privacy": "Privacy Policy · NaNSYSTEMS",
+      "credits": "Credits · NaNSYSTEMS",
+      "components": "Component catalog · NaNSYSTEMS"
+    },
+    "media": {
+      "missing": "Image not available"
     }
   }

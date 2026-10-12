@@ -34,11 +34,18 @@
       "ariaClose": "Cerrar"
     },
     "footer": {
-      "copy": "Derechos Reservados ©2020 con ",
+      "copy": "Hecho con ",
       "by": " por ",
       "terms": "Términos de Servicio",
       "contactme": "Contáctame en las Redes Sociales",
-      "ourserv": "Nuestros Servicios"
+      "ourserv": "Nuestros Servicios",
+      "desc": "Automatización e IT por Ana Echeverría. Español · English.",
+      "legal": "Legal",
+      "privacy": "Privacidad",
+      "credits": "Créditos",
+      "newsletterText": "Artículos técnicos y novedades de proyectos, una vez al mes y sin spam.",
+      "rights": "Derechos reservados",
+      "social": "Redes sociales"
     },
     "home": {
       "latest": "Artículos Recientes",
@@ -53,10 +60,23 @@
       "until": "Hasta",
       "actual": "Empleo Actual",
       "visit": "Visitar el Sitio Web",
-      "salary": "Salario: $"
+      "salary": "Salario: $",
+      "description": "Descripción del puesto",
+      "responsibilities": "Responsabilidades",
+      "tasks": "Tareas habituales",
+      "accomplishments": "Logros",
+      "empty": "Todavía no hay experiencias publicadas.",
+      "present": "Actual"
     },
     "blog": {
-      "quote": "Escribir un libro es una aventura para empezar, es un juguete y una diversión, luego se convierte en una amante, y luego se convierte en un maestro, y luego en un tirano. La última fase es que justo cuando está a punto de reconciliarse con su servidumbre, mata al monstruo, y lo lanza al público."
+      "quote": "Escribir un libro es una aventura para empezar, es un juguete y una diversión, luego se convierte en una amante, y luego se convierte en un maestro, y luego en un tirano. La última fase es que justo cuando está a punto de reconciliarse con su servidumbre, mata al monstruo, y lo lanza al público.",
+      "all": "Ir al blog",
+      "empty": "Todavía no hay artículos.",
+      "readTime": "min de lectura",
+      "published": "Publicado el",
+      "back": "Volver al blog",
+      "share": "Compartir este artículo",
+      "intro": "Notas técnicas sobre automatización, infraestructura y diseño."
     },
     "contact": {
       "name": "Nombre",
@@ -72,7 +92,9 @@
       "sentTwo": "Gracias. Responderé a la brevedad posible.",
       "errorTitle": "No se pudo enviar el mensaje.",
       "errorText": "Inténtalo de nuevo en unos minutos o escríbenos directamente por correo.",
-      "errorTextWithEmail": "Inténtalo de nuevo en unos minutos o escríbenos directamente a"
+      "errorTextWithEmail": "Inténtalo de nuevo en unos minutos o escríbenos directamente a",
+      "intro": "Escríbenos y te respondemos lo antes posible.",
+      "message": "Mensaje"
     },
     "tos": {
       "l1": "Términos y condiciones de uso del sitio web",
@@ -121,7 +143,13 @@
     "button": {
       "readmore": "Leer Más",
       "getquote": "Cotizar por Email",
-      "retry": "Reintentar"
+      "retry": "Reintentar",
+      "quote": "Cotizar",
+      "close": "Cerrar",
+      "sendAnother": "Enviar otro mensaje",
+      "details": "Ver detalles",
+      "hideDetails": "Ocultar detalles",
+      "viewResource": "Ver recurso"
     },
     "blogpost": {
       "categories": "Categorías: "
@@ -133,7 +161,8 @@
       "thanks": "Grazie, Gracias, Shukran, 감사합니다!",
       "error": "Si el error persiste,",
       "error2": "contáctenos",
-      "errorTitle": "No se pudo completar la suscripción."
+      "errorTitle": "No se pudo completar la suscripción.",
+      "text": "Artículos técnicos y novedades de proyectos, una vez al mes y sin spam."
     },
     "quickquote": {
       "companyUser": "Trabajador/Empleado",
@@ -163,7 +192,8 @@
       "title": "Solicitar cotización",
       "errorTitle": "No se pudo enviar la solicitud.",
       "errorText": "Inténtalo de nuevo o escríbenos por correo.",
-      "errorTextWithEmail": "Inténtalo de nuevo o escríbenos a"
+      "errorTextWithEmail": "Inténtalo de nuevo o escríbenos a",
+      "service": "Servicio"
     },
     "carousel": {
       "tellme": "Más"
@@ -171,6 +201,103 @@
     "cookies": {
       "title": "Este sitio web utiliza cookies para mejorar la experiencia del usuario. No almacenamos/recuperamos/comercializamos información personal de ningún tipo. Los datos del usuario se utilizan dentro de NANSYSTEMS con el consentimiento del usuario.",
       "sub_title": "Nuestros robots trabajan para hacer del mundo un lugar mejor.",
-      "msg": "Acepto"
+      "msg": "Acepto",
+      "reject": "Rechazar"
+    },
+    "a11y": {
+      "skip": "Saltar al contenido",
+      "logo": "NaNSYSTEMS, ir al inicio",
+      "themeDark": "Activar modo oscuro",
+      "themeLight": "Activar modo claro",
+      "langToggle": "Cambiar idioma a English",
+      "menuOpen": "Abrir menú",
+      "menuClose": "Cerrar menú",
+      "closeDialog": "Cerrar diálogo",
+      "pauseMarquee": "Pausar la franja de tecnologías",
+      "marquee": "Tecnologías con las que trabajamos",
+      "footerNav": "Pie de página",
+      "mainNav": "Principal",
+      "shareOn": "Compartir en",
+      "a11yWidget": "Opciones de accesibilidad",
+      "externalLink": "(se abre en una pestaña nueva)",
+      "readMoreAbout": "Leer más sobre"
+    },
+    "hero": {
+      "l1": "Edificios inteligentes,",
+      "accent": "operación",
+      "box": "simple.",
+      "lead": "Automatización, infraestructura IT y diseño técnico, liderados por Ana Echeverría.",
+      "fig": "FIG. 01 — AUTOMATIZACIÓN DE EDIFICIOS",
+      "chip": "Proyectos medianos y grandes",
+      "statText": "años resolviendo proyectos de automatización e IT.",
+      "cta": "Hablemos de tu proyecto",
+      "photoFallback": "FOTO: SALA TÉCNICA",
+      "alt": "Técnico, de espaldas, revisando un tablero de control ordenado en la sala técnica de un edificio"
+    },
+    "marquee": {
+      "networks": "REDES"
+    },
+    "services": {
+      "title": "Lo que hacemos",
+      "all": "Todos los proyectos",
+      "empty": "Todavía no hay servicios publicados."
+    },
+    "testimony": {
+      "title": "Lo que dicen de nosotros",
+      "empty": "Aún no hay testimonios publicados.",
+      "profile": "Ver perfil"
+    },
+    "cta": {
+      "t1": "¿Hablamos de tu",
+      "t2": "próximo",
+      "t3": "proyecto?",
+      "text": "Cuéntanos qué necesitas y recibe una cotización por email. Nuestros robots están felices de trabajar para ti."
+    },
+    "about": {
+      "areas": "Áreas de trabajo",
+      "share": "Compartir esta página"
+    },
+    "ventures": {
+      "dialogTitle": "Detalle del proyecto",
+      "empty": "Todavía no hay proyectos publicados."
+    },
+    "technology": {
+      "quote": "Cotizar este servicio",
+      "service": "Servicio"
+    },
+    "form": {
+      "required": "Este campo es obligatorio.",
+      "invalidEmail": "Escribe un correo válido.",
+      "errorsTitle": "Revisa estos campos:",
+      "requiredNote": "Los campos marcados con * son obligatorios."
+    },
+    "notfound": {
+      "code": "ERROR 404",
+      "title": "Esta página no existe",
+      "text": "La dirección puede haber cambiado o nunca existió. Nuestros robots ya lo están revisando.",
+      "back": "Volver al inicio"
+    },
+    "credits": {
+      "intro": "Recursos de terceros utilizados en este sitio."
+    },
+    "legal": {
+      "updated": "Última actualización",
+      "toc": "Contenido"
+    },
+    "meta": {
+      "home": "NaNSYSTEMS · Automatización de edificios e infraestructura IT",
+      "about": "Biografía · NaNSYSTEMS",
+      "portfolio": "Portafolio · NaNSYSTEMS",
+      "blog": "Blog · NaNSYSTEMS",
+      "ventures": "Proyectos · NaNSYSTEMS",
+      "contact": "Contacto · NaNSYSTEMS",
+      "notfound": "Página no encontrada · NaNSYSTEMS",
+      "tos": "Términos de servicio · NaNSYSTEMS",
+      "privacy": "Política de privacidad · NaNSYSTEMS",
+      "credits": "Créditos · NaNSYSTEMS",
+      "components": "Catálogo de componentes · NaNSYSTEMS"
+    },
+    "media": {
+      "missing": "Imagen no disponible"
     }
   }

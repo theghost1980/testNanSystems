@@ -7,7 +7,7 @@ const Privacy = () => {
   const { t } = useTranslation();
 
   return (
-    <Layout>
+    <Layout showCta={false}>
       <Helmet title={`${t("privacy.l1")} | NaNSYSTEMS.us`} />
       <div className="tosCont">
         <h2 className="titleTos centerTextTos">{t("privacy.l1")}</h2>

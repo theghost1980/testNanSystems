@@ -4,13 +4,12 @@ import Img from "gatsby-image";
 import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 import Layout from "../components/layout";
-import "../styles/styles.css";
 
 const Notfound = (props) => {
   const { t } = useTranslation();
 
   return (
-    <Layout>
+    <Layout showCta={false}>
       <Helmet title={`${t("notFound.title")} | NaNSYSTEMS.us`} />
       <div className="notFoundImgCont">
         <Img

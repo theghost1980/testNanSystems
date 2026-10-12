@@ -183,6 +183,14 @@ La clienta dio **carta abierta** para el rediseño. Se trabaja en la rama `feat/
 
 ### Avance de R1a
 - **Paso 1 (hecho):** `static/fonts/` + `src/styles/fonts.css` + `src/styles/nx.css` (copia sin cambios del paquete), importados desde `Layout`. Son **inertes**: los tokens van en `:root` y el reset está acotado a `.nx-root`, que aún no se aplica. Comprobado: mismas rutas y `page-data`, y la huella de estilos calculados de 5 páginas (`/tos/`, `/privacy/`, `/contact/`, `/blog/`, `/aboutNew/`) es idéntica a la de antes; las fuentes cargan de `/fonts/` con acentos y ñ. Las peticiones a Google Fonts que siguen apareciendo son las del CSS viejo (`@import` de Tenor Sans, Fira Sans y Signika) y se van con `styles.css`.
-- **Paso 2:** `Layout` nuevo (`nx-root` en `<body>`, tema, cabecera con selector ES/EN, pie, banda de cotización) y retirada de `styles.css` y Bootstrap en el mismo cambio (SPEC k.6).
-- **Paso 3:** hero de la home con `Media` y datos del CMS.
-- **Paso 4:** verificación con `gatsby serve` y capturas en 375, 768 y 1440 px, claro y oscuro, ES y EN.
+- **Paso 2 (hecho):** `Layout` nuevo (`nx-root` en `<body>` desde `gatsby-ssr.js`, script de tema y precarga de fuentes; cabecera con menú móvil, selector ES/EN y botón de tema; pie con servicios y redes del CMS; banda de cotización; diálogos de cotización y boletín accesibles y conectados al helper de A8). Se retiran los imports de `styles.css` y Bootstrap (SPEC k.6); el archivo `styles.css` queda como referencia hasta terminar R3.
+- **Paso 3 (hecho):** home completa: hero (imagen local, cifra "+11", tarjeta de cotización), franja de tecnologías, servicios, testimonios y artículos recientes con datos del CMS, todo a través del componente `Media`.
+- **Paso 4 (parcial):** verificado con el build de producción por mediciones del DOM (sin desborde de 320 a 1920 px, comportamiento de menú, idioma, tema y diálogos, 15 rutas sin errores); la revisión visual completa la hace el dueño en su navegador porque las capturas del entorno no son fiables al desplazarse. **Pendiente:** PR en borrador para el primer preview cuando haya bastantes pantallas.
+
+### Decisiones tomadas al portar la home (2026-10-12)
+- **El hero es un archivo local**, no `carouselHome[0]` del CMS: el carrusel antiguo trae fotos de 2020 y siempre ganaría. Cambiar a la fuente del CMS es una línea en `src/components/hero.js`.
+- **La cifra "+11 años"** sale de `TECH_CAREER_START_YEAR = 2015` en `src/config/site.js`, no del primer empleo (2008 es coordinación de recursos humanos). Pendiente de confirmar con la clienta.
+- **El rótulo del hero** pasa de "FIG. 01 — INTEGRACIÓN EN SITIO" (afirma una obra real) a "FIG. 01 — AUTOMATIZACIÓN DE EDIFICIOS", porque la imagen es de concepto.
+- **`react-cookie-consent` y el banner antiguo se mantienen** hasta decidir A4.
+- **Primer render estable** (`useNx`): hasta montar se usa español, para que ningún atributo dependiente del idioma quede obsoleto tras hidratar (A7).
+- **Diálogos que se montan solo al abrirse:** su formulario se reinicia al cerrar y no hay contenido oculto en el HTML.

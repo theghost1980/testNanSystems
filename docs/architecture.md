@@ -108,3 +108,16 @@ Comprobado con búsqueda de imports el 2026-10-10. Antes de borrar algo, mirar M
 - Formulario Netlify **`newsletter`** y su helper `static/forms.html`.
 - Rutas públicas existentes (`/aboutNew`, `/blog/<slug>`, `/<slug>`…): si cambian, añadir redirects.
 - Versiones mayores de Gatsby, React y plugins (línea 2.x de Gatsby).
+
+## Rediseño en curso (rama `feat/redesign-coral-editorial`, aún no en `master`)
+
+Estructura nueva, que sustituye a la de arriba cuando se fusione:
+
+- **`gatsby-ssr.js`**: `lang="es"`, `<body class="nx-root">`, `color-scheme`, script de tema antes de pintar y precarga de fuentes.
+- **`src/styles/`**: `nx.css` (tokens en `:root`/`[data-theme]`, reset acotado a `.nx-root`) y `fonts.css`; fuentes en `static/fonts/`. `styles.css` queda sin importar, como referencia hasta terminar R3.
+- **`src/hooks/`**: `useNx` (traducción e idioma estables en el primer render), `useTheme`, `useDialog` (contexto de diálogos).
+- **`src/components/`**: `layout` (estructura de toda página; `showCta={false}` en 404 y legales), `header`, `footer`, `ctaBand`, `button`, `dialog`, `formField`, `quoteDialog`, `newsletterDialog`, `media` (único componente de imágenes del CMS), `icons`, `hero`, `marquee`, `testimonials`; de A8: `honeypotField`, `formErrorText`, `contactErrorText`.
+- **`src/utils/`**: `netlifyForm` (envío y antiabuso) y `content` (categorías, punto focal, texto alternativo, fechas). **`src/config/site.js`**: datos del negocio escritos a mano.
+- **`src/media-imgs/redesign/`**: imágenes locales del diseño (hero y 404).
+
+Regla para la futura migración de Gatsby: toda imagen del CMS pasa por `Media`, y no se añaden plugins de Gatsby nuevos (ver [dependency-audit.md](dependency-audit.md)).

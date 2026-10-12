@@ -2,6 +2,13 @@
 
 Documento **vivo**. Las imágenes viven en DatoCMS (no en el repo); este archivo solo guarda los prompts, las medidas de cada hueco y los textos alternativos. Medidas y huecos salen de la SPEC del rediseño (sección d) y de [redesign.md](redesign.md).
 
+## Estado (2026-10-12)
+
+Las imágenes ya están generadas (14, con el prompt maestro y los prompts de este documento) y procesadas:
+- **En el repo** (`src/media-imgs/redesign/`): el hero en 3 tamaños y la imagen de la 404, porque el código las usa como archivos locales.
+- **Para subir a DatoCMS** (fuera del repo, en `Refactor-Sites2026/nanasystems/imagenes-para-datocms/`, con un `LEEME.md`): las 4 de servicios, las 3 tarjetas de Biografía, la de Proyectos y las 3 portadas de blog, más la alternativa del hero.
+- Revisadas a tamaño reducido: sin texto, logos ni marcas visibles. Queda por confirmar a tamaño real que ninguna lleva marca visible en una esquina ni texto legible en las pantallas.
+
 ## Reglas (leer antes de generar)
 
 1. **Solo imágenes de concepto** (portadas, ambientes, objetos). **No** generar a la clienta ni a clientes reales, ni testimonios, ni retratos: serían personas falsas en un sitio de marca personal. Las fotos de personas reales se suben tal cual.

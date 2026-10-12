@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet";
 
 const Credits = (props) => {
   return (
-    <Layout>
+    <Layout showCta={false}>
       <Helmet title="Credits | NaNSYSTEMS.us" />
       <div className="creditsCont">
         <h1 className="h2Title">Credits</h1>

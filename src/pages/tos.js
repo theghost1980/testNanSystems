@@ -8,7 +8,7 @@ const Tos = () => {
   const { t } = useTranslation();
 
   return (
-    <Layout>
+    <Layout showCta={false}>
       <Helmet title={`${t("tos.l1")} | NaNSYSTEMS.us`} />
       <div className="tosCont">
         <h2 className="titleTos centerTextTos">{t("tos.l1")}</h2>

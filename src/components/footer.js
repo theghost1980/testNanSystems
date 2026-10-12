@@ -1,221 +1,142 @@
-import React, { useState } from "react";
-import { StaticQuery, graphql, Link } from "gatsby";
-import Img from "gatsby-image";
-import heartIcon from "../media-imgs/heart.png";
-import { useTranslation } from "react-i18next";
+import React from "react";
+import { Link, graphql, useStaticQuery } from "gatsby";
+import Icon, { socialIconName } from "./icons";
+import { Logo, NAV } from "./header";
+import { useDialog } from "../hooks/useDialog";
+import { useNx } from "../hooks/useNx";
 
 const Footer = () => {
-  const { t, i18n } = useTranslation();
-  const _lang = i18n.language;
-
-  const [clickedMap, setClickedMap] = useState(false);
-
-  return (
-    <StaticQuery
-      query={graphql`
-        query {
-          allDatoCmsSocialProfile(filter: { locale: { eq: "en" } }) {
-            edges {
-              node {
-                id
-                profileType
-                url
-                seoMetaTags {
-                  ...GatsbyDatoCmsSeoMetaTags
-                }
-                darkIcon {
-                  fluid {
-                    ...GatsbyDatoCmsFluid
-                  }
-                }
-                lightIcon {
-                  fluid {
-                    ...GatsbyDatoCmsFluid
-                  }
-                }
-              }
-            }
-          }
-          datoCmsInfoSite {
+  const { t, lang } = useNx();
+  const { open } = useDialog();
+  const data = useStaticQuery(graphql`
+    query FooterData {
+      social: allDatoCmsSocialProfile(filter: { locale: { eq: "en" } }) {
+        edges {
+          node {
             id
-            logoSite {
-              fluid {
-                ...GatsbyDatoCmsFluid
-              }
-            }
-            logoSiteWhite {
-              fluid {
-                ...GatsbyDatoCmsFluid
-              }
-            }
-          }
-          dataServices_en: allDatoCmsTechnology(
-            filter: { locale: { eq: "en" } }
-          ) {
-            edges {
-              node {
-                id
-                shortTitle
-                slug
-              }
-            }
-          }
-          dataServices_es: allDatoCmsTechnology(
-            filter: { locale: { eq: "es" } }
-          ) {
-            edges {
-              node {
-                id
-                shortTitle
-                slug
-              }
-            }
+            profileType
+            url
           }
         }
-      `}
-      render={(data) => (
-        <footer>
-          <div className="rowFooter">
-            <div className="rowDisplay justW100 justSpace">
-              <div className="columnDisplay justW40p justAligItems">
-                <div className="displayBlock250p">
-                  <Link
-                    to="/"
-                    activeClassName="activeNavLink"
-                    aria-label={t("menu.ariaHome")}
-                  >
-                    <Img
-                      fluid={data.datoCmsInfoSite.logoSiteWhite.fluid}
-                      className="logoFooter scaleHovered justBorderWhite justBorderRounded"
-                    />
+      }
+      services_es: allDatoCmsTechnology(filter: { locale: { eq: "es" } }) {
+        edges {
+          node {
+            id
+            shortTitle
+            slug
+          }
+        }
+      }
+      services_en: allDatoCmsTechnology(filter: { locale: { eq: "en" } }) {
+        edges {
+          node {
+            id
+            shortTitle
+            slug
+          }
+        }
+      }
+    }
+  `);
+
+  const services = (lang === "en" ? data.services_en : data.services_es).edges;
+  const year = new Date().getFullYear();
+
+  return (
+    <footer className="nx-footer nx-container">
+      <div className="nx-footer__top">
+        <div className="nx-footer__brand">
+          <Logo />
+          <p className="nx-footer__desc">{t("footer.desc")}</p>
+          {data.social.edges.length > 0 && (
+            <nav aria-label={t("footer.social")}>
+              <ul className="nx-social">
+                {data.social.edges.map(({ node }) => (
+                  <li key={node.id}>
+                    <a
+                      className="nx-social__link"
+                      href={node.url}
+                      rel="noopener noreferrer"
+                      target="_blank"
+                      aria-label={node.profileType}
+                    >
+                      <Icon name={socialIconName(node.profileType)} />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          )}
+        </div>
+        <div className="nx-footer__cols">
+          <nav aria-label={t("footer.ourserv")}>
+            <h2 className="nx-footer__heading">{t("footer.ourserv")}</h2>
+            <ul className="nx-footer__links">
+              {services.map(({ node }) => (
+                <li key={node.id}>
+                  <Link className="nx-footer__link" to={`/${node.slug}`}>
+                    {node.shortTitle}
                   </Link>
-                </div>
-                <ul className="socialULfooter">
-                  {data.allDatoCmsSocialProfile.edges.map((item) => {
-                    return (
-                      <li key={item.node.id} className="scaleHovered">
-                        <a href={item.node.url}>
-                          <Img
-                            fluid={item.node.lightIcon.fluid}
-                            className="socialIconSmaller"
-                          />
-                        </a>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
-              <div
-                className={`columnDisplay justW40p relativeDiv justAligItems`}
-              >
-                <ul
-                  className={`ulFooterSiteMap ${
-                    clickedMap ? "expandedMap shadowWhite" : "collapsedMap"
-                  }`}
-                  onMouseLeave={() => setClickedMap(false)}
-                  onMouseOver={() => setClickedMap(true)}
-                >
-                  <li
-                    className={`navItem pointer boldTextTitles fontSizeLarge ${
-                      clickedMap ? "displayNone" : null
-                    }`}
-                  >
-                    {t("menu.siteMap")}
-                  </li>
-                  <li className="navItem">
-                    <Link
-                      to="/"
-                      className="navLinkWhite"
-                      activeClassName="activeNavLink"
-                    >
-                      {t("menu.home")}
-                    </Link>
-                  </li>
-                  <li className="navItem">
-                    <Link
-                      to="/aboutNew"
-                      className="navLinkWhite"
-                      activeClassName="activeNavLink"
-                    >
-                      {t("menu.about")}
-                    </Link>
-                  </li>
-                  <li className="navItem">
-                    <Link
-                      to="/portfolio"
-                      className="navLinkWhite"
-                      activeClassName="activeNavLink"
-                    >
-                      {t("menu.portfolio")}
-                    </Link>
-                  </li>
-                  <li className="navItem">
-                    <Link
-                      to="/blog"
-                      className="navLinkWhite"
-                      activeClassName="activeNavLink"
-                    >
-                      {t("menu.blog")}
-                    </Link>
-                  </li>
-                  <li className="navItem">
-                    <Link
-                      to="/ventures"
-                      className="navLinkWhite"
-                      activeClassName="activeNavLink"
-                    >
-                      {t("menu.ventures")}
-                    </Link>
-                  </li>
-                  <li className="navItem">
-                    <Link
-                      to="/contact"
-                      className="navLinkWhite"
-                      activeClassName="activeNavLink"
-                    >
-                      {t("menu.contact")}
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div className="justPaddingTop">
-            <div className="rowColumFooter">
-              <p className="textFooterSmall">
-                {t("footer.copy")}
-                <span>
-                  <img
-                    src={heartIcon}
-                    className="heartIcon"
-                    alt="love love love"
-                  />
-                </span>
-                {t("footer.by")}&nbsp;&nbsp;
-              </p>
-              <p className="textFooterSmall">
-                <a className="whiteHover" href="http://saturnoman.com/">
-                  @theghost1980
-                </a>{" "}
-                |{" "}
-              </p>
-              <p className="textFooterSmall">
-                <Link className="whiteHover" to="/tos">
-                  &nbsp;&nbsp;{t("footer.terms")}
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <nav aria-label={t("menu.siteMap")}>
+            <h2 className="nx-footer__heading">{t("menu.siteMap")}</h2>
+            <ul className="nx-footer__links">
+              {NAV.map(([to, key]) => (
+                <li key={to}>
+                  <Link className="nx-footer__link" to={to}>
+                    {t(key)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <div>
+            <h2 className="nx-footer__heading">{t("footer.legal")}</h2>
+            <ul className="nx-footer__links">
+              <li>
+                <Link className="nx-footer__link nx-footer__link--muted" to="/tos">
+                  {t("footer.terms")}
                 </Link>
-                &nbsp;&nbsp;|
-              </p>
-              <p className="textFooterSmall">
-                <Link className="whiteHover" to="/credits">
-                  &nbsp;&nbsp;Credits
+              </li>
+              <li>
+                <Link className="nx-footer__link nx-footer__link--muted" to="/privacy">
+                  {t("footer.privacy")}
                 </Link>
-                .
-              </p>
-            </div>
+              </li>
+              <li>
+                <Link className="nx-footer__link nx-footer__link--muted" to="/credits">
+                  {t("footer.credits")}
+                </Link>
+              </li>
+            </ul>
+            <button
+              className="nx-btn nx-btn--ghost nx-btn--sm nx-mt-sm"
+              type="button"
+              onClick={() => open("nx-newsletter")}
+            >
+              {t("subscribe.getgood")}
+            </button>
           </div>
-        </footer>
-      )}
-    />
+        </div>
+      </div>
+      <div className="nx-footer__bottom">
+        <span>
+          <span>{t("footer.copy")}</span>
+          <span aria-hidden="true">♥</span>
+          <span>{t("footer.by")}</span>
+          <a className="nx-link" href="http://saturnoman.com/" rel="noopener noreferrer">
+            @theghost1980
+          </a>
+        </span>
+        <span>
+          © {year} NaNSYSTEMS · {t("footer.rights")}
+        </span>
+      </div>
+    </footer>
   );
 };
 
