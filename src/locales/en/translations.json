@@ -5,6 +5,14 @@
       "author": "@theghost1980",
       "footer": "Construido con  Gatsby"
     },
+    "formLimit": {
+      "cooldown": "You just sent this form. Please wait a minute before sending it again.",
+      "daily": "You have reached today's sending limit. Please try again tomorrow or email us directly.",
+      "dailyWithEmail": "You have reached today's sending limit. Please try again tomorrow or email us directly at"
+    },
+    "notFound": {
+      "title": "Page not found"
+    },
     "menu": {
       "siteMap": "Site Map",
       "home": "Home",
@@ -61,7 +69,10 @@
       "inputFeedback": "feedback/comments here please",
       "sending": "Sending Email. Please Wait!",
       "sentOne": "Email Sent!",
-      "sentTwo": "Thank you. I will replay as soon as possible."
+      "sentTwo": "Thank you. I will reply as soon as possible.",
+      "errorTitle": "The message could not be sent.",
+      "errorText": "Please try again in a few minutes or email us directly.",
+      "errorTextWithEmail": "Please try again in a few minutes or email us directly at"
     },
     "tos": {
       "l1": "Website Terms and Conditions of Use",
@@ -109,7 +120,8 @@
     },
     "button": {
       "readmore": "Read More",
-      "getquote": "Get quote by Email"
+      "getquote": "Get quote by Email",
+      "retry": "Try again"
     },
     "blogpost": {
       "categories": "Categories: "
@@ -120,7 +132,8 @@
       "emailhere": " email here please",
       "thanks": "Grazie, Gracias, Shukran, 감사합니다!",
       "error": "If error persists, ",
-      "error2": "contact us"
+      "error2": "contact us",
+      "errorTitle": "The subscription could not be completed."
     },
     "quickquote": {
       "companyUser": "Company User",
@@ -146,7 +159,11 @@
       "sending": "Sending Message Please Wait..",
       "ourobots": "Our Robots are making the world a better place :D",
       "sent": "Message Sent. Our Robots are happy to work for you!",
-      "wewill": "We will answer you as soon as possible. Please add our email to your safe contacts"
+      "wewill": "We will answer you as soon as possible. Please add our email to your safe contacts",
+      "title": "Request a quote",
+      "errorTitle": "The request could not be sent.",
+      "errorText": "Please try again or email us directly.",
+      "errorTextWithEmail": "Please try again or email us at"
     },
     "carousel": {
       "tellme": "More"

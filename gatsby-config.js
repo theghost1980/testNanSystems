@@ -1,10 +1,21 @@
 require("dotenv").config();
 
+// Sin esta variable el plugin de DatoCMS recibiría el texto "undefined" y el build
+// fallaría unos segundos después con un `401 INVALID_AUTHORIZATION_HEADER` de la API.
+if (!process.env.api_key) {
+  throw new Error(
+    "Falta la variable de entorno `api_key` (token de solo lectura de DatoCMS). " +
+      "En local, defínela en el archivo .env (docs/setup-local.md, sección 3). " +
+      "En Netlify, en las variables de entorno del sitio (que apliquen también a Deploy Previews)."
+  );
+}
+
 module.exports = {
   siteMetadata: {
     title: `NanSystems - Ana Echeverría`,
     description: `Ana Echeverria provides solutions in IT and technology for the medium, small and large companies.`,
     author: `Saturno Mangieri -> saturnoman.com`,
+    siteUrl: `https://nansystems.us`,
   },
   plugins: [
     {
@@ -19,6 +30,7 @@ module.exports = {
         icon: `src/media-imgs/favIcon.png`,
       },
     },
+    `gatsby-plugin-react-helmet`,
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
@@ -77,6 +89,21 @@ module.exports = {
         // You can add multiple tracking ids and a pageview event will be fired for all of them.
         trackingIds: [
           "G-GWX08J3QRF", // Google Analytics / GA
+        ],
+      },
+    },
+    {
+      resolve: `gatsby-plugin-sitemap`,
+      options: {
+        // `exclude` reemplaza la lista por defecto del plugin, por eso se repite.
+        // /about y /singleventure son páginas viejas sin enlaces (ver M4): no se listan.
+        exclude: [
+          `/dev-404-page`,
+          `/404`,
+          `/404.html`,
+          `/offline-plugin-app-shell-fallback`,
+          `/about`,
+          `/singleventure`,
         ],
       },
     },

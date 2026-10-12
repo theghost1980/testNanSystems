@@ -10,14 +10,15 @@
 | Imágenes | `gatsby-image` (fluid) + `gatsby-plugin-sharp` + `sharp` 0.27.2 |
 | i18n | i18next 19.9.2 + react-i18next 11.18.6 + language detector |
 | Estilos | un único `src/styles/styles.css` global; Bootstrap 4 solo para el carrusel |
-| Formularios | EmailJS (contacto y cotización) y Netlify Forms (boletín) |
+| Formularios | Netlify Forms (boletín, contacto y cotización) |
 | Analítica / cookies | `gatsby-plugin-google-gtag`, `react-cookie-consent`, `gatsby-plugin-gdpr-cookies` |
 | Hosting | Netlify, build desde GitHub (`master`) |
 
 ## Carpetas
 
 ```
-gatsby-config.js     plugins; lee la variable api_key (DatoCMS)
+gatsby-config.js     plugins; lee la variable api_key (DatoCMS); siteUrl para el sitemap
+gatsby-ssr.js        pone lang="es" en el HTML estático (el idioma real lo ajusta Layout)
 gatsby-node.js       crea páginas: blog/<slug> y /<slug> (tecnologías)
 gatsby-browser.js    carga el widget de accesibilidad (equalweb) en window.onload
 src/
@@ -65,10 +66,14 @@ Modelos de DatoCMS usados: InfoSite, BlogPost, Technology, Aboutnew, About, Vent
 
 | Formulario | Dónde | Envío |
 |---|---|---|
-| Contacto | `pages/contact.js` | EmailJS |
-| Cotización (modal) | `components/quickQuote.js`, abierto desde `components/button.js` (acción `quote`) | EmailJS |
+| Contacto | `pages/contact.js` | POST a `/` con `form-name=contact` (vía `utils/netlifyForm.js`) → Netlify Forms |
+| Cotización (modal) | `components/quickQuote.js`, abierto desde `components/button.js` (acción `quote`) | POST a `/` con `form-name=quote` (vía `utils/netlifyForm.js`) → Netlify Forms |
 | Boletín | `components/mailChimpForm.js` (exporta `NetlifyForm`; el nombre es histórico) | POST a `/` con `form-name=newsletter` → Netlify Forms |
 | Comentarios | `components/commentsForm.js` | **Sin uso** |
+
+Los tres formularios activos se declaran en `static/forms.html` (nombre, campos y honeypot `bot-field`): Netlify solo los reconoce si coinciden con lo que envía el código. Si falla el envío, el mensaje de error muestra el correo de `GATSBY_CONTACT_EMAIL` (`components/contactErrorText.js`); sin la variable, sale sin dirección.
+
+**Antiabuso** (todo en `utils/netlifyForm.js`; los límites son constantes al principio del archivo): espera de 60 s entre envíos y 5 al día por formulario y navegador (marcas en `localStorage`, `nx-form-sends-<formulario>`), y honeypot `bot-field` (`components/honeypotField.js`) que viaja siempre en el POST; si viene relleno no se envía nada. `components/formErrorText.js` elige el texto de error según el motivo. Es un freno del lado del cliente: quien haga POST directo a `/` lo salta; lo detiene Akismet de Netlify (automático) y, si hiciera falta, un reCAPTCHA. Hasta A8 contacto y cotización usaban EmailJS.
 
 El formulario `newsletter` solo existe en el DOM cuando se abre el modal, por eso `static/forms.html` lo declara en HTML estático para que Netlify lo registre en el build. **Los dos deben mantenerse sincronizados** (nombre `newsletter`, campo `email`).
 
@@ -81,7 +86,11 @@ El formulario `newsletter` solo existe en el DOM cuando se abre el modal, por es
 
 ## SEO
 
-Cada página llama a `<HelmetDatoCms seo={...}/>` con los metadatos que entrega DatoCMS. El proyecto **no tiene `gatsby-plugin-react-helmet`**, así que esos metadatos no llegan al HTML estático (hallazgo A3). Sin SEO propio: `aboutNew`, `404`, `credits`, `privacy`, `tos`.
+Cada página llama a `<HelmetDatoCms seo={...}/>` con los metadatos que entrega DatoCMS (`aboutNew` incluida desde A3). `gatsby-plugin-react-helmet` los lleva al HTML estático, que siempre sale con `<html lang="es">` (`gatsby-ssr.js`); `Layout` ajusta `lang` al idioma real al montar. `tos`, `privacy`, `credits` y `404` solo tienen título (`Helmet`). `singleventure` queda sin `<title>` (lee su SEO del estado de navegación; página vieja, M4).
+
+`gatsby-plugin-sitemap` genera `/sitemap.xml` al construir (`siteUrl` en `siteMetadata`; excluye `/404`, `/about` y `/singleventure`) y `static/robots.txt` lo declara.
+
+La detección de idioma **no** usa el detector `htmlTag` (`src/i18n/config.js`): el `lang` del HTML es salida del sitio y, si se leyera, ese `es` exacto ganaría a un `en-US` del visitante.
 
 ## Código en uso y código muerto
 

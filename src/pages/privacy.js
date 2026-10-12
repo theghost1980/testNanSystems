@@ -1,5 +1,6 @@
 import React from "react";
 import Layout from "../components/layout";
+import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 
 const Privacy = () => {
@@ -7,6 +8,7 @@ const Privacy = () => {
 
   return (
     <Layout>
+      <Helmet title={`${t("privacy.l1")} | NaNSYSTEMS.us`} />
       <div className="tosCont">
         <h2 className="titleTos centerTextTos">{t("privacy.l1")}</h2>
         <p className="textTos">

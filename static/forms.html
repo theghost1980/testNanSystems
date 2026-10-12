@@ -5,9 +5,38 @@
   <title>Netlify Form Helper</title>
 </head>
 <body>
-  <form name="newsletter" data-netlify="true" hidden>
+  <!-- Registro de los formularios para Netlify. Cada uno debe coincidir con el
+       código que lo envía (nombre y campos) y con honeypot "bot-field":
+       - newsletter: src/components/mailChimpForm.js
+       - contact:    src/pages/contact.js (vía src/utils/netlifyForm.js)
+       - quote:      src/components/quickQuote.js (vía src/utils/netlifyForm.js) -->
+  <form name="newsletter" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
     <input type="hidden" name="form-name" value="newsletter" />
+    <p hidden><label>Don’t fill this out if you’re human: <input name="bot-field" /></label></p>
     <input type="email" name="email" />
+  </form>
+
+  <form name="contact" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="contact" />
+    <p hidden><label>Don’t fill this out if you’re human: <input name="bot-field" /></label></p>
+    <input type="text" name="name" />
+    <input type="email" name="email" />
+    <textarea name="message"></textarea>
+  </form>
+
+  <form name="quote" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+    <input type="hidden" name="form-name" value="quote" />
+    <p hidden><label>Don’t fill this out if you’re human: <input name="bot-field" /></label></p>
+    <input type="text" name="quote" />
+    <input type="text" name="companyUser" />
+    <input type="text" name="company" />
+    <input type="text" name="job" />
+    <input type="text" name="name" />
+    <input type="email" name="email" />
+    <input type="tel" name="phone" />
+    <input type="text" name="callme" />
+    <input type="text" name="dateTime" />
+    <textarea name="comments"></textarea>
   </form>
 </body>
 </html>

@@ -140,25 +140,9 @@ export const data = graphql`
           dateIn(formatString: "YYYY")
           dateOut(formatString: "YYYY")
           id
-          jobDescriptionNode {
-            childMarkdownRemark {
-              html
-            }
-          }
           jobTitle
           locale
-          opinionAboutCompanyNode {
-            childMarkdownRemark {
-              html
-            }
-          }
           place
-          responsibilitiesNode {
-            childMarkdownRemark {
-              html
-            }
-          }
-          salary
           urlCompany
         }
       }
@@ -178,25 +162,9 @@ export const data = graphql`
           dateIn(formatString: "YYYY")
           dateOut(formatString: "YYYY")
           id
-          jobDescriptionNode {
-            childMarkdownRemark {
-              html
-            }
-          }
           jobTitle
           locale
-          opinionAboutCompanyNode {
-            childMarkdownRemark {
-              html
-            }
-          }
           place
-          responsibilitiesNode {
-            childMarkdownRemark {
-              html
-            }
-          }
-          salary
           urlCompany
         }
       }

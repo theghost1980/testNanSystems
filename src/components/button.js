@@ -7,7 +7,7 @@ const Button = (props) => {
   const _typebtn = type || "btnNoFilled";
   const _value = value || "Click me";
   const _pathname = pathname || "/";
-  const _data = data || "";
+  const _data = data || {};
   const _action = action || null;
   const _extraClass = extraclass || null;
 

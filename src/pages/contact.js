@@ -1,14 +1,12 @@
 import React from "react";
 import Layout from "../components/layout";
-import _emailJs from "emailjs-com";
 import iconSystem from "../media-imgs/test-logo-system.png";
 import { withTranslation } from "react-i18next";
 import { HelmetDatoCms } from "gatsby-source-datocms";
 import { graphql } from "gatsby";
-
-const userId = "user_eI2TfwSXCTylXcY4axXJe";
-const serviceId = "nansystems.us";
-const templateId = "template_a4weyh4";
+import FormErrorText from "../components/formErrorText";
+import HoneypotField from "../components/honeypotField";
+import { submitNetlifyForm, errorKind } from "../utils/netlifyForm";
 
 class Contact extends React.Component {
   constructor(props) {
@@ -17,10 +15,14 @@ class Contact extends React.Component {
       feedback: "",
       name: "",
       email: "",
+      botField: "",
       sent: false,
       sending: false,
+      error: false,
+      errorKind: "send",
     };
     this.handleChange = this.handleChange.bind(this);
+    this.handleChangeBot = this.handleChangeBot.bind(this);
     this.handleChangeEmail = this.handleChangeEmail.bind(this);
     this.handleChangeText = this.handleChangeText.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -39,6 +41,10 @@ class Contact extends React.Component {
         <div className="contactContainer">
           <div className="formContainer">
             <form className="contactForm" onSubmit={this.handleSubmit}>
+              <HoneypotField
+                value={this.state.botField}
+                onChange={this.handleChangeBot}
+              />
               <div className="rowCont">
                 <div className="labelsCont">
                   <p className="lblForm">{this.props.t("contact.name")}</p>
@@ -80,6 +86,18 @@ class Contact extends React.Component {
                 </div>
               </div>
               <div className="btnCont">
+                {this.state.error && !this.state.sending && (
+                  <div className="sendingEmailCont">
+                    <p className="divErrorSubcriptions" role="alert">
+                      {this.props.t("contact.errorTitle")}
+                      <br></br>
+                      <FormErrorText
+                        kind={this.state.errorKind}
+                        sendKey="contact.errorText"
+                      />
+                    </p>
+                  </div>
+                )}
                 {!this.state.sending && !this.state.sent && (
                   <div className="btnRowCont">
                     <input
@@ -136,16 +154,21 @@ class Contact extends React.Component {
   handleChange(event) {
     this.setState({ feedback: event.target.value });
   }
+  handleChangeBot(event) {
+    this.setState({ botField: event.target.value });
+  }
   resetForm = () => {
     this.setState({
       name: "",
       email: "",
       feedback: "",
+      botField: "",
       sent: false,
+      error: false,
     });
   };
   sendingMessage() {
-    this.setState({ sending: true });
+    this.setState({ sending: true, error: false });
   }
   messageSentSuccess() {
     this.setState({ sending: false });
@@ -156,26 +179,30 @@ class Contact extends React.Component {
   handleSubmit(event) {
     this.sendingMessage();
     this.sendFeedback({
-      message_html: this.state.feedback,
-      from_name: this.state.name,
-      reply_to: this.state.email,
+      name: this.state.name,
+      email: this.state.email,
+      message: this.state.feedback,
+      "bot-field": this.state.botField,
     });
     event.preventDefault();
   }
 
-  sendFeedback(variables) {
-    _emailJs.init(userId);
-    _emailJs
-      .send(serviceId, templateId, variables)
-      .then((res) => {
+  sendFeedback(fields) {
+    submitNetlifyForm("contact", fields)
+      .then(() => {
         this.messageSentSuccess();
       })
-      .catch((err) =>
-        console.error(
-          "Oh well, you failed. Here some thoughts on the error that occured:",
-          err,
-        ),
-      );
+      .catch((err) => {
+        const kind = errorKind(err);
+        if (kind === "send") {
+          console.error(
+            "Oh well, you failed. Here some thoughts on the error that occured:",
+            err,
+          );
+        }
+        // Antes la pantalla se quedaba en "Enviando…" para siempre.
+        this.setState({ sending: false, error: true, errorKind: kind });
+      });
   }
 }
 

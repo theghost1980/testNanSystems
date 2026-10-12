@@ -1,6 +1,7 @@
 import React from "react";
 import Layout from "../components/layout";
 import { Link } from "gatsby";
+import { Helmet } from "react-helmet";
 import { useTranslation } from "react-i18next";
 
 const Tos = () => {
@@ -8,6 +9,7 @@ const Tos = () => {
 
   return (
     <Layout>
+      <Helmet title={`${t("tos.l1")} | NaNSYSTEMS.us`} />
       <div className="tosCont">
         <h2 className="titleTos centerTextTos">{t("tos.l1")}</h2>
         <h3 className="subtitleTos">{t("tos.l2")}</h3>

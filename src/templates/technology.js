@@ -32,7 +32,8 @@ const Technology = (props) => {
             <Button
               value={t("button.getquote")}
               type="btnFilled"
-              pathname="/"
+              action="quote"
+              data={{ title: dataTech.title }}
             />
             <Sharebuttons
               url={_url}

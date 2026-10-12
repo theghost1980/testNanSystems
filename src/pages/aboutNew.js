@@ -4,6 +4,7 @@ import Layout from "../components/layout";
 import Button from "../components/button";
 import { useTranslation } from "react-i18next";
 import { graphql } from "gatsby";
+import { HelmetDatoCms } from "gatsby-source-datocms";
 import Sharebuttons from "../components/shareButton";
 
 const AboutNew = (props) => {
@@ -14,11 +15,14 @@ const AboutNew = (props) => {
 
   const _twitterHandle = "_MsLinda";
   const _url = props.location.href;
-  let _titlePost = data.title;
+  // Antes `data.title` apuntaba al `export const data = graphql...` del módulo
+  // (no a props.data) y daba `undefined`.
+  const _titlePost = t("menu.about");
   const _tags = ["NaNSYSTEMS", "SolutionsIT", "automation", "Niagara"];
 
   return (
     <Layout>
+      <HelmetDatoCms seo={dataVenture.seoMetaTags} />
       <div className="venturesCont">
         <div className="textAboutUs">
           <div
@@ -41,7 +45,7 @@ const AboutNew = (props) => {
         <ul className="ulAboutUsCards">
           {dataVenture.aboutarea.map((aboutItem) => {
             return (
-              <li>
+              <li key={aboutItem.id}>
                 <div className="cardAboutUs">
                   <Img fluid={aboutItem.image.fluid} className="imgCard" />
                   <h3 className="titleItemVenture">{aboutItem.title}</h3>
@@ -86,7 +90,7 @@ const AboutNew = (props) => {
           value={t("button.getquote")}
           type="btnFilled"
           action="quote"
-          data={{ title: data.title }}
+          data={{ title: _titlePost }}
         />
       </div>
     </Layout>
@@ -108,7 +112,11 @@ export const data = graphql`
     #     }
     # }
     dataVenture_en: datoCmsAboutnew(locale: { eq: "en" }) {
+      seoMetaTags {
+        ...GatsbyDatoCmsSeoMetaTags
+      }
       aboutarea {
+        id
         title
         image {
           fluid {
@@ -147,7 +155,11 @@ export const data = graphql`
       # }
     }
     dataVenture_es: datoCmsAboutnew(locale: { eq: "es" }) {
+      seoMetaTags {
+        ...GatsbyDatoCmsSeoMetaTags
+      }
       aboutarea {
+        id
         title
         image {
           fluid {
