@@ -125,8 +125,22 @@ El dueño revisó el sitio en su navegador y pidió tres cambios (capturas de la
 - Auditoría de DOM sobre todas las rutas: imágenes con `alt`, enlaces y botones con nombre accesible, sin `id` repetidos ni saltos de encabezado, enlaces `_blank` con `noopener`, campos con etiqueta, un solo `header`/`main`/`footer` y todos los `nav` con nombre; el único hallazgo (imágenes del texto del CMS sin `alt`) quedó corregido y se comprobó en el HTML generado de los 5 posts y los 3 servicios.
 - Términos: nueve secciones con ancla y enlaces del índice válidos, `tos.l5` ya sin la frase duplicada, fecha "Last updated: December 19, 2020". Créditos: 13 tarjetas, 13 imágenes cargadas (carga diferida), enlaces con nombre "View resource: npmjs.com (opens in a new tab)". 404: imagen cargada con su texto alternativo y sin banda de cotización.
 
+### Hecho (parte 5: favicon, términos y política de privacidad)
+El dueño revisó la parte 4 y pidió tres cosas: márgenes en los términos, el favicon con los colores del logo y "los cambios que consideres" en política y términos.
+- **Márgenes de `/tos`:** lo que veía no era un fallo del código. Su servidor de desarrollo (puerto 8000) seguía sirviendo el marcado viejo (títulos y párrafos sin clases, con la frase duplicada de `tos.l5` todavía visible) porque los builds de producción que se hicieron en la misma carpeta le descuadraron `.cache` (ver la nota de entorno de la parte 4). Comprobado en un servidor de desarrollo **aislado** (copia del repo, puerto 8001): la página sale con el diseño nuevo y los márgenes del diseño (16 px a 375 px, 31 px a 768 px, columna de 880 px centrada a 1440 px), sin desborde. Solución para el dueño: parar `npm run develop`, borrar `.cache` y `public` (o `npx gatsby clean`) y volver a arrancarlo.
+- **Favicon con los colores del logo** (`src/media-imgs/favIcon.png`, 512 × 512): los dos engranajes del logo en coral y azul marino sobre fondo crema, generados con `sharp` a partir de los mismos paths de `header.js` (así no hay dos dibujos que mantener). `gatsby-plugin-manifest` regenera de ahí `favicon-32x32.png` y los iconos de la app (la URL lleva un digest nuevo: basta con recargar sin caché). El **manifiesto web** pasa a `theme_color` azul marino (#1C2541) y `background_color` crema (#FBFAF7) en lugar del azul antiguo (#285790).
+- **Términos** (`tos.js`, `legalToc.js`): índice y numeración generados por la página (los títulos de las traducciones ya no llevan "1.", "2."…); dos secciones nuevas, **"Uso de los formularios"** (uso legítimo, sin spam ni automatismos, límite de frecuencia por navegador) e **"Información del sitio y cotizaciones"** (los contenidos son informativos, no una oferta; alcance, precio y plazos se acuerdan por escrito); la cláusula de leyes vigentes ya no dice "nuestras leyes" a secas: **leyes de los Estados Unidos y del estado donde NaNSYSTEMS tiene su domicilio** (la web dice que la empresa se fundó en EE. UU.; **el estado concreto lo debe confirmar la clienta**); la sección de modificaciones remite a la fecha de revisión del inicio de la página.
+- **Política de privacidad** (`privacy.js`) **reescrita con lo que el sitio hace de verdad**: quién es responsable, qué datos se recogen en cada formulario (contacto, cotización, boletín) y datos técnicos, con quién se comparten (**Netlify**, que aloja el sitio y recibe los formularios; **DatoCMS**, que sirve textos e imágenes; **Google Analytics**; **Equalweb**, el menú de accesibilidad), lista exacta de lo que se guarda en el navegador (`nan-theme`, `i18nextLng`, `nx-form-sends-*`, `gatsby-gdpr-google-analytics`, `_ga`), conservación, derechos y cómo ejercerlos (por la página de contacto), menores, enlaces externos y cambios. Se conserva el crédito a GetTerms (la plantilla de origen). Fecha de revisión: `LEGAL_UPDATED = "2026-10-12"` (antes 19/12/2020; actualizar si se revisa de nuevo o al publicar).
+- **Texto del aviso de cookies** (`cookies.title`): decía "no almacenamos información personal de ningún tipo" y "con el consentimiento del usuario", y no era cierto (los formularios guardan datos y Analytics se carga siempre); ahora dice que se usan cookies y almacenamiento local para recordar preferencias y medir visitas con Google Analytics, que los datos de los formularios solo sirven para responder y remite a la política.
+
+### Hallazgo importante: Google Analytics no depende del banner (A4)
+En el HTML de producción **`gtag` se carga siempre** (`gatsby-plugin-google-gtag` con el identificador de medición `G-…`, y además una petición a `gtag/js?id=undefined` que sale de `gatsby-plugin-gdpr-cookies`, que no tiene configurado Analytics): el botón "Acepto/Rechazar" del banner solo guarda su cookie y **no activa ni detiene nada**. La política lo describe tal como es, sin prometer una exclusión voluntaria que no existe. Para cumplir la normativa de consentimiento (UE/California) hay dos salidas, la decisión es del dueño (**A4**): (a) **quitar Analytics** (plugins `google-gtag` y `gdpr-cookies` y el banner), o (b) **condicionar** `gtag` al consentimiento (configurar `gatsby-plugin-gdpr-cookies` con el identificador, quitar el plugin gtag y que el banner lo controle). Con (a) la política se acorta (desaparecen Analytics y las cookies `_ga`).
+
+### Revisión legal pendiente
+Los textos legales son un **borrador técnico** escrito a partir de lo que el sitio hace, **no asesoría legal**: conviene que la clienta o su asesor los revise antes de publicar (jurisdicción, plazos de conservación, derechos según el país de los visitantes y la decisión sobre Analytics).
+
 ### Para avisar a la clienta (legales y créditos)
-- **La política de privacidad es de 2020 (GetTerms) y no menciona Google Analytics, cookies ni Netlify Forms** (donde caen los formularios). Conviene que la revise ella o su asesor antes de publicar el rediseño. No es asesoría legal.
+- **La política de privacidad se reescribió** (parte 5) y los textos legales son un borrador técnico: que la revise la clienta o su asesor (ver arriba), y decidir **A4** (Google Analytics).
 - **Créditos:** "emailjs.com" sigue en la lista y el sitio ya no usa EmailJS (A8); revisar también "equalweb.com" (widget de accesibilidad) y añadir los créditos nuevos si hacen falta (por ejemplo las fuentes autoalojadas, con licencia OFL, o las imágenes de concepto).
 - Los créditos no tienen leyenda en el CMS; si se escribe una, sustituye al dominio.
 
@@ -139,7 +153,7 @@ El dueño tiene `npm run develop` abierto en el puerto 8000 mientras trabajamos.
 - Decidir si `GATSBY_CONTACT_EMAIL` queda definida en Netlify (se mostraría en la página de contacto).
 
 ### Estado al cerrar el bloque (leer primero)
-- **Rama `feat/redesign-coral-editorial`**. R3 y R4 completos. Las partes 1 a 3 ya están commiteadas (`a388284`, `82bb814` y `d6876d8`); la parte 4 (**términos, privacidad, créditos y 404**) está **sin commitear** (lo hace el dueño). Commit propuesto: `feat: R4 legal, credits and 404 pages for the redesign`. `docs/images_new` no se añade nunca.
+- **Rama `feat/redesign-coral-editorial`**. R3 y R4 completos. Las partes 1 a 4 ya están commiteadas (`a388284`, `82bb814`, `d6876d8` y `fb9466d`); la parte 5 (**favicon con los colores del logo, términos y política de privacidad reescritos, texto del aviso de cookies**) está **sin commitear** (lo hace el dueño). Commit propuesto: `feat: new favicon and rewritten terms and privacy policy`. `docs/images_new` no se añade nunca.
 - **Faltan:** la revisión visual final del dueño (todas las pantallas, claro y oscuro), el PR en borrador y la limpieza. R4 (legales, créditos y 404) está hecho en el árbol de trabajo (parte 4, sin commitear); `prefers-reduced-motion` ya está cubierto en `nx.css`.
 - **Acción del dueño:** `npm uninstall react-share` (ya nadie lo importa) y, antes, `npm uninstall bootstrap react-bootstrap` si no se hizo.
 
@@ -153,7 +167,8 @@ El dueño tiene `npm run develop` abierto en el puerto 8000 mientras trabajamos.
 - `a388284` Parte 1 (logo con engranajes, blog, post y servicios).
 - `82bb814` Parte 2 (biografía, portafolio, proyectos y contacto).
 - `d6876d8` Parte 3 (ajustes de la revisión del dueño).
-- Parte 4 (R4: legales, créditos y 404): pendiente del dueño, propuesto: `feat: R4 legal, credits and 404 pages for the redesign`
+- `fb9466d` Parte 4 (R4: legales, créditos y 404).
+- Parte 5 (favicon, términos y política de privacidad): pendiente del dueño, propuesto: `feat: new favicon and rewritten terms and privacy policy`
 
 ---
 

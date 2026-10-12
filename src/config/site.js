@@ -21,6 +21,7 @@ export const SHARE_VIA_HANDLE = "_MsLinda";
 // ninguna dirección. No escribir el correo en el repositorio: es público.
 export const CONTACT_EMAIL = process.env.GATSBY_CONTACT_EMAIL || "";
 
-// Fecha de los textos legales (términos y privacidad): la de "Esta política es efectiva a partir del
-// 19 de diciembre de 2020". Actualizar si se revisan.
-export const LEGAL_UPDATED = "2020-12-19";
+// Fecha de la última revisión de los textos legales (términos y privacidad), que se muestra al inicio
+// de ambas páginas. Las versiones anteriores eran del 19 de diciembre de 2020; se reescribieron el
+// 12 de octubre de 2026. Actualizar cada vez que se revisen.
+export const LEGAL_UPDATED = "2026-10-12";

@@ -24,8 +24,9 @@ module.exports = {
         name: `NaNSYSTEMS.us`,
         short_name: `NaNSYSTEMS.us`,
         start_url: `/`,
-        background_color: `#285790`,
-        theme_color: `#285790`,
+        // Colores del rediseño: crema (fondo) y azul marino (barra del navegador en móvil).
+        background_color: `#FBFAF7`,
+        theme_color: `#1C2541`,
         display: `standalone`,
         icon: `src/media-imgs/favIcon.png`,
       },

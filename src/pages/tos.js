@@ -3,44 +3,36 @@ import { Link } from "gatsby";
 import { Helmet } from "react-helmet";
 import Layout from "../components/layout";
 import LegalHead from "../components/legalHead";
+import LegalToc from "../components/legalToc";
 import { useNx } from "../hooks/useNx";
 
-// Los textos están en las traducciones (tos.l1 a tos.l25). Las secciones 1 a 9 llevan ancla (#t1…)
-// y el índice de arriba enlaza a ellas.
-const SECTIONS = ["tos.l2", "tos.l4", "tos.l12", "tos.l14", "tos.l16", "tos.l18", "tos.l20", "tos.l22", "tos.l24"];
+// Textos en las traducciones (tos.*). Cada sección es [clave del título, clave del texto]; la numeración
+// ("1.", "2."…) la pone la página, así que los títulos del archivo de traducciones no la llevan.
+const SECTIONS = [
+  ["tos.l2", "tos.l3"],
+  ["tos.l4", "tos.l5"], // tiene además la lista de restricciones y el aviso del generador
+  ["tos.l12", "tos.l13"],
+  ["tos.l14", "tos.l15"],
+  ["tos.l16", "tos.l17"],
+  ["tos.l18", "tos.l19"],
+  ["tos.l26", "tos.l27"],
+  ["tos.l28", "tos.l29"],
+  ["tos.l20", "tos.l21"],
+  ["tos.l22", null], // el texto lleva un enlace a la política de privacidad
+  ["tos.l24", "tos.l25"],
+];
 
 const Tos = () => {
   const { t } = useNx();
-  const [s1, s2, s3, s4, s5, s6, s7, s8, s9] = SECTIONS;
 
-  return (
-    <Layout showCta={false}>
-      <Helmet title={t("meta.tos")} />
-      <LegalHead title={t("tos.l1")} />
-      <div className="nx-section nx-section--tight nx-container nx-container--narrow nx-stack nx-stack--lg">
-        <nav className="nx-card nx-card--flat nx-card--pad" aria-labelledby="nx-toc-title">
-          <h2 className="nx-mono" id="nx-toc-title">
-            {t("legal.toc")}
-          </h2>
-          <ol className="nx-toc nx-mt-sm">
-            {SECTIONS.map((key, i) => (
-              <li key={key}>
-                <a href={`#t${i + 1}`}>{t(key)}</a>
-              </li>
-            ))}
-          </ol>
-        </nav>
-        <div className="nx-prose nx-prose--lg">
-          <h2 id="t1">{t(s1)}</h2>
-          <p>{t("tos.l3")}</p>
-          <h2 id="t2">{t(s2)}</h2>
-          <p>{t("tos.l5")}</p>
+  const extra = (i) => {
+    if (i === 1) {
+      return (
+        <>
           <ul>
-            <li>{t("tos.l6")}</li>
-            <li>{t("tos.l7")}</li>
-            <li>{t("tos.l8")}</li>
-            <li>{t("tos.l9")}</li>
-            <li>{t("tos.l10")}</li>
+            {["l6", "l7", "l8", "l9", "l10"].map((k) => (
+              <li key={k}>{t(`tos.${k}`)}</li>
+            ))}
           </ul>
           <p>
             {t("tos.l11")}{" "}
@@ -53,22 +45,34 @@ const Tos = () => {
             </a>
             .
           </p>
-          <h2 id="t3">{t(s3)}</h2>
-          <p>{t("tos.l13")}</p>
-          <h2 id="t4">{t(s4)}</h2>
-          <p>{t("tos.l15")}</p>
-          <h2 id="t5">{t(s5)}</h2>
-          <p>{t("tos.l17")}</p>
-          <h2 id="t6">{t(s6)}</h2>
-          <p>{t("tos.l19")}</p>
-          <h2 id="t7">{t(s7)}</h2>
-          <p>{t("tos.l21")}</p>
-          <h2 id="t8">{t(s8)}</h2>
-          <p>
-            {t("tos.l23")} <Link to="/privacy">{t("tos.l23-1")}</Link>.
-          </p>
-          <h2 id="t9">{t(s9)}</h2>
-          <p>{t("tos.l25")}</p>
+        </>
+      );
+    }
+    return null;
+  };
+
+  return (
+    <Layout showCta={false}>
+      <Helmet title={t("meta.tos")} />
+      <LegalHead title={t("tos.l1")} />
+      <div className="nx-section nx-section--tight nx-container nx-container--narrow nx-stack nx-stack--lg">
+        <LegalToc items={SECTIONS.map(([title], i) => ({ id: `t${i + 1}`, label: t(title) }))} />
+        <div className="nx-prose nx-prose--lg">
+          {SECTIONS.map(([title, text], i) => (
+            <React.Fragment key={title}>
+              <h2 id={`t${i + 1}`}>
+                {i + 1}. {t(title)}
+              </h2>
+              {text ? (
+                <p>{t(text)}</p>
+              ) : (
+                <p>
+                  {t("tos.l23")} <Link to="/privacy">{t("tos.l23-1")}</Link>.
+                </p>
+              )}
+              {extra(i)}
+            </React.Fragment>
+          ))}
         </div>
       </div>
     </Layout>
