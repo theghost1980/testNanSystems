@@ -9,7 +9,7 @@
 | CMS | DatoCMS vía `gatsby-source-datocms` 2.6.18 |
 | Imágenes | `gatsby-image` (fluid) + `gatsby-plugin-sharp` + `sharp` 0.27.2 |
 | i18n | i18next 19.9.2 + react-i18next 11.18.6 + language detector |
-| Estilos | un único `src/styles/styles.css` global; Bootstrap 4 solo para el carrusel |
+| Estilos | `src/styles/styles.css` global (el actual; Bootstrap 4 solo para el carrusel). En la rama del rediseño se suman `src/styles/nx.css` y `fonts.css` (inertes hasta el cambio de `Layout`); fuentes autoalojadas en `static/fonts/` |
 | Formularios | Netlify Forms (boletín, contacto y cotización) |
 | Analítica / cookies | `gatsby-plugin-google-gtag`, `react-cookie-consent`, `gatsby-plugin-gdpr-cookies` |
 | Hosting | Netlify, build desde GitHub (`master`) |

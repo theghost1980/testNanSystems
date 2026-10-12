@@ -18,6 +18,7 @@ Esta carpeta **no se publica en el sitio web**: vive solo en el repositorio.
 | [dependency-audit.md](dependency-audit.md) | Las 337 vulnerabilidades de `npm audit`: de dónde vienen, qué llega al visitante y por qué no se arreglan ahora (M8) | **Vivo** |
 | [roadmap.md](roadmap.md) | Mejoras pendientes con estado | **Vivo** |
 | [redesign.md](redesign.md) | Decisión, tokens y plan del rediseño | **Vivo** |
+| [image-prompts.md](image-prompts.md) | Prompts (Gemini) y medidas de cada imagen del rediseño | **Vivo** |
 | [CHANGELOG.md](CHANGELOG.md) | Registro de cambios realizados | **Vivo** |
 | [dev-log.md](dev-log.md) | Bitácora de cada sesión: hecho, decisiones, pendiente y próximos pasos | **Vivo** |
 

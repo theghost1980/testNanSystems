@@ -58,6 +58,25 @@ Todo se reparte entre **7 de las 25 dependencias directas** (las demás no traen
 3. **Higiene del servidor de desarrollo:** `npm run develop` arranca con `-H 0.0.0.0`, que lo deja accesible desde la red local, y `webpack-dev-server`, `socket.io` y `webpack-dev-middleware` tienen avisos altos. Usarlo solo en redes de confianza o con `gatsby develop` (solo `localhost`) cuando no haga falta probar desde otro dispositivo.
 4. **Repetir este análisis** al cerrar el rediseño y antes de cualquier migración.
 
+## Qué exigiría migrar (verificado el 2026-10-12)
+
+Datos del registro de npm y del README del plugin; sirven para decidir cuándo y cómo migrar. Decisión tomada: **no antes del rediseño**.
+
+| Quiero | Exige |
+|---|---|
+| React 18 | Gatsby ≥ 4.13 (la 4.0.0 no lo admite, la 4.13.0 sí). Gatsby 2 solo admite React 16 y 17 |
+| Gatsby 4 (último, 4.25.9) | Node ≥ 14.15 (sirve el Node 14 actual); React 16, 17 o 18 |
+| Gatsby 5 (último, 5.16.1) | React ≥ 18 y **Node ≥ 18** (también en Netlify) |
+| `gatsby-source-datocms` | 2.x: Gatsby 2 o 3 · 3.x y 4.x: Gatsby 2 a 4 · 5.x: Gatsby ≥ 4.24. El README fija: Gatsby 2 → `^2.6.17`; Gatsby 3 o 4 anterior a 4.24 → `^4.0.4` |
+| `gatsby-plugin-image` | 1.x: Gatsby 3 · 2.x: Gatsby 4 · 3.x: Gatsby 5 |
+| `gatsby-plugin-sharp` / `gatsby-transformer-remark` | mayor 5 / 6 para Gatsby 5 (Node ≥ 18) |
+
+- **DatoCMS (el CMS) no se rompe**: es contenido y API. Lo que cambia es el plugin.
+- **El plugin está en modo mantenimiento y su repositorio archivado desde junio 2024** (README: "due to upstream changes at Gatsby and Netlify"); para proyectos nuevos recomienda otra vía (la API GraphQL de DatoCMS directamente). Gatsby 5 es un destino con poco recorrido.
+- **Imágenes:** el README sigue documentando `fluid`/`fixed` (`gatsby-image`) como obsoletas pero disponibles, así que migrar a `gatsby-plugin-image` no sería obligatorio de golpe (no verificado para la 5.x). Tamaño actual: 17 archivos importan `gatsby-image`, 50 fragmentos `GatsbyDatoCmsFluid` en 15 archivos, 26 `<Img>`. El SEO (`HelmetDatoCms`, 10 usos) no cambia.
+- **Sin verificar:** qué cambia en el esquema de GraphQL entre el plugin 2.x y el 5.x (no hay guía de migración); `gatsby-plugin-scroll-reveal` 0.0.7 y `gatsby-plugin-gdpr-cookies` con Gatsby 4/5.
+- **Camino de menor riesgo si se migra dentro de Gatsby:** Gatsby 4.25.9 (mantiene Node 14 y React 17/18) como escalón, con el plugin 5.x; la ganancia en vulnerabilidades es pequeña. La alternativa es cambiar de framework con la API GraphQL de DatoCMS.
+
 ## Cómo reproducirlo
 
 Con Node 14.21.3 y npm 6.14.18, desde la raíz del proyecto:

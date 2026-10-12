@@ -5,6 +5,10 @@ import CookieConsent from "react-cookie-consent";
 import PropTypes from "prop-types";
 import { withTrans } from "../i18n/withTrans";
 import { useTranslation } from "react-i18next";
+// Rediseño (R1a): hojas nuevas. Son inertes mientras <body> no lleve la clase
+// "nx-root" (los tokens van en :root y el reset está acotado a .nx-root).
+import "../styles/fonts.css";
+import "../styles/nx.css";
 
 const Layout = (props) => {
   const { t, i18n } = useTranslation();

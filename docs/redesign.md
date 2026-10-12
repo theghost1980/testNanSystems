@@ -162,3 +162,27 @@ Se revisó contra los datos reales (esquema de DatoCMS, consultas del repo) y en
 
 ## Siguiente paso: pieza vertical (R1a)
 Antes de portar las 11 pantallas restantes se construye una rebanada completa en una rama `feat/redesign-…` (desde `master`, tras fusionar los docs): `layout` nuevo (`gatsby-ssr.js`, tema, idioma, cabecera, pie) + hero de la home alimentado por el CMS con `.nx-media`. Se valida con `npm run build` y `gatsby serve` en local (Node 14) y con el deploy preview. Si algo no encaja (imágenes, SSR, hidratación), se descubre con una pantalla, no con doce.
+
+## Decisiones y avance (2026-10-12)
+
+La clienta dio **carta abierta** para el rediseño. Se trabaja en la rama `feat/redesign-coral-editorial` (desde `master`), se prueba en local y se abre un **PR en borrador** contra `master` solo para obtener deploy previews (los branch deploys están apagados); **no se fusiona hasta que ella apruebe**.
+
+### Decisiones
+1. **Gatsby 2, React 17 y `gatsby-image` se quedan** durante el rediseño. Migrar (React 18 exige Gatsby ≥ 4.13; Gatsby 5 exige React ≥ 18 y Node ≥ 18) mezclaría dos riesgos y el plugin de DatoCMS para Gatsby está en mantenimiento y archivado. Se decide después, con un spike de un día; análisis en [dependency-audit.md](dependency-audit.md).
+2. **Reglas para que el rediseño no encarezca esa migración:** un solo componente `Media` para todas las imágenes del CMS (hoy 17 archivos importan `gatsby-image`, hay 50 fragmentos `fluid` y 26 `<Img>`); ningún plugin de Gatsby nuevo; retirar `bootstrap`, `react-bootstrap` y `react-cookie-consent` (y, según A4, `gatsby-plugin-gdpr-cookies`).
+3. **Fuentes autoalojadas** (en vez de Google Fonts): 5 archivos `woff2` latinos en `static/fonts/` (70 KB; Plus Jakarta Sans 400/500/600/800 y JetBrains Mono 500), licencia OFL-1.1 con sus textos junto a los archivos, `@font-face` en `src/styles/fonts.css`. Sin petición a terceros y sin `@import`. Los preloads de las fuentes críticas se añaden en `gatsby-ssr.js` cuando el nuevo `Layout` las use.
+4. **Textos realistas** en ES y EN al portar cada pantalla, sin cifras ni promesas no verificables (ver "Decisiones abiertas" del roadmap).
+5. **Imágenes con IA (Gemini)** solo para portadas de concepto; no se generan personas reales, retratos de la clienta ni testimonios. Si una imagen generada ocupa el hero, el rótulo "FIG. 01 — INTEGRACIÓN EN SITIO" no puede sugerir que es una obra real.
+6. **Google Analytics (A4):** se evaluará si compensa mantenerlo antes de diseñar el banner de cookies definitivo.
+
+### La SPEC del paquete quedó desactualizada en estos puntos (adaptar al portar)
+- **Formularios (k.1–k.3, g):** asume EmailJS. Desde A8 contacto, cotización y boletín usan `submitNetlifyForm` (`src/utils/netlifyForm.js`), `FormErrorText`, `HoneypotField` y el límite por navegador; los campos de contacto son `name`, `email`, `message` y los de cotización los de `static/forms.html`. La validación en cliente del diseño debe sumarse a eso, no sustituirlo.
+- **SSR y cabecera (k.5, g):** `gatsby-plugin-react-helmet` ya está instalado (A3) y `gatsby-ssr.js` ya fija `<html lang="es">`; `Layout` ajusta `lang` al montar y `i18n/config.js` ya no usa el detector `htmlTag`. Añadir `nx-root` en `<body>`, el script de tema y los preloads de fuentes ahí, sin duplicar el mecanismo de `lang`.
+- **Correo de contacto:** ya existe `GATSBY_CONTACT_EMAIL` (variable de entorno, fuera del repo); el `contacto@nansystems.us` del paquete es solo un ejemplo.
+- **Cookies (k.4):** el banner nuevo sustituye a `react-cookie-consent`; qué hace con Google Analytics depende de A4.
+
+### Avance de R1a
+- **Paso 1 (hecho):** `static/fonts/` + `src/styles/fonts.css` + `src/styles/nx.css` (copia sin cambios del paquete), importados desde `Layout`. Son **inertes**: los tokens van en `:root` y el reset está acotado a `.nx-root`, que aún no se aplica. Comprobado: mismas rutas y `page-data`, y la huella de estilos calculados de 5 páginas (`/tos/`, `/privacy/`, `/contact/`, `/blog/`, `/aboutNew/`) es idéntica a la de antes; las fuentes cargan de `/fonts/` con acentos y ñ. Las peticiones a Google Fonts que siguen apareciendo son las del CSS viejo (`@import` de Tenor Sans, Fira Sans y Signika) y se van con `styles.css`.
+- **Paso 2:** `Layout` nuevo (`nx-root` en `<body>`, tema, cabecera con selector ES/EN, pie, banda de cotización) y retirada de `styles.css` y Bootstrap en el mismo cambio (SPEC k.6).
+- **Paso 3:** hero de la home con `Media` y datos del CMS.
+- **Paso 4:** verificación con `gatsby serve` y capturas en 375, 768 y 1440 px, claro y oscuro, ES y EN.

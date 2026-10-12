@@ -16,12 +16,15 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 
 ## Fase 1 · Bugs sin tocar dependencias
 
-> **Progreso (4.ª sesión, 2026-10-12):** hechos en la rama `fix/portfolio-total-refactor-design-2026`, todos con build de producción comprobado: **A6, A1, A2, M1, A5, A7, M3, M5, A3** (completo, con sitemap y `robots.txt`), **M9 y A8**, más el `key` de `aboutNew` (B1 parcial). **La Fase 1 de código queda cerrada.** **Nada de esto está en `master` todavía**: el PR del hito 1 se hará cuando el dueño lo pida (no antes).
+> **Progreso (2026-10-12):** la Fase 1 de código está **fusionada en `master`** (PR #2, con **squash**: commit `2de51ed`). Los commits individuales, y los hashes que citan estos docs, viven en la rama `fix/portfolio-total-refactor-design-2026`: **no borrarla**. Hechos: A6, A1, A2, M1, A5, A7, M3, M5, A3, M9, A8 (con el antiabuso de los formularios) y el `key` de `aboutNew` (B1 parcial).
+>
+> **Rediseño en curso** en la rama `feat/redesign-coral-editorial` (desde `master`; **no se fusiona hasta que la clienta apruebe**). R1a, paso 1 hecho: fuentes autoalojadas y `nx.css` dentro del proyecto, sin cambios visibles (ver [dev-log](dev-log.md)).
 >
 > **Siguiente (en este orden):**
-> 1. **Re-probar en el deploy preview con A8** (contacto y cotización ya no usan EmailJS; antes de eso crear `GATSBY_CONTACT_EMAIL` en Netlify y las notificaciones de `contact` y `quote`). Resto de la prueba manual del PR del hito 1 (boletín real, contacto, cotización, clic home → post, `es-VE`/`en-US`, título de la pestaña al cambiar de idioma, `/sitemap.xml` y `/robots.txt` con 200, y que `api_key` esté disponible en Deploy Previews: M9 hace fallar el build con un mensaje si no lo está).
-> 2. R1a (pieza vertical del rediseño, en rama aparte desde `master`; el prerrequisito A3 ya está cumplido).
-> 3. M8 (vulnerabilidades) ya está analizado: no hay arreglo compatible; se resuelve con el rediseño (A4/R1) y la migración de Gatsby. El resto de B1 (teclado) va con el rediseño.
+> 1. **Comprobar producción tras el merge** (`nansystems.us`): home en ES y EN, `/sitemap.xml` y `/robots.txt` con 200, un envío real de contacto, de cotización y de boletín (llegan a Netlify → Forms y las notificaciones por correo funcionan), ninguna llamada a `emailjs.com`, y confirmar el dominio canónico (con o sin `www`).
+> 2. R1a, pasos 2–4: `Layout` nuevo (cabecera, pie, tema, idioma), hero de la home con `Media`, verificación en 375/768/1440 px en claro y oscuro.
+> 3. A4: evaluar si compensa seguir con Google Analytics (decisión del dueño; hasta entonces no se toca).
+> 4. Avisar a la clienta de que contacto y cotización estuvieron caídos en producción (EmailJS), y revisar el contenido de DatoCMS y los deploys antiguos de Netlify (A6).
 >
 > Detalle y método de prueba en el [dev-log](dev-log.md) (sección "Próximos pasos").
 
@@ -44,7 +47,7 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 | ID | Qué | Riesgo | Estado | Rama / PR |
 |---|---|---|---|---|
 | A3 | `gatsby-plugin-react-helmet@3`, `lang`, SEO en páginas sin él, `robots.txt`, sitemap. **R1 depende de esto o de `gatsby-ssr.js`**: `<body class="nx-root">`, `lang` y las fuentes deben estar en el HTML estático (ver SPEC del rediseño, k.5) | bajo | **hecho en la rama** `441bc68` (react-helmet, `lang`, títulos) y sitemap + `robots.txt` (commit pendiente del dueño). Probado con build + `gatsby serve`. Queda sin `<title>` la página vieja `/singleventure` (M4). Por confirmar: dominio canónico (`siteUrl` = `https://nansystems.us`, sin `www`) | `fix/portfolio-total-refactor-design-2026` |
-| A4 | Banner de cookies que realmente controle Google Analytics. El banner del rediseño ya guarda la cookie `gatsby-gdpr-google-analytics`; falta decidir el modelo y configurar `gatsby-plugin-gdpr-cookies` (y retirar el plugin gtag) | medio | bloqueado: decisión con la clienta | — |
+| A4 | Banner de cookies que realmente controle Google Analytics. El banner del rediseño ya guarda la cookie `gatsby-gdpr-google-analytics`; falta decidir el modelo y configurar `gatsby-plugin-gdpr-cookies` (y retirar el plugin gtag). **2026-10-12:** el dueño quiere evaluar primero si compensa seguir usando Google Analytics; si se descarta, el banner solo informaría y se retirarían `gatsby-plugin-google-gtag`, `gatsby-plugin-gdpr-cookies` y `react-cookie-consent` | medio | **a evaluar** (decisión del dueño) | — |
 
 ## Fase 3 · Despliegue
 
@@ -73,7 +76,7 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 |---|---|---|---|---|
 | R0 | Decisión (D Coral Editorial + detalles de A) y tokens | — | **hecho** | docs |
 | R0b | Muestras HTML de las 12 pantallas + catálogo de componentes + SPEC (generadas con IA, **revisadas y corregidas**: 208/208 combinaciones sin desborde horizontal; ver [redesign.md](redesign.md)) | — | **hecho** | fuera del repo (carpeta local) |
-| R1a | **Pieza vertical**: `layout` nuevo + hero de la home alimentado por el CMS con `.nx-media` + `gatsby-image`. Valida SSR (`gatsby-ssr.js`), tema, idioma, build y el comportamiento real de las imágenes antes de portar el resto | medio | pendiente | `feat/redesign-…` (por crear, desde `master` tras fusionar los docs) |
+| R1a | **Pieza vertical**: `layout` nuevo + hero de la home alimentado por el CMS con `.nx-media` + `gatsby-image`. Valida SSR (`gatsby-ssr.js`), tema, idioma, build y el comportamiento real de las imágenes antes de portar el resto. **Paso 1 hecho (2026-10-12):** fuentes autoalojadas (`static/fonts/`, 70 KB) y `nx.css` + `fonts.css` importados desde `Layout`, inertes (huella de estilos idéntica en 5 páginas) | medio | **en curso** | `feat/redesign-coral-editorial` (desde `master`) |
 | R1 | Base completa: variables CSS, fuentes, header/footer nuevos en `Layout`; **retirar `styles.css` y los imports de Bootstrap en el mismo cambio** (el reset de `.nx-root` es global y la regla vieja de `html, body` pisa el fondo) | medio | pendiente | idem |
 | R2 | Home | medio | pendiente | idem |
 | R3 | Páginas con contenido del CMS: blog, post, proyectos, biografía, portafolio, contacto y modal de cotización | medio | pendiente | idem |
@@ -85,7 +88,7 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 | Tema | Pregunta | Quién |
 |---|---|---|
 | Boletín en el rediseño | ¿Pasa al pie o sigue como sección en la home? (los mocks D y A no lo muestran como sección) | dueño + clienta |
-| Textos del mock | "+6 años" y "Respuesta en 24 h" son afirmaciones comerciales: confirmar | clienta |
+| Textos del mock | "+6 años" y "Respuesta en 24 h" son afirmaciones comerciales. **Decidido (2026-10-12):** textos realistas en ES y EN al portar cada pantalla, **sin cifras ni promesas que no se puedan comprobar**; lo que dependa de un dato del negocio (años de experiencia, plazo de respuesta) irá como clave o campo configurable y se confirma antes de publicar | dueño |
 | Servicios | Los títulos del mock no coinciden con los servicios del CMS (los slugs sugieren CAD, Red Hat e IoT inalámbrico); definir el contenido final | clienta |
 | Blog | Los posts del CMS son de prueba; sin posts reales, la sección "Artículos recientes" queda pobre | clienta |
 | Consentimiento de GA (A4) | Qué modelo de cookies quiere la clienta | clienta |
@@ -93,13 +96,13 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 | Panel de Netlify | Completar los `TODO(tú)` de [deploy-netlify.md](deploy-netlify.md) | dueño |
 | Logo | El rediseño usa el wordmark de texto y deja de usar el logo gráfico (los engranajes) en cabecera y pie. ¿Se aprueba? | clienta |
 | Correo de contacto | El de las muestras (`contacto@…`) es de ejemplo; ¿cuál es el real y se guarda como campo de DatoCMS? | dueño + clienta |
-| Foto del hero | Sale de `InfoSite.carouselHome[0]`; hay que subir al CMS una imagen de al menos 1800×1200 con punto focal y texto alternativo | dueño + clienta |
+| Foto del hero | Sale de `InfoSite.carouselHome[0]`; hay que subir al CMS una imagen de al menos 1800×1200 con punto focal y texto alternativo. **2026-10-12:** se generarán imágenes con IA (Gemini) a partir de los prompts de [image-prompts.md](image-prompts.md); solo imágenes de concepto: no personas reales, testimonios ni fotos que se presenten como proyectos reales | dueño |
 | Texto alternativo | Hoy el `alt` está vacío en todas las imágenes del CMS; el diseño usa el título como respaldo, pero conviene rellenarlo | clienta |
 | Cifra "+6 años" | La copia actual (2020) ya dice "más de 6 años": confirmar el número vigente | clienta |
 | Copia del banner de cookies | `cookies.title` trae "almacenamos/recuperamos/comercializamos" (42 caracteres seguidos): reescribir con espacios | dueño |
 
 ## Futuro (no antes de cerrar lo anterior)
 
-- Migrar Gatsby 2 → versión soportada (**es lo que realmente baja las 337 vulnerabilidades**, ver M8): implica `gatsby-image` → `gatsby-plugin-image`, `gatsby-source-datocms` mayor, React/Node modernos y revisar i18n. Proyecto aparte, con su propia rama larga y previews.
+- Migrar Gatsby 2 → versión soportada (**es lo que realmente baja las 337 vulnerabilidades**, ver M8; **decisión del 2026-10-12: después del rediseño**, no antes; matriz de compatibilidad verificada en [dependency-audit.md](dependency-audit.md); el plugin de DatoCMS para Gatsby está en mantenimiento y archivado, así que la alternativa es otro framework): implica `gatsby-image` → `gatsby-plugin-image`, `gatsby-source-datocms` mayor, React/Node modernos y revisar i18n. Proyecto aparte, con su propia rama larga y previews.
 - Tema oscuro opcional como `prefers-color-scheme` apoyado en las variables CSS del rediseño.
 - ~~Migrar `emailjs-com` v2 a `@emailjs/browser`~~: obsoleto, contacto y cotización dejaron EmailJS por Netlify Forms (A8).

@@ -41,6 +41,57 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 
 ---
 
+## 2026-10-12 (5.ª sesión) · Rediseño: decisiones, análisis de migración y R1a paso 1
+
+**Rama:** `feat/redesign-coral-editorial` (desde `master` en `2de51ed`, el squash del PR #2) · **Entorno:** Node 14.21.3
+**Objetivo:** arrancar el rediseño ahora que la clienta dio carta abierta ("rediséñalo como gustes").
+
+### Contexto
+- **PR #2 fusionado con squash** (`2de51ed`, un solo padre, contenido idéntico al de la rama), no con merge commit como se había recomendado. Consecuencia: los hashes que citan los docs (`0816500`, `3c0f244`, `8bfe809`…) existen solo en la rama `fix/portfolio-total-refactor-design-2026` y en el PR #2. **No borrar esa rama.** Revertir todo el hito: `git revert 2de51ed`; un arreglo suelto: `git revert -n <hash de la rama>` (sin probar, puede pedir resolver conflictos).
+- La rama principal se llama `master` (el dueño dice "main").
+
+### Decisiones del dueño
+1. **Fuentes autoalojadas** (sí).
+2. **Imágenes con Gemini:** prompts en [image-prompts.md](image-prompts.md) (prompt maestro de estilo + un prompt por hueco, con proporción, punto focal y textos alternativos).
+3. **Textos realistas** en lugar de los de relleno del mock (sin cifras ni promesas no verificables; lo que dependa de un dato del negocio irá como clave o campo configurable y se confirma).
+4. **Google Analytics:** evaluar si vale la pena mantenerlo (A4); hasta entonces no se toca.
+5. Mismo ritmo: se prueba en local y, cuando haya bastantes cambios, un **PR en borrador** contra `master` que no se fusiona hasta que la clienta apruebe (los branch deploys están apagados; cada push al PR gasta minutos de build, 300 al mes).
+
+### Análisis: ¿migrar a React 18?
+- **No se propuso migrar**; la mención de React 18 salió de `react-cookie-consent` 10, que lo exige (M8). Aun así se analizó (datos del registro de npm y del README del plugin; tabla completa en [dependency-audit.md](dependency-audit.md)):
+  - React 18 exige **Gatsby ≥ 4.13** (Gatsby 2 solo admite React 16/17). Gatsby 4.25.9 sigue admitiendo **Node ≥ 14.15**; Gatsby 5 exige React ≥ 18 y Node ≥ 18.
+  - `gatsby-source-datocms`: 2.x = Gatsby 2/3, 3.x y 4.x = Gatsby 2–4, 5.x = Gatsby ≥ 4.24. **DatoCMS (el CMS) no se rompe**; cambia el plugin. **El plugin está en mantenimiento y archivado desde junio 2024** y Gatsby también lo está de facto (el README lo atribuye a "cambios en Gatsby y Netlify").
+  - Imágenes: el README sigue documentando `fluid`/`fixed` como obsoletas pero disponibles. En este repo: 17 archivos con `gatsby-image`, 50 fragmentos `fluid` en 15 archivos, 26 `<Img>`; SEO (`HelmetDatoCms`, 10 usos) sin cambios.
+- **Conclusión:** no migrar ahora; rediseñar sobre Gatsby 2 / React 17 con reglas que abaratan la migración posterior (un solo componente `Media`, ningún plugin de Gatsby nuevo, retirar Bootstrap/react-bootstrap/react-cookie-consent) y decidir después (Gatsby 5 u otro framework) con un spike de un día.
+
+### R1a · paso 1: fuentes y CSS nuevos, inertes
+- **Fuentes:** de los paquetes `@fontsource/plus-jakarta-sans` y `@fontsource/jetbrains-mono` (5.3.0, OFL-1.1), obtenidos en una carpeta aparte (**no son dependencias del proyecto**). Se copian a `static/fonts/` solo los `woff2` del subconjunto latino (Jakarta 400/500/600/800 y Mono 500): **70.044 bytes**, dentro del presupuesto de ~90 KB de la SPEC, con los textos de la licencia junto a ellos. `src/styles/fonts.css` declara los `@font-face` (`font-display: swap`, mismo `unicode-range` que fontsource, `url("/fonts/…")`).
+- **CSS:** `src/styles/nx.css` es una copia exacta del paquete. Tanto `fonts.css` como `nx.css` se importan desde `layout.js`.
+- **Por qué es seguro (inerte):** en `nx.css` los tokens van en `:root`/`[data-theme]` y el reset está acotado a `.nx-root`, que todavía no se aplica a `<body>`.
+- **Prueba de que no cambia nada visible:** antes de tocar, se calculó una *huella* (hash de ~16 estilos calculados de todos los elementos del `<body>`, más altura de página y número de elementos) de 5 páginas servidas con `gatsby serve`; dos cargas daban lo mismo (estable). Tras el cambio: **idéntica en las 5** (`/tos/` 609076d8, `/privacy/` 250f3c09, `/contact/` 799638a, `/blog/` e88190b3, `/aboutNew/` e9820de1; mismas alturas y mismo número de elementos). Build: mismas 20 rutas + `404.html` y mismos `page-data`.
+- **Las fuentes cargan de verdad:** con un elemento de prueba bajo `.nx-root`, `document.fonts.check` da verdadero para Jakarta 600 y 800 y Mono 500, con acentos, ñ y ¿¡; las peticiones van a `/fonts/…` (200, `font/woff2`). Las 7 peticiones a Google Fonts que siguen apareciendo son las del CSS viejo (`@import` de Tenor Sans, Fira Sans Extra Condensed y Signika Negative) y se van con `styles.css`.
+- **Coste temporal:** +~47 KB de CSS (10,7 KB gzip) en cada página hasta que se retire `styles.css`.
+
+### Hallazgos / sorpresas
+- Las **capturas de pantalla sí funcionan** en el panel de pruebas, aunque esté oculto (`visibilityState: hidden`): se podrá revisar el diseño a la vista con `resize_window` (375, 768, 1440 px) y en claro y oscuro. Lo que no corre sigue siendo `requestAnimationFrame`.
+- La SPEC del paquete quedó desactualizada en formularios (asume EmailJS), SSR/cabecera (ya existen `react-helmet` y `gatsby-ssr.js`) y correo de contacto (ya hay `GATSBY_CONTACT_EMAIL`): detalle en [redesign.md](redesign.md).
+
+### Pendiente y abierto
+- El dueño genera las imágenes (en especial el hero) y las sube a DatoCMS con punto focal y texto alternativo; mientras tanto se usa `carouselHome[0]`.
+- Comprobar producción tras el merge del PR #2 (lista en el [roadmap](roadmap.md)) y avisar a la clienta de que contacto y cotización estuvieron caídos.
+- A4: decidir si se mantiene Google Analytics.
+- Pregunta heredada: dominio canónico (con o sin `www`) para `siteUrl` y `robots.txt`.
+
+### Próximos pasos
+1. **R1a paso 2:** `Layout` nuevo (`nx-root` en `<body>`, script de tema y preloads de fuentes en `gatsby-ssr.js`, cabecera con selector ES/EN y botón de tema, pie, banda de cotización) y retirada de `styles.css` y Bootstrap en el mismo cambio (SPEC k.6). Adaptar el diálogo de cotización y el boletín al helper de formularios actual.
+2. **Paso 3:** hero de la home con el componente `Media` (`.nx-media` + `gatsby-image`) y textos realistas ES/EN.
+3. **Paso 4:** verificación con `gatsby serve` y capturas en 375, 768 y 1440 px, claro y oscuro, ES y EN; después, PR en borrador para el primer preview.
+
+### Commits de la sesión
+- Pendiente del dueño, propuesto: `feat: R1a self-host the redesign fonts and add nx.css (inert)`
+
+---
+
 ## 2026-10-12 (4.ª sesión) · Cierre de M5, A3 (SEO, sitemap y `robots.txt`), B1 parcial, M9, análisis de M8 y A8 (formularios a Netlify Forms)
 
 **Rama:** `fix/portfolio-total-refactor-design-2026` (sobre `c75189b`) · **Entorno:** Node 14.21.3
