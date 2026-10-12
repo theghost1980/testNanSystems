@@ -16,13 +16,14 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 
 ## Fase 1 · Bugs sin tocar dependencias
 
-> **Progreso (4.ª sesión, 2026-10-12):** hechos en la rama `fix/portfolio-total-refactor-design-2026`, todos con build de producción comprobado: **A6, A1, A2, M1, A5, A7, M3 y M5** (código y dependencia). **Nada de esto está en `master` todavía**: el PR del hito 1 se hará cuando el dueño lo pida (no antes).
+> **Progreso (4.ª sesión, 2026-10-12):** hechos en la rama `fix/portfolio-total-refactor-design-2026`, todos con build de producción comprobado: **A6, A1, A2, M1, A5, A7, M3, M5 y A3** (A3 sin sitemap ni `robots.txt`: esperan decisión). **Nada de esto está en `master` todavía**: el PR del hito 1 se hará cuando el dueño lo pida (no antes).
 >
 > **Siguiente (en este orden):**
-> 1. **A3** (SEO en el HTML estático; añade `gatsby-plugin-react-helmet`: pedir OK). Prerrequisito de R1a.
+> 1. Decidir **sitemap + `robots.txt`** (resto de A3; añade `gatsby-plugin-sitemap@2` y un `siteUrl`).
 > 2. Extras a elección: B1 (`key` en `aboutNew.js`), fallo claro si falta `api_key`.
-> 3. PR del hito 1 y prueba manual en el deploy preview (boletín real, contacto, cotización, clic home → post, `es-VE`/`en-US`).
-> 4. R1a (pieza vertical del rediseño, en rama aparte desde `master`).
+> 3. PR del hito 1 y prueba manual en el deploy preview (boletín real, contacto, cotización, clic home → post, `es-VE`/`en-US`, título de la pestaña al cambiar de idioma).
+> 4. R1a (pieza vertical del rediseño, en rama aparte desde `master`; el prerrequisito A3 ya está cumplido).
+> 5. Al final: bajar las vulnerabilidades de `npm audit` (M8).
 >
 > Detalle y método de prueba en el [dev-log](dev-log.md) (sección "Próximos pasos").
 
@@ -35,7 +36,7 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 | A5 | Errores visibles en contacto/cotización/boletín; `response.ok`; helper de Netlify alineado | bajo | **hecho en la rama** `092d9a4` (este commit se llama "M3" por error) y `db8158e` (docs); falta probar el boletín real en el deploy preview | `fix/portfolio-total-refactor-design-2026` |
 | M1 | "Últimos posts" en orden `DESC` y enlace absoluto | bajo | **hecho en la rama** `72cf6b0` | `fix/portfolio-total-refactor-design-2026` |
 | M3 | `gatsby-node.js`: manejo de errores y deduplicar por slug | bajo-medio | **hecho en la rama** `3c0f244` (build comparado con la línea base: mismas 20 rutas) | `fix/portfolio-total-refactor-design-2026` |
-| M5 | i18n: retirar backend sobrante, `wait` y el parche `i18next.languages`; `state` por defecto de `Button` (**ya hecho con A1**) | bajo | **hecho en la rama** `6ef3025` (código, probado con build) y desinstalado `i18next-http-backend` de `package.json` (commit del dueño tras la 4.ª sesión; build idéntico) | `fix/portfolio-total-refactor-design-2026` |
+| M5 | i18n: retirar backend sobrante, `wait` y el parche `i18next.languages`; `state` por defecto de `Button` (**ya hecho con A1**) | bajo | **hecho en la rama** `6ef3025` (código, probado con build) y desinstalado `i18next-http-backend` de `package.json` (`34630bb`; build idéntico) | `fix/portfolio-total-refactor-design-2026` |
 
 > A1, A2 y M1 tocan archivos que el rediseño reescribe (`index.js`, `testimonyFixed`, `quickQuote`, `button`). Decisión por defecto: resolverlos **dentro de la rama del rediseño** solo en los archivos que se reescriben de todos modos; el resto, en ramas `fix/` aparte.
 
@@ -43,7 +44,7 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 
 | ID | Qué | Riesgo | Estado | Rama / PR |
 |---|---|---|---|---|
-| A3 | `gatsby-plugin-react-helmet@3`, `lang`, SEO en páginas sin él, `robots.txt`, sitemap. **R1 depende de esto o de `gatsby-ssr.js`**: `<body class="nx-root">`, `lang` y las fuentes deben estar en el HTML estático (ver SPEC del rediseño, k.5) | bajo | pendiente | — |
+| A3 | `gatsby-plugin-react-helmet@3`, `lang`, SEO en páginas sin él, `robots.txt`, sitemap. **R1 depende de esto o de `gatsby-ssr.js`**: `<body class="nx-root">`, `lang` y las fuentes deben estar en el HTML estático (ver SPEC del rediseño, k.5) | bajo | **hecho en la rama** salvo `robots.txt` y sitemap (esperan decisión del dueño; el sitemap añade una dependencia). Probado con build + `gatsby serve`. Queda sin `<title>` la página vieja `/singleventure` (M4) | `fix/portfolio-total-refactor-design-2026` |
 | A4 | Banner de cookies que realmente controle Google Analytics. El banner del rediseño ya guarda la cookie `gatsby-gdpr-google-analytics`; falta decidir el modelo y configurar `gatsby-plugin-gdpr-cookies` (y retirar el plugin gtag) | medio | bloqueado: decisión con la clienta | — |
 
 ## Fase 3 · Despliegue
@@ -53,6 +54,7 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 | M2 | Confirmar Node de Netlify y alinear `.nvmrc`; `netlify.toml`; versionar lockfile | medio | pendiente (primero `TODO(tú)` de [deploy-netlify.md](deploy-netlify.md)) | — |
 | M7 | Cabeceras de seguridad (`_headers` o `netlify.toml`); CSP al final | medio | pendiente | — |
 | M6 | EmailJS: claves a variables de entorno, restringir dominios, antispam | bajo | pendiente | — |
+| M8 | `npm install` informa de **337 vulnerabilidades** (14 low, 157 moderate, 155 high, 11 critical), la misma cifra antes y después de A3. Sin analizar todavía: ver cuántas son de dependencias de producción (`npm audit --production`) y cuántas del árbol de Gatsby 2 (solo build). **No usar `npm audit fix --force`** (subiría versiones mayores; ver Reglas). Decisión del dueño: se deja para el final | medio | pendiente (al final) | — |
 
 ## Fase 4 · Limpieza
 

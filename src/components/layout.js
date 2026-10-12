@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Header from "./header";
 import Footer from "./footer";
 import CookieConsent from "react-cookie-consent";
@@ -8,6 +8,11 @@ import { useTranslation } from "react-i18next";
 
 const Layout = (props) => {
   const { t, i18n } = useTranslation();
+
+  // El HTML estático trae lang="es" (gatsby-ssr.js); aquí se ajusta al idioma real.
+  useEffect(() => {
+    document.documentElement.lang = i18n.language;
+  }, [i18n.language]);
 
   return (
     <div className="layoutContainer">

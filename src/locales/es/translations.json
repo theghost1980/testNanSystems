@@ -5,6 +5,9 @@
       "author": "@theghost1980",
       "footer": "Construido con  Gatsby"
     },
+    "notFound": {
+      "title": "Página no encontrada"
+    },
     "menu": {
       "siteMap": "Mapa de Sitio",
       "home": "Inicio",

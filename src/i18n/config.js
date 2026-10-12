@@ -11,6 +11,18 @@ i18next
     // Solo existen es y en. Con esto un navegador "en-US" o "es-VE" se resuelve
     // a "en" / "es": el resto del código compara i18n.language con "es"/"en".
     supportedLngs: ["es", "en"],
+    // El `lang` de <html> lo pone el sitio (gatsby-ssr.js, siempre "es"): no es una
+    // preferencia del visitante. Sin quitar `htmlTag` del orden por defecto, ese
+    // "es" exacto ganaba a un "en-US" guardado o del navegador.
+    detection: {
+      order: [
+        "querystring",
+        "cookie",
+        "localStorage",
+        "sessionStorage",
+        "navigator",
+      ],
+    },
     resources: {
       es: {
         translations: require("../locales/es/translations.json"),

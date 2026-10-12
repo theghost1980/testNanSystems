@@ -41,33 +41,49 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 
 ---
 
-## 2026-10-12 (4.ª sesión) · Cierre de M5: desinstalar `i18next-http-backend`
+## 2026-10-12 (4.ª sesión) · Cierre de M5 y A3 (SEO en el HTML estático)
 
 **Rama:** `fix/portfolio-total-refactor-design-2026` (sobre `c75189b`) · **Entorno:** Node 14.21.3
-**Objetivo:** hacer el primer paso de "Próximos pasos" de la 3.ª sesión, con el OK del dueño.
+**Objetivo:** hacer los dos primeros pasos de "Próximos pasos" de la 3.ª sesión, con el OK del dueño en cada dependencia.
 
-### Hecho
-- `npm uninstall i18next-http-backend`: `package.json` pierde una línea (`"i18next-http-backend": "^1.0.21"`); npm retira 6 paquetes en total (la dependencia y las suyas). `package-lock.json` no cambia porque está en `.gitignore`.
-- **Antes de desinstalar:** sin `develop` ni `serve` abiertos (puertos 8000 y 9000 libres); lista de rutas y MD5 de los `page-data.json` de `public/` (último build, el de M5) guardados como línea base.
-- **Build de comprobación** (`npm run build`, ~128 s, sin errores): `SitePage` y 21 consultas de página OK, 21 HTML estáticos.
+### M5 · desinstalar `i18next-http-backend`
+- `npm uninstall i18next-http-backend`: `package.json` pierde una línea; npm retira 6 paquetes (la dependencia y las suyas). `package-lock.json` no cambia (está en `.gitignore`).
+- **Comprobación (build, ~128 s, sin errores):** mismas 20 rutas + `404.html`; los 21 `page-data.json` con el mismo MD5; JS de la home **520.746 bytes**, igual que tras M5 (el bundler ya descartaba el módulo; solo se limpian `package.json` y `node_modules`).
+- Línea base usada: lista de rutas y MD5 de los `page-data` del último build (el de M5), guardados antes de desinstalar.
 
-### Resultado (frente a la línea base)
-- **Rutas:** idénticas (20 `index.html` + `404.html`).
-- **`page-data`:** los 21 `page-data.json` tienen el mismo MD5.
-- **JS de la home:** 520.746 bytes, exactamente igual que tras M5 (el bundler ya había descartado el módulo al dejar de importarse; la desinstalación solo limpia `package.json` y `node_modules`).
-- **Avisos del build:** solo los de siempre (`WMIC` y `isModuleDeclaration` de Babel).
+### A3 · SEO en el HTML estático
+- **Antes (build):** ningún HTML estático traía `lang`, `<title>` ni metaetiquetas; el `<head>` solo tenía lo de Gatsby y el manifiesto. Las páginas ya usaban `HelmetDatoCms`, pero sin `gatsby-plugin-react-helmet` esos datos solo aparecían tras hidratar.
+- **Dependencia (instalada por el dueño):** `gatsby-plugin-react-helmet@^3.10.0` (última 3.x, línea de Gatsby 2; acepta `react-helmet@^6`, que ya estaba). Registrada en `gatsby-config.js`, antes de `gatsby-transformer-sharp`.
+- **`lang` (decidido con el dueño):** `gatsby-ssr.js` (nuevo) hace `setHtmlAttributes({ lang: "es" })`: el HTML estático sale siempre en español. `Layout` (`src/components/layout.js`) añade un `useEffect` que pone `document.documentElement.lang = i18n.language` al montar y al cambiar de idioma.
+- **`aboutNew.js`:** `HelmetDatoCms` con `seoMetaTags` (el modelo ya lo tiene en ES y EN; la consulta se amplía). Sin textos nuevos.
+- **`tos`, `privacy`, `credits`, `404`:** `Helmet` con título propio (`<texto de la página> | NaNSYSTEMS.us`); solo la 404 necesitó clave nueva (`notFound.title`: "Página no encontrada" / "Page not found"). Sin descripción a propósito.
+- **Resultado (build):** mismas 20 rutas + `404.html`; solo cambia el `page-data` de `aboutNew` (la única consulta tocada); las 21 páginas traen `<html lang="es">`, **una sola `<title>`** y, salvo las cuatro anteriores y `singleventure`, descripción y Open Graph. JS de la home 521.004 bytes (+258). Sin avisos nuevos.
+- **Regresión encontrada y corregida antes de commitear:** con `lang="es"` en el HTML, un `en-US` o `en-GB` (guardado o del navegador) se resolvía a **español** y reescribía `localStorage` a `es`. Causa: `i18next-browser-languagedetector` tiene un detector `htmlTag` (último del orden por defecto) que lee `<html lang>`; `getBestMatchFromCodes` de i18next busca primero un código **exacto** soportado en toda la lista, y ese `es` le ganaba a la coincidencia parcial `en-US` → `en` (la que arregló A2). Antes de A3 `<html>` no traía `lang`, por eso nunca se vio. **Arreglo:** `detection.order` en `src/i18n/config.js` sin `htmlTag` (el `lang` es salida del sitio, no preferencia del visitante). La prueba con build la descubrió; el dev server no habría podido mostrarla (no sirve HTML estático).
+- **Prueba final (`gatsby serve`, build de producción):** guardado `en-US`, `en-GB`, `en`, `fr-FR` y sin valor → inglés; `es-VE`, `es-ES`, `es` → español; en todos `<html lang>` coincide y `localStorage` queda en `en`/`es`. Selector `es → en → es` y `en → es → en` en `/tos/`: `lang`, texto, icono y `localStorage` cambian juntos.
+- **Título de la pestaña al cambiar de idioma:** el panel de pruebas está oculto y `react-helmet` aplica los cambios con `requestAnimationFrame`, que ahí no corre. Se verificó con `requestAnimationFrame` simulado en un documento escrito dentro de un iframe: `/tos/` pasa de "Términos y condiciones de uso del sitio web | NaNSYSTEMS.us" a "Website Terms and Conditions of Use | NaNSYSTEMS.us" (y de vuelta) al pulsar el selector; la 404 pasa de "Página no encontrada" a "Page not found"; en el blog la descripción cambia por idioma. **Conviene confirmarlo una vez en un navegador real** (deploy preview).
+- **Consola:** solo 404 de la ruta inexistente que se pidió a propósito para probar la 404 (Gatsby consulta su `page-data` antes de mostrarla); ningún recurso real roto.
 
 ### Decisiones
-- No se prueba nada en el navegador: el cambio no altera ni una línea de `src/` y el resultado del build es byte a byte el mismo. El comportamiento de idioma ya se comprobó con M5.
+- `lang` estático `es` + ajuste en el cliente (en vez de generar HTML por idioma): coherente con A7 (HTML estático en español, idioma real al montar).
+- **Sitemap y `robots.txt` quedan fuera de esta entrega:** sin sitemap, un `robots.txt` de "permitir todo" no cambia nada (hoy Netlify responde 404 a `/robots.txt`, que los buscadores tratan como "sin restricciones"). El sitemap añade `gatsby-plugin-sitemap@2` y un `siteUrl` en `siteMetadata`: espera decisión del dueño.
+- **Vulnerabilidades de `npm`** (337: 14 low, 157 moderate, 155 high, 11 critical; la misma cifra antes y después de A3): el dueño decide dejarlo para el final. Anotado como **M8** en el roadmap. No usar `npm audit fix --force` (subiría versiones mayores de la línea Gatsby 2).
+
+### Hallazgos / sorpresas
+- Un `npm run develop` abierto por el dueño sobrescribió `public/index.html` con el HTML de desarrollo (`socket.io`, `<div id="___gatsby">` vacío): `public/` está ignorada por git y se regenera con el build, pero obliga a **no mezclar `develop` con `build`/`install`** (comparten `.cache` y `node_modules`).
+- `singleventure` queda sin `<title>`: lee su SEO del estado de navegación (`data.seoData`), que no existe al generar el HTML. Es una página vieja (M4).
+- El `<title>` de `aboutNew` es "NaNSYSTEMS.us" en ambos idiomas: es lo que tiene DatoCMS en ese modelo (contenido, no código).
 
 ### Pendiente y abierto
-- Sin cambios respecto a la 3.ª sesión: A3, extras (B1, `api_key`), PR del hito 1 (cuando el dueño lo pida) y R1a.
+- Sitemap + `robots.txt` (decisión del dueño), extras (B1, fallo claro si falta `api_key`), PR del hito 1 (cuando lo pida) y R1a. M8 (vulnerabilidades) al final.
+- En el **deploy preview** del hito 1, además de lo ya listado: ver el `<title>` y `lang` en el código fuente de la página (Ver código fuente, no Inspeccionar) y que la pestaña cambie de título al pulsar el selector.
 
 ### Próximos pasos
-1. **A3 · SEO**, tal como está detallado en "Próximos pasos" de la 3.ª sesión (añade `gatsby-plugin-react-helmet@3`, `robots.txt` y decisión sobre `lang`; pedir OK antes de instalar).
+1. **Sitemap y `robots.txt`:** si el dueño lo aprueba, `gatsby-plugin-sitemap@2` + `siteUrl` en `siteMetadata` + `static/robots.txt` con la línea `Sitemap:`; si no, dejar A3 cerrado así.
+2. Extras a elección: B1 (`key` en `aboutNew.js`), fallo claro si falta `api_key`.
+3. Cuando el dueño lo pida: PR del hito 1 (merge commit) y prueba en el deploy preview. Después R1a.
 
 ### Commits de la sesión
-- Pendiente del dueño: `chore: M5 remove the unused i18next-http-backend dependency`
+- `34630bb` M5 (desinstalar `i18next-http-backend`) · A3: pendiente del dueño, propuesto `fix: A3 static SEO with react-helmet, html lang and language detection without htmlTag`
 
 ---
 

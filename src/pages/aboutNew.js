@@ -4,6 +4,7 @@ import Layout from "../components/layout";
 import Button from "../components/button";
 import { useTranslation } from "react-i18next";
 import { graphql } from "gatsby";
+import { HelmetDatoCms } from "gatsby-source-datocms";
 import Sharebuttons from "../components/shareButton";
 
 const AboutNew = (props) => {
@@ -21,6 +22,7 @@ const AboutNew = (props) => {
 
   return (
     <Layout>
+      <HelmetDatoCms seo={dataVenture.seoMetaTags} />
       <div className="venturesCont">
         <div className="textAboutUs">
           <div
@@ -110,6 +112,9 @@ export const data = graphql`
     #     }
     # }
     dataVenture_en: datoCmsAboutnew(locale: { eq: "en" }) {
+      seoMetaTags {
+        ...GatsbyDatoCmsSeoMetaTags
+      }
       aboutarea {
         title
         image {
@@ -149,6 +154,9 @@ export const data = graphql`
       # }
     }
     dataVenture_es: datoCmsAboutnew(locale: { eq: "es" }) {
+      seoMetaTags {
+        ...GatsbyDatoCmsSeoMetaTags
+      }
       aboutarea {
         title
         image {

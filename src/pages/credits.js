@@ -2,10 +2,12 @@ import React from "react";
 import Layout from "../components/layout";
 import Img from "gatsby-image";
 import { graphql } from "gatsby";
+import { Helmet } from "react-helmet";
 
 const Credits = (props) => {
   return (
     <Layout>
+      <Helmet title="Credits | NaNSYSTEMS.us" />
       <div className="creditsCont">
         <h1 className="h2Title">Credits</h1>
         <h3 className="h2Title">
