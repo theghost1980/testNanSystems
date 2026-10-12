@@ -180,15 +180,43 @@ El dueño tiene `npm run develop` abierto en el puerto 8000 mientras trabajamos.
 - Confirmar con la clienta: `SHARE_VIA_HANDLE` (`_MsLinda`), la cifra de años (`TECH_CAREER_START_YEAR`, ahora también en el texto del portafolio) y completar el contenido del CMS de la lista de arriba.
 - Decidir si `GATSBY_CONTACT_EMAIL` queda definida en Netlify (se mostraría en la página de contacto).
 
+### Cierre de la sesión: PR de preview y fusión
+El dueño decidió **probar todo el refactor en un Deploy Preview** y, si va bien, **fusionar a `master`**; lo demás (contenido de DatoCMS con la API y limpieza final) queda para la próxima sesión.
+
+**Subir y abrir el PR** (lo hace el dueño; la rama aún no está en GitHub):
+1. Commit de esta documentación y `git push -u origin feat/redesign-coral-editorial`.
+2. PR contra `master` **en borrador** (así no se fusiona por accidente). La rama tiene 10 commits y 79 archivos cambiados sobre `master`.
+
+**Qué probar en el Deploy Preview:**
+1. El build termina bien. Variables del contexto "Deploy Previews": `api_key` (token de **solo lectura**); `GATSBY_CONTACT_EMAIL` es opcional.
+2. Recorrer: `/`, `/aboutNew`, `/portfolio`, `/blog` y un artículo, un servicio, `/ventures` (abrir "Leer más" y "Cotizar por Email"), `/contact`, `/tos`, `/privacy`, `/credits` y una ruta inexistente (404).
+3. Español e inglés, tema claro y oscuro, menú móvil (hasta 1099 px), barras de desplazamiento y favicon (recargar sin caché).
+4. **Envío real** de los tres formularios (contacto, cotización y boletín): deben aparecer en Netlify → Forms y llegar el correo de aviso.
+5. Consola sin errores; `/sitemap.xml` y `/robots.txt` con 200; ninguna petición a `googletagmanager`, `emailjs.com` ni `equalweb`.
+6. Mirarlo en un teléfono real.
+
+**Antes de fusionar:**
+- **Visto bueno de la clienta** (regla del proyecto: nada llega a `master` sin su aprobación).
+- `api_key` de **Netlify** = token de solo lectura, en Production y Deploy Previews (desde aquí no se ve) y que el token de acceso completo esté regenerado (M10).
+- Decidir si `GATSBY_CONTACT_EMAIL` queda en Netlify (saldría el correo en la página de contacto).
+- Asumir que **desde el merge no se mide el tráfico** (A4 a) y que los textos legales son un borrador sin revisión legal.
+- Contenido: los 5 artículos de prueba siguen publicados (salen en el blog y la home) y el relleno del CMS se oculta por código; no bloquea el merge, pero sí la imagen del sitio (ver [datocms-api.md](datocms-api.md)).
+- Forma de fusionar: **"Create a merge commit"** conserva los 10 commits y los hashes que citan estos documentos (el squash del PR #2 los perdió); **no borrar la rama** después.
+
+**Revertir si algo falla en producción:** en Netlify → Deploys, **"Publish deploy"** del último deploy bueno (inmediato, sin tocar Git); y en Git `git revert -m 1 <commit del merge>`.
+
+**Tras el merge:** comprobaciones en producción (home ES/EN, sitemap, robots, un envío real de cada formulario, ninguna llamada a Analytics, EmailJS ni Equalweb), dominio canónico (con o sin `www`; hoy `siteUrl: https://nansystems.us`) y avisar a la clienta (contacto y cotización estuvieron caídos, política de privacidad por revisar, créditos).
+
 ### Estado al cerrar el bloque (leer primero)
-- **Rama `feat/redesign-coral-editorial`**. R3 y R4 completos. Las partes 1 a 6 ya están commiteadas (`a388284`, `82bb814`, `d6876d8`, `fb9466d`, `12b1632` y `0e7a2a0`); la parte 7 (**widget de accesibilidad de Equalweb desactivado detrás de un interruptor**) está **sin commitear** (lo hace el dueño). Commit propuesto: `feat: disable the Equalweb accessibility widget behind a switch`. `docs/images_new` no se añade nunca.
-- **Faltan:** la revisión visual final del dueño (todas las pantallas, claro y oscuro), el PR en borrador y la limpieza. R4 (legales, créditos y 404) está hecho en el árbol de trabajo (parte 4, sin commitear); `prefers-reduced-motion` ya está cubierto en `nx.css`.
-- **Acción del dueño:** `npm uninstall react-share` (ya nadie lo importa) y, antes, `npm uninstall bootstrap react-bootstrap` si no se hizo.
+- **Rama `feat/redesign-coral-editorial`**: 10 commits sobre `master` (79 archivos), **todavía no subida a GitHub**. El rediseño está hecho (R1a–R4, A4 sin Analytics ni banner, widget de Equalweb apagado detrás de un interruptor, favicon y textos legales nuevos). Las partes 1 a 8 están commiteadas (hasta `afc03ec`); queda sin commitear este cierre de documentación (corrección sobre los tokens, plan de la próxima sesión, checklist del PR). `docs/images_new` no se añade nunca.
+- **Siguiente paso:** abrir el **PR contra `master`** para probar todo en el Deploy Preview y, si va bien, fusionar (checklist arriba). **Todo lo demás queda para la próxima sesión** (ver "Próximos pasos").
+- **Hecho por el dueño:** desinstalados `react-share`, `bootstrap`, `react-bootstrap`, `react-cookie-consent`, `gatsby-plugin-gdpr-cookies` y `gatsby-plugin-google-gtag`; `api_key` del `.env` = token de solo lectura (verificado); `datocms-write.env` (ignorado por Git) con un token de escritura que se comporta como el rol Editor; **modo borrador activado en `blog_post`** (verificado; los 5 artículos siguen publicados). Sin comprobar: `api_key` de Netlify.
 
 ### Próximos pasos
-1. **QA final del dueño** a 375/768/1440 px en claro y oscuro y en `es`, `es-VE` y `en-US` (las comprobaciones automáticas ya están hechas; falta la mirada humana, sobre todo de las imágenes del CMS con otros posts).
-2. **PR en borrador** contra `master` para el primer preview (nunca fusionarlo antes de la aprobación de la clienta); revisar en el preview el formulario de contacto y la cotización con envío real a Netlify.
-3. **Limpieza final:** borrar `src/styles/styles.css` y lo que solo ella usa (`media-imgs` de fondos), M4 (`confettiAnimation`, `teamlist`, `blogList`, `commentsForm`, `pages/about.js` y su `exclude` del sitemap), `react-cookie-consent`/GA según A4, `gatsby-plugin-scroll-reveal` (ya sin uso en las páginas portadas) y repetir el análisis de [dependency-audit.md](dependency-audit.md).
+1. **PR de preview** (comprobaciones arriba) y, si todo va bien, **merge a `master`** con el procedimiento de arriba (visto bueno de la clienta incluido).
+2. **Próxima sesión · contenido de DatoCMS con la API** (Fase 5 del [roadmap](roadmap.md), tareas C1–C8; detalle en [datocms-api.md](datocms-api.md), sección 7): carpeta `tools/` (simulacro por defecto, registro de cambios, filtro de tokens), alt y punto focal de las 108 imágenes, subir el kit de imágenes del rediseño, vaciar el relleno, sustituir los 5 artículos de prueba (ya con borrador), quitar `emailjs.com` de los créditos.
+3. **Próxima sesión · limpieza final:** borrar `src/styles/styles.css` y lo que solo ella usa (`media-imgs` de fondos), M4 (`confettiAnimation`, `teamlist`, `blogList`, `commentsForm`, `pages/about.js` y su `exclude` del sitemap), `gatsby-plugin-scroll-reveal` (sin uso en las páginas portadas) y repetir el análisis de [dependency-audit.md](dependency-audit.md).
+4. **Tras el merge:** comprobaciones en producción y aviso a la clienta (lista arriba).
 
 ### Commits de la sesión
 - `3eb7951` R1a pasos 2 y 3 (del cierre de la 5.ª sesión).
@@ -198,7 +226,9 @@ El dueño tiene `npm run develop` abierto en el puerto 8000 mientras trabajamos.
 - `fb9466d` Parte 4 (R4: legales, créditos y 404).
 - `12b1632` Parte 5 (favicon, términos y política de privacidad).
 - `0e7a2a0` Parte 6 (A4 (a): sin Analytics ni banner; enlace del autor).
-- Parte 7 (widget de Equalweb desactivado): pendiente del dueño, propuesto: `feat: disable the Equalweb accessibility widget behind a switch`
+- `c47c196` Parte 7 (widget de Equalweb desactivado detrás de un interruptor).
+- `afc03ec` Parte 8 (qué se puede hacer con la API de DatoCMS; M10).
+- Parte 9 (cierre: corrección sobre los tokens, plan de la próxima sesión y lista del PR): pendiente del dueño, propuesto: `docs: close the session with the PR checklist and the DatoCMS plan`
 
 ---
 

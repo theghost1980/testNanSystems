@@ -18,15 +18,15 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 
 > **Progreso (2026-10-12):** la Fase 1 de código está **fusionada en `master`** (PR #2, con **squash**: commit `2de51ed`). Los commits individuales, y los hashes que citan estos docs, viven en la rama `fix/portfolio-total-refactor-design-2026`: **no borrarla**. Hechos: A6, A1, A2, M1, A5, A7, M3, M5, A3, M9, A8 (con el antiabuso de los formularios) y el `key` de `aboutNew` (B1 parcial).
 >
-> **Rediseño en curso** en la rama `feat/redesign-coral-editorial` (desde `master`; **no se fusiona hasta que la clienta apruebe**). **R1a, R1 y R2 hechos en la rama:** `Layout` nuevo (cabecera, pie, banda de cotización, diálogos de cotización y boletín) y home completa con datos del CMS. **R3 y R4 hechos en la rama:** blog, post, servicios, biografía, portafolio, proyectos, contacto, legales, créditos y 404 (y el logo con engranajes); falta la revisión visual final del dueño (ver [dev-log](dev-log.md)).
+> **Rediseño listo en la rama** `feat/redesign-coral-editorial` (10 commits sobre `master`, aún no subida a GitHub; **no se fusiona sin el visto bueno de la clienta**): R1a, R1, R2, R3 y R4, A4 resuelto (sin Analytics ni banner), widget de Equalweb apagado tras un interruptor, favicon y textos legales nuevos.
 >
 > **Siguiente (en este orden):**
-> 1. **Comprobar producción tras el merge** (`nansystems.us`): home en ES y EN, `/sitemap.xml` y `/robots.txt` con 200, un envío real de contacto, de cotización y de boletín (llegan a Netlify → Forms y las notificaciones por correo funcionan), ninguna llamada a `emailjs.com`, y confirmar el dominio canónico (con o sin `www`).
-> 2. **Revisión del dueño en local** del inicio (escritorio, tableta, tema oscuro) y confirmación con la clienta de la cifra "+11" y los textos. Luego el PR en borrador para el primer preview y la limpieza.
-> 3. A4: evaluar si compensa seguir con Google Analytics (decisión del dueño; hasta entonces no se toca).
-> 4. Avisar a la clienta de que contacto y cotización estuvieron caídos en producción (EmailJS), y revisar el contenido de DatoCMS y los deploys antiguos de Netlify (A6).
+> 1. **PR en borrador contra `master` y prueba en el Deploy Preview** (lista de comprobaciones en el [dev-log](dev-log.md), "Cierre de la sesión"); si todo va bien y la clienta aprueba, **fusionar** (con "Create a merge commit"; no borrar la rama).
+> 2. **Comprobar producción tras el merge** (`nansystems.us`): home en ES y EN, `/sitemap.xml` y `/robots.txt` con 200, un envío real de contacto, de cotización y de boletín (llegan a Netlify → Forms y las notificaciones por correo funcionan), ninguna llamada a `emailjs.com`, `equalweb` ni Analytics, y confirmar el dominio canónico (con o sin `www`).
+> 3. **Próxima sesión:** Fase 5 (contenido de DatoCMS con la API, tareas C1–C8) y la limpieza final (Fase 4: M4, `styles.css`, plugin de scroll-reveal, `npm audit`).
+> 4. Avisar a la clienta de que contacto y cotización estuvieron caídos en producción (EmailJS), de que los textos legales son un borrador por revisar y de que ya no se mide el tráfico; y revisar los deploys antiguos de Netlify (A6).
 >
-> Detalle y método de prueba en el [dev-log](dev-log.md) (sección "Próximos pasos").
+> Detalle y método de prueba en el [dev-log](dev-log.md) (sección "Cierre de la sesión" y "Próximos pasos").
 
 | ID | Qué | Riesgo | Estado | Rama / PR |
 |---|---|---|---|---|
@@ -56,7 +56,7 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 | M2 | Confirmar Node de Netlify y alinear `.nvmrc`; `netlify.toml`; versionar lockfile | medio | pendiente (primero `TODO(tú)` de [deploy-netlify.md](deploy-netlify.md)) | — |
 | M7 | Cabeceras de seguridad (`_headers` o `netlify.toml`); CSP al final | medio | pendiente | — |
 | M6 | EmailJS: claves a variables de entorno, restringir dominios, antispam | bajo | **descartado** (sustituido por A8: ya no hay EmailJS ni claves en el código; el antispam lo da el honeypot de Netlify Forms) | — |
-| M10 | **Token de DatoCMS:** el `api_key` del `.env` (y probablemente el de Netlify) es el de **acceso completo**, no el de solo lectura. Poner el **Read-only API token** en `.env` y en Netlify (el build compila igual, comprobado), **regenerar el Full-access token** (su valor apareció en una salida de la sesión del 2026-10-12) y, para escribir contenido, crear un token aparte con un rol acotado, solo local. Detalle en [datocms-api.md](datocms-api.md) | alto | **pendiente (dueño)** | — |
+| M10 | **Token de DatoCMS:** el `api_key` del `.env` (y probablemente el de Netlify) es el de **acceso completo**, no el de solo lectura. Poner el **Read-only API token** en `.env` y en Netlify (el build compila igual, comprobado), **regenerar el Full-access token** (su valor apareció en una salida de la sesión del 2026-10-12) y, para escribir contenido, crear un token aparte con un rol acotado, solo local. Detalle en [datocms-api.md](datocms-api.md) | alto | **parcial (2026-10-12):** `.env` ya con el token de solo lectura y token de escritura aparte en `datocms-write.env`; falta confirmar `api_key` en Netlify y regenerar el token de acceso completo | — |
 | M9 | `gatsby-config.js` falla al instante con un mensaje claro si falta `api_key` (antes el plugin de DatoCMS recibía el texto `"undefined"` y el build fallaba a los ~14 s con un `401 INVALID_AUTHORIZATION_HEADER`) | bajo | **hecho en la rama** (commit pendiente del dueño). Atención: si en Netlify `api_key` no aplica a Deploy Previews, esos builds ya fallaban; ahora lo dicen claro | `fix/portfolio-total-refactor-design-2026` |
 | M8 | `npm install` informa de **337 vulnerabilidades** (14 low, 157 moderate, 155 high, 11 critical) = 140 avisos únicos. **Analizado el 2026-10-12, sin cambios de código** (detalle y método en [dependency-audit.md](dependency-audit.md)): todo viene de 7 dependencias directas, casi todo es herramienta de build de Gatsby 2 que no llega al navegador; los 2 hallazgos que sí llegan (`js-cookie` vía `react-cookie-consent`, `cookie` vía `gatsby-plugin-gdpr-cookies`) no son alcanzables con el uso actual. **No hay arreglo compatible** con la línea Gatsby 2.x (todo son versiones mayores) y `npm audit fix` solo toca 2 utilidades en local. Se cierra con: retirar `react-cookie-consent` con el rediseño (A4/R1) y la migración de Gatsby (Futuro). **No usar `npm audit fix --force`** | medio | **analizado**; el arreglo real queda en A4/R1 y en la migración de Gatsby | — |
 
@@ -70,6 +70,21 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 | B3 | Fuentes fuera de `@import`, peso de imágenes, CSS de Bootstrap | bajo | pendiente | — |
 | B4 | Renombrar `mailChimpForm.js` / `NetlifyForm` / `.inputMailChimp` | bajo | pendiente | — |
 | B5 | `gatsby-browser.js`: evitar `window.onload =`, quitar comentarios | bajo | pendiente | — |
+
+## Fase 5 · Contenido en DatoCMS con la API (próxima sesión)
+
+Prerrequisitos ya cumplidos (2026-10-12): `api_key` del `.env` es de solo lectura, `datocms-write.env` (ignorado por Git) tiene un token de escritura con el comportamiento del rol Editor y el **modo borrador está activo en `blog_post`**. Pendiente del dueño: confirmar `api_key` en Netlify y regenerar el token de acceso completo (M10). Método y límites en [datocms-api.md](datocms-api.md). Todo lo que escriba un script: simulacro por defecto, registro de lo anterior para poder revertir y nada de borrar sin confirmación escrita.
+
+| ID | Qué | Riesgo | Estado | Rama / PR |
+|---|---|---|---|---|
+| C1 | Carpeta `tools/` con los scripts de DatoCMS: simulacro por defecto (`--apply` para escribir), registro de cambios, filtro que oculta tokens, respeto del límite de 60 peticiones cada 3 s; los secretos solo en `datocms-write.env` | bajo | pendiente | — |
+| C2 | Texto alternativo (es/en) y punto focal de las 108 imágenes (hoy todas vacías): propuesta revisada por el dueño y luego aplicada en lote | bajo | pendiente | — |
+| C3 | Subir el kit de imágenes del rediseño (12, con alt y punto focal) y asignarlo a las portadas de servicios, tarjetas de biografía y proyectos y portadas de blog, guardando los identificadores anteriores | medio | pendiente | — |
+| C4 | Vaciar el texto de relleno (66 campos) y cargar los textos reales cuando la clienta los entregue; corregir erratas ("Energia", "especificas") con su visto bueno | medio | pendiente | — |
+| C5 | Sustituir los 5 artículos de prueba por reales: borradores en español e inglés a partir de lo que aporte la clienta; los publica el dueño | medio | pendiente | — |
+| C6 | Quitar "emailjs.com" de los créditos del CMS (dejar "equalweb.com" mientras se vaya a reactivar el widget) | bajo | pendiente | — |
+| C7 | Revisión de los textos legales por la clienta o su asesor; confirmar el estado del domicilio en la cláusula de leyes aplicables | medio | pendiente (clienta) | — |
+| C8 | Reactivar el menú de accesibilidad de Equalweb (`A11Y_WIDGET_ENABLED = true`) cuando el dueño lo decida | bajo | pospuesto | — |
 
 ## Rediseño (ver [redesign.md](redesign.md))
 
