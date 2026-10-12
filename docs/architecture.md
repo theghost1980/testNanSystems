@@ -20,7 +20,7 @@
 gatsby-config.js     plugins; lee la variable api_key (DatoCMS); siteUrl para el sitemap
 gatsby-ssr.js        pone lang="es" en el HTML estático (el idioma real lo ajusta Layout)
 gatsby-node.js       crea páginas: blog/<slug> y /<slug> (tecnologías)
-gatsby-browser.js    carga el widget de accesibilidad (equalweb) en window.onload
+gatsby-browser.js    carga el widget de accesibilidad (equalweb) en window.onload, solo si A11Y_WIDGET_ENABLED (src/config/site.js; hoy false)
 src/
   pages/             páginas con ruta propia
   templates/         blogpost.js y technology.js (usadas por gatsby-node)
@@ -81,7 +81,7 @@ El formulario `newsletter` solo existe en el DOM cuando se abre el modal, por es
 
 - **En `master` (sitio actual):** `gatsby-plugin-google-gtag` inyecta Google Analytics en producción, `react-cookie-consent` muestra un banner que **no controla la carga de GA** y `gatsby-plugin-gdpr-cookies` está sin `trackingId`.
 - **En la rama del rediseño (A4, opción a):** no hay analítica, ni plugins de cookies, ni banner. Lo que se guarda en el navegador es funcional (tema, idioma, contador de envíos). Si se añade analítica o cookies no esenciales, hay que poner un aviso con consentimiento real.
-- `gatsby-browser.js` carga el widget de accesibilidad de un tercero, con SRI, al terminar de cargar la página.
+- `gatsby-browser.js` carga el widget de accesibilidad de un tercero (Equalweb), con SRI, al terminar de cargar la página, **solo si `A11Y_WIDGET_ENABLED` es `true`** en `src/config/site.js` (hoy `false` en la rama del rediseño). El mismo interruptor controla la mención en la política de privacidad y el espacio reservado junto al botón de la banda de cotización.
 
 ## SEO
 

@@ -144,6 +144,16 @@ El dueño decidió **quitar Google Analytics** (opción (a) de A4) y pidió que 
 ### Verificación (parte 6)
 - Build limpio de 20 páginas en la copia aislada. **Ni el HTML ni el JS de producción contienen `googletagmanager` ni `gtag`**; sin `dataLayer`, sin banner y con `document.cookie` vacío tras cargar la política (el sitio no instala cookies propias). La política lista Netlify, DatoCMS y Equalweb, tres entradas de almacenamiento (`nan-theme`, `i18nextLng`, `nx-form-sends-*`) y la frase de que no hay analítica ni publicidad; el pie enlaza a `https://github.com/theghost1980/`. Barrido de 50 combinaciones (5 rutas × 5 anchos × español e inglés): 0 desbordes y un solo `h1` en cada una.
 
+### Hecho (parte 7: widget de accesibilidad de Equalweb desactivado)
+El dueño pidió quitar el menú de accesibilidad de Equalweb (lo reactivará más adelante).
+- **Un solo interruptor:** `A11Y_WIDGET_ENABLED = false` en `src/config/site.js`. Con `false`: `gatsby-browser.js` no carga el script de Equalweb (el fragmento activo se conserva **idéntico**, con su integridad SRI, y se retiró el fragmento de pruebas comentado, que sigue en el historial de git), la política de privacidad no menciona a Equalweb y el CSS no reserva espacio junto al botón de la banda de cotización (`--a11y-reserve: 0px`; con `true`, `gatsby-ssr.js` añade la clase `nx-has-a11y` a `<body>` y vuelve a 72 px).
+- **Limpieza asociada:** fuera la clave `a11y.a11yWidget` de las traducciones (la interfaz del menú es la del tercero), el marcador `.nx-a11y-slot` y los tokens `--a11y-bg`/`--a11y-fg` y `--z-a11y` de `nx.css` (eran de la muestra del diseño). Se conservan en las traducciones las frases de la política (`privacy.s2-eq`, `privacy.s3-eq`) que se muestran solo con el interruptor en `true`.
+- **Para reactivarlo:** poner `A11Y_WIDGET_ENABLED = true` (un build lo aplica en todo: script, política y espacio). Antes conviene comprobar que la clave del sitio (`sitekey`) y la versión del script de `gatsby-browser.js` siguen vigentes en el panel de Equalweb, y que Equalweb figure en los créditos del CMS.
+- **En el CMS:** mientras esté desactivado, "equalweb.com" (y "emailjs.com", que ya no se usa) pueden salir de la lista de créditos.
+
+### Verificación (parte 7)
+Probado en las dos posiciones con builds de 20 páginas en la copia aislada. **Con `true`:** `<body class="nx-root nx-has-a11y">`, se carga `cdn.equalweb.com/core/3.0.0/accessibility.js`, `window.interdeal` queda definido, la política menciona a Equalweb y `--a11y-reserve` vale 72 px. **Con `false` (estado del repo):** `<body class="nx-root">`, 0 peticiones a `equalweb`, `window.interdeal` sin definir, la política lista solo Netlify y DatoCMS y `--a11y-reserve` vale 0 px. En el JS de producción sigue el fragmento del widget (≈1 KB) sin ejecutarse; en el HTML de créditos aparece "equalweb.com" porque viene del CMS.
+
 ### Hallazgo de la parte 5, resuelto en la parte 6: Google Analytics no dependía del banner (A4)
 En el HTML de producción **`gtag` se carga siempre** (`gatsby-plugin-google-gtag` con el identificador de medición `G-…`, y además una petición a `gtag/js?id=undefined` que sale de `gatsby-plugin-gdpr-cookies`, que no tiene configurado Analytics): el botón "Acepto/Rechazar" del banner solo guarda su cookie y **no activa ni detiene nada**. La política lo describía tal como era. El dueño eligió la opción **(a): quitar Analytics** (ver la parte 6), que además evita tener que gestionar consentimiento.
 
@@ -164,7 +174,7 @@ El dueño tiene `npm run develop` abierto en el puerto 8000 mientras trabajamos.
 - Decidir si `GATSBY_CONTACT_EMAIL` queda definida en Netlify (se mostraría en la página de contacto).
 
 ### Estado al cerrar el bloque (leer primero)
-- **Rama `feat/redesign-coral-editorial`**. R3 y R4 completos. Las partes 1 a 5 ya están commiteadas (`a388284`, `82bb814`, `d6876d8`, `fb9466d` y `12b1632`); la parte 6 (**A4 opción (a): sin Analytics ni banner, y enlace del autor**) está **sin commitear** (lo hace el dueño). Commit propuesto: `feat: A4 remove analytics and the cookie banner`. `docs/images_new` no se añade nunca.
+- **Rama `feat/redesign-coral-editorial`**. R3 y R4 completos. Las partes 1 a 6 ya están commiteadas (`a388284`, `82bb814`, `d6876d8`, `fb9466d`, `12b1632` y `0e7a2a0`); la parte 7 (**widget de accesibilidad de Equalweb desactivado detrás de un interruptor**) está **sin commitear** (lo hace el dueño). Commit propuesto: `feat: disable the Equalweb accessibility widget behind a switch`. `docs/images_new` no se añade nunca.
 - **Faltan:** la revisión visual final del dueño (todas las pantallas, claro y oscuro), el PR en borrador y la limpieza. R4 (legales, créditos y 404) está hecho en el árbol de trabajo (parte 4, sin commitear); `prefers-reduced-motion` ya está cubierto en `nx.css`.
 - **Acción del dueño:** `npm uninstall react-share` (ya nadie lo importa) y, antes, `npm uninstall bootstrap react-bootstrap` si no se hizo.
 
@@ -180,7 +190,8 @@ El dueño tiene `npm run develop` abierto en el puerto 8000 mientras trabajamos.
 - `d6876d8` Parte 3 (ajustes de la revisión del dueño).
 - `fb9466d` Parte 4 (R4: legales, créditos y 404).
 - `12b1632` Parte 5 (favicon, términos y política de privacidad).
-- Parte 6 (A4 (a): sin Analytics ni banner; enlace del autor): pendiente del dueño, propuesto: `feat: A4 remove analytics and the cookie banner`
+- `0e7a2a0` Parte 6 (A4 (a): sin Analytics ni banner; enlace del autor).
+- Parte 7 (widget de Equalweb desactivado): pendiente del dueño, propuesto: `feat: disable the Equalweb accessibility widget behind a switch`
 
 ---
 

@@ -5,6 +5,7 @@ import Layout from "../components/layout";
 import LegalHead from "../components/legalHead";
 import LegalToc from "../components/legalToc";
 import { useNx } from "../hooks/useNx";
+import { A11Y_WIDGET_ENABLED } from "../config/site";
 
 // Lo que el sitio guarda en el navegador: [nombre, clave del texto]. Los nombres no se traducen.
 const STORAGE = [
@@ -41,7 +42,7 @@ const Privacy = () => {
           <ul>
             <li>{t("privacy.s2-netlify")}</li>
             <li>{t("privacy.s2-dato")}</li>
-            <li>{t("privacy.s2-eq")}</li>
+            {A11Y_WIDGET_ENABLED && <li>{t("privacy.s2-eq")}</li>}
           </ul>
           <p>{t("privacy.s2-end")}</p>
 
@@ -54,7 +55,7 @@ const Privacy = () => {
               </li>
             ))}
           </ul>
-          <p>{t("privacy.s3-eq")}</p>
+          {A11Y_WIDGET_ENABLED && <p>{t("privacy.s3-eq")}</p>}
           <p>{t("privacy.s3-none")}</p>
           <p>{t("privacy.s3-outro")}</p>
 

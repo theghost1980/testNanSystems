@@ -1,4 +1,5 @@
 import React from "react";
+import { A11Y_WIDGET_ENABLED } from "./src/config/site";
 
 // Lo que debe estar en el HTML estático para que la primera pintura salga bien
 // (sin parpadeo de fondo ni de tema) — SPEC del rediseño, k.5.
@@ -26,7 +27,8 @@ export const onRenderBody = ({
   setHtmlAttributes({ lang: "es" });
   // `.nx-root` va en <body> para que el reset acotado de nx.css cubra también el
   // margen del body y el fondo.
-  setBodyAttributes({ className: "nx-root" });
+  // `nx-has-a11y` (solo con el widget de accesibilidad activo) reserva espacio junto al botón de la banda.
+  setBodyAttributes({ className: A11Y_WIDGET_ENABLED ? "nx-root nx-has-a11y" : "nx-root" });
   setHeadComponents([
     <meta key="nx-color-scheme" name="color-scheme" content="light dark" />,
     <script key="nx-theme" dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />,

@@ -25,3 +25,9 @@ export const CONTACT_EMAIL = process.env.GATSBY_CONTACT_EMAIL || "";
 // de ambas páginas. Las versiones anteriores eran del 19 de diciembre de 2020; se reescribieron el
 // 12 de octubre de 2026. Actualizar cada vez que se revisen.
 export const LEGAL_UPDATED = "2026-10-12";
+
+// Menú de accesibilidad de Equalweb (script de un tercero). Desactivado por decisión del dueño; para
+// reactivarlo basta con poner `true`: `gatsby-browser.js` vuelve a cargar el script, la política de
+// privacidad vuelve a mencionarlo y el CSS reserva espacio junto al botón de la banda de cotización.
+// Si se reactiva, revisar también que Equalweb siga figurando en los créditos del CMS.
+export const A11Y_WIDGET_ENABLED = false;
