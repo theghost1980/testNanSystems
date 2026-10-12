@@ -20,7 +20,9 @@ import "../styles/nx.css";
 // al contenido, cabecera, <main>, banda de cotización + pie (fuera de <main>) y
 // los diálogos globales. Lo marcado con data-nx-page queda inerte mientras hay
 // un diálogo abierto. `showCta={false}` quita la banda (404 y páginas legales).
-const Layout = ({ children, showCta = true }) => {
+// `dialogs`: diálogos propios de una página; van aquí, FUERA de <main>, porque lo que está
+// dentro de data-nx-page queda inerte (el diálogo no se podría usar) y dentro del proveedor.
+const Layout = ({ children, dialogs = null, showCta = true }) => {
   const { t } = useNx();
   const { t: translate, i18n } = useTranslation();
 
@@ -44,6 +46,7 @@ const Layout = ({ children, showCta = true }) => {
       </div>
       <QuoteDialog />
       <NewsletterDialog />
+      {dialogs}
       {/* Se mantiene react-cookie-consent hasta decidir A4 (si se sigue con Google Analytics). */}
       <CookieConsent
         location="bottom"
@@ -65,6 +68,7 @@ const Layout = ({ children, showCta = true }) => {
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,
+  dialogs: PropTypes.node,
   showCta: PropTypes.bool,
 };
 

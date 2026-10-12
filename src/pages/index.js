@@ -10,7 +10,7 @@ import Icon from "../components/icons";
 import { useNx } from "../hooks/useNx";
 import PostMeta from "../components/postMeta";
 import { readMinutes } from "../utils/content";
-import { TECH_CAREER_START_YEAR } from "../config/site";
+import { techYears } from "../config/site";
 
 const Home = ({ data }) => {
   const { t, lang } = useNx();
@@ -20,7 +20,7 @@ const Home = ({ data }) => {
   const services = data[`services_${L}`].edges;
   const posts = data[`posts_${L}`].edges;
   const testimonies = data[`testimonies_${L}`].edges;
-  const years = new Date().getFullYear() - TECH_CAREER_START_YEAR;
+  const years = techYears();
 
   return (
     <Layout>

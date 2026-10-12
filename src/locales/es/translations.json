@@ -19,14 +19,14 @@
       "about": "Biografía",
       "portfolio": "Portafolio",
       "blog": "Blog",
-      "ventures": "Projectos",
+      "ventures": "Proyectos",
       "contact": "Contacto",
       "close": "CERRAR",
       "ariaHome": "Ir página inicio",
       "ariaAbout": "Ir página acerca de",
       "ariaPortfolio": "Ir página portafolio",
       "ariaBlog": "Ir página blog",
-      "ariaVentures": "Ir página projectos",
+      "ariaVentures": "Ir página proyectos",
       "ariaContact": "Ir página contacto",
       "ariaLanguage": "Cambiar lenguaje",
       "ariaHam": "Abrir o cerrar mini menú",
@@ -55,7 +55,7 @@
       "readingtime": "min de lectura)"
     },
     "portfolio": {
-      "text": "Durante más de 6 años de experiencia, he podido trabajar en proyectos medianos y grandes. Cada experiencia ha sido de gran ayuda para completar mis habilidades como ingeniero.",
+      "text": "Durante más de {{years}} años de experiencia, he podido trabajar en proyectos medianos y grandes. Cada experiencia ha sido de gran ayuda para completar mis habilidades como ingeniero.",
       "since": "Empleada desde:",
       "until": "Hasta",
       "actual": "Empleo Actual",
@@ -254,10 +254,12 @@
       "text": "Cuéntanos qué necesitas y recibe una cotización por email. Nuestros robots están felices de trabajar para ti."
     },
     "about": {
+      "area": "Área",
       "areas": "Áreas de trabajo",
       "share": "Compartir esta página"
     },
     "ventures": {
+      "project": "Proyecto",
       "dialogTitle": "Detalle del proyecto",
       "empty": "Todavía no hay proyectos publicados."
     },

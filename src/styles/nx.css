@@ -366,7 +366,7 @@
 .nx-menu-btn__close { display: none; }
 .nx-menu-btn[aria-expanded="true"] .nx-menu-btn__open { display: none; }
 .nx-menu-btn[aria-expanded="true"] .nx-menu-btn__close { display: block; }
-.nx-header__cta { display: none; }
+.nx-header__cta { display: none; white-space: nowrap; }
 .nx-nav.nx-is-open {
   display: block; position: absolute; left: calc(-1 * var(--gutter)); right: calc(-1 * var(--gutter)); top: 100%;
   background: var(--bg); border-bottom: 2px solid var(--text); padding: 12px var(--gutter) 20px;
@@ -374,7 +374,9 @@
 .nx-nav.nx-is-open .nx-nav__list { flex-direction: column; gap: 4px; }
 .nx-nav.nx-is-open .nx-nav__link { width: 100%; min-height: 48px; font-size: 17px; }
 .nx-nav__cta-mobile { margin-top: 12px; width: 100%; }
-@media (min-width: 960px) {
+/* Menú de escritorio desde 1100 px (no 960): con 6 enlaces en español, idioma, tema y Cotizar, la cabecera
+   necesitaba más de 1024 px y desbordaba (medido). Mantener igual que `matchMedia` en header.js. */
+@media (min-width: 1100px) {
   .nx-header__actions { gap: 8px; }
   .nx-nav { display: block; }
   .nx-nav__cta-mobile { display: none; }
@@ -468,6 +470,7 @@
 @media (min-width: 640px) { .nx-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 960px) { .nx-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } .nx-grid--2-lg { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .nx-two-col { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
+.nx-page-head .nx-two-col > .nx-stack { align-content: center; }
 @media (min-width: 960px) { .nx-two-col { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); } .nx-two-col--rev { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); } }
 .nx-divider { border: 0; border-top: 1px solid var(--line); margin: 0; }
 .nx-empty { border: 1px dashed var(--line); border-radius: var(--radius-lg); padding: 32px; text-align: center; color: var(--muted); display: grid; gap: 12px; justify-items: center; }

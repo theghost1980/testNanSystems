@@ -1,11 +1,9 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
+import { CONTACT_EMAIL } from "../config/site";
 
-// Correo que se muestra si falla un formulario. Se define con la variable de
-// entorno GATSBY_CONTACT_EMAIL (.env en local; variables del sitio en Netlify,
-// también para Deploy Previews) y se fija al construir. Sin ella, el mensaje
-// sale sin dirección.
-const CONTACT_EMAIL = process.env.GATSBY_CONTACT_EMAIL;
+// Correo que se muestra si falla un formulario (ver CONTACT_EMAIL en config/site.js). Sin
+// él, el mensaje sale sin dirección.
 
 // `i18nKey` es la clave del texto sin correo (p. ej. "contact.errorText"). La
 // versión con correo es la misma clave + "WithEmail": una frase que termina justo

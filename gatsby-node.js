@@ -8,7 +8,6 @@ const FIXED_PATHS = [
   `aboutNew`,
   `portfolio`,
   `ventures`,
-  `singleventure`,
   `tos`,
   `privacy`,
   `credits`,

@@ -10,9 +10,10 @@ const FOCUSABLE =
 // (Tab / Shift+Tab), Esc y clic en el fondo cierran. Los hijos se montan solo
 // mientras está abierto, así que sus formularios se reinician al cerrarlo.
 //
-// Uso: <Dialog id="nx-quote" title={…} size="sm">…</Dialog>; se abre con
+// Uso: <Dialog id="nx-quote" title={…} kicker={…} size="sm">…</Dialog> (`kicker`: texto corto
+// opcional sobre el título); se abre con
 // useDialog().open("nx-quote", detalle).
-const Dialog = ({ id, title, size, children }) => {
+const Dialog = ({ id, title, kicker, size, children }) => {
   const { id: openId, close } = useDialog();
   const { t } = useNx();
   const panelRef = useRef(null);
@@ -76,9 +77,12 @@ const Dialog = ({ id, title, size, children }) => {
         ref={panelRef}
       >
         <div className="nx-dialog__head">
-          <h2 className="nx-dialog__title" id={titleId}>
-            {title}
-          </h2>
+          <div>
+            {kicker && <span className="nx-mono">{kicker}</span>}
+            <h2 className="nx-dialog__title" id={titleId}>
+              {title}
+            </h2>
+          </div>
           <button
             className="nx-icon-btn nx-icon-btn--close"
             type="button"

@@ -54,7 +54,7 @@ const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   // Esc cierra el menú móvil y devuelve el foco al botón; al ensanchar la
-  // ventana (≥ 960 px) se cierra solo.
+  // ventana (≥ 1100 px, el mismo punto de corte que el CSS) se cierra solo.
   useEffect(() => {
     if (!menuOpen) return undefined;
     const onKey = (e) => {
@@ -70,7 +70,7 @@ const Header = () => {
 
   useEffect(() => {
     if (!window.matchMedia) return undefined;
-    const media = window.matchMedia("(min-width: 960px)");
+    const media = window.matchMedia("(min-width: 1100px)");
     const onChange = (e) => {
       if (e.matches) setMenuOpen(false);
     };

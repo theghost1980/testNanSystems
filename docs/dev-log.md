@@ -41,12 +41,12 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 
 ---
 
-## 2026-10-12 (6.ª sesión) · R3 (parte 1): logo con engranajes, blog, post y servicios
+## 2026-10-12 (6.ª sesión) · R3: logo con engranajes, blog, post, servicios, biografía, portafolio, proyectos y contacto
 
 **Rama:** `feat/redesign-coral-editorial` (sobre `3eb7951`, el commit de R1a pasos 2 y 3) · **Entorno:** Node 14.21.3
 **Objetivo:** el dueño revisó la home ("todo funciona y se va viendo mejor") y pidió seguir; además, recuperar de forma opcional la "ruedita" del logo anterior.
 
-### Hecho
+### Hecho (parte 1: logo, blog, post y servicios; ya commiteada)
 - **Logo con engranajes** (`src/components/header.js`, `nx.css`): el punto coral se sustituye por los dos engranajes del logo anterior, dibujados como SVG propio (grande de 8 dientes en coral, pequeño de 6 en el color del texto, engranados). Al pasar el mouse o enfocar el logo giran un diente en sentidos contrarios (45° y −60°, solo `transform`); con `prefers-reduced-motion` no se mueven (regla general de `nx.css`). Es un dibujo nuevo, no el PNG viejo (que era azul y verde agua): se ve igual de bien en claro y oscuro y no pesa. Los paths los genera un script (no hay archivo en el repo): si hay que cambiar dientes o proporciones, se regeneran.
 - **Blog** (`src/pages/blog.js`): cabecera con `h1`, texto de introducción y la cita (`blog.quote`); tarjetas `nx-post-card` con la primera destacada (dos columnas desde 768 px), portada 16:10 con punto focal, hasta 3 pastillas, fecha absoluta por idioma y minutos de lectura. Consulta mínima (se quitaron `blogImg*`, `locale` y `fromNow`), orden descendente, `sizes` real por hueco y estado vacío (`blog.empty`). Los títulos de las tarjetas son `h2` (el `h3` de la muestra saltaba un nivel).
 - **Post** (`src/templates/blogpost.js`): `nx-article` con enlace "Volver al blog", pastillas, `h1`, meta, portada 2:1 (`priority`, sin lazy), contenido en `.nx-prose--lg`, categorías al pie y compartir. Si el artículo no existe en el idioma elegido muestra el otro (antes habría roto la página).
@@ -55,7 +55,37 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 - **`prepareCmsHtml`** (SPEC j.3 y j.4) se aplica al HTML del CMS en post y servicio: baja los `h1` del contenido a `h2` (un solo `h1` por página), añade `scope="col"` a las cabeceras de tabla y `tabindex="0"` a los `pre` y tablas (se desplazan en horizontal: así se pueden recorrer con el teclado).
 - **Arreglo de CSS:** el borde coral de `.nx-link-more` se estiraba a todo el ancho cuando el enlace estaba en una rejilla (`justify-self: start`).
 
-### Decisiones
+### Hecho (parte 2: biografía, portafolio, proyectos y contacto)
+- **Biografía** (`src/pages/aboutNew.js`): cabecera con `h1`, texto de bienvenida y compartir; tarjetas de áreas de trabajo (1:1, `Media`); ítems alternados con imagen 3:2, etiqueta ("Área 01"…), `h2` y texto corto, y **"Leer más"** (`src/components/readMore.js`) si el CMS trae texto completo. Datos por idioma con el patrón `about_<L>`.
+- **Portafolio** (`src/pages/portfolio.js`): filas editoriales con rango de años (un solo año si inicio y fin coinciden, "Empleo actual" si no hay fin), cargo, empresa · lugar y pastilla del empleo actual; botón `+`/`−` que despliega hasta cuatro bloques (descripción, responsabilidades, tareas, logros) y el enlace a la empresa. El primer puesto actual sale desplegado. **No se piden `salary` ni `opinionAboutCompany`.** Solo se muestra lo que aporta (ver "Contenido del CMS").
+- **Proyectos** (`src/pages/ventures.js`): cabecera de dos columnas (bienvenida + imagen lateral 4:5) y tarjetas 3:2. Con texto completo en el CMS, "Leer más" abre un diálogo de detalle (imagen, texto, "Cotizar por Email" y "Cerrar"); **"Cotizar" cierra el detalle y abre la cotización con el título del proyecto**, y al cerrarla el foco vuelve a la tarjeta. Las tarjetas sin texto real ofrecen directamente "Cotizar por Email" (antes llevaban a `/singleventure` con relleno). Se retiran `singleventure.js` y el estado del router.
+- **Contacto** (`src/pages/contact.js`): formulario con validación por campo y resumen de errores accesible, estados enviando / enviado / error, y `submitNetlifyForm("contact", …)` con honeypot y el texto de error con el correo (A8). Tarjeta lateral (`contactAside.js`) con el correo (solo si existe `GATSBY_CONTACT_EMAIL`) y las redes del CMS. Se acabaron los estilos y el icono giratorio del formulario viejo.
+- **Cabecera:** el menú de escritorio pasa de 960 a **1100 px**. Entre 960 y 1099 px la cabecera desbordaba (scroll horizontal en español a 960 y 1024 px, en inglés a 960) y "Get a quote" se partía en dos líneas; hallazgo de esta sesión (las mediciones de R1a no incluían esos anchos). Además `white-space: nowrap` en el botón.
+- **Traducciones:** se aplican tres correcciones de la SPEC que no se habían fusionado (`es.menu.ventures` y `ariaVentures` "Projectos" → "Proyectos", `en.home.latest` "Lastest Articles" → "Latest articles", `en.portfolio.actual` "Actual Job" → "Current role"); claves nuevas `about.area` y `ventures.project`; `portfolio.text` usa `{{years}}` (`techYears()` de `config/site.js`, la misma cifra que el "+11" del inicio) en lugar del "6 años" fijo de 2020.
+- **Piezas compartidas:** `Layout` acepta `dialogs` (diálogos propios de una página, fuera de `<main>`); `Dialog` acepta `kicker`; `isPlaceholder` y `usefulBlocks` en `utils/content.js`; `techYears()` y `CONTACT_EMAIL` en `config/site.js`; iconos `plus` y `minus`; `.nx-page-head .nx-two-col > .nx-stack` centrado vertical.
+- **M4 parcial:** se borran `src/pages/singleventure.js` y `src/components/shareButton.js` (ya sin uso), `singleventure` sale de `FIXED_PATHS` (`gatsby-node.js`) y de `exclude` del sitemap. **`react-share` ya no se importa en ningún archivo.**
+
+### Decisiones (parte 2)
+- **Filtro de relleno del CMS** (`isPlaceholder`): lo que contenga "Lorem ipsum", "Ipsem Lorem" o la nota interna "Place here all the accomplishments…/Recommended for Ana" se trata como vacío. Protege el sitio público sin tocar el CMS; cuando la clienta escriba el texto real, aparece solo. Es un parche en código a propósito, para que el relleno no llegue a producción mientras se completa el contenido.
+- **Sin `data-sal`** (scroll-reveal) en las páginas portadas: el efecto es decorativo, deja el contenido invisible si el script falla o no se dispara (también en pruebas) y exige un umbral de visibilidad. Si se quiere, se añade luego; `gatsby-plugin-scroll-reveal` queda como candidato a retirar en la limpieza.
+- **Encabezados:** un `h1` por página; los títulos de ítems y tarjetas son `h2` (la muestra usaba `h3` saltando un nivel).
+- **El correo de contacto** de la página sale de `GATSBY_CONTACT_EMAIL`; si está definida en Netlify, **aparece en la tarjeta de contacto del sitio publicado** (hoy es el correo personal del dueño). Si no se quiere en público todavía, quitar la variable.
+
+### Contenido del CMS por completar (para avisar a la clienta)
+- **Biografía:** el texto completo (`content`) de los tres ítems es "Lorem ipsum" con una imagen de stock y la etiqueta (`shotTitle`) es "Ipsem Lorem": no se muestran ("Leer más" oculto, etiqueta "Área 01/02/03"). Errata: "Conservación de **Energia**" (falta la tilde). El SEO de la página tiene el título genérico "NaNSYSTEMS.us".
+- **Proyectos:** el texto completo de 3 de 4 proyectos es relleno; solo "Soluciones de Automatización" tiene texto. **El sitio en producción hoy muestra ese relleno en `/singleventure` al pulsar "Leer más".**
+- **Portafolio:** "Tareas habituales" (`summaryTasks`) es "Lorem Ipsum" en los 11 puestos; "Descripción" y "Responsabilidades" suelen repetirse entre sí o repetir el cargo (se muestra una sola vez); un puesto trae en "Logros" una nota interna en inglés ("Recommended for Ana…") que **hoy sale publicada**. Los logros están vacíos en casi todos.
+- Imágenes del CMS sin texto alternativo ni punto focal (ya anotado).
+
+### Verificación (parte 2; build de producción + `gatsby serve`)
+- Build limpio: **20 páginas** (sin `/singleventure`). Un error por el camino: Gatsby 2 no admite una consulta de página y otra estática en el mismo archivo (`contact.js` + tarjeta lateral): la tarjeta pasó a `contactAside.js`.
+- **Matriz de desborde: 126 combinaciones** (7 rutas × 9 anchos de 320 a 1440 px × español e inglés), **0 desbordes** y el botón de cabecera nunca se parte.
+- **Portafolio:** 11 puestos; ninguna "lorem" visible (incluidos los paneles ocultos); desplegable con `aria-expanded`/`aria-controls`, iconos y estado independiente por fila. **Biografía:** `h1` único, etiquetas "Área 0N", imágenes cargadas, sin "Leer más" (contenido de relleno). **`ReadMore`** probado con una página temporal (ya borrada): estado, iconos, `h1`→`h2`, `scope="col"` y `tabindex="0"` en `pre`/tabla.
+- **Proyectos:** diálogo con foco dentro y página inerte; "Cotizar" lo sustituye por la cotización con "Servicio: <título>"; al cerrar, el foco vuelve a la tarjeta. **Error encontrado y corregido:** el diálogo estaba dentro de `<main data-nx-page>`, que se marca `inert` al abrir (el propio diálogo quedaba inerte); por eso existe `Layout dialogs`.
+- **Contacto con `fetch` simulado:** envío vacío (resumen de 3 errores y foco en él), correo inválido, envío válido (cuerpo `form-name=contact&bot-field=&name=…&email=…&message=…`), "Enviar otro mensaje" (foco en el nombre), límite de 60 s, error de servidor (texto con enlace `mailto` y "Reintentar" sin caer en el honeypot) y honeypot lleno (no se envía nada).
+- Pendiente de la revisión visual del dueño: todas las pantallas en su navegador (escritorio, tableta, oscuro).
+
+### Decisiones (parte 1)
 - **Compartir con enlaces normales, no con `react-share`:** la muestra del diseño ya usa `<a class="nx-share__btn">`; cada enlace abre la red en una pestaña nueva (`noopener noreferrer`), con nombre accesible "Compartir en X (se abre en una pestaña nueva)". Se evita un SDK con ventanas emergentes y botones sin enlace real, y la URL sale de `siteUrl` + ruta, igual en el HTML estático y en el navegador (antes salía de `location.href`, que no existe al generar el HTML). `react-share` **sigue en uso** por `aboutNew.js` y `singleventure.js` hasta portarlas; después: `npm uninstall react-share` y borrar `src/components/shareButton.js`.
 - **El logo gráfico vuelve en versión engranajes** aunque la SPEC lo había dejado como solo texto: lo pidió el dueño, es decorativo (el nombre accesible lo da el enlace) y no cambia el contrato del logo.
 - **`SHARE_VIA_HANDLE = "_MsLinda"`** es el usuario que ya tenía el botón anterior; hay que confirmar con la clienta si sigue siendo suyo.
@@ -74,20 +104,23 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 
 ### Pendiente y abierto
 - Lo de la 5.ª sesión sigue abierto (confirmaciones con la clienta, kit de imágenes en DatoCMS con punto focal y alt, producción tras el merge del PR #2, A4, dominio canónico).
-- Confirmar `SHARE_VIA_HANDLE`.
-- Los posts no tienen punto focal ni alt en el CMS: se ven con el centro y el título como texto alternativo hasta subir el kit.
+- Confirmar con la clienta: `SHARE_VIA_HANDLE` (`_MsLinda`), la cifra de años (`TECH_CAREER_START_YEAR`, ahora también en el texto del portafolio) y completar el contenido del CMS de la lista de arriba.
+- Decidir si `GATSBY_CONTACT_EMAIL` queda definida en Netlify (se mostraría en la página de contacto).
 
 ### Estado al cerrar el bloque (leer primero)
-- **Rama `feat/redesign-coral-editorial`**. Hecho en el árbol de trabajo y **sin commitear** (lo hace el dueño): logo con engranajes, blog, post, servicios y las piezas compartidas. Commit propuesto: `feat: R3 gears logo, blog, post and service pages for the redesign`. `docs/images_new` no se añade nunca.
-- **Siguen sin portar** (se ven sin estilos nuevos dentro del `Layout`): biografía (`aboutNew.js`), portafolio, proyectos, contacto; legales y 404 en R4. `react-share` y `shareButton.js` se retiran cuando `aboutNew.js` y `singleventure.js` dejen de usarlos.
+- **Rama `feat/redesign-coral-editorial`**. R3 completo en el árbol de trabajo (partes 1 y 2); la parte 1 ya está commiteada, la parte 2 (**biografía, portafolio, proyectos, contacto, cabecera a 1100 px, traducciones, M4 parcial**) está **sin commitear** (lo hace el dueño). Commit propuesto: `feat: R3 about, portfolio, ventures and contact pages for the redesign`. `docs/images_new` no se añade nunca.
+- **Faltan:** R4 (legales `tos`/`privacy`/`credits` y 404 siguen con el marcado viejo dentro del `Layout`, `prefers-reduced-motion` ya cubierto en `nx.css`, QA final), el PR en borrador y la limpieza.
+- **Acción del dueño:** `npm uninstall react-share` (ya nadie lo importa) y, antes, `npm uninstall bootstrap react-bootstrap` si no se hizo.
 
 ### Próximos pasos
-1. **Biografía** (`src/pages/aboutNew.js`): tarjetas `aboutarea` 1:1 con `Media`, `itemAboutus` alternados con acordeón "Leer más" (`content` por fin se muestra), `welcomeNode` en `.nx-prose--lg` con `prepareCmsHtml`; sin `Sharebuttons` (si la muestra lo lleva, usar `Share` con `labelKey="about.share"`).
-2. **Portafolio**, **Proyectos** (diálogo "Leer más" que encadena con la cotización) y **Contacto** (reutilizar `submitNetlifyForm("contact", …)`, `HoneypotField` y `FormErrorText`), según la sección "Próximos pasos" de la 5.ª sesión.
-3. R4 y el PR en borrador para el primer preview; limpieza final (incluida `react-share` y `styles.css`).
+1. **R4:** legales (`tos`, `privacy`, `credits`: lectura larga de 880 px con `.nx-prose`, `Credit.image` 1:1 `contain`; ver las muestras `terminos.html`, `privacidad.html`, `creditos.html`) y 404 (`src/media-imgs/redesign/404-cable-desconectado.jpg` y claves `notfound.*`; muestra `404.html`). Después QA a 375/768/1440 px en claro y oscuro y en `es`, `es-VE` y `en-US`.
+2. **PR en borrador** contra `master` para el primer preview (nunca fusionarlo antes de la aprobación de la clienta); revisar en el preview el formulario de contacto y la cotización con envío real a Netlify.
+3. **Limpieza final:** borrar `src/styles/styles.css` y lo que solo ella usa (`media-imgs` de fondos), M4 (`confettiAnimation`, `teamlist`, `blogList`, `commentsForm`, `pages/about.js` y su `exclude` del sitemap), `react-cookie-consent`/GA según A4, `gatsby-plugin-scroll-reveal` (ya sin uso en las páginas portadas) y repetir el análisis de [dependency-audit.md](dependency-audit.md).
 
 ### Commits de la sesión
-- `3eb7951` R1a pasos 2 y 3 (del cierre de la 5.ª sesión) · pendiente del dueño, propuesto: `feat: R3 gears logo, blog, post and service pages for the redesign`
+- `3eb7951` R1a pasos 2 y 3 (del cierre de la 5.ª sesión).
+- Parte 1 (logo con engranajes, blog, post y servicios): commiteada por el dueño.
+- Parte 2 (resto de R3): pendiente del dueño, propuesto: `feat: R3 about, portfolio, ventures and contact pages for the redesign`
 
 ---
 

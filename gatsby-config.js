@@ -96,14 +96,13 @@ module.exports = {
       resolve: `gatsby-plugin-sitemap`,
       options: {
         // `exclude` reemplaza la lista por defecto del plugin, por eso se repite.
-        // /about y /singleventure son páginas viejas sin enlaces (ver M4): no se listan.
+        // /about es una página vieja sin enlaces (ver M4): no se lista.
         exclude: [
           `/dev-404-page`,
           `/404`,
           `/404.html`,
           `/offline-plugin-app-shell-fallback`,
           `/about`,
-          `/singleventure`,
         ],
       },
     },

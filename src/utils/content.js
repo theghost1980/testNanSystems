@@ -29,6 +29,34 @@ export const readMinutes = (node) =>
     node.contentNode.childMarkdownRemark.timeToRead) ||
   0;
 
+// Textos de relleno que el CMS trae de fábrica o que quedaron de pruebas ("Lorem ipsum",
+// "Ipsem Lorem", la nota interna de los logros). No deben llegar al público: lo que los
+// contenga se trata como vacío hasta que se escriba el texto real en DatoCMS.
+const PLACEHOLDER_RE = /lorem\s+ipsum|ipsem\s+lorem|place here all the|recommended for ana/i;
+const stripTags = (html) => String(html || "").replace(/<[^>]+>/g, " ");
+
+export const isPlaceholder = (text) => {
+  const s = stripTags(text).trim();
+  return !s || PLACEHOLDER_RE.test(s);
+};
+
+// Texto plano en minúsculas y sin espacios repetidos, para comparar bloques.
+const plainText = (html) =>
+  stripTags(html).replace(/&nbsp;/g, " ").replace(/\s+/g, " ").trim().toLowerCase();
+
+// Bloques de texto del CMS que sí aportan: sin relleno, sin repetir el título ni otro bloque
+// ya incluido. [{ key, html }] → los mismos objetos filtrados, en el mismo orden.
+export const usefulBlocks = (blocks, title) => {
+  const seen = new Set([plainText(title)]);
+  return blocks.filter(({ html }) => {
+    if (isPlaceholder(html)) return false;
+    const key = plainText(html);
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+};
+
 // HTML crudo del CMS (remark sin plugins) → listo para `.nx-prose` (SPEC j.3 y j.4):
 // - un solo h1 por página: los h1 del contenido bajan a h2 (el estilo ya los iguala);
 // - las celdas de cabecera de tabla reciben scope="col" (remark GFM no lo pone);

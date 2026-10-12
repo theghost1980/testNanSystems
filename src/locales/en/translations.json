@@ -48,17 +48,17 @@
       "social": "Social media"
     },
     "home": {
-      "latest": "Lastest Articles",
+      "latest": "Latest articles",
       "some": "Some technologies We work with:"
     },
     "blogList": {
       "readingtime": "minutes to read)"
     },
     "portfolio": {
-      "text": "During more than 6 years of experience, I have been able to work on medium and large projects. Each experience has been of great help in completing my skills as an engineer.",
+      "text": "During more than {{years}} years of experience, I have been able to work on medium and large projects. Each experience has been of great help in completing my skills as an engineer.",
       "since": "Working since:",
       "until": "Until",
-      "actual": "Actual Job",
+      "actual": "Current role",
       "visit": "Visit Company Web Site",
       "salary": "Wage: $",
       "description": "Job description",
@@ -254,10 +254,12 @@
       "text": "Tell us what you need and get a quote by email. Our robots are happy to work for you."
     },
     "about": {
+      "area": "Area",
       "areas": "Areas of work",
       "share": "Share this page"
     },
     "ventures": {
+      "project": "Project",
       "dialogTitle": "Project details",
       "empty": "No projects have been published yet."
     },

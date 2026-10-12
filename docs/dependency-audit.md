@@ -55,7 +55,7 @@ Todo se reparte entre **7 de las 25 dependencias directas** (las demás no traen
 
 **Actualización (R1a, 2026-10-12):** el rediseño ya no importa `bootstrap` ni `react-bootstrap` en ningún archivo (el JS de la home bajó 16 KB). Se pueden desinstalar (`npm uninstall bootstrap react-bootstrap`) y salen del árbol de dependencias.
 
-**Actualización (R3, 2026-10-12):** blog, post y servicio comparten con enlaces normales y ya no usan `react-share`. Solo lo siguen usando `aboutNew.js` y `singleventure.js`; al portar la primera y borrar la segunda (M4), `npm uninstall react-share` y borrar `src/components/shareButton.js`.
+**Actualización (R3, 2026-10-12):** el rediseño comparte con enlaces normales y **`react-share` ya no se importa en ningún archivo** (`shareButton.js` y `singleventure.js` se borraron): se puede desinstalar con `npm uninstall react-share`. Además `gatsby-plugin-scroll-reveal` ya no lo usa ninguna página portada (candidato a retirar en la limpieza, junto con su entrada en `gatsby-config.js`).
 
 1. **Retirar `react-cookie-consent`** cuando el rediseño sustituya el banner de cookies (A4 y R1: el banner nuevo ya guarda la cookie de consentimiento). Con eso desaparece el único aviso alto que llega al navegador. Si A4 termina sin usar `gatsby-plugin-gdpr-cookies`, retirarlo también.
 2. **Migrar Gatsby 2 → versión soportada** (apartado "Futuro" del roadmap): es la única forma de bajar la cifra de verdad.
