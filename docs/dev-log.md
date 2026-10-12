@@ -41,7 +41,7 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 
 ---
 
-## 2026-10-12 (4.ª sesión) · Cierre de M5, A3 (SEO, sitemap y `robots.txt`), B1 parcial y M9
+## 2026-10-12 (4.ª sesión) · Cierre de M5, A3 (SEO, sitemap y `robots.txt`), B1 parcial, M9 y análisis de M8
 
 **Rama:** `fix/portfolio-total-refactor-design-2026` (sobre `c75189b`) · **Entorno:** Node 14.21.3
 **Objetivo:** hacer los dos primeros pasos de "Próximos pasos" de la 3.ª sesión, con el OK del dueño en cada dependencia.
@@ -88,10 +88,19 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 - **Alcance:** `gatsby develop`, `build` y `serve` cargan la configuración y ahora también necesitan la variable (en tu máquina sale del `.env`; `gatsby clean` no carga la configuración).
 - **A confirmar en Netlify:** si `api_key` no estuviera definida para Deploy Previews o branch deploys (`TODO(tú)` de [deploy-netlify.md](deploy-netlify.md)), esos builds **ya fallaban** antes (token `"undefined"`); la diferencia es que ahora el log lo dice. El primer deploy preview del PR del hito 1 lo comprobará.
 
+### M8 · análisis de las 337 vulnerabilidades de `npm audit` (solo documentación)
+- **Detalle completo, tablas y método:** [dependency-audit.md](dependency-audit.md) (doc nuevo). Aquí solo lo esencial.
+- **Qué son 337:** 140 avisos únicos (7 críticos, 65 altos, 60 moderados, 8 bajos) repetidos por cada ruta del árbol. **Resolver el árbol desde cero** (carpeta aparte, `npm install --package-lock-only`, sin tocar el proyecto) da **la misma cifra**: lo que ves en local es lo que instala Netlify.
+- **De dónde vienen:** solo 7 de las 25 dependencias directas (`gatsby` con la gran mayoría, `gatsby-plugin-sharp`, `gatsby-source-datocms`, `gatsby-transformer-remark`, `gatsby-plugin-manifest`, `react-cookie-consent`, `gatsby-plugin-gdpr-cookies`). `npm 6` marca todo como "producción" (`dev: 0`) porque `package.json` no separa dependencias de build: `--production` no sirve para distinguir.
+- **Qué llega al visitante:** dentro de `gatsby` todo es herramienta de Node (CLI, `webpack-dev-server`, ESLint, loaders, `axios` del CLI, `socket.io` de recarga en caliente). Solo **2 hallazgos** viajan al navegador: `js-cookie` 2.2.1 (alto; vía `react-cookie-consent`) y `cookie` 0.4.2 (bajo; vía `gatsby-plugin-gdpr-cookies`). Leídos los avisos y el uso: `js-cookie` exige atributos de `Cookies.set` salidos de un `JSON.parse` de un atacante y el banner solo pasa opciones fijas (sin `extraCookieOptions` ni `JSON.parse` de datos externos en `src/`); `cookie` exige valores no confiables como nombre/ruta/dominio. **No alcanzables con el uso actual** (lectura de código, sin prueba de explotación).
+- **Por qué no se arregla:** las 5 acciones "install" de `npm audit` son versiones mayores (`gatsby` 5.16.1, `gatsby-plugin-sharp` 5.16.0, `gatsby-transformer-remark` 6.16.0, `gatsby-plugin-gdpr-cookies` 2.0.10, `react-cookie-consent` 10.0.2). La última solo corrige `js-cookie` en la 10.x, que exige React ≥18 y Node ≥20.16 (7, 8 y 9 siguen con `js-cookie` 2.2.1). `npm audit fix --dry-run`: actualiza `node-fetch` y `cross-fetch` (resuelven 3 de las 337 rutas), solo en `node_modules` y el lock local (ignorado por git, Netlify no lo recibe). Todas las dependencias directas se usan (comprobado por referencias en `src/` y `gatsby-*.js`; `react-dom` es requisito de Gatsby).
+- **Qué se hace:** nada en código. Retirar `react-cookie-consent` con el rediseño (A4/R1) quita el único alto que llega al navegador; la cifra solo baja de verdad con la migración de Gatsby ("Futuro" del roadmap). Se recomienda usar `npm run develop` (`-H 0.0.0.0`: accesible desde la red local) solo en redes de confianza o `gatsby develop` cuando no se prueba desde otro dispositivo. No se ha cambiado el script.
+- **Límites:** el endpoint de auditoría de npm 6 está anunciado como retirado (el propio `npm audit` lo avisa); la separación build/navegador se hizo por la ruta de cada hallazgo, sin medir los módulos del JS final.
+
 ### Decisiones
 - `lang` estático `es` + ajuste en el cliente (en vez de generar HTML por idioma): coherente con A7 (HTML estático en español, idioma real al montar).
 - **Sitemap y `robots.txt` van juntos:** un `robots.txt` de "permitir todo" solo tiene sentido para declarar el sitemap; el dueño aprobó la dependencia.
-- **Vulnerabilidades de `npm`** (337: 14 low, 157 moderate, 155 high, 11 critical; la misma cifra antes y después de A3): el dueño decide dejarlo para el final. Anotado como **M8** en el roadmap. No usar `npm audit fix --force` (subiría versiones mayores de la línea Gatsby 2).
+- **Vulnerabilidades de `npm`** (337; la misma cifra antes y después de A3): el dueño pidió abordarlas tras M9. Resultado: analizadas y documentadas (M8, ver arriba); no hay arreglo compatible con Gatsby 2.x. No usar `npm audit fix --force`.
 
 ### Hallazgos / sorpresas
 - Un `npm run develop` abierto por el dueño sobrescribió `public/index.html` con el HTML de desarrollo (`socket.io`, `<div id="___gatsby">` vacío): `public/` está ignorada por git y se regenera con el build, pero obliga a **no mezclar `develop` con `build`/`install`** (comparten `.cache` y `node_modules`).
@@ -99,17 +108,17 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 - El `<title>` de `aboutNew` es "NaNSYSTEMS.us" en ambos idiomas: es lo que tiene DatoCMS en ese modelo (contenido, no código).
 
 ### Pendiente y abierto
-- La Fase 1 de código queda cerrada (el resto de B1 va con el rediseño). Quedan: PR del hito 1 (cuando lo pida), R1a y, al final, M8 (vulnerabilidades).
+- La Fase 1 de código queda cerrada (el resto de B1 va con el rediseño). M8 analizado (sin arreglo compatible). Quedan: PR del hito 1 y prueba en el deploy preview (lo siguiente que pidió el dueño), R1a y, con el rediseño, retirar `react-cookie-consent`.
 - **Dominio canónico:** confirmar con o sin `www` (cambiar `siteUrl` y `static/robots.txt` si fuera con `www`).
 - En el **deploy preview** del hito 1, además de lo ya listado: ver el `<title>` y `lang` en el código fuente de la página (Ver código fuente, no Inspeccionar), que la pestaña cambie de título al pulsar el selector y que `/sitemap.xml` y `/robots.txt` respondan 200.
 
 ### Próximos pasos
-1. Cuando el dueño lo pida: PR del hito 1 (merge commit; aclarar en la descripción que `092d9a4` es A5 aunque se llame M3) y prueba en el deploy preview. Después R1a.
+1. **Deploy preview del hito 1 (lo que sigue):** PR del hito 1 (merge commit; aclarar en la descripción que `092d9a4` es A5 aunque se llame M3) y prueba en el deploy preview. Después R1a.
 2. R1a (pieza vertical del rediseño, rama aparte desde `master`; lee antes `docs/redesign.md` y el SPEC del paquete fuera del repo).
-3. Al final: M8 (vulnerabilidades de `npm audit`).
+3. Con el rediseño: retirar `react-cookie-consent` (y `gatsby-plugin-gdpr-cookies` si A4 no lo usa) y repetir el análisis de [dependency-audit.md](dependency-audit.md).
 
 ### Commits de la sesión
-- `34630bb` M5 (desinstalar `i18next-http-backend`) · `441bc68` A3 (react-helmet, `lang`, títulos y detección de idioma) · `6283b9d` sitemap y `robots.txt` · `2973907` B1 parcial (`key` de `aboutNew`) · M9: pendiente del dueño, propuesto `fix: M9 fail with a clear message when api_key is missing`
+- `34630bb` M5 (desinstalar `i18next-http-backend`) · `441bc68` A3 (react-helmet, `lang`, títulos y detección de idioma) · `6283b9d` sitemap y `robots.txt` · `2973907` B1 parcial (`key` de `aboutNew`) · `7050659` M9 · M8: solo documentación, propuesto `docs: M8 analyze the npm audit vulnerabilities`
 
 ---
 

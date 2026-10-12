@@ -21,7 +21,7 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 > **Siguiente (en este orden):**
 > 1. PR del hito 1 y prueba manual en el deploy preview (boletín real, contacto, cotización, clic home → post, `es-VE`/`en-US`, título de la pestaña al cambiar de idioma, `/sitemap.xml` y `/robots.txt` con 200, y que `api_key` esté disponible en Deploy Previews: M9 hace fallar el build con un mensaje si no lo está).
 > 2. R1a (pieza vertical del rediseño, en rama aparte desde `master`; el prerrequisito A3 ya está cumplido).
-> 3. Al final: bajar las vulnerabilidades de `npm audit` (M8). El resto de B1 (teclado) va con el rediseño.
+> 3. M8 (vulnerabilidades) ya está analizado: no hay arreglo compatible; se resuelve con el rediseño (A4/R1) y la migración de Gatsby. El resto de B1 (teclado) va con el rediseño.
 >
 > Detalle y método de prueba en el [dev-log](dev-log.md) (sección "Próximos pasos").
 
@@ -53,7 +53,7 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 | M7 | Cabeceras de seguridad (`_headers` o `netlify.toml`); CSP al final | medio | pendiente | — |
 | M6 | EmailJS: claves a variables de entorno, restringir dominios, antispam | bajo | pendiente | — |
 | M9 | `gatsby-config.js` falla al instante con un mensaje claro si falta `api_key` (antes el plugin de DatoCMS recibía el texto `"undefined"` y el build fallaba a los ~14 s con un `401 INVALID_AUTHORIZATION_HEADER`) | bajo | **hecho en la rama** (commit pendiente del dueño). Atención: si en Netlify `api_key` no aplica a Deploy Previews, esos builds ya fallaban; ahora lo dicen claro | `fix/portfolio-total-refactor-design-2026` |
-| M8 | `npm install` informa de **337 vulnerabilidades** (14 low, 157 moderate, 155 high, 11 critical), la misma cifra antes y después de A3. Sin analizar todavía: ver cuántas son de dependencias de producción (`npm audit --production`) y cuántas del árbol de Gatsby 2 (solo build). **No usar `npm audit fix --force`** (subiría versiones mayores; ver Reglas). Decisión del dueño: se deja para el final | medio | pendiente (al final) | — |
+| M8 | `npm install` informa de **337 vulnerabilidades** (14 low, 157 moderate, 155 high, 11 critical) = 140 avisos únicos. **Analizado el 2026-10-12, sin cambios de código** (detalle y método en [dependency-audit.md](dependency-audit.md)): todo viene de 7 dependencias directas, casi todo es herramienta de build de Gatsby 2 que no llega al navegador; los 2 hallazgos que sí llegan (`js-cookie` vía `react-cookie-consent`, `cookie` vía `gatsby-plugin-gdpr-cookies`) no son alcanzables con el uso actual. **No hay arreglo compatible** con la línea Gatsby 2.x (todo son versiones mayores) y `npm audit fix` solo toca 2 utilidades en local. Se cierra con: retirar `react-cookie-consent` con el rediseño (A4/R1) y la migración de Gatsby (Futuro). **No usar `npm audit fix --force`** | medio | **analizado**; el arreglo real queda en A4/R1 y en la migración de Gatsby | — |
 
 ## Fase 4 · Limpieza
 
@@ -99,6 +99,6 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 
 ## Futuro (no antes de cerrar lo anterior)
 
-- Migrar Gatsby 2 → versión soportada: implica `gatsby-image` → `gatsby-plugin-image`, `gatsby-source-datocms` mayor, React/Node modernos y revisar i18n. Proyecto aparte, con su propia rama larga y previews.
+- Migrar Gatsby 2 → versión soportada (**es lo que realmente baja las 337 vulnerabilidades**, ver M8): implica `gatsby-image` → `gatsby-plugin-image`, `gatsby-source-datocms` mayor, React/Node modernos y revisar i18n. Proyecto aparte, con su propia rama larga y previews.
 - Tema oscuro opcional como `prefers-color-scheme` apoyado en las variables CSS del rediseño.
 - Migrar `emailjs-com` v2 a `@emailjs/browser`.

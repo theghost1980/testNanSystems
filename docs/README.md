@@ -15,6 +15,7 @@ Esta carpeta **no se publica en el sitio web**: vive solo en el repositorio.
 | [deploy-netlify.md](deploy-netlify.md) | Cómo se publica, variables, límites del plan, previews | Referencia |
 | [workflow.md](workflow.md) | Cómo se trabaja un cambio de principio a fin | Guía |
 | [audit-2026-10.md](audit-2026-10.md) | Auditoría del 2026-10-10 con evidencia | **Foto fija** (no se edita) |
+| [dependency-audit.md](dependency-audit.md) | Las 337 vulnerabilidades de `npm audit`: de dónde vienen, qué llega al visitante y por qué no se arreglan ahora (M8) | **Vivo** |
 | [roadmap.md](roadmap.md) | Mejoras pendientes con estado | **Vivo** |
 | [redesign.md](redesign.md) | Decisión, tokens y plan del rediseño | **Vivo** |
 | [CHANGELOG.md](CHANGELOG.md) | Registro de cambios realizados | **Vivo** |
