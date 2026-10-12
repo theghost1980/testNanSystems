@@ -11,8 +11,6 @@ const STORAGE = [
   ["nan-theme", "privacy.s3-theme"],
   ["i18nextLng", "privacy.s3-lang"],
   ["nx-form-sends-contact, nx-form-sends-quote, nx-form-sends-newsletter", "privacy.s3-limit"],
-  ["gatsby-gdpr-google-analytics", "privacy.s3-consent"],
-  ["_ga, _ga_*", "privacy.s3-ga"],
 ];
 
 const Privacy = () => {
@@ -43,7 +41,6 @@ const Privacy = () => {
           <ul>
             <li>{t("privacy.s2-netlify")}</li>
             <li>{t("privacy.s2-dato")}</li>
-            <li>{t("privacy.s2-ga")}</li>
             <li>{t("privacy.s2-eq")}</li>
           </ul>
           <p>{t("privacy.s2-end")}</p>
@@ -58,6 +55,7 @@ const Privacy = () => {
             ))}
           </ul>
           <p>{t("privacy.s3-eq")}</p>
+          <p>{t("privacy.s3-none")}</p>
           <p>{t("privacy.s3-outro")}</p>
 
           <h2 id="p4">4. {t("privacy.s4")}</h2>

@@ -14,7 +14,7 @@ module.exports = {
   siteMetadata: {
     title: `NanSystems - Ana Echeverría`,
     description: `Ana Echeverria provides solutions in IT and technology for the medium, small and large companies.`,
-    author: `Saturno Mangieri -> saturnoman.com`,
+    author: `Saturno Mangieri -> github.com/theghost1980`,
     siteUrl: `https://nansystems.us`,
   },
   plugins: [
@@ -70,27 +70,6 @@ module.exports = {
           // rootMargin: '0% 50%', // Corresponds to root's bounding box margin
           // enterEventName: 'sal:in', // Enter event name
           // exitEventName: 'sal:out', // Exit event name
-      },
-    },
-    {
-      resolve: `gatsby-plugin-gdpr-cookies`,
-      options: {
-        // googleAnalytics: {
-        //   trackingId: 'YOUR_GOOGLE_ANALYTICS_TRACKING_ID',
-        //   // Setting this parameter is optional
-        //   anonymize: true
-        // },     >>>>>>> todo LATER dont forget configure the google analytics using nansystems.us@gmail.com <<<<<<<<
-        // Defines the environments where the tracking should be available  - default is ["production"]
-        environments: ['production', 'development']
-      },
-    },
-    {
-      resolve: `gatsby-plugin-google-gtag`,
-      options: {
-        // You can add multiple tracking ids and a pageview event will be fired for all of them.
-        trackingIds: [
-          "G-GWX08J3QRF", // Google Analytics / GA
-        ],
       },
     },
     {

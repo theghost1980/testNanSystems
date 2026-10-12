@@ -101,5 +101,5 @@ Probar los tres es importante: hoy el sitio se comporta distinto con códigos re
 
 - **Los formularios de contacto y de cotización envían correos reales** (las credenciales de EmailJS están en el código). No los uses para probar sin avisar.
 - Los formularios de Netlify (boletín) **no funcionan en local**, solo desplegados.
-- Una build de producción (`gatsby build` + `gatsby serve`) carga Google Analytics del sitio real si abres la página. `develop` no lo carga.
+- En `master` (sitio actual) una build de producción (`gatsby build` + `gatsby serve`) carga Google Analytics del sitio real si abres la página; `develop` no lo carga. En la rama del rediseño ya no hay analítica (A4).
 - En la consola de `develop` aparecen avisos de eslint (accesibilidad, variables sin uso) y de i18next; los conocidos están listados en [audit-2026-10.md](audit-2026-10.md).

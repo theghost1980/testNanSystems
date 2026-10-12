@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import CookieConsent from "react-cookie-consent";
 import { withTrans } from "../i18n/withTrans";
 import { useTranslation } from "react-i18next";
 import Header from "./header";
@@ -24,7 +23,7 @@ import "../styles/nx.css";
 // dentro de data-nx-page queda inerte (el diálogo no se podría usar) y dentro del proveedor.
 const Layout = ({ children, dialogs = null, showCta = true }) => {
   const { t } = useNx();
-  const { t: translate, i18n } = useTranslation();
+  const { i18n } = useTranslation();
 
   // El HTML estático trae lang="es" (gatsby-ssr.js); aquí se ajusta al idioma real.
   useEffect(() => {
@@ -47,21 +46,6 @@ const Layout = ({ children, dialogs = null, showCta = true }) => {
       <QuoteDialog />
       <NewsletterDialog />
       {dialogs}
-      {/* Se mantiene react-cookie-consent hasta decidir A4 (si se sigue con Google Analytics). */}
-      <CookieConsent
-        location="bottom"
-        buttonText={translate("cookies.msg")}
-        declineButtonText="Decline"
-        cookieName="gatsby-gdpr-google-analytics"
-        buttonStyle={{
-          color: "#4e503b",
-          fontSize: "15px",
-          fontWeight: "bold",
-        }}
-      >
-        {translate("cookies.title")}.<br></br>
-        <span style={{ fontSize: "10px" }}>{translate("cookies.sub_title")}</span>
-      </CookieConsent>
     </DialogProvider>
   );
 };

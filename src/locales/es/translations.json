@@ -139,13 +139,12 @@
       "s1-contact": "Formulario de contacto: nombre, correo electrónico y mensaje, para responder a su consulta.",
       "s1-quote": "Solicitud de cotización: nombre, correo electrónico, teléfono (opcional), horario preferido de llamada, empresa y cargo (opcional), comentarios y el servicio que le interesa, para preparar y enviarle una cotización.",
       "s1-news": "Boletín: su correo electrónico, para enviarle artículos técnicos y novedades. Puede pedir la baja en cualquier momento.",
-      "s1-tech": "Datos técnicos: al visitar el sitio, los servidores que lo entregan y las herramientas de estadísticas reciben datos como su dirección IP, el navegador y las páginas que visita.",
+      "s1-tech": "Datos técnicos: al visitar el sitio, los servidores que lo entregan reciben datos como su dirección IP, el navegador y las páginas que visita.",
       "s1-note": "No pedimos datos de pago ni datos sensibles, y no vendemos su información personal.",
       "s2": "Con quién se comparten",
       "s2-intro": "Usamos proveedores que tratan datos por nuestra cuenta; algunos pueden hacerlo fuera de su país de residencia:",
       "s2-netlify": "Netlify: aloja el sitio y recibe los envíos de los formularios, que nos notifica por correo y que quedan guardados en nuestro panel.",
       "s2-dato": "DatoCMS: gestiona los textos e imágenes del sitio; sus servidores entregan las imágenes y pueden registrar la dirección IP de quien las descarga.",
-      "s2-ga": "Google Analytics: estadísticas de uso del sitio (ver «Cookies y almacenamiento local»).",
       "s2-eq": "Equalweb: ofrece el menú de accesibilidad del sitio, que se carga desde sus servidores.",
       "s2-end": "Fuera de estos proveedores no compartimos su información personal con terceros, salvo que la ley lo exija.",
       "s3": "Cookies y almacenamiento local",
@@ -153,10 +152,9 @@
       "s3-theme": "recuerda si eligió el tema claro u oscuro.",
       "s3-lang": "recuerda el idioma que eligió.",
       "s3-limit": "cuentan los envíos recientes de cada formulario para frenar abusos.",
-      "s3-consent": "guarda su elección en el aviso de cookies.",
-      "s3-ga": "cookies de Google Analytics para distinguir visitas y medir el uso del sitio de forma agregada.",
       "s3-eq": "El menú de accesibilidad de Equalweb puede guardar en su navegador las opciones que usted elija.",
-      "s3-outro": "Puede borrar o bloquear estos datos desde la configuración de su navegador: el sitio seguirá funcionando, aunque olvidará sus preferencias. Para que Google Analytics no mida su visita también puede usar su complemento de inhabilitación (tools.google.com/dlpage/gaoptout).",
+      "s3-none": "El sitio no usa herramientas de analítica ni de publicidad: no instala cookies con esos fines.",
+      "s3-outro": "Puede borrar o bloquear estos datos desde la configuración de su navegador: el sitio seguirá funcionando, aunque olvidará sus preferencias.",
       "s4": "Cuánto tiempo conservamos los datos",
       "s4-text": "Conservamos sus mensajes y solicitudes el tiempo necesario para atenderlos y para la relación comercial que resulte de ellos, y los eliminamos cuando usted lo pida, salvo que la ley nos obligue a conservarlos. Protegemos los datos que almacenamos con medios comercialmente razonables para evitar su pérdida, su robo y el acceso, el uso o la modificación no autorizados.",
       "s5": "Sus derechos",
@@ -228,12 +226,6 @@
     },
     "carousel": {
       "tellme": "Más"
-    },
-    "cookies": {
-      "title": "Este sitio web usa cookies y almacenamiento local para recordar sus preferencias y medir las visitas con Google Analytics. Los datos que usted envía por los formularios se usan solo para responderle. Más información en la Política de privacidad",
-      "sub_title": "Nuestros robots trabajan para hacer del mundo un lugar mejor.",
-      "msg": "Acepto",
-      "reject": "Rechazar"
     },
     "a11y": {
       "skip": "Saltar al contenido",

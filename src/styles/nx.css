@@ -68,7 +68,7 @@
   --space-5: 24px; --space-6: 32px; --space-7: 48px; --space-8: 64px; --space-9: 96px;
   --measure: 68ch;
   --shadow-dialog: 0 24px 64px rgba(28, 37, 65, 0.25);
-  --z-header: 50; --z-a11y: 60; --z-cookie: 70; --z-dialog: 80; --z-skip: 100;
+  --z-header: 50; --z-a11y: 60; --z-dialog: 80; --z-skip: 100;
   --t-fast: 120ms ease;
   --t-move: 150ms ease;
   --t-dialog: 180ms cubic-bezier(0.2, 0, 0, 1);
@@ -199,9 +199,8 @@
   .nx-acc__panel, .nx-posts, .nx-post__body, .nx-post-card, .nx-post-card__body, .nx-toc, .nx-exp__grid, .nx-feature,
   .nx-feature__body, .nx-about-card, .nx-venture, .nx-venture__body, .nx-credit, .nx-notfound, .nx-cta, .nx-cta__side,
   .nx-footer, .nx-footer__top, .nx-footer__brand, .nx-footer__cols, .nx-footer__links, .nx-dialog__panel,
-  .nx-dialog__state, .nx-cookie, .nx-catalog__item) { grid-template-columns: minmax(0, 1fr); }
-/* Texto sin espacios (URLs, "a/b/c"): que se parta en vez de salirse de su caja. La copia actual de
-   cookies.title trae "almacenamos/recuperamos/comercializamos" (42 caracteres seguidos): a 320 px desbordaba. */
+  .nx-dialog__state, .nx-catalog__item) { grid-template-columns: minmax(0, 1fr); }
+/* Texto sin espacios (URLs, "a/b/c"): que se parta en vez de salirse de su caja. */
 .nx-root { overflow-wrap: break-word; }
 
 /* =====================================================================
@@ -668,7 +667,7 @@
 @media (min-width: 960px) { .nx-footer__top { grid-template-columns: minmax(0, 1fr) auto; align-items: start; } }
 
 /* =====================================================================
-   10. DIÁLOGOS, BANNER DE COOKIES, WIDGET A11Y
+   10. DIÁLOGOS Y WIDGET A11Y
    ===================================================================== */
 .nx-dialog { position: fixed; inset: 0; z-index: var(--z-dialog); display: none; align-items: center; justify-content: center; padding: 16px; }
 .nx-dialog.nx-is-open { display: flex; }
@@ -691,17 +690,6 @@
 .nx-dialog--inline .nx-dialog__panel { animation: none; box-shadow: var(--shadow); border: 1px solid var(--line-soft); max-width: none; }
 .nx-spinner { width: 36px; height: 36px; border-radius: 50%; border: 4px solid var(--line); border-top-color: var(--brand-blue-text); animation: nx-spin 800ms linear infinite; }
 @keyframes nx-dialog-in { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
-
-.nx-cookie {
-  position: fixed; left: 16px; right: calc(16px + var(--a11y-reserve)); bottom: 16px; z-index: var(--z-cookie);
-  max-width: 720px; background: var(--surface); color: var(--text); border: 1px solid var(--line);
-  border-radius: var(--radius-lg); box-shadow: var(--shadow-dialog); padding: 20px; display: grid; gap: 12px;
-}
-.nx-cookie--inline { position: static; max-width: none; box-shadow: var(--shadow); }
-.nx-cookie__text { font-size: 14px; }
-.nx-cookie__sub { font-size: 13px; color: var(--muted); }
-.nx-cookie__actions { display: flex; flex-wrap: wrap; gap: 8px; }
-@media (min-width: 768px) { .nx-cookie { left: 24px; bottom: 24px; } }
 
 .nx-a11y-slot {
   position: fixed; right: 16px; top: 80vh; z-index: var(--z-a11y);

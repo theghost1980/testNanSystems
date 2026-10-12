@@ -206,6 +206,6 @@ La clienta dio **carta abierta** para el rediseño. Se trabaja en la rama `feat/
 - **El hero es un archivo local**, no `carouselHome[0]` del CMS: el carrusel antiguo trae fotos de 2020 y siempre ganaría. Cambiar a la fuente del CMS es una línea en `src/components/hero.js`.
 - **La cifra "+11 años"** sale de `TECH_CAREER_START_YEAR = 2015` en `src/config/site.js`, no del primer empleo (2008 es coordinación de recursos humanos). Pendiente de confirmar con la clienta.
 - **El rótulo del hero** pasa de "FIG. 01 — INTEGRACIÓN EN SITIO" (afirma una obra real) a "FIG. 01 — AUTOMATIZACIÓN DE EDIFICIOS", porque la imagen es de concepto.
-- **`react-cookie-consent` y el banner antiguo se mantienen** hasta decidir A4.
+- **`react-cookie-consent` y el banner antiguo se mantuvieron** hasta decidir A4; **el 2026-10-12 el dueño eligió quitar Google Analytics y el banner** (ver [dev-log](dev-log.md), parte 6).
 - **Primer render estable** (`useNx`): hasta montar se usa español, para que ningún atributo dependiente del idioma quede obsoleto tras hidratar (A7).
 - **Diálogos que se montan solo al abrirse:** su formulario se reinicia al cerrar y no hay contenido oculto en el HTML.

@@ -133,14 +133,25 @@ El dueño revisó la parte 4 y pidió tres cosas: márgenes en los términos, el
 - **Política de privacidad** (`privacy.js`) **reescrita con lo que el sitio hace de verdad**: quién es responsable, qué datos se recogen en cada formulario (contacto, cotización, boletín) y datos técnicos, con quién se comparten (**Netlify**, que aloja el sitio y recibe los formularios; **DatoCMS**, que sirve textos e imágenes; **Google Analytics**; **Equalweb**, el menú de accesibilidad), lista exacta de lo que se guarda en el navegador (`nan-theme`, `i18nextLng`, `nx-form-sends-*`, `gatsby-gdpr-google-analytics`, `_ga`), conservación, derechos y cómo ejercerlos (por la página de contacto), menores, enlaces externos y cambios. Se conserva el crédito a GetTerms (la plantilla de origen). Fecha de revisión: `LEGAL_UPDATED = "2026-10-12"` (antes 19/12/2020; actualizar si se revisa de nuevo o al publicar).
 - **Texto del aviso de cookies** (`cookies.title`): decía "no almacenamos información personal de ningún tipo" y "con el consentimiento del usuario", y no era cierto (los formularios guardan datos y Analytics se carga siempre); ahora dice que se usan cookies y almacenamiento local para recordar preferencias y medir visitas con Google Analytics, que los datos de los formularios solo sirven para responder y remite a la política.
 
-### Hallazgo importante: Google Analytics no depende del banner (A4)
-En el HTML de producción **`gtag` se carga siempre** (`gatsby-plugin-google-gtag` con el identificador de medición `G-…`, y además una petición a `gtag/js?id=undefined` que sale de `gatsby-plugin-gdpr-cookies`, que no tiene configurado Analytics): el botón "Acepto/Rechazar" del banner solo guarda su cookie y **no activa ni detiene nada**. La política lo describe tal como es, sin prometer una exclusión voluntaria que no existe. Para cumplir la normativa de consentimiento (UE/California) hay dos salidas, la decisión es del dueño (**A4**): (a) **quitar Analytics** (plugins `google-gtag` y `gdpr-cookies` y el banner), o (b) **condicionar** `gtag` al consentimiento (configurar `gatsby-plugin-gdpr-cookies` con el identificador, quitar el plugin gtag y que el banner lo controle). Con (a) la política se acorta (desaparecen Analytics y las cookies `_ga`).
+### Hecho (parte 6: A4 opción (a), sin Analytics ni banner, y enlace del autor)
+El dueño decidió **quitar Google Analytics** (opción (a) de A4) y pidió que el enlace de `@theghost1980` del pie fuera directo a su GitHub.
+- **Fuera de la configuración y del código:** `gatsby-plugin-google-gtag` y `gatsby-plugin-gdpr-cookies` salen de `gatsby-config.js` (con ellos desaparecen el identificador de medición y la petición `gtag/js?id=undefined`), y el banner de `react-cookie-consent` sale de `Layout` junto con el bloque `cookies` de las traducciones, las reglas `.nx-cookie*` y el token `--z-cookie` de `nx.css`.
+- **Sin banner:** el sitio ya no instala cookies de analítica ni de publicidad; lo que guarda (tema, idioma y contador de envíos) es almacenamiento funcional que el propio visitante provoca, y el menú de accesibilidad de Equalweb solo guarda las opciones que se elijan. Si en el futuro se añade analítica o cualquier cookie no esencial, hay que volver a poner un aviso con consentimiento real (no uno decorativo).
+- **Política de privacidad más corta:** sin Google Analytics en los proveedores, sin las cookies `_ga` ni la cookie del banner en la lista de lo guardado, sin el complemento de inhabilitación, y con una frase nueva: el sitio no usa herramientas de analítica ni de publicidad. Los datos técnicos de la visita ya no mencionan "herramientas de estadísticas".
+- **Enlace del pie:** `@theghost1980` apunta a `https://github.com/theghost1980/` (antes a `saturnoman.com`); también el campo `author` de `siteMetadata`.
+- **Pendiente para el dueño:** `npm uninstall react-cookie-consent gatsby-plugin-gdpr-cookies gatsby-plugin-google-gtag` (ya nada los importa ni los configura; hay que desinstalarlos **después** de aplicar este cambio, porque con ellos aún en la configuración el build fallaría) y volver a ejecutar `npm audit`: con ellos se va el único aviso alto que llegaba al navegador (`js-cookie`).
+
+### Verificación (parte 6)
+- Build limpio de 20 páginas en la copia aislada. **Ni el HTML ni el JS de producción contienen `googletagmanager` ni `gtag`**; sin `dataLayer`, sin banner y con `document.cookie` vacío tras cargar la política (el sitio no instala cookies propias). La política lista Netlify, DatoCMS y Equalweb, tres entradas de almacenamiento (`nan-theme`, `i18nextLng`, `nx-form-sends-*`) y la frase de que no hay analítica ni publicidad; el pie enlaza a `https://github.com/theghost1980/`. Barrido de 50 combinaciones (5 rutas × 5 anchos × español e inglés): 0 desbordes y un solo `h1` en cada una.
+
+### Hallazgo de la parte 5, resuelto en la parte 6: Google Analytics no dependía del banner (A4)
+En el HTML de producción **`gtag` se carga siempre** (`gatsby-plugin-google-gtag` con el identificador de medición `G-…`, y además una petición a `gtag/js?id=undefined` que sale de `gatsby-plugin-gdpr-cookies`, que no tiene configurado Analytics): el botón "Acepto/Rechazar" del banner solo guarda su cookie y **no activa ni detiene nada**. La política lo describía tal como era. El dueño eligió la opción **(a): quitar Analytics** (ver la parte 6), que además evita tener que gestionar consentimiento.
 
 ### Revisión legal pendiente
 Los textos legales son un **borrador técnico** escrito a partir de lo que el sitio hace, **no asesoría legal**: conviene que la clienta o su asesor los revise antes de publicar (jurisdicción, plazos de conservación, derechos según el país de los visitantes y la decisión sobre Analytics).
 
 ### Para avisar a la clienta (legales y créditos)
-- **La política de privacidad se reescribió** (parte 5) y los textos legales son un borrador técnico: que la revise la clienta o su asesor (ver arriba), y decidir **A4** (Google Analytics).
+- **La política de privacidad se reescribió** (parte 5) y los textos legales son un borrador técnico: que la revise la clienta o su asesor (ver arriba), y (A4 ya está resuelto: se quitó Analytics).
 - **Créditos:** "emailjs.com" sigue en la lista y el sitio ya no usa EmailJS (A8); revisar también "equalweb.com" (widget de accesibilidad) y añadir los créditos nuevos si hacen falta (por ejemplo las fuentes autoalojadas, con licencia OFL, o las imágenes de concepto).
 - Los créditos no tienen leyenda en el CMS; si se escribe una, sustituye al dominio.
 
@@ -153,7 +164,7 @@ El dueño tiene `npm run develop` abierto en el puerto 8000 mientras trabajamos.
 - Decidir si `GATSBY_CONTACT_EMAIL` queda definida en Netlify (se mostraría en la página de contacto).
 
 ### Estado al cerrar el bloque (leer primero)
-- **Rama `feat/redesign-coral-editorial`**. R3 y R4 completos. Las partes 1 a 4 ya están commiteadas (`a388284`, `82bb814`, `d6876d8` y `fb9466d`); la parte 5 (**favicon con los colores del logo, términos y política de privacidad reescritos, texto del aviso de cookies**) está **sin commitear** (lo hace el dueño). Commit propuesto: `feat: new favicon and rewritten terms and privacy policy`. `docs/images_new` no se añade nunca.
+- **Rama `feat/redesign-coral-editorial`**. R3 y R4 completos. Las partes 1 a 5 ya están commiteadas (`a388284`, `82bb814`, `d6876d8`, `fb9466d` y `12b1632`); la parte 6 (**A4 opción (a): sin Analytics ni banner, y enlace del autor**) está **sin commitear** (lo hace el dueño). Commit propuesto: `feat: A4 remove analytics and the cookie banner`. `docs/images_new` no se añade nunca.
 - **Faltan:** la revisión visual final del dueño (todas las pantallas, claro y oscuro), el PR en borrador y la limpieza. R4 (legales, créditos y 404) está hecho en el árbol de trabajo (parte 4, sin commitear); `prefers-reduced-motion` ya está cubierto en `nx.css`.
 - **Acción del dueño:** `npm uninstall react-share` (ya nadie lo importa) y, antes, `npm uninstall bootstrap react-bootstrap` si no se hizo.
 
@@ -168,7 +179,8 @@ El dueño tiene `npm run develop` abierto en el puerto 8000 mientras trabajamos.
 - `82bb814` Parte 2 (biografía, portafolio, proyectos y contacto).
 - `d6876d8` Parte 3 (ajustes de la revisión del dueño).
 - `fb9466d` Parte 4 (R4: legales, créditos y 404).
-- Parte 5 (favicon, términos y política de privacidad): pendiente del dueño, propuesto: `feat: new favicon and rewritten terms and privacy policy`
+- `12b1632` Parte 5 (favicon, términos y política de privacidad).
+- Parte 6 (A4 (a): sin Analytics ni banner; enlace del autor): pendiente del dueño, propuesto: `feat: A4 remove analytics and the cookie banner`
 
 ---
 

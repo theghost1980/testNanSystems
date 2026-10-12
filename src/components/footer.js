@@ -128,7 +128,7 @@ const Footer = () => {
           <span>{t("footer.copy")}</span>
           <span aria-hidden="true">♥</span>
           <span>{t("footer.by")}</span>
-          <a className="nx-link" href="http://saturnoman.com/" rel="noopener noreferrer">
+          <a className="nx-link" href="https://github.com/theghost1980/" rel="noopener noreferrer">
             @theghost1980
           </a>
         </span>

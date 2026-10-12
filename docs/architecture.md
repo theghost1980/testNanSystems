@@ -11,7 +11,7 @@
 | i18n | i18next 19.9.2 + react-i18next 11.18.6 + language detector |
 | Estilos | `src/styles/styles.css` global (el actual; Bootstrap 4 solo para el carrusel). En la rama del rediseño se suman `src/styles/nx.css` y `fonts.css` (inertes hasta el cambio de `Layout`); fuentes autoalojadas en `static/fonts/` |
 | Formularios | Netlify Forms (boletín, contacto y cotización) |
-| Analítica / cookies | `gatsby-plugin-google-gtag`, `react-cookie-consent`, `gatsby-plugin-gdpr-cookies` |
+| Analítica / cookies | ninguna: en la rama del rediseño se quitó Google Analytics, los plugins de cookies y el banner (A4) |
 | Hosting | Netlify, build desde GitHub (`master`) |
 
 ## Carpetas
@@ -79,9 +79,8 @@ El formulario `newsletter` solo existe en el DOM cuando se abre el modal, por es
 
 ## Analítica, cookies y accesibilidad
 
-- `gatsby-plugin-google-gtag` inyecta Google Analytics en producción.
-- `react-cookie-consent` (en `Layout`) muestra el banner, pero **no controla la carga de GA** (hallazgo A4).
-- `gatsby-plugin-gdpr-cookies` está configurado sin ningún `trackingId`, por lo que hoy no hace nada.
+- **En `master` (sitio actual):** `gatsby-plugin-google-gtag` inyecta Google Analytics en producción, `react-cookie-consent` muestra un banner que **no controla la carga de GA** y `gatsby-plugin-gdpr-cookies` está sin `trackingId`.
+- **En la rama del rediseño (A4, opción a):** no hay analítica, ni plugins de cookies, ni banner. Lo que se guarda en el navegador es funcional (tema, idioma, contador de envíos). Si se añade analítica o cookies no esenciales, hay que poner un aviso con consentimiento real.
 - `gatsby-browser.js` carga el widget de accesibilidad de un tercero, con SRI, al terminar de cargar la página.
 
 ## SEO
