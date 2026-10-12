@@ -1,8 +1,9 @@
 import React, { useState, useRef } from "react";
 
 import { useTranslation } from "react-i18next";
-import ContactErrorText from "./contactErrorText";
-import { submitNetlifyForm } from "../utils/netlifyForm";
+import FormErrorText from "./formErrorText";
+import HoneypotField from "./honeypotField";
+import { submitNetlifyForm, errorKind } from "../utils/netlifyForm";
 import robotImg from "../media-imgs/robot.png";
 import bottomImg from "../media-imgs/lineBG.png";
 
@@ -26,6 +27,7 @@ const QuickQuote = (props) => {
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState(false);
+  const [errorType, setErrorType] = useState("send");
   // Sin título (formulario abierto desde una página sin servicio) se usa un
   // texto genérico: antes llegaba "undefined" en el correo.
   const _titleQuote = props.quote || t("quickquote.title");
@@ -75,6 +77,8 @@ const QuickQuote = (props) => {
       // La fecha es la del envío, no la de cuando se montó el formulario.
       dateTime: new Date().toString(),
       comments: data.comments,
+      // Honeypot: lo rellenan los bots, nunca una persona (handleChange lo guarda por su nombre).
+      "bot-field": data["bot-field"] || "",
     });
   }
 
@@ -90,12 +94,16 @@ const QuickQuote = (props) => {
         messageSentSuccess();
       })
       .catch((err) => {
-        console.error(
-          "Oh well, you failed. Here some thoughts on the error that occured:",
-          err,
-        );
+        const kind = errorKind(err);
+        if (kind === "send") {
+          console.error(
+            "Oh well, you failed. Here some thoughts on the error that occured:",
+            err,
+          );
+        }
         // Antes `sending` se quedaba en true: formulario bloqueado para siempre.
         setSending(false);
+        setErrorType(kind);
         setError(true);
       });
   }
@@ -119,6 +127,7 @@ const QuickQuote = (props) => {
         className="formQuote"
         id="form-Quote"
       >
+        <HoneypotField value={data["bot-field"]} onChange={handleChange} />
         <div className="rowCont">
           <div className="labelsCont">
             <p className="lblFormQuote boldLblInputs">{t("quickquote.name")}</p>
@@ -230,7 +239,7 @@ const QuickQuote = (props) => {
           {error && !sending && (
             <p className="divErrorSubcriptions" role="alert">
               {t("quickquote.errorTitle")}{" "}
-              <ContactErrorText i18nKey="quickquote.errorText" />
+              <FormErrorText kind={errorType} sendKey="quickquote.errorText" />
             </p>
           )}
           {!sending && (

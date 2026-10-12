@@ -40,7 +40,7 @@ Plan **Free (legacy)**. Datos del panel el 2026-10-10:
 | Minutos de build | 300 / mes (límite duro) | 1 |
 | Ancho de banda | 100 GB / mes (límite duro) | 837 MB |
 | Builds concurrentes | 1 | — |
-| Envíos de formularios | 100 por sitio y mes (según la tabla de planes legacy). **Se reparten entre `newsletter`, `contact` y `quote`**; cada prueba real gasta 1 | `TODO(tú)` |
+| Envíos de formularios | 100 por sitio y mes (según la tabla de planes legacy). **Se reparten entre `newsletter`, `contact` y `quote`**; cada prueba real gasta 1. El sitio limita en el navegador los envíos repetidos (60 s y 5/día por formulario), pero no hay límite por IP en Netlify Forms: conviene mirar el uso y la pestaña de spam de vez en cuando | `TODO(tú)` |
 
 - El contador se reinicia el primer día de cada mes.
 - Free **no genera cargos**: "Legacy Free tier accounts are not charged, but have metered limits".

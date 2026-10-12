@@ -5,6 +5,11 @@
       "author": "@theghost1980",
       "footer": "Construido con  Gatsby"
     },
+    "formLimit": {
+      "cooldown": "You just sent this form. Please wait a minute before sending it again.",
+      "daily": "You have reached today's sending limit. Please try again tomorrow or email us directly.",
+      "dailyWithEmail": "You have reached today's sending limit. Please try again tomorrow or email us directly at"
+    },
     "notFound": {
       "title": "Page not found"
     },

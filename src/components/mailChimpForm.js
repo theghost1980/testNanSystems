@@ -1,44 +1,30 @@
 import React, { useState } from "react";
 import imgSubcription from "../media-imgs/dummy300x300-subscriptions.png";
 import { useTranslation } from "react-i18next";
+import FormErrorText from "./formErrorText";
+import HoneypotField from "./honeypotField";
+import { submitNetlifyForm, errorKind } from "../utils/netlifyForm";
 
 const NetlifyForm = (props) => {
   const { closeCB } = props;
   const { t } = useTranslation();
   const [data, setData] = useState({
     email: "",
+    botField: "",
     result: {
       result: "empty",
       msg: "",
     },
   });
 
-  const encode = (data) => {
-    return Object.keys(data)
-      .map(
-        (key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]),
-      )
-      .join("&");
-  };
-
   const _handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await fetch("/?no-cache=1", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: encode({
-          "form-name": "newsletter",
-          email: data.email,
-        }),
+      await submitNetlifyForm("newsletter", {
+        email: data.email,
+        "bot-field": data.botField,
       });
-
-      // fetch solo rechaza ante fallos de red: un 4xx/5xx de Netlify llegaba
-      // aquí como si fuera un éxito y se mostraba "gracias".
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
 
       setData({
         ...data,
@@ -47,7 +33,7 @@ const NetlifyForm = (props) => {
     } catch (error) {
       setData({
         ...data,
-        result: { result: "error", msg: error.message },
+        result: { result: "error", msg: error.message, kind: errorKind(error) },
       });
     }
   };
@@ -64,6 +50,13 @@ const NetlifyForm = (props) => {
     setData({
       ...data,
       email: event.target.value,
+    });
+  };
+
+  const _handleChangeBot = (event) => {
+    setData({
+      ...data,
+      botField: event.target.value,
     });
   };
 
@@ -84,11 +77,7 @@ const NetlifyForm = (props) => {
           data-netlify-honeypot="bot-field"
         >
           <input type="hidden" name="form-name" value="newsletter" />
-          <p hidden>
-            <label>
-              Don’t fill this out if you’re human: <input name="bot-field" />
-            </label>
-          </p>
+          <HoneypotField value={data.botField} onChange={_handleChangeBot} />
 
           <input
             type="email"
@@ -138,17 +127,25 @@ const NetlifyForm = (props) => {
         <img src={imgSubcription} alt="error" className="imgSubscriptions" />
         <div className="divErrorSubcriptions" role="alert">
           <p>{t("subscribe.errorTitle")}</p>
-          <p>
-            {t("subscribe.error")}{" "}
-            <a href="/contact">{t("subscribe.error2")}</a>.
-          </p>
-          <button
-            type="button"
-            className="btnSubscribe xtraSubscribeBtn"
-            onClick={_handleRetry}
-          >
-            {t("button.retry")}
-          </button>
+          {data.result.kind === "cooldown" || data.result.kind === "daily" ? (
+            <p>
+              <FormErrorText kind={data.result.kind} />
+            </p>
+          ) : (
+            <p>
+              {t("subscribe.error")}{" "}
+              <a href="/contact">{t("subscribe.error2")}</a>.
+            </p>
+          )}
+          {data.result.kind !== "daily" && (
+            <button
+              type="button"
+              className="btnSubscribe xtraSubscribeBtn"
+              onClick={_handleRetry}
+            >
+              {t("button.retry")}
+            </button>
+          )}
         </div>
         <div
           className="btnSubscribeMini positionAbs1 "

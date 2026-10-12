@@ -71,7 +71,9 @@ Modelos de DatoCMS usados: InfoSite, BlogPost, Technology, Aboutnew, About, Vent
 | Boletín | `components/mailChimpForm.js` (exporta `NetlifyForm`; el nombre es histórico) | POST a `/` con `form-name=newsletter` → Netlify Forms |
 | Comentarios | `components/commentsForm.js` | **Sin uso** |
 
-Los tres formularios activos se declaran en `static/forms.html` (nombre, campos y honeypot `bot-field`): Netlify solo los reconoce si coinciden con lo que envía el código. Si falla el envío, el mensaje de error muestra el correo de `GATSBY_CONTACT_EMAIL` (`components/contactErrorText.js`); sin la variable, sale sin dirección. Hasta A8 contacto y cotización usaban EmailJS.
+Los tres formularios activos se declaran en `static/forms.html` (nombre, campos y honeypot `bot-field`): Netlify solo los reconoce si coinciden con lo que envía el código. Si falla el envío, el mensaje de error muestra el correo de `GATSBY_CONTACT_EMAIL` (`components/contactErrorText.js`); sin la variable, sale sin dirección.
+
+**Antiabuso** (todo en `utils/netlifyForm.js`; los límites son constantes al principio del archivo): espera de 60 s entre envíos y 5 al día por formulario y navegador (marcas en `localStorage`, `nx-form-sends-<formulario>`), y honeypot `bot-field` (`components/honeypotField.js`) que viaja siempre en el POST; si viene relleno no se envía nada. `components/formErrorText.js` elige el texto de error según el motivo. Es un freno del lado del cliente: quien haga POST directo a `/` lo salta; lo detiene Akismet de Netlify (automático) y, si hiciera falta, un reCAPTCHA. Hasta A8 contacto y cotización usaban EmailJS.
 
 El formulario `newsletter` solo existe en el DOM cuando se abre el modal, por eso `static/forms.html` lo declara en HTML estático para que Netlify lo registre en el build. **Los dos deben mantenerse sincronizados** (nombre `newsletter`, campo `email`).
 
