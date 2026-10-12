@@ -16,10 +16,10 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 
 ## Fase 1 · Bugs sin tocar dependencias
 
-> **Progreso (4.ª sesión, 2026-10-12):** hechos en la rama `fix/portfolio-total-refactor-design-2026`, todos con build de producción comprobado: **A6, A1, A2, M1, A5, A7, M3, M5, A3** (completo, con sitemap y `robots.txt`) **y M9**, más el `key` de `aboutNew` (B1 parcial). **La Fase 1 de código queda cerrada.** **Nada de esto está en `master` todavía**: el PR del hito 1 se hará cuando el dueño lo pida (no antes).
+> **Progreso (4.ª sesión, 2026-10-12):** hechos en la rama `fix/portfolio-total-refactor-design-2026`, todos con build de producción comprobado: **A6, A1, A2, M1, A5, A7, M3, M5, A3** (completo, con sitemap y `robots.txt`), **M9 y A8**, más el `key` de `aboutNew` (B1 parcial). **La Fase 1 de código queda cerrada.** **Nada de esto está en `master` todavía**: el PR del hito 1 se hará cuando el dueño lo pida (no antes).
 >
 > **Siguiente (en este orden):**
-> 1. PR del hito 1 y prueba manual en el deploy preview (boletín real, contacto, cotización, clic home → post, `es-VE`/`en-US`, título de la pestaña al cambiar de idioma, `/sitemap.xml` y `/robots.txt` con 200, y que `api_key` esté disponible en Deploy Previews: M9 hace fallar el build con un mensaje si no lo está).
+> 1. **Re-probar en el deploy preview con A8** (contacto y cotización ya no usan EmailJS; antes de eso crear `GATSBY_CONTACT_EMAIL` en Netlify y las notificaciones de `contact` y `quote`). Resto de la prueba manual del PR del hito 1 (boletín real, contacto, cotización, clic home → post, `es-VE`/`en-US`, título de la pestaña al cambiar de idioma, `/sitemap.xml` y `/robots.txt` con 200, y que `api_key` esté disponible en Deploy Previews: M9 hace fallar el build con un mensaje si no lo está).
 > 2. R1a (pieza vertical del rediseño, en rama aparte desde `master`; el prerrequisito A3 ya está cumplido).
 > 3. M8 (vulnerabilidades) ya está analizado: no hay arreglo compatible; se resuelve con el rediseño (A4/R1) y la migración de Gatsby. El resto de B1 (teclado) va con el rediseño.
 >
@@ -35,6 +35,7 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 | M1 | "Últimos posts" en orden `DESC` y enlace absoluto | bajo | **hecho en la rama** `72cf6b0` | `fix/portfolio-total-refactor-design-2026` |
 | M3 | `gatsby-node.js`: manejo de errores y deduplicar por slug | bajo-medio | **hecho en la rama** `3c0f244` (build comparado con la línea base: mismas 20 rutas) | `fix/portfolio-total-refactor-design-2026` |
 | M5 | i18n: retirar backend sobrante, `wait` y el parche `i18next.languages`; `state` por defecto de `Button` (**ya hecho con A1**) | bajo | **hecho en la rama** `6ef3025` (código, probado con build) y desinstalado `i18next-http-backend` de `package.json` (`34630bb`; build idéntico) | `fix/portfolio-total-refactor-design-2026` |
+| A8 | **EmailJS está caído** (`404 Account not found`: la clave pública del código no corresponde a ninguna cuenta; los identificadores son idénticos a los de `master`, así que **contacto y cotización fallaban también en producción**, solo que antes la pantalla se quedaba en "Enviando…" sin avisar). Contacto y cotización pasan a **Netlify Forms** (como el boletín): `static/forms.html` declara `contact` y `quote`, helper `src/utils/netlifyForm.js`, y el correo de los mensajes de error sale de `GATSBY_CONTACT_EMAIL`. Se retira EmailJS del código (la dependencia `emailjs-com` la desinstala el dueño) | medio-alto | **hecho en la rama** (commit pendiente del dueño; falta probar los envíos reales en el deploy preview) | `fix/portfolio-total-refactor-design-2026` |
 
 > A1, A2 y M1 tocan archivos que el rediseño reescribe (`index.js`, `testimonyFixed`, `quickQuote`, `button`). Decisión por defecto: resolverlos **dentro de la rama del rediseño** solo en los archivos que se reescriben de todos modos; el resto, en ramas `fix/` aparte.
 
@@ -51,7 +52,7 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 |---|---|---|---|---|
 | M2 | Confirmar Node de Netlify y alinear `.nvmrc`; `netlify.toml`; versionar lockfile | medio | pendiente (primero `TODO(tú)` de [deploy-netlify.md](deploy-netlify.md)) | — |
 | M7 | Cabeceras de seguridad (`_headers` o `netlify.toml`); CSP al final | medio | pendiente | — |
-| M6 | EmailJS: claves a variables de entorno, restringir dominios, antispam | bajo | pendiente | — |
+| M6 | EmailJS: claves a variables de entorno, restringir dominios, antispam | bajo | **descartado** (sustituido por A8: ya no hay EmailJS ni claves en el código; el antispam lo da el honeypot de Netlify Forms) | — |
 | M9 | `gatsby-config.js` falla al instante con un mensaje claro si falta `api_key` (antes el plugin de DatoCMS recibía el texto `"undefined"` y el build fallaba a los ~14 s con un `401 INVALID_AUTHORIZATION_HEADER`) | bajo | **hecho en la rama** (commit pendiente del dueño). Atención: si en Netlify `api_key` no aplica a Deploy Previews, esos builds ya fallaban; ahora lo dicen claro | `fix/portfolio-total-refactor-design-2026` |
 | M8 | `npm install` informa de **337 vulnerabilidades** (14 low, 157 moderate, 155 high, 11 critical) = 140 avisos únicos. **Analizado el 2026-10-12, sin cambios de código** (detalle y método en [dependency-audit.md](dependency-audit.md)): todo viene de 7 dependencias directas, casi todo es herramienta de build de Gatsby 2 que no llega al navegador; los 2 hallazgos que sí llegan (`js-cookie` vía `react-cookie-consent`, `cookie` vía `gatsby-plugin-gdpr-cookies`) no son alcanzables con el uso actual. **No hay arreglo compatible** con la línea Gatsby 2.x (todo son versiones mayores) y `npm audit fix` solo toca 2 utilidades en local. Se cierra con: retirar `react-cookie-consent` con el rediseño (A4/R1) y la migración de Gatsby (Futuro). **No usar `npm audit fix --force`** | medio | **analizado**; el arreglo real queda en A4/R1 y en la migración de Gatsby | — |
 
@@ -101,4 +102,4 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 
 - Migrar Gatsby 2 → versión soportada (**es lo que realmente baja las 337 vulnerabilidades**, ver M8): implica `gatsby-image` → `gatsby-plugin-image`, `gatsby-source-datocms` mayor, React/Node modernos y revisar i18n. Proyecto aparte, con su propia rama larga y previews.
 - Tema oscuro opcional como `prefers-color-scheme` apoyado en las variables CSS del rediseño.
-- Migrar `emailjs-com` v2 a `@emailjs/browser`.
+- ~~Migrar `emailjs-com` v2 a `@emailjs/browser`~~: obsoleto, contacto y cotización dejaron EmailJS por Netlify Forms (A8).

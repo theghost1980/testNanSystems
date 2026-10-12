@@ -57,7 +57,9 @@ api_key=<token de solo lectura de DatoCMS>
 
 - El nombre es **`api_key` en minúsculas** (se lee en `gatsby-config.js`). No lo renombres: Netlify usa el mismo nombre.
 - El token se crea en DatoCMS → Settings → API tokens (permiso de solo lectura).
-- Si falta (o está vacía), `develop`, `build` y `serve` se detienen enseguida con `ERROR #10123 CONFIG` y un mensaje que nombra la variable (antes se enviaba el texto `"undefined"` a DatoCMS y el error era un `401` poco claro).
+- Opcional: `GATSBY_CONTACT_EMAIL=<correo>` en el mismo `.env`. Es el correo que aparece en el mensaje de error de los formularios de contacto y cotización; sin ella el mensaje sale sin dirección. Se fija al arrancar o construir: reinicia `develop` si la cambias. En Netlify se define igual, en las variables de entorno del sitio.
+- Los formularios (contacto, cotización y boletín) **no se pueden probar en local**: el dev server responde 404 al POST. Se prueban en un deploy preview.
+- Si falta `api_key` (o está vacía), `develop`, `build` y `serve` se detienen enseguida con `ERROR #10123 CONFIG` y un mensaje que nombra la variable (antes se enviaba el texto `"undefined"` a DatoCMS y el error era un `401` poco claro).
 
 ## 4. Instalar y arrancar
 

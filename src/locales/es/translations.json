@@ -66,7 +66,8 @@
       "sentOne": "Correo Enviado!",
       "sentTwo": "Gracias. Responderé a la brevedad posible.",
       "errorTitle": "No se pudo enviar el mensaje.",
-      "errorText": "Inténtalo de nuevo en unos minutos o escríbenos directamente por correo."
+      "errorText": "Inténtalo de nuevo en unos minutos o escríbenos directamente por correo.",
+      "errorTextWithEmail": "Inténtalo de nuevo en unos minutos o escríbenos directamente a"
     },
     "tos": {
       "l1": "Términos y condiciones de uso del sitio web",
@@ -156,7 +157,8 @@
       "wewill": "Le responderemos lo antes posible. Por favor, añada nuestro correo electrónico a sus contactos seguros",
       "title": "Solicitar cotización",
       "errorTitle": "No se pudo enviar la solicitud.",
-      "errorText": "Inténtalo de nuevo o escríbenos por correo."
+      "errorText": "Inténtalo de nuevo o escríbenos por correo.",
+      "errorTextWithEmail": "Inténtalo de nuevo o escríbenos a"
     },
     "carousel": {
       "tellme": "Más"

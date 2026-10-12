@@ -30,7 +30,7 @@ Esta carpeta **no se publica en el sitio web**: vive solo en el repositorio.
 - Hay una auditoría completa y un plan por fases; ver [roadmap.md](roadmap.md).
 - Rediseño elegido como base: propuesta D (Coral Editorial); ver [redesign.md](redesign.md).
 - Muestras HTML de todas las pantallas y su SPEC: hechas y revisadas (fuera del repo). Siguiente: pieza vertical R1a en una rama aparte.
-- Arreglos de código hechos en la rama `fix/portfolio-total-refactor-design-2026` (aún **no** en `master`): A6, A1, A2, M1, A5, A7, M3, M5, A3 (SEO en el HTML estático, sitemap y `robots.txt`) M9 (fallo claro si falta `api_key`) y el `key` de `aboutNew` (B1, parcial): la Fase 1 de código está cerrada. Pendiente: PR del hito 1 y R1a. Ver [roadmap.md](roadmap.md) y [dev-log.md](dev-log.md).
+- Arreglos de código hechos en la rama `fix/portfolio-total-refactor-design-2026` (aún **no** en `master`): A6, A1, A2, M1, A5, A7, M3, M5, A3 (SEO en el HTML estático, sitemap y `robots.txt`) M9 (fallo claro si falta `api_key`), A8 (contacto y cotización pasan de EmailJS a Netlify Forms) y el `key` de `aboutNew` (B1, parcial): la Fase 1 de código está cerrada. Pendiente: PR del hito 1 y R1a. Ver [roadmap.md](roadmap.md) y [dev-log.md](dev-log.md).
 
 ## Convenciones
 

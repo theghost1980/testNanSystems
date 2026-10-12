@@ -1,14 +1,11 @@
 import React from "react";
 import Layout from "../components/layout";
-import _emailJs from "emailjs-com";
 import iconSystem from "../media-imgs/test-logo-system.png";
 import { withTranslation } from "react-i18next";
 import { HelmetDatoCms } from "gatsby-source-datocms";
 import { graphql } from "gatsby";
-
-const userId = "user_eI2TfwSXCTylXcY4axXJe";
-const serviceId = "nansystems.us";
-const templateId = "template_a4weyh4";
+import ContactErrorText from "../components/contactErrorText";
+import { submitNetlifyForm } from "../utils/netlifyForm";
 
 class Contact extends React.Component {
   constructor(props) {
@@ -86,7 +83,7 @@ class Contact extends React.Component {
                     <p className="divErrorSubcriptions" role="alert">
                       {this.props.t("contact.errorTitle")}
                       <br></br>
-                      {this.props.t("contact.errorText")}
+                      <ContactErrorText i18nKey="contact.errorText" />
                     </p>
                   </div>
                 )}
@@ -167,18 +164,16 @@ class Contact extends React.Component {
   handleSubmit(event) {
     this.sendingMessage();
     this.sendFeedback({
-      message_html: this.state.feedback,
-      from_name: this.state.name,
-      reply_to: this.state.email,
+      name: this.state.name,
+      email: this.state.email,
+      message: this.state.feedback,
     });
     event.preventDefault();
   }
 
-  sendFeedback(variables) {
-    _emailJs.init(userId);
-    _emailJs
-      .send(serviceId, templateId, variables)
-      .then((res) => {
+  sendFeedback(fields) {
+    submitNetlifyForm("contact", fields)
+      .then(() => {
         this.messageSentSuccess();
       })
       .catch((err) => {

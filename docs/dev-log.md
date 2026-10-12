@@ -41,7 +41,7 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 
 ---
 
-## 2026-10-12 (4.ª sesión) · Cierre de M5, A3 (SEO, sitemap y `robots.txt`), B1 parcial, M9 y análisis de M8
+## 2026-10-12 (4.ª sesión) · Cierre de M5, A3 (SEO, sitemap y `robots.txt`), B1 parcial, M9, análisis de M8 y A8 (formularios a Netlify Forms)
 
 **Rama:** `fix/portfolio-total-refactor-design-2026` (sobre `c75189b`) · **Entorno:** Node 14.21.3
 **Objetivo:** hacer los dos primeros pasos de "Próximos pasos" de la 3.ª sesión, con el OK del dueño en cada dependencia.
@@ -97,6 +97,22 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 - **Qué se hace:** nada en código. Retirar `react-cookie-consent` con el rediseño (A4/R1) quita el único alto que llega al navegador; la cifra solo baja de verdad con la migración de Gatsby ("Futuro" del roadmap). Se recomienda usar `npm run develop` (`-H 0.0.0.0`: accesible desde la red local) solo en redes de confianza o `gatsby develop` cuando no se prueba desde otro dispositivo. No se ha cambiado el script.
 - **Límites:** el endpoint de auditoría de npm 6 está anunciado como retirado (el propio `npm audit` lo avisa); la separación build/navegador se hizo por la ruta de cada hallazgo, sin medir los módulos del JS final.
 
+### A8 · contacto y cotización: de EmailJS a Netlify Forms
+- **Cómo apareció:** el dueño probó el deploy preview del PR del hito 1: todo bien salvo contacto y cotización. Consola: `POST https://api.emailjs.com/api/v1.0/email/send 404 (Not Found)` con `{status: 404, text: 'Account not found'}`; solo el boletín (Netlify Forms) funcionaba. El aviso visible es el que añadió A5.
+- **Diagnóstico:** `Account not found` = la clave pública (`user_…`, formato antiguo de EmailJS) no corresponde a ninguna cuenta (borrada, cerrada o clave cambiada); no es una restricción de dominio. **No es una regresión:** los identificadores de `contact.js` y `quickQuote.js` son idénticos a los de `master`. Por tanto **producción falla igual**, y antes de A5 nadie lo veía (la pantalla se quedaba en "Enviando…"). No se pudo comprobar la web publicada desde este entorno (sin salida a internet); se confirma con la pestaña Network en `nansystems.us`.
+- **Opciones consideradas:** (A) reparar EmailJS (cuenta que ya desapareció una vez; si se borró hay que recrear servicio y dos plantillas que no están en el repo; sigue la clave en el código y la dependencia obsoleta), (B) Netlify Forms para los tres formularios, (C) otro servicio o función serverless (otra cuenta o pieza que mantener). **Decisión del dueño: B, en este mismo PR.**
+- **Cambios:** `static/forms.html` declara `contact` y `quote` (mismo patrón y honeypot `bot-field` que `newsletter`; `quote` con los 10 campos que ya enviaba el modal); `src/utils/netlifyForm.js` (`submitNetlifyForm(nombre, campos)`: POST urlencoded a `/?no-cache=1`, lanza error si `!response.ok`, igual que el boletín); `contact.js` envía `name`, `email` y `message`; `quickQuote.js` envía los mismos campos que antes menos `reply_to`; se eliminan los identificadores de EmailJS. El **boletín no se toca** (funciona y está probado en un deploy real); podría usar el mismo helper más adelante (B4).
+- **Correo en los mensajes de error:** A5 decía "escríbenos directamente por correo" **sin mostrar ningún correo** (no hay ninguno en el código del sitio). Ahora `components/contactErrorText.js` lee `process.env.GATSBY_CONTACT_EMAIL` (fijada al construir) y muestra la frase con un enlace `mailto:`; sin la variable, usa el texto anterior. **La dirección no está en el repo** (es público): vive en `.env` y en las variables de Netlify; cambiarla = cambiar la variable y redeploy. Las claves nuevas son `contact.errorTextWithEmail` y `quickquote.errorTextWithEmail`: una frase que acaba justo antes de la dirección (el componente pone el enlace y el punto).
+- **`<Trans>` descartado por peso:** la primera versión usaba `Trans` de react-i18next con la dirección dentro de la traducción; el JS de la home subió **7,5 KB** (arrastra un parser de HTML). Con el componente ligero el JS de la home queda en **519.447 bytes, 1,5 KB menos** que antes de A8 (521.004): se retiran los ~3 KB de EmailJS.
+- **Prueba (build de producción + `gatsby serve`, `fetch` simulado dentro de un iframe; no salió ninguna petición real):**
+  - Contacto, éxito: `POST /?no-cache=1`, `application/x-www-form-urlencoded`, cuerpo `form-name=contact&name=…&email=…&message=…` con acentos, `&` y comillas bien codificados; aparece el mensaje de enviado; 0 errores de JS.
+  - Contacto, HTTP 500 (ES) y fallo de red (EN): aviso con el texto de respaldo (sin correo), campos conservados y editables, botón de envío visible; el reintento llega al éxito.
+  - Cotización (`/computer-aided-design-cad`): éxito con `form-name=quote` y los 10 campos (todos declarados en `forms.html`); 500 en ES con aviso y texto conservado; el reintento envía y vacía el formulario.
+  - Con `GATSBY_CONTACT_EMAIL` puesta (build aparte, con una dirección de prueba): contacto ES y EN y cotización ES muestran la frase con `<a href="mailto:…">`. La variable queda incrustada en el JS (verificado).
+  - Build: mismas 20 rutas + `404.html`, mismos 21 `page-data`; `public/forms.html` con los 3 formularios. El `.env` del dueño no se leyó ni se modificó (la variable se probó en la línea de comandos).
+- **Limitaciones y riesgos:** (1) los envíos **reales** solo se pueden probar en un deploy preview (en local el POST da 404), y cada prueba gasta 1 de los **100 envíos/mes** del plan, ahora compartidos por tres formularios; (2) Netlify manda las notificaciones desde su propia dirección: hay que ver en la primera prueba si el correo permite responder al visitante (se espera que use el campo `email`); (3) si se agota la cuota, los formularios dejan de recibir y el visitante verá el mensaje de error con el correo; (4) Netlify registra los formularios nuevos en el primer deploy que los incluye y las notificaciones se configuran **después**, en el panel (Forms → Form notifications).
+- **Pasos del dueño:** `npm uninstall emailjs-com`; crear `GATSBY_CONTACT_EMAIL` en Netlify (todos los contextos, incluido Deploy Previews) y en su `.env`; tras el primer deploy, añadir las notificaciones por correo de `contact` y `quote`; probar un envío real de cada uno.
+
 ### Decisiones
 - `lang` estático `es` + ajuste en el cliente (en vez de generar HTML por idioma): coherente con A7 (HTML estático en español, idioma real al montar).
 - **Sitemap y `robots.txt` van juntos:** un `robots.txt` de "permitir todo" solo tiene sentido para declarar el sitemap; el dueño aprobó la dependencia.
@@ -108,17 +124,19 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 - El `<title>` de `aboutNew` es "NaNSYSTEMS.us" en ambos idiomas: es lo que tiene DatoCMS en ese modelo (contenido, no código).
 
 ### Pendiente y abierto
-- La Fase 1 de código queda cerrada (el resto de B1 va con el rediseño). M8 analizado (sin arreglo compatible). Quedan: PR del hito 1 y prueba en el deploy preview (lo siguiente que pidió el dueño), R1a y, con el rediseño, retirar `react-cookie-consent`.
+- La Fase 1 de código queda cerrada (el resto de B1 va con el rediseño). M8 analizado (sin arreglo compatible). **El deploy preview del hito 1 lo probó el dueño: todo bien salvo contacto y cotización, que se corrigen con A8 en el mismo PR.** Quedan: re-probar en el preview, R1a y, con el rediseño, retirar `react-cookie-consent`.
+- **EmailJS:** si el dueño o la clienta tenían plantillas o historial en la cuenta de EmailJS, ya no son accesibles desde el sitio; confirmar si hace falta recuperarlos. **Producción lleva un tiempo sin recibir mensajes de contacto y cotización:** conviene avisar a la clienta y revisar si hubo contactos perdidos.
+- Correo real de contacto: mientras tanto se usa el que indicó el dueño en `GATSBY_CONTACT_EMAIL`; la pregunta del roadmap (correo real y si va en DatoCMS) sigue abierta.
 - **Dominio canónico:** confirmar con o sin `www` (cambiar `siteUrl` y `static/robots.txt` si fuera con `www`).
 - En el **deploy preview** del hito 1, además de lo ya listado: ver el `<title>` y `lang` en el código fuente de la página (Ver código fuente, no Inspeccionar), que la pestaña cambie de título al pulsar el selector y que `/sitemap.xml` y `/robots.txt` respondan 200.
 
 ### Próximos pasos
-1. **Deploy preview del hito 1 (lo que sigue):** PR del hito 1 (merge commit; aclarar en la descripción que `092d9a4` es A5 aunque se llame M3) y prueba en el deploy preview. Después R1a.
+1. **Dueño:** `npm uninstall emailjs-com`, crear `GATSBY_CONTACT_EMAIL` (Netlify y `.env`), push, y en el deploy preview comprobar un envío real de contacto y de cotización (aparecen en Netlify → Forms; configurar las notificaciones por correo). Con eso se puede fusionar el PR del hito 1 (merge commit; aclarar en la descripción que `092d9a4` es A5 aunque se llame M3).
 2. R1a (pieza vertical del rediseño, rama aparte desde `master`; lee antes `docs/redesign.md` y el SPEC del paquete fuera del repo).
 3. Con el rediseño: retirar `react-cookie-consent` (y `gatsby-plugin-gdpr-cookies` si A4 no lo usa) y repetir el análisis de [dependency-audit.md](dependency-audit.md).
 
 ### Commits de la sesión
-- `34630bb` M5 (desinstalar `i18next-http-backend`) · `441bc68` A3 (react-helmet, `lang`, títulos y detección de idioma) · `6283b9d` sitemap y `robots.txt` · `2973907` B1 parcial (`key` de `aboutNew`) · `7050659` M9 · M8: solo documentación, propuesto `docs: M8 analyze the npm audit vulnerabilities`
+- `34630bb` M5 (desinstalar `i18next-http-backend`) · `441bc68` A3 (react-helmet, `lang`, títulos y detección de idioma) · `6283b9d` sitemap y `robots.txt` · `2973907` B1 parcial (`key` de `aboutNew`) · `7050659` M9 · `2dd54bd` M8 (solo documentación) · A8: pendiente del dueño, propuesto `fix: A8 send contact and quote forms through Netlify Forms instead of EmailJS`
 
 ---
 

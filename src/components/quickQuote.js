@@ -1,13 +1,10 @@
 import React, { useState, useRef } from "react";
 
-import emailJs from "emailjs-com";
 import { useTranslation } from "react-i18next";
+import ContactErrorText from "./contactErrorText";
+import { submitNetlifyForm } from "../utils/netlifyForm";
 import robotImg from "../media-imgs/robot.png";
 import bottomImg from "../media-imgs/lineBG.png";
-
-const userId = "user_eI2TfwSXCTylXcY4axXJe";
-const serviceId = "nansystems.us";
-const templateId = "simple_quote21";
 
 // Los campos empiezan vacíos: lo que el usuario no rellena se envía vacío,
 // nunca con datos de prueba.
@@ -64,7 +61,6 @@ const QuickQuote = (props) => {
     setSending(true);
 
     sendFeedback({
-      reply_to: data.email,
       quote: _titleQuote,
       companyUser: companyUser
         ? "It was a company User"
@@ -88,11 +84,9 @@ const QuickQuote = (props) => {
     setTimeout(clearAll, 5500);
   }
 
-  function sendFeedback(variables) {
-    emailJs.init(userId);
-    emailJs
-      .send(serviceId, templateId, variables)
-      .then((res) => {
+  function sendFeedback(fields) {
+    submitNetlifyForm("quote", fields)
+      .then(() => {
         messageSentSuccess();
       })
       .catch((err) => {
@@ -235,7 +229,8 @@ const QuickQuote = (props) => {
         <div className="btnCont">
           {error && !sending && (
             <p className="divErrorSubcriptions" role="alert">
-              {t("quickquote.errorTitle")} {t("quickquote.errorText")}
+              {t("quickquote.errorTitle")}{" "}
+              <ContactErrorText i18nKey="quickquote.errorText" />
             </p>
           )}
           {!sending && (

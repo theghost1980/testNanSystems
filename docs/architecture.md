@@ -10,7 +10,7 @@
 | Imágenes | `gatsby-image` (fluid) + `gatsby-plugin-sharp` + `sharp` 0.27.2 |
 | i18n | i18next 19.9.2 + react-i18next 11.18.6 + language detector |
 | Estilos | un único `src/styles/styles.css` global; Bootstrap 4 solo para el carrusel |
-| Formularios | EmailJS (contacto y cotización) y Netlify Forms (boletín) |
+| Formularios | Netlify Forms (boletín, contacto y cotización) |
 | Analítica / cookies | `gatsby-plugin-google-gtag`, `react-cookie-consent`, `gatsby-plugin-gdpr-cookies` |
 | Hosting | Netlify, build desde GitHub (`master`) |
 
@@ -66,10 +66,12 @@ Modelos de DatoCMS usados: InfoSite, BlogPost, Technology, Aboutnew, About, Vent
 
 | Formulario | Dónde | Envío |
 |---|---|---|
-| Contacto | `pages/contact.js` | EmailJS |
-| Cotización (modal) | `components/quickQuote.js`, abierto desde `components/button.js` (acción `quote`) | EmailJS |
+| Contacto | `pages/contact.js` | POST a `/` con `form-name=contact` (vía `utils/netlifyForm.js`) → Netlify Forms |
+| Cotización (modal) | `components/quickQuote.js`, abierto desde `components/button.js` (acción `quote`) | POST a `/` con `form-name=quote` (vía `utils/netlifyForm.js`) → Netlify Forms |
 | Boletín | `components/mailChimpForm.js` (exporta `NetlifyForm`; el nombre es histórico) | POST a `/` con `form-name=newsletter` → Netlify Forms |
 | Comentarios | `components/commentsForm.js` | **Sin uso** |
+
+Los tres formularios activos se declaran en `static/forms.html` (nombre, campos y honeypot `bot-field`): Netlify solo los reconoce si coinciden con lo que envía el código. Si falla el envío, el mensaje de error muestra el correo de `GATSBY_CONTACT_EMAIL` (`components/contactErrorText.js`); sin la variable, sale sin dirección. Hasta A8 contacto y cotización usaban EmailJS.
 
 El formulario `newsletter` solo existe en el DOM cuando se abre el modal, por eso `static/forms.html` lo declara en HTML estático para que Netlify lo registre en el build. **Los dos deben mantenerse sincronizados** (nombre `newsletter`, campo `email`).
 

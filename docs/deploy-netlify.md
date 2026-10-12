@@ -19,6 +19,8 @@ El repo **no tiene `netlify.toml`, `static/_headers` ni `static/_redirects`**: l
 | Comando de build | probablemente `gatsby build` | `TODO(tú)` confirmar en Site configuration → Build & deploy |
 | Directorio de publicación | probablemente `public` | `TODO(tú)` confirmar |
 | Variable `api_key` | token de solo lectura de DatoCMS | Existe (el build funciona). `TODO(tú)` confirmar a qué contextos aplica: Production / Deploy Previews / Branch deploys |
+| Variable `GATSBY_CONTACT_EMAIL` | correo que se muestra en los mensajes de error de los formularios (A8). Opcional: sin ella el mensaje sale sin dirección. Se fija **al construir**: cambiarla exige un deploy nuevo | `TODO(tú)` crearla en Netlify para todos los contextos (Production, Deploy Previews, Branch deploys) |
+| Notificaciones de formularios | los formularios `contact` y `quote` (A8) y `newsletter` se registran en el primer deploy que los incluye | `TODO(tú)` en Forms → Form notifications: añadir un aviso por correo para `contact` y `quote` (y el que ya tenga `newsletter`) |
 | Versión de Node | **desconocida** | `TODO(tú)`: ver las primeras líneas del log del último deploy |
 | Webhook de DatoCMS | un commit de 2021 menciona "fire builds from netlify" | `TODO(tú)` confirmar si sigue activo (cada edición de contenido lanza un build y gasta cuota) |
 | Deploy previews / branch deploys | por defecto: previews activos al abrir un PR, branch deploys apagados | `TODO(tú)` confirmar en Project configuration → Developer settings → Continuous deployment |
@@ -38,7 +40,7 @@ Plan **Free (legacy)**. Datos del panel el 2026-10-10:
 | Minutos de build | 300 / mes (límite duro) | 1 |
 | Ancho de banda | 100 GB / mes (límite duro) | 837 MB |
 | Builds concurrentes | 1 | — |
-| Envíos de formularios | 100 por sitio y mes (según la tabla de planes legacy) | `TODO(tú)` |
+| Envíos de formularios | 100 por sitio y mes (según la tabla de planes legacy). **Se reparten entre `newsletter`, `contact` y `quote`**; cada prueba real gasta 1 | `TODO(tú)` |
 
 - El contador se reinicia el primer día de cada mes.
 - Free **no genera cargos**: "Legacy Free tier accounts are not charged, but have metered limits".
