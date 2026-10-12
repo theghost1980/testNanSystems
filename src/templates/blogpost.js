@@ -17,29 +17,35 @@ const Blogpost = ({ data, location }) => {
   const post = data[`post_${L}`] || data.post_es || data.post_en;
   const cats = parseCategories(post.categories);
   const md = post.contentNode && post.contentNode.childMarkdownRemark;
+  const hasCover = Boolean(post.coverImage && post.coverImage.fluid);
 
   return (
     <Layout>
       <HelmetDatoCms seo={post.seoMetaTags} />
       <article className="nx-article nx-section nx-section--tight nx-container">
-        <header className="nx-article__head">
-          <Link className="nx-link-more" to="/blog">
-            <Icon name="back" size={18} /> <span>{t("blog.back")}</span>
-          </Link>
-          <Pills items={cats} />
-          <h1 className="nx-h1">{post.title}</h1>
-          <p className="nx-article__meta">
-            <PostMeta date={post.datePublished} minutes={readMinutes(post)} />
-          </p>
-        </header>
-        <Media
-          image={post.coverImage}
-          fallbackAlt={post.title}
-          ratio="2x1"
-          sizes="(min-width: 1320px) 1256px, 100vw"
-          priority
-          className="nx-media--card nx-media--blur"
-        />
+        <Link className="nx-link-more" to="/blog">
+          <Icon name="back" size={18} /> <span>{t("blog.back")}</span>
+        </Link>
+        {/* Con portada, desde 768 px la cabecera va sobre la imagen; sin portada no se pinta el hueco. */}
+        <div className={`nx-post-hero${hasCover ? " nx-post-hero--over" : ""}`}>
+          <header className="nx-post-hero__head">
+            <Pills items={cats} />
+            <h1 className="nx-h1">{post.title}</h1>
+            <p className="nx-article__meta">
+              <PostMeta date={post.datePublished} minutes={readMinutes(post)} />
+            </p>
+          </header>
+          {hasCover && (
+            <Media
+              image={post.coverImage}
+              fallbackAlt={post.title}
+              ratio="2x1"
+              sizes="(min-width: 1320px) 1256px, 100vw"
+              priority
+              className="nx-media--card nx-media--blur"
+            />
+          )}
+        </div>
         {md && (
           <div
             className="nx-prose nx-prose--lg"

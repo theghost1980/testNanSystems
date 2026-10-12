@@ -194,6 +194,8 @@ La clienta dio **carta abierta** para el rediseño. Se trabaja en la rama `feat/
 - **Proyectos:** las tarjetas sin texto real ofrecen "Cotizar por Email" en lugar de "Leer más" (decisión nueva, no estaba en la muestra); el diálogo de detalle encadena con la cotización.
 - **Sin `data-sal`** en las páginas portadas (decorativo y puede dejar contenido invisible); `gatsby-plugin-scroll-reveal` queda como candidato a retirar.
 - **El correo de contacto de la tarjeta lateral** sale de `GATSBY_CONTACT_EMAIL` (no se inventa uno): sin la variable, la tarjeta no aparece.
+- **Post con el título sobre la imagen** desde 768 px (decisión del dueño tras revisar el sitio): portada 16:9 y desde 1100 px 21:9 con 560 px de alto máximo; la muestra del paquete tenía el título encima de una portada 2:1 a ancho completo. En móvil y sin portada va apilado.
+- **Barras de desplazamiento propias** (decisión del dueño): color del borde de los campos (≥ 3:1) y coral al pasar el mouse; `color-scheme` sigue el tema elegido, no el del sistema.
 - **Compartir sin `react-share`:** enlaces normales a cada red (como en la muestra), con la URL de `siteUrl` + ruta. La SPEC pedía `react-share`; se cambia porque la muestra ya usa `<a>` y así no hay SDK ni ventanas emergentes. `react-share` se desinstala cuando se porten `aboutNew.js` y `singleventure.js`.
 - **Logo:** vuelven los engranajes del logo anterior (SVG propio, coral y color del texto) en lugar del punto; la SPEC los había descartado en favor de solo texto, pero el dueño pidió recuperarlos.
 - **Títulos de tarjeta del blog en `h2`** (la muestra usaba `h3` bajo el `h1`, saltando un nivel).

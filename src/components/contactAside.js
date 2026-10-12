@@ -25,7 +25,7 @@ const ContactAside = () => {
   if (!CONTACT_EMAIL && !social.length) return null;
 
   return (
-    <aside className="nx-stack">
+    <aside className="nx-stack nx-aside">
       {CONTACT_EMAIL && (
         <div className="nx-card nx-card--navy nx-card--pad nx-stack nx-stack--sm">
           <span className="nx-mono nx-on-band-muted">{t("contact.email")}</span>

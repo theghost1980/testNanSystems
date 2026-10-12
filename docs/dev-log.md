@@ -41,7 +41,7 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 
 ---
 
-## 2026-10-12 (6.ª sesión) · R3: logo con engranajes, blog, post, servicios, biografía, portafolio, proyectos y contacto
+## 2026-10-12 (6.ª sesión) · R3 completo: logo con engranajes, blog, post, servicios, biografía, portafolio, proyectos, contacto y ajustes de la revisión
 
 **Rama:** `feat/redesign-coral-editorial` (sobre `3eb7951`, el commit de R1a pasos 2 y 3) · **Entorno:** Node 14.21.3
 **Objetivo:** el dueño revisó la home ("todo funciona y se va viendo mejor") y pidió seguir; además, recuperar de forma opcional la "ruedita" del logo anterior.
@@ -102,13 +102,23 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 - Cotización desde el servicio: abre con "Servicio: <título>", foco dentro del diálogo, Esc cierra, el foco vuelve al botón y el resto de la página recupera `inert`.
 - Tema oscuro del blog y logo con engranajes en claro y oscuro revisados en la primera pintura. La revisión visual completa sigue siendo del dueño.
 
+### Hecho (parte 3: ajustes tras la revisión del dueño)
+El dueño revisó el sitio en su navegador y pidió tres cambios (capturas de la ventana de cotización, del contacto y de un post):
+- **Barras de desplazamiento con el estilo del sitio** (`nx.css`, sección 12b): píldora delgada con el color del borde de los campos (3:1 o más sobre el fondo en claro y en oscuro) que se vuelve coral al pasar el mouse; vale para la página, los diálogos, los bloques de código y las tablas. Chrome, Edge y Safari usan pseudoelementos `-webkit-`; Firefox, las propiedades estándar (en Chrome 121+ las estándar anularían el diseño redondeado, por eso solo van en Firefox). Además `color-scheme` ahora sigue el tema elegido en el sitio (antes seguía el del sistema: la barra de la página y los controles nativos podían salir oscuros con el sitio en claro).
+- **Tarjeta de redes del contacto:** se estiraba hasta la altura del formulario y repartía el espacio sobrante (título arriba, iconos abajo, un hueco blanco en medio). Ahora mide lo que contiene y se alinea arriba (clase `nx-aside`; 145 px a 1440 px). No lleva imagen: son el título y los iconos.
+- **Post con el título sobre la imagen** (`blogpost.js`, `nx-post-hero`): desde 768 px las pastillas, el título y la fecha van sobre la portada con un degradado navy; la portada baja de 2:1 a **16:9 (768–1099 px) y 21:9 con 560 px de alto máximo desde 1100 px** (a 1440 px pasaba de unos 630 px de alto a 538). En móvil siguen apilados encima de la imagen, y el enlace "Volver al blog" queda fuera de la cabecera. **Sin portada ya no se pinta el hueco "Imagen no disponible"** en el post (en las tarjetas del blog sí). El título sobre la imagen usa de 1,75 a 3 rem.
+
+### Verificación (parte 3)
+- Título de 100 caracteres sobre la imagen a 768, 900, 1099, 1100, 1440 y 1920 px: cabe dentro de la portada en todos y no hay desborde de página; a 375 px sigue apilado. Captura del post a 1024 px y del diálogo de cotización con scroll a 800 × 560 px (la barra es una píldora delgada, ya no el bloque gris); tarjeta de redes a 375, 1024 y 1440 px (145 px, alineada con el formulario).
+- Mientras compilé había un `npm run develop` en el puerto 8000 (el del dueño): comparten `.cache`; si ese servidor se comporta raro, reiniciarlo.
+
 ### Pendiente y abierto
 - Lo de la 5.ª sesión sigue abierto (confirmaciones con la clienta, kit de imágenes en DatoCMS con punto focal y alt, producción tras el merge del PR #2, A4, dominio canónico).
 - Confirmar con la clienta: `SHARE_VIA_HANDLE` (`_MsLinda`), la cifra de años (`TECH_CAREER_START_YEAR`, ahora también en el texto del portafolio) y completar el contenido del CMS de la lista de arriba.
 - Decidir si `GATSBY_CONTACT_EMAIL` queda definida en Netlify (se mostraría en la página de contacto).
 
 ### Estado al cerrar el bloque (leer primero)
-- **Rama `feat/redesign-coral-editorial`**. R3 completo en el árbol de trabajo (partes 1 y 2); la parte 1 ya está commiteada, la parte 2 (**biografía, portafolio, proyectos, contacto, cabecera a 1100 px, traducciones, M4 parcial**) está **sin commitear** (lo hace el dueño). Commit propuesto: `feat: R3 about, portfolio, ventures and contact pages for the redesign`. `docs/images_new` no se añade nunca.
+- **Rama `feat/redesign-coral-editorial`**. R3 completo. Las partes 1 y 2 ya están commiteadas (`a388284` y `82bb814`: **biografía, portafolio, proyectos, contacto, cabecera a 1100 px, traducciones, M4 parcial**); la parte 3 (**barras de desplazamiento, tarjeta de redes y título del post sobre la imagen**) está **sin commitear** (lo hace el dueño). Commit propuesto: `feat: R3 polish scrollbars, contact card and post cover`. `docs/images_new` no se añade nunca.
 - **Faltan:** R4 (legales `tos`/`privacy`/`credits` y 404 siguen con el marcado viejo dentro del `Layout`, `prefers-reduced-motion` ya cubierto en `nx.css`, QA final), el PR en borrador y la limpieza.
 - **Acción del dueño:** `npm uninstall react-share` (ya nadie lo importa) y, antes, `npm uninstall bootstrap react-bootstrap` si no se hizo.
 
@@ -119,8 +129,9 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 
 ### Commits de la sesión
 - `3eb7951` R1a pasos 2 y 3 (del cierre de la 5.ª sesión).
-- Parte 1 (logo con engranajes, blog, post y servicios): commiteada por el dueño.
-- Parte 2 (resto de R3): pendiente del dueño, propuesto: `feat: R3 about, portfolio, ventures and contact pages for the redesign`
+- `a388284` Parte 1 (logo con engranajes, blog, post y servicios).
+- `82bb814` Parte 2 (biografía, portafolio, proyectos y contacto).
+- Parte 3 (ajustes de la revisión del dueño): pendiente del dueño, propuesto: `feat: R3 polish scrollbars, contact card and post cover`
 
 ---
 

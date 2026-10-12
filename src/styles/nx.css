@@ -11,6 +11,7 @@
    Los valores heredados de index.html v1 NO se tocan; los nuevos se añaden debajo.
    ===================================================================== */
 :root {
+  color-scheme: light;
   /* --- v1 (intactos) --- */
   --bg: #FBFAF7;
   --surface: #FFFFFF;
@@ -75,6 +76,7 @@
 }
 
 [data-theme="dark"] {
+  color-scheme: dark;
   --bg: #0F1326;
   --surface: #181E3A;
   --text: #F3EFE8;
@@ -116,6 +118,7 @@
 /* Sin JS, o sin preferencia guardada: seguir el sistema */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
+    color-scheme: dark;
     --bg: #0F1326; --surface: #181E3A; --text: #F3EFE8; --muted: #A9B0C3;
     --line: rgba(243, 239, 232, 0.14); --line-soft: rgba(243, 239, 232, 0.08);
     --brand-blue: #2B50C8; --brand-blue-text: #8EA2FF; --coral: #FF8A5B; --on-coral: #0F1326;
@@ -471,6 +474,7 @@
 @media (min-width: 960px) { .nx-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); } .nx-grid--2-lg { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .nx-two-col { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
 .nx-page-head .nx-two-col > .nx-stack { align-content: center; }
+.nx-aside { align-self: start; align-content: start; }
 @media (min-width: 960px) { .nx-two-col { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); } .nx-two-col--rev { grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); } }
 .nx-divider { border: 0; border-top: 1px solid var(--line); margin: 0; }
 .nx-empty { border: 1px dashed var(--line); border-radius: var(--radius-lg); padding: 32px; text-align: center; color: var(--muted); display: grid; gap: 12px; justify-items: center; }
@@ -585,6 +589,24 @@
 .nx-article { display: grid; grid-template-columns: minmax(0, 1fr); gap: 32px; }
 .nx-article__head { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; max-width: 880px; }
 .nx-article__meta { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; }
+/* Portada del artículo (post): cabecera + imagen. Con imagen, desde 768 px el título, las pastillas y la
+   fecha van sobre la imagen con un degradado navy; en móvil (y sin imagen) van apilados encima. */
+.nx-post-hero { display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; }
+.nx-post-hero__head { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; max-width: 880px; }
+@media (min-width: 768px) {
+  .nx-post-hero--over { position: relative; display: block; }
+  .nx-post-hero--over .nx-media { aspect-ratio: 16 / 9; }
+  .nx-post-hero--over .nx-post-hero__head {
+    position: absolute; inset: auto 0 0 0; z-index: 2; max-width: none; gap: 12px;
+    padding: 120px clamp(24px, 4vw, 48px) clamp(24px, 3.5vw, 40px);
+    background: linear-gradient(to top, rgba(8, 12, 30, 0.92) 0%, rgba(8, 12, 30, 0.72) 45%, rgba(8, 12, 30, 0) 100%);
+    border-radius: 0 0 var(--radius-card) var(--radius-card); color: #fff;
+  }
+  .nx-post-hero--over .nx-h1 { font-size: clamp(1.75rem, 3.6vw, 3rem); color: #fff; text-shadow: 0 1px 14px rgba(0, 0, 0, 0.35); }
+  .nx-post-hero--over .nx-pill { background: rgba(255, 255, 255, 0.16); border-color: rgba(255, 255, 255, 0.5); color: #fff; }
+  .nx-post-hero--over .nx-mono { color: rgba(255, 255, 255, 0.9); }
+}
+@media (min-width: 1100px) { .nx-post-hero--over .nx-media { aspect-ratio: 21 / 9; max-height: 560px; } }
 .nx-article__footer { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; padding-top: 24px; border-top: 1px solid var(--line); max-width: var(--measure); }
 .nx-share { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
 .nx-share__btn { width: 44px; height: 44px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; border: 1px solid var(--line); }
@@ -756,6 +778,27 @@
 .nx-catalog__swatch--coral { background: var(--coral); } .nx-catalog__swatch--band { background: var(--band); }
 .nx-catalog__swatch--success { background: var(--success); } .nx-catalog__swatch--error { background: var(--error); }
 .nx-catalog__swatch--line { background: var(--line); } .nx-catalog__swatch--surface2 { background: var(--surface-2); }
+
+/* =====================================================================
+   12b. BARRAS DE DESPLAZAMIENTO (página, diálogos, bloques de código y tablas)
+   Mismo color que el borde de los campos (3:1 o más sobre el fondo en claro y en oscuro) y coral
+   al pasar el mouse. Chrome, Edge y Safari: pseudoelementos -webkit-; Firefox: propiedades
+   estándar (en Chrome 121+ las estándar anularían el diseño redondeado, por eso solo van aquí).
+   ===================================================================== */
+html::-webkit-scrollbar, .nx-root *::-webkit-scrollbar { width: 14px; height: 14px; }
+html::-webkit-scrollbar-track, .nx-root *::-webkit-scrollbar-track { background: transparent; }
+html::-webkit-scrollbar-corner, .nx-root *::-webkit-scrollbar-corner { background: transparent; }
+html::-webkit-scrollbar-thumb, .nx-root *::-webkit-scrollbar-thumb {
+  background: var(--field-line); background-clip: content-box;
+  border: 4px solid transparent; border-radius: var(--radius-pill); min-height: 48px; min-width: 48px;
+}
+html::-webkit-scrollbar-thumb:hover, .nx-root *::-webkit-scrollbar-thumb:hover,
+html::-webkit-scrollbar-thumb:active, .nx-root *::-webkit-scrollbar-thumb:active {
+  background: var(--coral); background-clip: content-box;
+}
+@supports (-moz-appearance: none) {
+  :root, .nx-root * { scrollbar-width: thin; scrollbar-color: var(--field-line) transparent; }
+}
 
 /* =====================================================================
    13. MOVIMIENTO REDUCIDO
