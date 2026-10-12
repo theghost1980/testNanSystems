@@ -41,7 +41,7 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 
 ---
 
-## 2026-10-12 (4.ª sesión) · Cierre de M5, A3 (SEO, sitemap y `robots.txt`) y B1 parcial
+## 2026-10-12 (4.ª sesión) · Cierre de M5, A3 (SEO, sitemap y `robots.txt`), B1 parcial y M9
 
 **Rama:** `fix/portfolio-total-refactor-design-2026` (sobre `c75189b`) · **Entorno:** Node 14.21.3
 **Objetivo:** hacer los dos primeros pasos de "Próximos pasos" de la 3.ª sesión, con el OK del dueño en cada dependencia.
@@ -80,6 +80,14 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 - **Build:** mismas 20 rutas + `404.html`; solo cambia el `page-data` de `aboutNew` (el `id`); JS de la home 521.004 bytes (igual); `sitemap.xml` y `robots.txt` intactos.
 - **Lo que queda de B1 (no se toca aquí):** el dev server imprime avisos `jsx-a11y` de ESLint en `button`, `footer`, `header`, `mailChimpForm`, `selector`, `quickQuote`, `about`, `index` y `portfolio`: elementos no nativos (`div`/`img`) con `onClick` sin soporte de teclado, `onMouseOver` sin `onFocus`, un `onChange` en un `select`; además de algunos `no-unused-vars` (`_lang` en `footer`, `blogImg` en `blog`). Arreglarlo cambia el marcado y el comportamiento con teclado de botones del sitio: **mejor hacerlo con el rediseño** (R1-R3), que reescribe esos componentes, que como parche suelto ahora.
 
+### M9 · fallo claro si falta `api_key`
+- **Antes (build real, sin tocar el `.env`):** (a) variable **ausente** → el plugin recibe el texto `"undefined"`, el build llega a `loading DatoCMS schema`, llama a la API y falla a los ~14 s con `ERROR #11321 PLUGIN … 401 INVALID_AUTHORIZATION_HEADER`; (b) variable **vacía** → falla a los ~16 s con `API token must be provided!` y un prefijo `[object Object]`. Ninguno nombra la variable que falta.
+- **Cambio** (`gatsby-config.js`, bajo el `require("dotenv")`): `if (!process.env.api_key) throw new Error(...)` con un mensaje en español que dice qué falta, dónde definirla en local (`.env`, `docs/setup-local.md` sección 3) y en Netlify (variables de entorno del sitio, también para Deploy Previews). Se eligió **fallar** y no solo avisar: sin token el build no puede acabar bien, y así falla antes y sin llamar a la API.
+- **Después:** (a) ausente (se carga el módulo desde otra carpeta, sin `.env` y con `api_key` sin definir) → `Error` con el mensaje; (b) vacía, con `gatsby build` real → **7 s**, `ERROR #10123 CONFIG … We encountered an error while trying to load your site's gatsby-config` + el mensaje + `gatsby-config.js:6`; (c) caso normal con el `.env` del proyecto → la configuración carga (10 plugins) y `npm run build` da **las mismas 20 rutas + `404.html`, los mismos 21 `page-data`, el mismo JS de la home (521.004 bytes) y el mismo sitemap**.
+- **Cómo se probó sin tocar el `.env`:** `dotenv` no sobrescribe variables que el proceso ya trae, así que `api_key= gatsby build` simula "vacía"; para "ausente" se carga la config desde otra carpeta. El `.env` no se lee ni se imprime (es un secreto).
+- **Alcance:** `gatsby develop`, `build` y `serve` cargan la configuración y ahora también necesitan la variable (en tu máquina sale del `.env`; `gatsby clean` no carga la configuración).
+- **A confirmar en Netlify:** si `api_key` no estuviera definida para Deploy Previews o branch deploys (`TODO(tú)` de [deploy-netlify.md](deploy-netlify.md)), esos builds **ya fallaban** antes (token `"undefined"`); la diferencia es que ahora el log lo dice. El primer deploy preview del PR del hito 1 lo comprobará.
+
 ### Decisiones
 - `lang` estático `es` + ajuste en el cliente (en vez de generar HTML por idioma): coherente con A7 (HTML estático en español, idioma real al montar).
 - **Sitemap y `robots.txt` van juntos:** un `robots.txt` de "permitir todo" solo tiene sentido para declarar el sitemap; el dueño aprobó la dependencia.
@@ -91,17 +99,17 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 - El `<title>` de `aboutNew` es "NaNSYSTEMS.us" en ambos idiomas: es lo que tiene DatoCMS en ese modelo (contenido, no código).
 
 ### Pendiente y abierto
-- Fallo claro si falta `api_key` (único extra pendiente de la Fase 1; el resto de B1 va con el rediseño), PR del hito 1 (cuando lo pida) y R1a. M8 (vulnerabilidades) al final.
+- La Fase 1 de código queda cerrada (el resto de B1 va con el rediseño). Quedan: PR del hito 1 (cuando lo pida), R1a y, al final, M8 (vulnerabilidades).
 - **Dominio canónico:** confirmar con o sin `www` (cambiar `siteUrl` y `static/robots.txt` si fuera con `www`).
 - En el **deploy preview** del hito 1, además de lo ya listado: ver el `<title>` y `lang` en el código fuente de la página (Ver código fuente, no Inspeccionar), que la pestaña cambie de título al pulsar el selector y que `/sitemap.xml` y `/robots.txt` respondan 200.
 
 ### Próximos pasos
-1. Último extra de la Fase 1: fallo claro si falta `api_key` en `gatsby-config.js` (hoy el plugin de DatoCMS recibe el texto `"undefined"`).
-2. Cuando el dueño lo pida: PR del hito 1 (merge commit; aclarar en la descripción que `092d9a4` es A5 aunque se llame M3) y prueba en el deploy preview. Después R1a.
+1. Cuando el dueño lo pida: PR del hito 1 (merge commit; aclarar en la descripción que `092d9a4` es A5 aunque se llame M3) y prueba en el deploy preview. Después R1a.
+2. R1a (pieza vertical del rediseño, rama aparte desde `master`; lee antes `docs/redesign.md` y el SPEC del paquete fuera del repo).
 3. Al final: M8 (vulnerabilidades de `npm audit`).
 
 ### Commits de la sesión
-- `34630bb` M5 (desinstalar `i18next-http-backend`) · `441bc68` A3 (react-helmet, `lang`, títulos y detección de idioma) · `6283b9d` sitemap y `robots.txt` · B1 parcial: pendiente del dueño, propuesto `fix: B1 add the missing key to the aboutNew card list`
+- `34630bb` M5 (desinstalar `i18next-http-backend`) · `441bc68` A3 (react-helmet, `lang`, títulos y detección de idioma) · `6283b9d` sitemap y `robots.txt` · `2973907` B1 parcial (`key` de `aboutNew`) · M9: pendiente del dueño, propuesto `fix: M9 fail with a clear message when api_key is missing`
 
 ---
 

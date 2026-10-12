@@ -1,5 +1,15 @@
 require("dotenv").config();
 
+// Sin esta variable el plugin de DatoCMS recibiría el texto "undefined" y el build
+// fallaría unos segundos después con un `401 INVALID_AUTHORIZATION_HEADER` de la API.
+if (!process.env.api_key) {
+  throw new Error(
+    "Falta la variable de entorno `api_key` (token de solo lectura de DatoCMS). " +
+      "En local, defínela en el archivo .env (docs/setup-local.md, sección 3). " +
+      "En Netlify, en las variables de entorno del sitio (que apliquen también a Deploy Previews)."
+  );
+}
+
 module.exports = {
   siteMetadata: {
     title: `NanSystems - Ana Echeverría`,

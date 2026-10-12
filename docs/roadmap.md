@@ -16,13 +16,12 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 
 ## Fase 1 · Bugs sin tocar dependencias
 
-> **Progreso (4.ª sesión, 2026-10-12):** hechos en la rama `fix/portfolio-total-refactor-design-2026`, todos con build de producción comprobado: **A6, A1, A2, M1, A5, A7, M3, M5 y A3** (A3 completo, con sitemap y `robots.txt`). **Nada de esto está en `master` todavía**: el PR del hito 1 se hará cuando el dueño lo pida (no antes).
+> **Progreso (4.ª sesión, 2026-10-12):** hechos en la rama `fix/portfolio-total-refactor-design-2026`, todos con build de producción comprobado: **A6, A1, A2, M1, A5, A7, M3, M5, A3** (completo, con sitemap y `robots.txt`) **y M9**, más el `key` de `aboutNew` (B1 parcial). **La Fase 1 de código queda cerrada.** **Nada de esto está en `master` todavía**: el PR del hito 1 se hará cuando el dueño lo pida (no antes).
 >
 > **Siguiente (en este orden):**
-> 1. Extra que queda: fallo claro si falta `api_key` (B1 ya tiene hecho el `key` de `aboutNew.js`; el resto de B1 es accesibilidad de teclado y va con el rediseño).
-> 2. PR del hito 1 y prueba manual en el deploy preview (boletín real, contacto, cotización, clic home → post, `es-VE`/`en-US`, título de la pestaña al cambiar de idioma, y que `/sitemap.xml` y `/robots.txt` respondan 200).
-> 3. R1a (pieza vertical del rediseño, en rama aparte desde `master`; el prerrequisito A3 ya está cumplido).
-> 4. Al final: bajar las vulnerabilidades de `npm audit` (M8).
+> 1. PR del hito 1 y prueba manual en el deploy preview (boletín real, contacto, cotización, clic home → post, `es-VE`/`en-US`, título de la pestaña al cambiar de idioma, `/sitemap.xml` y `/robots.txt` con 200, y que `api_key` esté disponible en Deploy Previews: M9 hace fallar el build con un mensaje si no lo está).
+> 2. R1a (pieza vertical del rediseño, en rama aparte desde `master`; el prerrequisito A3 ya está cumplido).
+> 3. Al final: bajar las vulnerabilidades de `npm audit` (M8). El resto de B1 (teclado) va con el rediseño.
 >
 > Detalle y método de prueba en el [dev-log](dev-log.md) (sección "Próximos pasos").
 
@@ -53,6 +52,7 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 | M2 | Confirmar Node de Netlify y alinear `.nvmrc`; `netlify.toml`; versionar lockfile | medio | pendiente (primero `TODO(tú)` de [deploy-netlify.md](deploy-netlify.md)) | — |
 | M7 | Cabeceras de seguridad (`_headers` o `netlify.toml`); CSP al final | medio | pendiente | — |
 | M6 | EmailJS: claves a variables de entorno, restringir dominios, antispam | bajo | pendiente | — |
+| M9 | `gatsby-config.js` falla al instante con un mensaje claro si falta `api_key` (antes el plugin de DatoCMS recibía el texto `"undefined"` y el build fallaba a los ~14 s con un `401 INVALID_AUTHORIZATION_HEADER`) | bajo | **hecho en la rama** (commit pendiente del dueño). Atención: si en Netlify `api_key` no aplica a Deploy Previews, esos builds ya fallaban; ahora lo dicen claro | `fix/portfolio-total-refactor-design-2026` |
 | M8 | `npm install` informa de **337 vulnerabilidades** (14 low, 157 moderate, 155 high, 11 critical), la misma cifra antes y después de A3. Sin analizar todavía: ver cuántas son de dependencias de producción (`npm audit --production`) y cuántas del árbol de Gatsby 2 (solo build). **No usar `npm audit fix --force`** (subiría versiones mayores; ver Reglas). Decisión del dueño: se deja para el final | medio | pendiente (al final) | — |
 
 ## Fase 4 · Limpieza

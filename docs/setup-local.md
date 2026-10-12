@@ -57,7 +57,7 @@ api_key=<token de solo lectura de DatoCMS>
 
 - El nombre es **`api_key` en minúsculas** (se lee en `gatsby-config.js`). No lo renombres: Netlify usa el mismo nombre.
 - El token se crea en DatoCMS → Settings → API tokens (permiso de solo lectura).
-- Si falta, `gatsby-config.js` lo convierte en el texto `"undefined"` y el error que se ve es poco claro.
+- Si falta (o está vacía), `develop`, `build` y `serve` se detienen enseguida con `ERROR #10123 CONFIG` y un mensaje que nombra la variable (antes se enviaba el texto `"undefined"` a DatoCMS y el error era un `401` poco claro).
 
 ## 4. Instalar y arrancar
 
