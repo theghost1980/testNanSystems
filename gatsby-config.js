@@ -5,6 +5,7 @@ module.exports = {
     title: `NanSystems - Ana Echeverría`,
     description: `Ana Echeverria provides solutions in IT and technology for the medium, small and large companies.`,
     author: `Saturno Mangieri -> saturnoman.com`,
+    siteUrl: `https://nansystems.us`,
   },
   plugins: [
     {
@@ -78,6 +79,21 @@ module.exports = {
         // You can add multiple tracking ids and a pageview event will be fired for all of them.
         trackingIds: [
           "G-GWX08J3QRF", // Google Analytics / GA
+        ],
+      },
+    },
+    {
+      resolve: `gatsby-plugin-sitemap`,
+      options: {
+        // `exclude` reemplaza la lista por defecto del plugin, por eso se repite.
+        // /about y /singleventure son páginas viejas sin enlaces (ver M4): no se listan.
+        exclude: [
+          `/dev-404-page`,
+          `/404`,
+          `/404.html`,
+          `/offline-plugin-app-shell-fallback`,
+          `/about`,
+          `/singleventure`,
         ],
       },
     },

@@ -16,14 +16,13 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 
 ## Fase 1 · Bugs sin tocar dependencias
 
-> **Progreso (4.ª sesión, 2026-10-12):** hechos en la rama `fix/portfolio-total-refactor-design-2026`, todos con build de producción comprobado: **A6, A1, A2, M1, A5, A7, M3, M5 y A3** (A3 sin sitemap ni `robots.txt`: esperan decisión). **Nada de esto está en `master` todavía**: el PR del hito 1 se hará cuando el dueño lo pida (no antes).
+> **Progreso (4.ª sesión, 2026-10-12):** hechos en la rama `fix/portfolio-total-refactor-design-2026`, todos con build de producción comprobado: **A6, A1, A2, M1, A5, A7, M3, M5 y A3** (A3 completo, con sitemap y `robots.txt`). **Nada de esto está en `master` todavía**: el PR del hito 1 se hará cuando el dueño lo pida (no antes).
 >
 > **Siguiente (en este orden):**
-> 1. Decidir **sitemap + `robots.txt`** (resto de A3; añade `gatsby-plugin-sitemap@2` y un `siteUrl`).
-> 2. Extras a elección: B1 (`key` en `aboutNew.js`), fallo claro si falta `api_key`.
-> 3. PR del hito 1 y prueba manual en el deploy preview (boletín real, contacto, cotización, clic home → post, `es-VE`/`en-US`, título de la pestaña al cambiar de idioma).
-> 4. R1a (pieza vertical del rediseño, en rama aparte desde `master`; el prerrequisito A3 ya está cumplido).
-> 5. Al final: bajar las vulnerabilidades de `npm audit` (M8).
+> 1. Extras a elección: B1 (`key` en `aboutNew.js`), fallo claro si falta `api_key`.
+> 2. PR del hito 1 y prueba manual en el deploy preview (boletín real, contacto, cotización, clic home → post, `es-VE`/`en-US`, título de la pestaña al cambiar de idioma, y que `/sitemap.xml` y `/robots.txt` respondan 200).
+> 3. R1a (pieza vertical del rediseño, en rama aparte desde `master`; el prerrequisito A3 ya está cumplido).
+> 4. Al final: bajar las vulnerabilidades de `npm audit` (M8).
 >
 > Detalle y método de prueba en el [dev-log](dev-log.md) (sección "Próximos pasos").
 
@@ -44,7 +43,7 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 
 | ID | Qué | Riesgo | Estado | Rama / PR |
 |---|---|---|---|---|
-| A3 | `gatsby-plugin-react-helmet@3`, `lang`, SEO en páginas sin él, `robots.txt`, sitemap. **R1 depende de esto o de `gatsby-ssr.js`**: `<body class="nx-root">`, `lang` y las fuentes deben estar en el HTML estático (ver SPEC del rediseño, k.5) | bajo | **hecho en la rama** salvo `robots.txt` y sitemap (esperan decisión del dueño; el sitemap añade una dependencia). Probado con build + `gatsby serve`. Queda sin `<title>` la página vieja `/singleventure` (M4) | `fix/portfolio-total-refactor-design-2026` |
+| A3 | `gatsby-plugin-react-helmet@3`, `lang`, SEO en páginas sin él, `robots.txt`, sitemap. **R1 depende de esto o de `gatsby-ssr.js`**: `<body class="nx-root">`, `lang` y las fuentes deben estar en el HTML estático (ver SPEC del rediseño, k.5) | bajo | **hecho en la rama** `441bc68` (react-helmet, `lang`, títulos) y sitemap + `robots.txt` (commit pendiente del dueño). Probado con build + `gatsby serve`. Queda sin `<title>` la página vieja `/singleventure` (M4). Por confirmar: dominio canónico (`siteUrl` = `https://nansystems.us`, sin `www`) | `fix/portfolio-total-refactor-design-2026` |
 | A4 | Banner de cookies que realmente controle Google Analytics. El banner del rediseño ya guarda la cookie `gatsby-gdpr-google-analytics`; falta decidir el modelo y configurar `gatsby-plugin-gdpr-cookies` (y retirar el plugin gtag) | medio | bloqueado: decisión con la clienta | — |
 
 ## Fase 3 · Despliegue
@@ -60,7 +59,7 @@ Al terminar algo: cambiar su estado aquí y anotarlo en [CHANGELOG.md](CHANGELOG
 
 | ID | Qué | Riesgo | Estado | Rama / PR |
 |---|---|---|---|---|
-| M4 | Retirar código muerto y páginas viejas (`/about`, `/singleventure`) con redirects | medio | pendiente | — |
+| M4 | Retirar código muerto y páginas viejas (`/about`, `/singleventure`) con redirects (al hacerlo, quitarlas también de `exclude` del sitemap en `gatsby-config.js`) | medio | pendiente | — |
 | B1 | Accesibilidad (teclado, `alt`, estructura de listas, un `<h1>`) | bajo | pendiente | — |
 | B2 | Navegación en un solo array; consultas sin uso del footer; variables sin uso | bajo | pendiente | — |
 | B3 | Fuentes fuera de `@import`, peso de imágenes, CSS de Bootstrap | bajo | pendiente | — |

@@ -17,7 +17,8 @@
 ## Carpetas
 
 ```
-gatsby-config.js     plugins; lee la variable api_key (DatoCMS)
+gatsby-config.js     plugins; lee la variable api_key (DatoCMS); siteUrl para el sitemap
+gatsby-ssr.js        pone lang="es" en el HTML estático (el idioma real lo ajusta Layout)
 gatsby-node.js       crea páginas: blog/<slug> y /<slug> (tecnologías)
 gatsby-browser.js    carga el widget de accesibilidad (equalweb) en window.onload
 src/
@@ -81,7 +82,11 @@ El formulario `newsletter` solo existe en el DOM cuando se abre el modal, por es
 
 ## SEO
 
-Cada página llama a `<HelmetDatoCms seo={...}/>` con los metadatos que entrega DatoCMS. El proyecto **no tiene `gatsby-plugin-react-helmet`**, así que esos metadatos no llegan al HTML estático (hallazgo A3). Sin SEO propio: `aboutNew`, `404`, `credits`, `privacy`, `tos`.
+Cada página llama a `<HelmetDatoCms seo={...}/>` con los metadatos que entrega DatoCMS (`aboutNew` incluida desde A3). `gatsby-plugin-react-helmet` los lleva al HTML estático, que siempre sale con `<html lang="es">` (`gatsby-ssr.js`); `Layout` ajusta `lang` al idioma real al montar. `tos`, `privacy`, `credits` y `404` solo tienen título (`Helmet`). `singleventure` queda sin `<title>` (lee su SEO del estado de navegación; página vieja, M4).
+
+`gatsby-plugin-sitemap` genera `/sitemap.xml` al construir (`siteUrl` en `siteMetadata`; excluye `/404`, `/about` y `/singleventure`) y `static/robots.txt` lo declara.
+
+La detección de idioma **no** usa el detector `htmlTag` (`src/i18n/config.js`): el `lang` del HTML es salida del sitio y, si se leyera, ese `es` exacto ganaría a un `en-US` del visitante.
 
 ## Código en uso y código muerto
 

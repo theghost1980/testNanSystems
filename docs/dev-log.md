@@ -41,7 +41,7 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 
 ---
 
-## 2026-10-12 (4.ª sesión) · Cierre de M5 y A3 (SEO en el HTML estático)
+## 2026-10-12 (4.ª sesión) · Cierre de M5 y A3 (SEO, sitemap y `robots.txt`)
 
 **Rama:** `fix/portfolio-total-refactor-design-2026` (sobre `c75189b`) · **Entorno:** Node 14.21.3
 **Objetivo:** hacer los dos primeros pasos de "Próximos pasos" de la 3.ª sesión, con el OK del dueño en cada dependencia.
@@ -63,9 +63,17 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 - **Título de la pestaña al cambiar de idioma:** el panel de pruebas está oculto y `react-helmet` aplica los cambios con `requestAnimationFrame`, que ahí no corre. Se verificó con `requestAnimationFrame` simulado en un documento escrito dentro de un iframe: `/tos/` pasa de "Términos y condiciones de uso del sitio web | NaNSYSTEMS.us" a "Website Terms and Conditions of Use | NaNSYSTEMS.us" (y de vuelta) al pulsar el selector; la 404 pasa de "Página no encontrada" a "Page not found"; en el blog la descripción cambia por idioma. **Conviene confirmarlo una vez en un navegador real** (deploy preview).
 - **Consola:** solo 404 de la ruta inexistente que se pidió a propósito para probar la 404 (Gatsby consulta su `page-data` antes de mostrarla); ningún recurso real roto.
 
+### A3 (cierre) · sitemap y `robots.txt`
+- **Dependencia (instalada por el dueño):** `gatsby-plugin-sitemap@^2.12.0` (línea de Gatsby 2). Registrada al final de `gatsby-config.js`; `siteMetadata.siteUrl` = `https://nansystems.us` (el plugin lo exige).
+- **`exclude`:** en v2 reemplaza la lista por defecto, por eso se repiten `/dev-404-page`, `/404`, `/404.html` y `/offline-plugin-app-shell-fallback` y se añaden `/about` y `/singleventure` (páginas viejas sin ningún enlace en menú ni pie; M4 las retirará). Al hacerlo, quitarlas también de esa lista.
+- **`static/robots.txt`:** `User-agent: *`, `Allow: /` y `Sitemap: https://nansystems.us/sitemap.xml`. Hasta ahora Netlify respondía 404 a `/robots.txt` (los buscadores lo tratan como "sin restricciones"), así que no cambia qué se rastrea: solo declara el sitemap.
+- **Resultado (build, ~76 s):** mismas 20 rutas + `404.html`; `page-data` y JS de la home (521.004 bytes) idénticos a la línea base de A3. `public/sitemap.xml` (2,5 KB, XML bien formado) con **17 URLs**: home, `aboutNew`, `blog`, `contact`, `credits`, `portfolio`, `privacy`, `tos`, `ventures`, 5 posts y 3 servicios. Las únicas páginas con HTML que no entran son las tres excluidas. `public/robots.txt` con las tres líneas.
+- **No se pudo comprobar desde este entorno (sin salida a internet):** el dominio canónico (con o sin `www`; se usó el que el propio sitio publica en `tos`/`privacy`) ni si Netlify redirige `/blog/<slug>` a `/blog/<slug>/`.
+- **Por verificar en el deploy preview / Search Console:** (a) `/sitemap.xml` y `/robots.txt` responden 200; (b) las URLs de posts y servicios salen **sin barra final** en el sitemap (sus rutas las crea `gatsby-node.js` como `blog/<slug>` y `/<slug>`, mientras que las páginas de `src/pages` llevan barra). Si Netlify las redirige con 301, Search Console avisará de "redirección en el sitemap": se arreglaría con la opción `serialize` del plugin añadiendo la barra final; no se hizo para no cambiar algo sin poder verlo.
+
 ### Decisiones
 - `lang` estático `es` + ajuste en el cliente (en vez de generar HTML por idioma): coherente con A7 (HTML estático en español, idioma real al montar).
-- **Sitemap y `robots.txt` quedan fuera de esta entrega:** sin sitemap, un `robots.txt` de "permitir todo" no cambia nada (hoy Netlify responde 404 a `/robots.txt`, que los buscadores tratan como "sin restricciones"). El sitemap añade `gatsby-plugin-sitemap@2` y un `siteUrl` en `siteMetadata`: espera decisión del dueño.
+- **Sitemap y `robots.txt` van juntos:** un `robots.txt` de "permitir todo" solo tiene sentido para declarar el sitemap; el dueño aprobó la dependencia.
 - **Vulnerabilidades de `npm`** (337: 14 low, 157 moderate, 155 high, 11 critical; la misma cifra antes y después de A3): el dueño decide dejarlo para el final. Anotado como **M8** en el roadmap. No usar `npm audit fix --force` (subiría versiones mayores de la línea Gatsby 2).
 
 ### Hallazgos / sorpresas
@@ -74,16 +82,17 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 - El `<title>` de `aboutNew` es "NaNSYSTEMS.us" en ambos idiomas: es lo que tiene DatoCMS en ese modelo (contenido, no código).
 
 ### Pendiente y abierto
-- Sitemap + `robots.txt` (decisión del dueño), extras (B1, fallo claro si falta `api_key`), PR del hito 1 (cuando lo pida) y R1a. M8 (vulnerabilidades) al final.
-- En el **deploy preview** del hito 1, además de lo ya listado: ver el `<title>` y `lang` en el código fuente de la página (Ver código fuente, no Inspeccionar) y que la pestaña cambie de título al pulsar el selector.
+- Extras (B1, fallo claro si falta `api_key`), PR del hito 1 (cuando lo pida) y R1a. M8 (vulnerabilidades) al final.
+- **Dominio canónico:** confirmar con o sin `www` (cambiar `siteUrl` y `static/robots.txt` si fuera con `www`).
+- En el **deploy preview** del hito 1, además de lo ya listado: ver el `<title>` y `lang` en el código fuente de la página (Ver código fuente, no Inspeccionar), que la pestaña cambie de título al pulsar el selector y que `/sitemap.xml` y `/robots.txt` respondan 200.
 
 ### Próximos pasos
-1. **Sitemap y `robots.txt`:** si el dueño lo aprueba, `gatsby-plugin-sitemap@2` + `siteUrl` en `siteMetadata` + `static/robots.txt` con la línea `Sitemap:`; si no, dejar A3 cerrado así.
-2. Extras a elección: B1 (`key` en `aboutNew.js`), fallo claro si falta `api_key`.
-3. Cuando el dueño lo pida: PR del hito 1 (merge commit) y prueba en el deploy preview. Después R1a.
+1. Extras a elección: B1 (`key` en `aboutNew.js`), fallo claro si falta `api_key`.
+2. Cuando el dueño lo pida: PR del hito 1 (merge commit; aclarar en la descripción que `092d9a4` es A5 aunque se llame M3) y prueba en el deploy preview. Después R1a.
+3. Al final: M8 (vulnerabilidades de `npm audit`).
 
 ### Commits de la sesión
-- `34630bb` M5 (desinstalar `i18next-http-backend`) · A3: pendiente del dueño, propuesto `fix: A3 static SEO with react-helmet, html lang and language detection without htmlTag`
+- `34630bb` M5 (desinstalar `i18next-http-backend`) · `441bc68` A3 (react-helmet, `lang`, títulos y detección de idioma) · sitemap y `robots.txt`: pendiente del dueño, propuesto `feat: A3 add sitemap and robots.txt`
 
 ---
 
