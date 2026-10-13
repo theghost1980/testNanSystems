@@ -1,46 +1,33 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "gatsby";
-import QuickQuote from "../components/quickQuote";
+import { useDialog } from "../hooks/useDialog";
 
-const Button = (props) => {
-  const { value, type, pathname, data, action, extraclass } = props;
-  const _typebtn = type || "btnNoFilled";
-  const _value = value || "Click me";
-  const _pathname = pathname || "/";
-  const _data = data || {};
-  const _action = action || null;
-  const _extraClass = extraclass || null;
+// Botón del sitio. Mantiene la API anterior (value, type, action, pathname,
+// data, extraclass) y la traduce a las clases del rediseño:
+//   type "btnFilled"  → primario;  cualquier otro → fantasma
+//   action "quote"    → abre el diálogo de cotización con data.title
+//   cualquier otra    → enlace interno a `pathname` (con `data` como state)
+const Button = ({ value, type, pathname, data, action, extraclass }) => {
+  const { open } = useDialog();
+  const variant = type === "btnFilled" ? "primary" : "ghost";
+  const className = `nx-btn nx-btn--${variant}${extraclass ? ` ${extraclass}` : ""}`;
 
-  const [clickQuote, setClickQuote] = useState(false);
+  if (action === "quote") {
+    return (
+      <button
+        type="button"
+        className={className}
+        onClick={() => open("nx-quote", (data && data.title) || null)}
+      >
+        {value}
+      </button>
+    );
+  }
 
   return (
-    <>
-      {_action !== null && _action !== "quote" ? (
-        <Link to={_pathname} state={_data} className="btnLink">
-          <div className={`btnX ${_typebtn} ${_extraClass}`}>{_value}</div>
-        </Link>
-      ) : (
-        <div
-          className={`btnX ${_typebtn} ${_extraClass}`}
-          onClick={() => setClickQuote(!clickQuote)}
-        >
-          {_value}
-        </div>
-      )}
-      {clickQuote && (
-        <div className="bgDivFullFixed extraHeight">
-          <div className="componentContFixed">
-            <QuickQuote quote={_data.title} />
-            <div
-              onClick={() => setClickQuote(!clickQuote)}
-              className="btnCloseQuote boldLblInputs"
-            >
-              Close
-            </div>
-          </div>
-        </div>
-      )}
-    </>
+    <Link to={pathname || "/"} state={data || undefined} className={className}>
+      {value}
+    </Link>
   );
 };
 

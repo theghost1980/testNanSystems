@@ -1,39 +1,62 @@
 import React from "react";
-import Layout from "../components/layout";
-import Img from "gatsby-image";
 import { graphql } from "gatsby";
 import { Helmet } from "react-helmet";
+import Layout from "../components/layout";
+import Media from "../components/media";
+import Icon from "../components/icons";
+import { useNx } from "../hooks/useNx";
 
-const Credits = (props) => {
+// Los créditos del CMS son logos sin leyenda: el nombre sale del dominio del enlace.
+const hostOf = (url) => {
+  try {
+    return new URL(url).hostname.replace(/^www\./, "");
+  } catch (e) {
+    return url;
+  }
+};
+
+const Credits = ({ data }) => {
+  const { t } = useNx();
+  const credits = data.credits.edges;
+
   return (
-    <Layout>
-      <Helmet title="Credits | NaNSYSTEMS.us" />
-      <div className="creditsCont">
-        <h1 className="h2Title">Credits</h1>
-        <h3 className="h2Title">
-          This site has been done using all the following tecnologies and
-          resources.
-        </h3>
-        <p className="pContrast contentMargin">
-          Even when maybe those big sites are too busy to come and see my work,
-          I have to be grateful. Thank you so much guys. Keep the good work.
-        </p>
-        <ul className="ulRowWrapBasic justiAlig bgUl justBorderRounded">
-          {props.data.credits.edges.map(({ node: credit }) => {
+    <Layout showCta={false}>
+      <Helmet title={t("meta.credits")} />
+      <section className="nx-page-head nx-container" aria-labelledby="nx-cr-title">
+        <h1 className="nx-h1" id="nx-cr-title">
+          {t("footer.credits")}
+        </h1>
+        <p className="nx-lead">{t("credits.intro")}</p>
+      </section>
+      <section className="nx-section nx-section--tight nx-container" aria-label={t("footer.credits")}>
+        <ul className="nx-credits">
+          {credits.map(({ node }) => {
+            const name = node.legend || hostOf(node.url);
             return (
-              <a href={credit.url} target="_blank" rel="noreferrer">
-                <li className="liImages pointer scaleHovered">
-                  <Img
-                    fixed={credit.image.fixed}
-                    className="shadowBottom whiteBack justBorderRounded"
-                  />
-                  {credit.legend && <h4>{credit.legend}</h4>}
-                </li>
-              </a>
+              <li key={node.id} className="nx-card nx-credit">
+                <Media
+                  image={node.image}
+                  alt=""
+                  fit="contain"
+                  ratio="1x1"
+                  sizes="250px"
+                  className="nx-media--lg nx-media--contain"
+                />
+                <p className="nx-h4">{name}</p>
+                <a
+                  className="nx-link"
+                  href={node.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${t("button.viewResource")}: ${name} ${t("a11y.externalLink")}`}
+                >
+                  <span>{t("button.viewResource")}</span> <Icon name="external" size={16} />
+                </a>
+              </li>
             );
           })}
         </ul>
-      </div>
+      </section>
     </Layout>
   );
 };
@@ -45,17 +68,14 @@ export const data = graphql`
     credits: allDatoCmsCredit(filter: { locale: { eq: "en" } }) {
       edges {
         node {
-          image {
-            fixed(
-              width: 250
-              forceBlurhash: false
-              imgixParams: { fm: "jpg", auto: "compress" }
-            ) {
-              ...GatsbyDatoCmsFixed
-            }
-          }
+          id
           url
           legend
+          image {
+            fluid(maxWidth: 250, imgixParams: { fm: "jpg", auto: "compress" }) {
+              ...GatsbyDatoCmsFluid
+            }
+          }
         }
       }
     }

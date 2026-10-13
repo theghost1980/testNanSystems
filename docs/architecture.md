@@ -9,9 +9,9 @@
 | CMS | DatoCMS vía `gatsby-source-datocms` 2.6.18 |
 | Imágenes | `gatsby-image` (fluid) + `gatsby-plugin-sharp` + `sharp` 0.27.2 |
 | i18n | i18next 19.9.2 + react-i18next 11.18.6 + language detector |
-| Estilos | un único `src/styles/styles.css` global; Bootstrap 4 solo para el carrusel |
+| Estilos | `src/styles/styles.css` global (el actual; Bootstrap 4 solo para el carrusel). En la rama del rediseño se suman `src/styles/nx.css` y `fonts.css` (inertes hasta el cambio de `Layout`); fuentes autoalojadas en `static/fonts/` |
 | Formularios | Netlify Forms (boletín, contacto y cotización) |
-| Analítica / cookies | `gatsby-plugin-google-gtag`, `react-cookie-consent`, `gatsby-plugin-gdpr-cookies` |
+| Analítica / cookies | ninguna: en la rama del rediseño se quitó Google Analytics, los plugins de cookies y el banner (A4) |
 | Hosting | Netlify, build desde GitHub (`master`) |
 
 ## Carpetas
@@ -20,7 +20,7 @@
 gatsby-config.js     plugins; lee la variable api_key (DatoCMS); siteUrl para el sitemap
 gatsby-ssr.js        pone lang="es" en el HTML estático (el idioma real lo ajusta Layout)
 gatsby-node.js       crea páginas: blog/<slug> y /<slug> (tecnologías)
-gatsby-browser.js    carga el widget de accesibilidad (equalweb) en window.onload
+gatsby-browser.js    carga el widget de accesibilidad (equalweb) en window.onload, solo si A11Y_WIDGET_ENABLED (src/config/site.js; hoy false)
 src/
   pages/             páginas con ruta propia
   templates/         blogpost.js y technology.js (usadas por gatsby-node)
@@ -79,10 +79,9 @@ El formulario `newsletter` solo existe en el DOM cuando se abre el modal, por es
 
 ## Analítica, cookies y accesibilidad
 
-- `gatsby-plugin-google-gtag` inyecta Google Analytics en producción.
-- `react-cookie-consent` (en `Layout`) muestra el banner, pero **no controla la carga de GA** (hallazgo A4).
-- `gatsby-plugin-gdpr-cookies` está configurado sin ningún `trackingId`, por lo que hoy no hace nada.
-- `gatsby-browser.js` carga el widget de accesibilidad de un tercero, con SRI, al terminar de cargar la página.
+- **En `master` (sitio actual):** `gatsby-plugin-google-gtag` inyecta Google Analytics en producción, `react-cookie-consent` muestra un banner que **no controla la carga de GA** y `gatsby-plugin-gdpr-cookies` está sin `trackingId`.
+- **En la rama del rediseño (A4, opción a):** no hay analítica, ni plugins de cookies, ni banner. Lo que se guarda en el navegador es funcional (tema, idioma, contador de envíos). Si se añade analítica o cookies no esenciales, hay que poner un aviso con consentimiento real.
+- `gatsby-browser.js` carga el widget de accesibilidad de un tercero (Equalweb), con SRI, al terminar de cargar la página, **solo si `A11Y_WIDGET_ENABLED` es `true`** en `src/config/site.js` (hoy `false` en la rama del rediseño). El mismo interruptor controla la mención en la política de privacidad y el espacio reservado junto al botón de la banda de cotización.
 
 ## SEO
 
@@ -108,3 +107,16 @@ Comprobado con búsqueda de imports el 2026-10-10. Antes de borrar algo, mirar M
 - Formulario Netlify **`newsletter`** y su helper `static/forms.html`.
 - Rutas públicas existentes (`/aboutNew`, `/blog/<slug>`, `/<slug>`…): si cambian, añadir redirects.
 - Versiones mayores de Gatsby, React y plugins (línea 2.x de Gatsby).
+
+## Rediseño en curso (rama `feat/redesign-coral-editorial`, aún no en `master`)
+
+Estructura nueva, que sustituye a la de arriba cuando se fusione:
+
+- **`gatsby-ssr.js`**: `lang="es"`, `<body class="nx-root">`, `color-scheme`, script de tema antes de pintar y precarga de fuentes.
+- **`src/styles/`**: `nx.css` (tokens en `:root`/`[data-theme]`, reset acotado a `.nx-root`) y `fonts.css`; fuentes en `static/fonts/`. `styles.css` queda sin importar, como referencia hasta terminar R3.
+- **`src/hooks/`**: `useNx` (traducción e idioma estables en el primer render), `useTheme`, `useDialog` (contexto de diálogos).
+- **`src/components/`**: `layout` (estructura de toda página; `showCta={false}` en 404 y legales), `header`, `footer`, `ctaBand`, `button`, `dialog`, `formField`, `quoteDialog`, `newsletterDialog`, `media` (único componente de imágenes del CMS), `icons`, `hero`, `marquee`, `testimonials`, `pills`, `postMeta`, `share` (enlaces para compartir), `readMore` (acordeón "Leer más"), `contactAside`, `legalHead`, `legalToc`; de A8: `honeypotField`, `formErrorText`, `contactErrorText`.
+- **`src/utils/`**: `netlifyForm` (envío y antiabuso) y `content` (categorías, punto focal, texto alternativo, fechas, minutos de lectura, `prepareCmsHtml`, que prepara el HTML del CMS: h1→h2, `scope` en `th`, `tabindex` en `pre` y tablas, e `isPlaceholder`/`usefulBlocks`, que ocultan el relleno del CMS). `Layout` acepta `dialogs`: los diálogos propios de una página van fuera de `<main>` porque esa zona queda inerte con un diálogo abierto. Gatsby 2 no admite una consulta de página y otra estática en el mismo archivo. **`src/config/site.js`**: datos del negocio escritos a mano.
+- **`src/media-imgs/redesign/`**: imágenes locales del diseño (hero y 404).
+
+Regla para la futura migración de Gatsby: toda imagen del CMS pasa por `Media`, y no se añaden plugins de Gatsby nuevos (ver [dependency-audit.md](dependency-audit.md)).

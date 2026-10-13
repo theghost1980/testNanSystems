@@ -56,9 +56,10 @@ api_key=<token de solo lectura de DatoCMS>
 ```
 
 - El nombre es **`api_key` en minúsculas** (se lee en `gatsby-config.js`). No lo renombres: Netlify usa el mismo nombre.
-- El token se crea en DatoCMS → Settings → API tokens (permiso de solo lectura).
+- Usa el **"Read-only API token"** de DatoCMS → Project Settings → API tokens: basta para compilar el sitio. **No pongas aquí el token de acceso completo** (M10): quien vea esa variable podría cambiar o borrar todo el contenido.
 - Opcional: `GATSBY_CONTACT_EMAIL=<correo>` en el mismo `.env`. Es el correo que aparece en el mensaje de error de los formularios de contacto y cotización; sin ella el mensaje sale sin dirección. Se fija al arrancar o construir: reinicia `develop` si la cambias. En Netlify se define igual, en las variables de entorno del sitio.
 - Los formularios (contacto, cotización y boletín) **no se pueden probar en local**: el dev server responde 404 al POST. Se prueban en un deploy preview.
+- Opcional: `DATO_ENVIRONMENT=<entorno>` en el mismo `.env` para leer de un **entorno de pruebas** de DatoCMS en lugar de `main` (el que usa producción). Sin ella se lee `main`. Ver [tools/datocms/README.md](../tools/datocms/README.md).
 - Si falta `api_key` (o está vacía), `develop`, `build` y `serve` se detienen enseguida con `ERROR #10123 CONFIG` y un mensaje que nombra la variable (antes se enviaba el texto `"undefined"` a DatoCMS y el error era un `401` poco claro).
 
 ## 4. Instalar y arrancar
@@ -101,5 +102,5 @@ Probar los tres es importante: hoy el sitio se comporta distinto con códigos re
 
 - **Los formularios de contacto y de cotización envían correos reales** (las credenciales de EmailJS están en el código). No los uses para probar sin avisar.
 - Los formularios de Netlify (boletín) **no funcionan en local**, solo desplegados.
-- Una build de producción (`gatsby build` + `gatsby serve`) carga Google Analytics del sitio real si abres la página. `develop` no lo carga.
+- En `master` (sitio actual) una build de producción (`gatsby build` + `gatsby serve`) carga Google Analytics del sitio real si abres la página; `develop` no lo carga. En la rama del rediseño ya no hay analítica (A4).
 - En la consola de `develop` aparecen avisos de eslint (accesibilidad, variables sin uso) y de i18next; los conocidos están listados en [audit-2026-10.md](audit-2026-10.md).

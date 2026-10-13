@@ -16,8 +16,13 @@ Esta carpeta **no se publica en el sitio web**: vive solo en el repositorio.
 | [workflow.md](workflow.md) | Cómo se trabaja un cambio de principio a fin | Guía |
 | [audit-2026-10.md](audit-2026-10.md) | Auditoría del 2026-10-10 con evidencia | **Foto fija** (no se edita) |
 | [dependency-audit.md](dependency-audit.md) | Las 337 vulnerabilidades de `npm audit`: de dónde vienen, qué llega al visitante y por qué no se arreglan ahora (M8) | **Vivo** |
+| [datocms-api.md](datocms-api.md) | Qué se puede (y qué no) hacer en DatoCMS desde el repositorio con su API de gestión, modelos del CMS y la recomendación sobre los tokens (M10) | **Vivo** |
+| [cv-ana-echeverria.md](cv-ana-echeverria.md) | CV actual de Ana (LinkedIn) junto con lo que ya tiene DatoCMS: contraste de datos, diferencias a resolver, preguntas para Ana y respaldo si el CMS falla | **Vivo** |
+| [contenido-nansystems.md](contenido-nansystems.md) | Contenido real del sitio en español e inglés (misión, visión, servicios, portafolio, SEO, blog, testimonios de ejemplo), revisado y listo para aprobar; con las notas de carga al CMS | **Vivo** |
+| [prompt-contenido-ia.md](prompt-contenido-ia.md) | Prompt para que otra IA redacte el contenido real (misión, visión, servicios, portafolio, SEO, blog, testimonios de ejemplo) y qué hacer con su respuesta | **Vivo** |
 | [roadmap.md](roadmap.md) | Mejoras pendientes con estado | **Vivo** |
 | [redesign.md](redesign.md) | Decisión, tokens y plan del rediseño | **Vivo** |
+| [image-prompts.md](image-prompts.md) | Prompts (Gemini) y medidas de cada imagen del rediseño | **Vivo** |
 | [CHANGELOG.md](CHANGELOG.md) | Registro de cambios realizados | **Vivo** |
 | [dev-log.md](dev-log.md) | Bitácora de cada sesión: hecho, decisiones, pendiente y próximos pasos | **Vivo** |
 
@@ -29,7 +34,7 @@ Esta carpeta **no se publica en el sitio web**: vive solo en el repositorio.
 - Los módulos de contenido (blog, proyectos, biografía, etc.) viven en DatoCMS.
 - Hay una auditoría completa y un plan por fases; ver [roadmap.md](roadmap.md).
 - Rediseño elegido como base: propuesta D (Coral Editorial); ver [redesign.md](redesign.md).
-- Muestras HTML de todas las pantallas y su SPEC: hechas y revisadas (fuera del repo). Siguiente: pieza vertical R1a en una rama aparte.
+- Muestras HTML de todas las pantallas y su SPEC: hechas y revisadas (fuera del repo). Rediseño en la rama `feat/redesign-coral-editorial`: R1a, R1, R2, R3 y R4 hechos (inicio, blog, post, servicios, biografía, portafolio, proyectos, contacto, legales, créditos y 404); siguiente: el PR de preview y el merge a `master`; después, el contenido de DatoCMS con la API (Fase 5) y la limpieza final.
 - Arreglos de código hechos en la rama `fix/portfolio-total-refactor-design-2026` (aún **no** en `master`): A6, A1, A2, M1, A5, A7, M3, M5, A3 (SEO en el HTML estático, sitemap y `robots.txt`) M9 (fallo claro si falta `api_key`), A8 (contacto y cotización pasan de EmailJS a Netlify Forms) y el `key` de `aboutNew` (B1, parcial): la Fase 1 de código está cerrada. Pendiente: PR del hito 1 y R1a. Ver [roadmap.md](roadmap.md) y [dev-log.md](dev-log.md).
 
 ## Convenciones

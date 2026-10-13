@@ -13,8 +13,8 @@ if (!process.env.api_key) {
 module.exports = {
   siteMetadata: {
     title: `NanSystems - Ana Echeverría`,
-    description: `Ana Echeverria provides solutions in IT and technology for the medium, small and large companies.`,
-    author: `Saturno Mangieri -> saturnoman.com`,
+    description: `NaNSYSTEMS: engineering consulting in Austin, Texas. Energy and water, building automation, IT and project management, in English and Spanish.`,
+    author: `Saturno Mangieri -> github.com/theghost1980`,
     siteUrl: `https://nansystems.us`,
   },
   plugins: [
@@ -24,8 +24,9 @@ module.exports = {
         name: `NaNSYSTEMS.us`,
         short_name: `NaNSYSTEMS.us`,
         start_url: `/`,
-        background_color: `#285790`,
-        theme_color: `#285790`,
+        // Colores del rediseño: crema (fondo) y azul marino (barra del navegador en móvil).
+        background_color: `#FBFAF7`,
+        theme_color: `#1C2541`,
         display: `standalone`,
         icon: `src/media-imgs/favIcon.png`,
       },
@@ -52,6 +53,9 @@ module.exports = {
       resolve: `gatsby-source-datocms`,
       options: {
         apiToken: `${process.env.api_key}`,
+        // Entorno de DatoCMS del que se lee. Sin la variable, el principal (`main`, el de producción). Sirve para
+        // revisar contenido nuevo en un entorno de pruebas (fork) antes de promoverlo (docs/datocms-api.md).
+        ...(process.env.DATO_ENVIRONMENT ? { environment: process.env.DATO_ENVIRONMENT } : {}),
       },
     },
     //animations for ventures page
@@ -72,38 +76,16 @@ module.exports = {
       },
     },
     {
-      resolve: `gatsby-plugin-gdpr-cookies`,
-      options: {
-        // googleAnalytics: {
-        //   trackingId: 'YOUR_GOOGLE_ANALYTICS_TRACKING_ID',
-        //   // Setting this parameter is optional
-        //   anonymize: true
-        // },     >>>>>>> todo LATER dont forget configure the google analytics using nansystems.us@gmail.com <<<<<<<<
-        // Defines the environments where the tracking should be available  - default is ["production"]
-        environments: ['production', 'development']
-      },
-    },
-    {
-      resolve: `gatsby-plugin-google-gtag`,
-      options: {
-        // You can add multiple tracking ids and a pageview event will be fired for all of them.
-        trackingIds: [
-          "G-GWX08J3QRF", // Google Analytics / GA
-        ],
-      },
-    },
-    {
       resolve: `gatsby-plugin-sitemap`,
       options: {
         // `exclude` reemplaza la lista por defecto del plugin, por eso se repite.
-        // /about y /singleventure son páginas viejas sin enlaces (ver M4): no se listan.
+        // /about es una página vieja sin enlaces (ver M4): no se lista.
         exclude: [
           `/dev-404-page`,
           `/404`,
           `/404.html`,
           `/offline-plugin-app-shell-fallback`,
           `/about`,
-          `/singleventure`,
         ],
       },
     },

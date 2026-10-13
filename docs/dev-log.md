@@ -41,6 +41,368 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 
 ---
 
+## 2026-10-13 (7.ª sesión) · Revisión de contenido, CV de Ana y prompt para redactar el contenido real
+
+**Rama:** `feat/redesign-coral-editorial` (sobre `a806150`) · **Entorno:** solo lecturas al CMS y archivos de `docs/`
+**Objetivo:** saber qué contenido del sitio es real, qué falta y qué no tiene sentido; reunir el CV de Ana y preparar el encargo de redacción a otra IA.
+
+### Hecho
+- **Revisión de contenido (sin cambios):** se leyó el código, las traducciones y los 26 modelos de DatoCMS (volcado de solo lectura con el token de lectura, sin imprimirlo) y las etiquetas SEO reales de cada página.
+- **[cv-ana-echeverria.md](cv-ana-echeverria.md):** el CV de LinkedIn (PDF de 7 páginas, entregado por el dueño) más lo que ya tiene el CMS, con las diferencias marcadas, la sección "qué respalda el CV", preguntas para Ana y la correspondencia con los modelos para reconstruir el CMS si fallara. No incluye sueldos, correo ni identificadores de credenciales (el repositorio es público).
+- **[prompt-contenido-ia.md](prompt-contenido-ia.md):** prompt completo (ES/EN) para que otra IA redacte posicionamiento y catálogo, misión, visión y valores, biografía, servicios, portafolio, certificaciones, SEO, dos artículos de blog, microtextos corregidos y testimonios de ejemplo, en un único `.md` con una estructura que luego se puede cargar al CMS con un script.
+
+### Hecho (parte 2: contenido recibido)
+- El dueño trajo el texto de la otra IA y pidió quitar todo lo de "confirmar" (la clienta quiere el sitio lleno de forma creíble y él asume la responsabilidad de los datos). Se dejó de exigir respaldo del CV frase a frase, pero se mantuvo la coherencia: **[contenido-nansystems.md](contenido-nansystems.md)** es la versión revisada.
+- Cuadre: marcas "confirmar" fuera; secciones 11 a 13 y preguntas de la IA fuera (sustituidas por las notas de carga); claves de traducción llevadas a las que existen; `cta.text` tenía dos valores y se dejó el de la banda; `quickquote.iwill` distinto en ES y EN (corregido); "(omitir en la web)" estaba dentro del título de tres certificaciones; `excerpt`, `about.headline` y `about.short` no existen como campos del CMS; cargo de Austin ISD mal traducido; "añade nuestro correo" cuando el sitio no muestra ninguna dirección; textos de interfaz que seguían diciendo "proyectos". Las 408 longitudes se comprobaron por script (0 incumplimientos).
+
+### Hecho (parte 3: contenido en el código y herramientas de carga)
+- El dev aprobó todas las decisiones propuestas (catálogo de 4 servicios, un solo catálogo en Servicios, titular "Edificios que gastan menos energía", sin epígrafe en el blog, 7 certificaciones, redirecciones 301, artículos de prueba fuera, nueva franja de tecnologías) y pidió **publicar los testimonios** (decisión suya y de la clienta, que asumen). Son genéricos y no nombran ninguna organización del CV.
+- **Código:** `translations.json` (es/en) a partir del documento (66 claves, `about.headline/short/certifications` nuevas, `blog.quote` y `portfolio.salary` fuera); `ventures.js` pasa a listar `Technology`; `aboutNew.js` suma biografía con foto, SEO de `about` y certificaciones; `isPlaceholder` trata "—" como vacío; `marquee.js` con las tecnologías del CV; `blog.js` sin recuadro si no hay epígrafe; `static/_redirects`; `gatsby-config.js` con la descripción nueva y `environment` desde `DATO_ENVIRONMENT`.
+- **Herramientas** en [tools/datocms](../tools/datocms/README.md): cliente con filtro de tokens y límite de peticiones, `backup.js` (hecho: respaldo completo fuera del repositorio, 56 peticiones, 108 archivos de mediateca), `env.js` (copiar, promover y borrar entornos), `upload-kit.js` y `load-content.js` (47 operaciones calculadas en simulacro contra `main`).
+- **Bloqueo:** crear la copia (`fork`) del entorno es una escritura en el proyecto de DatoCMS y la herramienta de permisos la rechazó. Al ejecutarla el dev, la API respondió `401 INSUFFICIENT_PERMISSIONS`: el token de `datocms-write.env` es de rol Editor y los entornos exigen el "Full-access API token" (Admin). Hasta usar ese token (o crear la copia desde el panel) no hay entorno donde cargar, y las escrituras de los scripts siguen sin probarse. Alternativa si el plan no permite entornos: modo borrador en los modelos y lectura con `previewMode`.
+
+### Hecho (parte 4: carga al entorno de pruebas y revisión completa)
+- **Carga:** el dev creó la copia `contenido-2026-10` (con el token Admin; el Editor responde `401 INSUFFICIENT_PERMISSIONS`), subió las 6 imágenes del kit y ejecutó la carga. Incidencias resueltas por el camino: `item.shot_title` exige 10 a 20 caracteres (el cargador ahora valida longitudes contra el esquema antes de escribir), publicar y despublicar son `PUT /items/:id/publish` y `/unpublish`, el cliente leía mal los acentos al partir las respuestas (ya usa UTF-8 correcto y el respaldo se repitió), las fechas vuelven con el huso del proyecto y los logros vacíos se cargan como "—" (con `null` el CMS rellena un texto de ejemplo).
+- **Revisión completa** sobre una compilación de producción en copia aislada que lee el entorno nuevo: 16 páginas por 4 anchos (360, 768, 1100 y 1440 px) sin desbordes y con un solo h1; 202 URLs de imagen responden 200; 0 enlaces internos rotos; sitio en inglés sin textos en español; sin relleno ni textos de prueba en el contenido cargado.
+- **Correcciones:** (1) el orden de servicios y testimonios salía invertido y cambiaba con cada edición (la API los entrega por última modificación): ahora se ordenan por `originalId` y por `name`; (2) la página vieja `/about` seguía publicada con la integrante "Tia Ferguson": se borra `about.js` y `teamlist.js` y `/about` redirige a `/aboutNew`; (3) EmailJS seguía en los créditos: el cargador lo borra; (4) etiquetas de certificaciones mal traducidas ("Empleos", "CRP"): corregidas; (5) los artículos salían con la descripción SEO general vieja: ahora usan un extracto del primer párrafo.
+- **Orden para salir:** (1) en Netlify, `DATO_ENVIRONMENT=contenido-2026-10` solo en el contexto Deploy Previews; (2) preview revisado; (3) `node tools/datocms/env.js promote contenido-2026-10 --yes`; (4) quitar la variable de Netlify y fusionar a `master` enseguida (producción lee `main`, que ya tendrá el contenido); (5) borrar el entorno con `env.js delete`.
+
+### Hecho (parte 5: fundido de imágenes y blog ampliado)
+- **Fundido de aparición de las imágenes:** las del CMS entran con el fundido de `gatsby-image` (de la miniatura borrosa a la nítida, 700 ms) en lugar de `fadeIn={false}`; las locales (hero y 404) llevan la clase `nx-fade` y un script mínimo en `gatsby-ssr.js` la marca como cargada al terminar, sin depender de React. Sin JavaScript se ven sin efecto (`noscript`) y con `prefers-reduced-motion` no hay transición.
+- **Blog:** de 2 a **8 artículos** (de 600 a 800 palabras cada uno, en español e inglés), con preguntas frecuentes y títulos de menos de 60 caracteres para posicionarse: factura de electricidad de un edificio comercial, EUI y WUI, auditoría energética (niveles de ASHRAE), subvenciones y reembolsos, lista de verificación para migrar servidores y documentación de la red y del directorio activo. Fechas semanales hacia atrás desde el 13 de octubre. El cargador crea los 6 nuevos, amplía los 2 existentes y usa 4 imágenes más del kit. Nuevo calendario editorial de 8 ideas (HVAC, alarmas del BAS, copias 3-2-1, seguridad de cuentas en Microsoft 365, etc.).
+
+### Hallazgo en el preview: la cotización "se enviaba" y no llegaba
+- El dev reportó que la cotización mostraba "enviado" y nunca aparecía en Netlify (la de contacto sí funcionaba). Dos envíos de prueba de Claude (uno con `curl` y otro desde un navegador automatizado) llegaron bien, y el código se probó en español e inglés con y sin empresa: el fallo era de su navegador.
+- **Primera hipótesis (descartada para este caso):** el campo trampa (`bot-field`) estaba fuera de pantalla y el autorrelleno podía rellenarlo, con lo que `submitNetlifyForm` descartaría el envío mostrando éxito. Se endureció igualmente (`display: none` y `data-lpignore`, `data-1p-ignore`, `data-bwignore`, `data-form-type`; la consola avisa si se descarta un envío por esa causa), pero el dev comprobó con un envoltorio de `fetch` que la petición sí sale (`POST /?no-cache=1` responde `200`).
+- **Lo que muestran las capturas de Netlify:** el formulario `quote` indica "Last submission 3:03 PM" (el último intento del dev) pero los envíos verificados solo incluyen los dos de prueba de Claude y uno del 12 de octubre. Los intentos del dev están, con toda probabilidad, en la pestaña **Spam** (Akismet): Netlify responde `200` igualmente y no avisa por correo. Pendiente: revisar esa pestaña, marcar "Not spam" y probar con un mensaje realista.
+
+### Decisiones
+- Los **testimonios** se cargan y se publican por decisión del dev y de la clienta (en la parte 1 se había propuesto dejarlos como ejemplo; ver la parte 3).
+- Todo lo que devuelva la IA se **contrasta con el CV** antes de tocar el CMS, y Ana aprueba el posicionamiento y la lista de pendientes.
+- **Cómo se carga y se aprueba el contenido:** copia de `main` en DatoCMS, carga con los scripts de `tools/datocms`, lectura en local y en el Deploy Preview con `DATO_ENVIRONMENT`, aprobación del dev y promoción de la copia al terminar. Detalle en el [README de las herramientas](../tools/datocms/README.md) y en las notas de carga de [contenido-nansystems.md](contenido-nansystems.md).
+- Contenido cargado en un **entorno de pruebas** (copia de `main`), no en borrador: producción sigue leyendo `main` hasta que se promueva. La lectura local y el Deploy Preview usan `DATO_ENVIRONMENT`.
+- El CV confirma el año base **2015** de la cifra "+11 años" (primer puesto técnico: enero de 2015).
+
+### Hallazgos / sorpresas
+- **Fuera del CMS (escrito en el código):** titular, bajada, chip y rótulo del hero; franja de tecnologías; descripción del pie; banda de cotización; introducciones; promesa del boletín "una vez al mes"; cita de Churchill sin autor en el blog; imágenes del hero y de la 404 generadas con IA; textos legales (borrador técnico). Claves de traducción muertas: `site.*` (texto del starter de Gatsby), `home.some`, `blogList.readingtime`.
+- **Testimonios del inicio:** parecen de relleno (empresas reales como Apple, un "Karl Marx"), y los tres enlazan a la web personal del desarrollador.
+- **Biografía:** muestra un tutorial genérico de "cómo redactar la misión de una empresa"; la biografía real de Ana (modelo `about`), 9 certificaciones y 16 frases de marca existen en el CMS pero el sitio nuevo no las muestra.
+- **Servicios:** textos que parecen copiados de Wikipedia, AutoCAD, Tridium y Avnet; mención de CentOS 7 (fuera de soporte desde 2024); el título en español del servicio de IoT es "Niágara y Tridium (Se buscan)". Tres catálogos de servicios que no coinciden y tres posicionamientos.
+- **Blog:** 5 artículos de prueba con cuerpos "Lorem ipsum" (el cuerpo del artículo no pasa por el filtro de relleno).
+- **SEO:** la biografía no tiene SEO propio (pestaña "NaNSYSTEMS.us"), servicios y artículos comparten una descripción con erratas, y el portafolio dice "más de 6 años".
+- **Portafolio contra LinkedIn:** el CMS da a Ana como empleada actual en Austin ISD; LinkedIn termina en agosto de 2024. Faltan 7 puestos (H&R Block ×3, GTS, K-FORCE, JFC Global y el segundo puesto de Austin ISD) y toda la formación; hay nombres propios traducidos y textos genéricos copiados de anuncios.
+- **El CV no respalda** Niagara/Tridium, IoT como programa propio, Linux como servicio ni diseño web; lo más fuerte es conservación de energía y agua, automatización de edificios (BAS/HVAC/EMS), consultoría de TI y gestión de proyectos.
+
+### Pendiente y abierto
+- **Aprobación del dev** del contenido (decisiones de la sección 11.3 y 11.2 de [contenido-nansystems.md](contenido-nansystems.md)).
+- Decisión del dev: el Instagram del CMS (`gabrielmelissa2015`) sale en el pie y en contacto y no parece de Ana; la descripción SEO general del proyecto (Ajustes → SEO, solo desde el panel) conserva el texto viejo y la usan las páginas sin SEO propio.
+- Respuestas de Ana a la sección 8 de [cv-ana-echeverria.md](cv-ana-echeverria.md): ocupación actual, servicios reales, equipo, alianzas, domicilio y correo públicos, puestos a mostrar, testimonios reales.
+- Instagram del CMS: el enlace no coincide con el nombre de Ana (sin verificar).
+
+### Próximos pasos
+1. El dev aprueba el contenido y las decisiones de carga.
+2. Crear la copia del entorno, subir las 6 imágenes del kit y cargar el contenido (comandos en el README de `tools/datocms`; el simulacro ya está hecho).
+3. Leer el sitio completo en local con `DATO_ENVIRONMENT`, corregir lo que haga falta (textos en el documento y volver a cargar).
+4. Deploy Preview con la misma variable, revisión en ES y EN, y promoción de la copia tras el merge.
+4. Limpieza final y comprobaciones posteriores al merge (ver el cierre de la 6.ª sesión).
+
+### Commits de la sesión
+- Sin commits todavía: `docs/cv-ana-echeverria.md`, `docs/prompt-contenido-ia.md`, `docs/README.md`, `docs/roadmap.md`, `docs/CHANGELOG.md` y `docs/dev-log.md` quedan pendientes del dueño (mensaje propuesto: `docs: add Ana's CV and the prompt to write the site content`).
+
+---
+
+## 2026-10-12 (6.ª sesión) · R3 completo: logo con engranajes, blog, post, servicios, biografía, portafolio, proyectos, contacto y ajustes de la revisión
+
+**Rama:** `feat/redesign-coral-editorial` (sobre `3eb7951`, el commit de R1a pasos 2 y 3) · **Entorno:** Node 14.21.3
+**Objetivo:** el dueño revisó la home ("todo funciona y se va viendo mejor") y pidió seguir; además, recuperar de forma opcional la "ruedita" del logo anterior.
+
+### Hecho (parte 1: logo, blog, post y servicios; ya commiteada)
+- **Logo con engranajes** (`src/components/header.js`, `nx.css`): el punto coral se sustituye por los dos engranajes del logo anterior, dibujados como SVG propio (grande de 8 dientes en coral, pequeño de 6 en el color del texto, engranados). Al pasar el mouse o enfocar el logo giran un diente en sentidos contrarios (45° y −60°, solo `transform`); con `prefers-reduced-motion` no se mueven (regla general de `nx.css`). Es un dibujo nuevo, no el PNG viejo (que era azul y verde agua): se ve igual de bien en claro y oscuro y no pesa. Los paths los genera un script (no hay archivo en el repo): si hay que cambiar dientes o proporciones, se regeneran.
+- **Blog** (`src/pages/blog.js`): cabecera con `h1`, texto de introducción y la cita (`blog.quote`); tarjetas `nx-post-card` con la primera destacada (dos columnas desde 768 px), portada 16:10 con punto focal, hasta 3 pastillas, fecha absoluta por idioma y minutos de lectura. Consulta mínima (se quitaron `blogImg*`, `locale` y `fromNow`), orden descendente, `sizes` real por hueco y estado vacío (`blog.empty`). Los títulos de las tarjetas son `h2` (el `h3` de la muestra saltaba un nivel).
+- **Post** (`src/templates/blogpost.js`): `nx-article` con enlace "Volver al blog", pastillas, `h1`, meta, portada 2:1 (`priority`, sin lazy), contenido en `.nx-prose--lg`, categorías al pie y compartir. Si el artículo no existe en el idioma elegido muestra el otro (antes habría roto la página).
+- **Servicio** (`src/templates/technology.js`): etiqueta "Servicio · `shortTitle`", `h1`, descripción corta, pastillas, botón coral "Cotizar este servicio" (abre la cotización con el título precargado), portada 3:2, contenido y compartir. Mismo respaldo de idioma.
+- **Piezas compartidas nuevas:** `postMeta` (fecha + minutos; la home ahora lo usa también), `pills`, `share`; en `utils/content.js`: `readMinutes` y `prepareCmsHtml`; `Media` acepta `sizes` también para imágenes del CMS; iconos `back` y `whatsapp`; `SHARE_VIA_HANDLE` en `config/site.js`.
+- **`prepareCmsHtml`** (SPEC j.3 y j.4) se aplica al HTML del CMS en post y servicio: baja los `h1` del contenido a `h2` (un solo `h1` por página), añade `scope="col"` a las cabeceras de tabla y `tabindex="0"` a los `pre` y tablas (se desplazan en horizontal: así se pueden recorrer con el teclado).
+- **Arreglo de CSS:** el borde coral de `.nx-link-more` se estiraba a todo el ancho cuando el enlace estaba en una rejilla (`justify-self: start`).
+
+### Hecho (parte 2: biografía, portafolio, proyectos y contacto)
+- **Biografía** (`src/pages/aboutNew.js`): cabecera con `h1`, texto de bienvenida y compartir; tarjetas de áreas de trabajo (1:1, `Media`); ítems alternados con imagen 3:2, etiqueta ("Área 01"…), `h2` y texto corto, y **"Leer más"** (`src/components/readMore.js`) si el CMS trae texto completo. Datos por idioma con el patrón `about_<L>`.
+- **Portafolio** (`src/pages/portfolio.js`): filas editoriales con rango de años (un solo año si inicio y fin coinciden, "Empleo actual" si no hay fin), cargo, empresa · lugar y pastilla del empleo actual; botón `+`/`−` que despliega hasta cuatro bloques (descripción, responsabilidades, tareas, logros) y el enlace a la empresa. El primer puesto actual sale desplegado. **No se piden `salary` ni `opinionAboutCompany`.** Solo se muestra lo que aporta (ver "Contenido del CMS").
+- **Proyectos** (`src/pages/ventures.js`): cabecera de dos columnas (bienvenida + imagen lateral 4:5) y tarjetas 3:2. Con texto completo en el CMS, "Leer más" abre un diálogo de detalle (imagen, texto, "Cotizar por Email" y "Cerrar"); **"Cotizar" cierra el detalle y abre la cotización con el título del proyecto**, y al cerrarla el foco vuelve a la tarjeta. Las tarjetas sin texto real ofrecen directamente "Cotizar por Email" (antes llevaban a `/singleventure` con relleno). Se retiran `singleventure.js` y el estado del router.
+- **Contacto** (`src/pages/contact.js`): formulario con validación por campo y resumen de errores accesible, estados enviando / enviado / error, y `submitNetlifyForm("contact", …)` con honeypot y el texto de error con el correo (A8). Tarjeta lateral (`contactAside.js`) con el correo (solo si existe `GATSBY_CONTACT_EMAIL`) y las redes del CMS. Se acabaron los estilos y el icono giratorio del formulario viejo.
+- **Cabecera:** el menú de escritorio pasa de 960 a **1100 px**. Entre 960 y 1099 px la cabecera desbordaba (scroll horizontal en español a 960 y 1024 px, en inglés a 960) y "Get a quote" se partía en dos líneas; hallazgo de esta sesión (las mediciones de R1a no incluían esos anchos). Además `white-space: nowrap` en el botón.
+- **Traducciones:** se aplican tres correcciones de la SPEC que no se habían fusionado (`es.menu.ventures` y `ariaVentures` "Projectos" → "Proyectos", `en.home.latest` "Lastest Articles" → "Latest articles", `en.portfolio.actual` "Actual Job" → "Current role"); claves nuevas `about.area` y `ventures.project`; `portfolio.text` usa `{{years}}` (`techYears()` de `config/site.js`, la misma cifra que el "+11" del inicio) en lugar del "6 años" fijo de 2020.
+- **Piezas compartidas:** `Layout` acepta `dialogs` (diálogos propios de una página, fuera de `<main>`); `Dialog` acepta `kicker`; `isPlaceholder` y `usefulBlocks` en `utils/content.js`; `techYears()` y `CONTACT_EMAIL` en `config/site.js`; iconos `plus` y `minus`; `.nx-page-head .nx-two-col > .nx-stack` centrado vertical.
+- **M4 parcial:** se borran `src/pages/singleventure.js` y `src/components/shareButton.js` (ya sin uso), `singleventure` sale de `FIXED_PATHS` (`gatsby-node.js`) y de `exclude` del sitemap. **`react-share` ya no se importa en ningún archivo.**
+
+### Decisiones (parte 2)
+- **Filtro de relleno del CMS** (`isPlaceholder`): lo que contenga "Lorem ipsum", "Ipsem Lorem" o la nota interna "Place here all the accomplishments…/Recommended for Ana" se trata como vacío. Protege el sitio público sin tocar el CMS; cuando la clienta escriba el texto real, aparece solo. Es un parche en código a propósito, para que el relleno no llegue a producción mientras se completa el contenido.
+- **Sin `data-sal`** (scroll-reveal) en las páginas portadas: el efecto es decorativo, deja el contenido invisible si el script falla o no se dispara (también en pruebas) y exige un umbral de visibilidad. Si se quiere, se añade luego; `gatsby-plugin-scroll-reveal` queda como candidato a retirar en la limpieza.
+- **Encabezados:** un `h1` por página; los títulos de ítems y tarjetas son `h2` (la muestra usaba `h3` saltando un nivel).
+- **El correo de contacto** de la página sale de `GATSBY_CONTACT_EMAIL`; si está definida en Netlify, **aparece en la tarjeta de contacto del sitio publicado** (hoy es el correo personal del dueño). Si no se quiere en público todavía, quitar la variable.
+
+### Contenido del CMS por completar (para avisar a la clienta)
+- **Biografía:** el texto completo (`content`) de los tres ítems es "Lorem ipsum" con una imagen de stock y la etiqueta (`shotTitle`) es "Ipsem Lorem": no se muestran ("Leer más" oculto, etiqueta "Área 01/02/03"). Errata: "Conservación de **Energia**" (falta la tilde). El SEO de la página tiene el título genérico "NaNSYSTEMS.us".
+- **Proyectos:** el texto completo de 3 de 4 proyectos es relleno; solo "Soluciones de Automatización" tiene texto. **El sitio en producción hoy muestra ese relleno en `/singleventure` al pulsar "Leer más".**
+- **Portafolio:** "Tareas habituales" (`summaryTasks`) es "Lorem Ipsum" en los 11 puestos; "Descripción" y "Responsabilidades" suelen repetirse entre sí o repetir el cargo (se muestra una sola vez); un puesto trae en "Logros" una nota interna en inglés ("Recommended for Ana…") que **hoy sale publicada**. Los logros están vacíos en casi todos.
+- Imágenes del CMS sin texto alternativo ni punto focal (ya anotado).
+
+### Verificación (parte 2; build de producción + `gatsby serve`)
+- Build limpio: **20 páginas** (sin `/singleventure`). Un error por el camino: Gatsby 2 no admite una consulta de página y otra estática en el mismo archivo (`contact.js` + tarjeta lateral): la tarjeta pasó a `contactAside.js`.
+- **Matriz de desborde: 126 combinaciones** (7 rutas × 9 anchos de 320 a 1440 px × español e inglés), **0 desbordes** y el botón de cabecera nunca se parte.
+- **Portafolio:** 11 puestos; ninguna "lorem" visible (incluidos los paneles ocultos); desplegable con `aria-expanded`/`aria-controls`, iconos y estado independiente por fila. **Biografía:** `h1` único, etiquetas "Área 0N", imágenes cargadas, sin "Leer más" (contenido de relleno). **`ReadMore`** probado con una página temporal (ya borrada): estado, iconos, `h1`→`h2`, `scope="col"` y `tabindex="0"` en `pre`/tabla.
+- **Proyectos:** diálogo con foco dentro y página inerte; "Cotizar" lo sustituye por la cotización con "Servicio: <título>"; al cerrar, el foco vuelve a la tarjeta. **Error encontrado y corregido:** el diálogo estaba dentro de `<main data-nx-page>`, que se marca `inert` al abrir (el propio diálogo quedaba inerte); por eso existe `Layout dialogs`.
+- **Contacto con `fetch` simulado:** envío vacío (resumen de 3 errores y foco en él), correo inválido, envío válido (cuerpo `form-name=contact&bot-field=&name=…&email=…&message=…`), "Enviar otro mensaje" (foco en el nombre), límite de 60 s, error de servidor (texto con enlace `mailto` y "Reintentar" sin caer en el honeypot) y honeypot lleno (no se envía nada).
+- Pendiente de la revisión visual del dueño: todas las pantallas en su navegador (escritorio, tableta, oscuro).
+
+### Decisiones (parte 1)
+- **Compartir con enlaces normales, no con `react-share`:** la muestra del diseño ya usa `<a class="nx-share__btn">`; cada enlace abre la red en una pestaña nueva (`noopener noreferrer`), con nombre accesible "Compartir en X (se abre en una pestaña nueva)". Se evita un SDK con ventanas emergentes y botones sin enlace real, y la URL sale de `siteUrl` + ruta, igual en el HTML estático y en el navegador (antes salía de `location.href`, que no existe al generar el HTML). `react-share` **sigue en uso** por `aboutNew.js` y `singleventure.js` hasta portarlas; después: `npm uninstall react-share` y borrar `src/components/shareButton.js`.
+- **El logo gráfico vuelve en versión engranajes** aunque la SPEC lo había dejado como solo texto: lo pidió el dueño, es decorativo (el nombre accesible lo da el enlace) y no cambia el contrato del logo.
+- **`SHARE_VIA_HANDLE = "_MsLinda"`** es el usuario que ya tenía el botón anterior; hay que confirmar con la clienta si sigue siendo suyo.
+
+### Hallazgos / sorpresas
+- **El build falló por un `\r` dentro de un string:** el script que incrustó los paths en `header.js` leyó la salida de Python en Windows (CRLF) y dejó un retorno de carro al final de cada cadena; Babel: `Unterminated string constant`. Lección: al generar código desde la salida de otro programa, limpiar `\r`. Parecido: `\s` dentro de una plantilla de JS (`` `\s…` ``) pierde la barra; en regex usar el literal `/\s…/`.
+- **`useDialog` solo funciona dentro de `Layout`** (el proveedor vive ahí): una página o plantilla no puede llamarlo directamente; el botón de cotización del servicio es un componente hijo (`QuoteButton`).
+- En los datos reales: los 5 artículos tienen portada, alt vacío (el respaldo es el título) y 3 categorías; las portadas se ven bien recortadas a 16:10 con el centro por defecto (sin punto focal en el CMS todavía).
+
+### Verificación (build de producción, `gatsby serve`)
+- Build limpio: 21 páginas. Blog: 5 tarjetas en orden descendente, portadas con relación 1,6, `sizes` correcto, fechas y minutos por idioma; la destacada ocupa dos columnas desde 768 px (7fr/5fr) y las demás van a 2 columnas; sin errores en consola.
+- Post y servicio: un solo `h1`, 0 `h1` dentro del contenido, enlaces de compartir bien formados, portada con `loading="eager"`, etiqueta del grupo "Compartir…" por página.
+- **Sin desborde de página** en blog, dos posts y un servicio a 320, 375, 768, 1024 y 1440 px (el único elemento que sobresale es el `<code>` de un `pre` que se desplaza dentro de su caja, como debe).
+- Cotización desde el servicio: abre con "Servicio: <título>", foco dentro del diálogo, Esc cierra, el foco vuelve al botón y el resto de la página recupera `inert`.
+- Tema oscuro del blog y logo con engranajes en claro y oscuro revisados en la primera pintura. La revisión visual completa sigue siendo del dueño.
+
+### Hecho (parte 3: ajustes tras la revisión del dueño)
+El dueño revisó el sitio en su navegador y pidió tres cambios (capturas de la ventana de cotización, del contacto y de un post):
+- **Barras de desplazamiento con el estilo del sitio** (`nx.css`, sección 12b): píldora delgada con el color del borde de los campos (3:1 o más sobre el fondo en claro y en oscuro) que se vuelve coral al pasar el mouse; vale para la página, los diálogos, los bloques de código y las tablas. Chrome, Edge y Safari usan pseudoelementos `-webkit-`; Firefox, las propiedades estándar (en Chrome 121+ las estándar anularían el diseño redondeado, por eso solo van en Firefox). Además `color-scheme` ahora sigue el tema elegido en el sitio (antes seguía el del sistema: la barra de la página y los controles nativos podían salir oscuros con el sitio en claro).
+- **Tarjeta de redes del contacto:** se estiraba hasta la altura del formulario y repartía el espacio sobrante (título arriba, iconos abajo, un hueco blanco en medio). Ahora mide lo que contiene y se alinea arriba (clase `nx-aside`; 145 px a 1440 px). No lleva imagen: son el título y los iconos.
+- **Post con el título sobre la imagen** (`blogpost.js`, `nx-post-hero`): desde 768 px las pastillas, el título y la fecha van sobre la portada con un degradado navy; la portada baja de 2:1 a **16:9 (768–1099 px) y 21:9 con 560 px de alto máximo desde 1100 px** (a 1440 px pasaba de unos 630 px de alto a 538). En móvil siguen apilados encima de la imagen, y el enlace "Volver al blog" queda fuera de la cabecera. **Sin portada ya no se pinta el hueco "Imagen no disponible"** en el post (en las tarjetas del blog sí). El título sobre la imagen usa de 1,75 a 3 rem.
+
+### Verificación (parte 3)
+- Título de 100 caracteres sobre la imagen a 768, 900, 1099, 1100, 1440 y 1920 px: cabe dentro de la portada en todos y no hay desborde de página; a 375 px sigue apilado. Captura del post a 1024 px y del diálogo de cotización con scroll a 800 × 560 px (la barra es una píldora delgada, ya no el bloque gris); tarjeta de redes a 375, 1024 y 1440 px (145 px, alineada con el formulario).
+- Mientras compilé había un `npm run develop` en el puerto 8000 (el del dueño): comparten `.cache`; si ese servidor se comporta raro, reiniciarlo.
+
+### Hecho (parte 4: R4, legales, créditos y 404)
+- **Términos** (`src/pages/tos.js`): cabecera con la fecha de los textos (`legalHead.js`, `LEGAL_UPDATED` en `config/site.js`), índice con enlaces a las nueve secciones (`#t1`…`#t9`; `scroll-margin-top` para que no queden bajo la cabecera fija) y el texto en `.nx-prose--lg` en una columna de 880 px. **Se corrige `tos.l5`** (en español e inglés traía pegada al final una frase duplicada entre comillas, un error de copia).
+- **Privacidad** (`privacy.js`): misma cabecera y lectura larga.
+- **Créditos** (`credits.js`): los 13 logos del CMS (sin leyenda) en tarjetas 1:1 con el logo entero sobre blanco (`Media fit="contain"`); como no hay leyenda, el nombre es el dominio del enlace y el enlace "Ver recurso" lleva un nombre accesible completo. El texto largo de la página anterior se sustituye por `credits.intro`.
+- **404** (`404.js`): la imagen de concepto local (`404-cable-desconectado.jpg`, 800 × 800) con su texto alternativo (`notfound.alt`, clave nueva), código, título, texto y los botones "Volver al inicio" y "Contacto". **Ya no usa `InfoSite.notFoundImg` del CMS** (ese campo queda sin uso).
+- **Títulos de pestaña** de las cuatro páginas con las claves `meta.*` (antes mezclaban claves viejas y texto fijo en inglés).
+- **`prepareCmsHtml` da `alt=""` a las imágenes sin `alt`** del texto del CMS (la auditoría encontró 3 en un post y 1 en un servicio): una imagen decorativa declarada es mejor que un atributo ausente, con el que los lectores de pantalla leen el nombre del archivo. Si el editor escribe el texto alternativo en el Markdown (`![descripción](url)`), se respeta.
+
+### Verificación (parte 4)
+- Build limpio de 20 páginas **desde una copia aislada del repo** (ver la nota de abajo). Barrido de 168 combinaciones (12 rutas × 7 anchos de 320 a 1920 px × español e inglés): 0 desbordes y exactamente un `h1` en cada una.
+- Auditoría de DOM sobre todas las rutas: imágenes con `alt`, enlaces y botones con nombre accesible, sin `id` repetidos ni saltos de encabezado, enlaces `_blank` con `noopener`, campos con etiqueta, un solo `header`/`main`/`footer` y todos los `nav` con nombre; el único hallazgo (imágenes del texto del CMS sin `alt`) quedó corregido y se comprobó en el HTML generado de los 5 posts y los 3 servicios.
+- Términos: nueve secciones con ancla y enlaces del índice válidos, `tos.l5` ya sin la frase duplicada, fecha "Last updated: December 19, 2020". Créditos: 13 tarjetas, 13 imágenes cargadas (carga diferida), enlaces con nombre "View resource: npmjs.com (opens in a new tab)". 404: imagen cargada con su texto alternativo y sin banda de cotización.
+
+### Hecho (parte 5: favicon, términos y política de privacidad)
+El dueño revisó la parte 4 y pidió tres cosas: márgenes en los términos, el favicon con los colores del logo y "los cambios que consideres" en política y términos.
+- **Márgenes de `/tos`:** lo que veía no era un fallo del código. Su servidor de desarrollo (puerto 8000) seguía sirviendo el marcado viejo (títulos y párrafos sin clases, con la frase duplicada de `tos.l5` todavía visible) porque los builds de producción que se hicieron en la misma carpeta le descuadraron `.cache` (ver la nota de entorno de la parte 4). Comprobado en un servidor de desarrollo **aislado** (copia del repo, puerto 8001): la página sale con el diseño nuevo y los márgenes del diseño (16 px a 375 px, 31 px a 768 px, columna de 880 px centrada a 1440 px), sin desborde. Solución para el dueño: parar `npm run develop`, borrar `.cache` y `public` (o `npx gatsby clean`) y volver a arrancarlo.
+- **Favicon con los colores del logo** (`src/media-imgs/favIcon.png`, 512 × 512): los dos engranajes del logo en coral y azul marino sobre fondo crema, generados con `sharp` a partir de los mismos paths de `header.js` (así no hay dos dibujos que mantener). `gatsby-plugin-manifest` regenera de ahí `favicon-32x32.png` y los iconos de la app (la URL lleva un digest nuevo: basta con recargar sin caché). El **manifiesto web** pasa a `theme_color` azul marino (#1C2541) y `background_color` crema (#FBFAF7) en lugar del azul antiguo (#285790).
+- **Términos** (`tos.js`, `legalToc.js`): índice y numeración generados por la página (los títulos de las traducciones ya no llevan "1.", "2."…); dos secciones nuevas, **"Uso de los formularios"** (uso legítimo, sin spam ni automatismos, límite de frecuencia por navegador) e **"Información del sitio y cotizaciones"** (los contenidos son informativos, no una oferta; alcance, precio y plazos se acuerdan por escrito); la cláusula de leyes vigentes ya no dice "nuestras leyes" a secas: **leyes de los Estados Unidos y del estado donde NaNSYSTEMS tiene su domicilio** (la web dice que la empresa se fundó en EE. UU.; **el estado concreto lo debe confirmar la clienta**); la sección de modificaciones remite a la fecha de revisión del inicio de la página.
+- **Política de privacidad** (`privacy.js`) **reescrita con lo que el sitio hace de verdad**: quién es responsable, qué datos se recogen en cada formulario (contacto, cotización, boletín) y datos técnicos, con quién se comparten (**Netlify**, que aloja el sitio y recibe los formularios; **DatoCMS**, que sirve textos e imágenes; **Google Analytics**; **Equalweb**, el menú de accesibilidad), lista exacta de lo que se guarda en el navegador (`nan-theme`, `i18nextLng`, `nx-form-sends-*`, `gatsby-gdpr-google-analytics`, `_ga`), conservación, derechos y cómo ejercerlos (por la página de contacto), menores, enlaces externos y cambios. Se conserva el crédito a GetTerms (la plantilla de origen). Fecha de revisión: `LEGAL_UPDATED = "2026-10-12"` (antes 19/12/2020; actualizar si se revisa de nuevo o al publicar).
+- **Texto del aviso de cookies** (`cookies.title`): decía "no almacenamos información personal de ningún tipo" y "con el consentimiento del usuario", y no era cierto (los formularios guardan datos y Analytics se carga siempre); ahora dice que se usan cookies y almacenamiento local para recordar preferencias y medir visitas con Google Analytics, que los datos de los formularios solo sirven para responder y remite a la política.
+
+### Hecho (parte 6: A4 opción (a), sin Analytics ni banner, y enlace del autor)
+El dueño decidió **quitar Google Analytics** (opción (a) de A4) y pidió que el enlace de `@theghost1980` del pie fuera directo a su GitHub.
+- **Fuera de la configuración y del código:** `gatsby-plugin-google-gtag` y `gatsby-plugin-gdpr-cookies` salen de `gatsby-config.js` (con ellos desaparecen el identificador de medición y la petición `gtag/js?id=undefined`), y el banner de `react-cookie-consent` sale de `Layout` junto con el bloque `cookies` de las traducciones, las reglas `.nx-cookie*` y el token `--z-cookie` de `nx.css`.
+- **Sin banner:** el sitio ya no instala cookies de analítica ni de publicidad; lo que guarda (tema, idioma y contador de envíos) es almacenamiento funcional que el propio visitante provoca, y el menú de accesibilidad de Equalweb solo guarda las opciones que se elijan. Si en el futuro se añade analítica o cualquier cookie no esencial, hay que volver a poner un aviso con consentimiento real (no uno decorativo).
+- **Política de privacidad más corta:** sin Google Analytics en los proveedores, sin las cookies `_ga` ni la cookie del banner en la lista de lo guardado, sin el complemento de inhabilitación, y con una frase nueva: el sitio no usa herramientas de analítica ni de publicidad. Los datos técnicos de la visita ya no mencionan "herramientas de estadísticas".
+- **Enlace del pie:** `@theghost1980` apunta a `https://github.com/theghost1980/` (antes a `saturnoman.com`); también el campo `author` de `siteMetadata`.
+- **Pendiente para el dueño:** `npm uninstall react-cookie-consent gatsby-plugin-gdpr-cookies gatsby-plugin-google-gtag` (ya nada los importa ni los configura; hay que desinstalarlos **después** de aplicar este cambio, porque con ellos aún en la configuración el build fallaría) y volver a ejecutar `npm audit`: con ellos se va el único aviso alto que llegaba al navegador (`js-cookie`).
+
+### Verificación (parte 6)
+- Build limpio de 20 páginas en la copia aislada. **Ni el HTML ni el JS de producción contienen `googletagmanager` ni `gtag`**; sin `dataLayer`, sin banner y con `document.cookie` vacío tras cargar la política (el sitio no instala cookies propias). La política lista Netlify, DatoCMS y Equalweb, tres entradas de almacenamiento (`nan-theme`, `i18nextLng`, `nx-form-sends-*`) y la frase de que no hay analítica ni publicidad; el pie enlaza a `https://github.com/theghost1980/`. Barrido de 50 combinaciones (5 rutas × 5 anchos × español e inglés): 0 desbordes y un solo `h1` en cada una.
+
+### Hecho (parte 7: widget de accesibilidad de Equalweb desactivado)
+El dueño pidió quitar el menú de accesibilidad de Equalweb (lo reactivará más adelante).
+- **Un solo interruptor:** `A11Y_WIDGET_ENABLED = false` en `src/config/site.js`. Con `false`: `gatsby-browser.js` no carga el script de Equalweb (el fragmento activo se conserva **idéntico**, con su integridad SRI, y se retiró el fragmento de pruebas comentado, que sigue en el historial de git), la política de privacidad no menciona a Equalweb y el CSS no reserva espacio junto al botón de la banda de cotización (`--a11y-reserve: 0px`; con `true`, `gatsby-ssr.js` añade la clase `nx-has-a11y` a `<body>` y vuelve a 72 px).
+- **Limpieza asociada:** fuera la clave `a11y.a11yWidget` de las traducciones (la interfaz del menú es la del tercero), el marcador `.nx-a11y-slot` y los tokens `--a11y-bg`/`--a11y-fg` y `--z-a11y` de `nx.css` (eran de la muestra del diseño). Se conservan en las traducciones las frases de la política (`privacy.s2-eq`, `privacy.s3-eq`) que se muestran solo con el interruptor en `true`.
+- **Para reactivarlo:** poner `A11Y_WIDGET_ENABLED = true` (un build lo aplica en todo: script, política y espacio). Antes conviene comprobar que la clave del sitio (`sitekey`) y la versión del script de `gatsby-browser.js` siguen vigentes en el panel de Equalweb, y que Equalweb figure en los créditos del CMS.
+- **En el CMS:** mientras esté desactivado, "equalweb.com" (y "emailjs.com", que ya no se usa) pueden salir de la lista de créditos.
+
+### Verificación (parte 7)
+Probado en las dos posiciones con builds de 20 páginas en la copia aislada. **Con `true`:** `<body class="nx-root nx-has-a11y">`, se carga `cdn.equalweb.com/core/3.0.0/accessibility.js`, `window.interdeal` queda definido, la política menciona a Equalweb y `--a11y-reserve` vale 72 px. **Con `false` (estado del repo):** `<body class="nx-root">`, 0 peticiones a `equalweb`, `window.interdeal` sin definir, la política lista solo Netlify y DatoCMS y `--a11y-reserve` vale 0 px. En el JS de producción sigue el fragmento del widget (≈1 KB) sin ejecutarse; en el HTML de créditos aparece "equalweb.com" porque viene del CMS.
+
+### Hecho (parte 8: qué se puede hacer con la API de DatoCMS, y un hallazgo de seguridad)
+El dueño preguntó si desde aquí se pueden crear artículos y cambiar contenido con la API de DatoCMS. Se revisó la documentación oficial y se hicieron **solo lecturas** al proyecto; el resultado completo está en [datocms-api.md](datocms-api.md) (qué se puede, qué no, modelos, límites y flujo propuesto).
+- **Sí se puede** crear, editar, borrar y publicar registros, subir imágenes con alt por idioma y punto focal (y corregir los 108 archivos existentes), completar los textos de relleno, cambiar el esquema, auditar el contenido y disparar el build de Netlify. Hace falta un token de escritura; hoy ninguna escritura se hizo.
+- **Hallazgo de seguridad (M10):** el `api_key` del `.env` es el token de **acceso completo (admin)**, no el de solo lectura que dicen los documentos y el mensaje de `gatsby-config.js`; probablemente también lo es el de Netlify (a comprobar). **Comprobado:** el sitio compila igual con el de solo lectura (20 páginas, 1152 nodos), así que el build no necesita escritura. Además, la consulta de `access_tokens` imprimió valores de tokens en la salida de esa sesión (queda en su registro local): conviene **regenerar el token de acceso completo**.
+- **Sin modo borrador en ningún modelo:** lo que se crea queda publicado en el CMS al instante (y sale en el siguiente build). Antes de escribir contenido, activar el borrador en el modelo o trabajar en un sandbox.
+- Detalles del proyecto: un solo entorno (`main`), un disparador de build a Netlify ("Blog Posts"), ningún webhook, plan antiguo (la API no devuelve `subscription-limits`).
+
+### Hallazgo de la parte 5, resuelto en la parte 6: Google Analytics no dependía del banner (A4)
+En el HTML de producción **`gtag` se carga siempre** (`gatsby-plugin-google-gtag` con el identificador de medición `G-…`, y además una petición a `gtag/js?id=undefined` que sale de `gatsby-plugin-gdpr-cookies`, que no tiene configurado Analytics): el botón "Acepto/Rechazar" del banner solo guarda su cookie y **no activa ni detiene nada**. La política lo describía tal como era. El dueño eligió la opción **(a): quitar Analytics** (ver la parte 6), que además evita tener que gestionar consentimiento.
+
+### Revisión legal pendiente
+Los textos legales son un **borrador técnico** escrito a partir de lo que el sitio hace, **no asesoría legal**: conviene que la clienta o su asesor los revise antes de publicar (jurisdicción, plazos de conservación, derechos según el país de los visitantes y la decisión sobre Analytics).
+
+### Para avisar a la clienta (legales y créditos)
+- **La política de privacidad se reescribió** (parte 5) y los textos legales son un borrador técnico: que la revise la clienta o su asesor (ver arriba), y (A4 ya está resuelto: se quitó Analytics).
+- **Créditos:** "emailjs.com" sigue en la lista y el sitio ya no usa EmailJS (A8); revisar también "equalweb.com" (widget de accesibilidad) y añadir los créditos nuevos si hacen falta (por ejemplo las fuentes autoalojadas, con licencia OFL, o las imágenes de concepto).
+- Los créditos no tienen leyenda en el CMS; si se escribe una, sustituye al dominio.
+
+### Nota de entorno (builds en copia aislada)
+El dueño tiene `npm run develop` abierto en el puerto 8000 mientras trabajamos. Un `npm run build` en la misma carpeta comparte `.cache` con ese servidor y lo descuadra (llegó a redirigir `/tos/` al inicio). Desde esta parte los builds se hacen en una **copia** del repo en la carpeta temporal de la sesión (`robocopy` sin `node_modules`, `.cache`, `public`, `.git` ni `docs`, y `node_modules` enlazado con una unión de carpeta) y se sirve con `gatsby serve -p 9000`. Si el servidor de desarrollo se comporta raro, basta con reiniciarlo.
+
+### Pendiente y abierto
+- Lo de la 5.ª sesión sigue abierto (confirmaciones con la clienta, kit de imágenes en DatoCMS con punto focal y alt, producción tras el merge del PR #2, A4, dominio canónico).
+- Confirmar con la clienta: `SHARE_VIA_HANDLE` (`_MsLinda`), la cifra de años (`TECH_CAREER_START_YEAR`, ahora también en el texto del portafolio) y completar el contenido del CMS de la lista de arriba.
+- Decidir si `GATSBY_CONTACT_EMAIL` queda definida en Netlify (se mostraría en la página de contacto).
+
+### Cierre de la sesión: PR de preview y fusión
+El dueño decidió **probar todo el refactor en un Deploy Preview** y, si va bien, **fusionar a `master`**; lo demás (contenido de DatoCMS con la API y limpieza final) queda para la próxima sesión.
+
+**Subir y abrir el PR** (lo hace el dueño; la rama aún no está en GitHub):
+1. Commit de esta documentación y `git push -u origin feat/redesign-coral-editorial`.
+2. PR contra `master` **en borrador** (así no se fusiona por accidente). La rama tiene 10 commits y 79 archivos cambiados sobre `master`.
+
+**Qué probar en el Deploy Preview:**
+1. El build termina bien. Variables del contexto "Deploy Previews": `api_key` (token de **solo lectura**); `GATSBY_CONTACT_EMAIL` es opcional.
+2. Recorrer: `/`, `/aboutNew`, `/portfolio`, `/blog` y un artículo, un servicio, `/ventures` (abrir "Leer más" y "Cotizar por Email"), `/contact`, `/tos`, `/privacy`, `/credits` y una ruta inexistente (404).
+3. Español e inglés, tema claro y oscuro, menú móvil (hasta 1099 px), barras de desplazamiento y favicon (recargar sin caché).
+4. **Envío real** de los tres formularios (contacto, cotización y boletín): deben aparecer en Netlify → Forms y llegar el correo de aviso.
+5. Consola sin errores; `/sitemap.xml` y `/robots.txt` con 200; ninguna petición a `googletagmanager`, `emailjs.com` ni `equalweb`.
+6. Mirarlo en un teléfono real.
+
+**Antes de fusionar:**
+- **Visto bueno de la clienta** (regla del proyecto: nada llega a `master` sin su aprobación).
+- `api_key` de **Netlify** = token de solo lectura, en Production y Deploy Previews (desde aquí no se ve) y que el token de acceso completo esté regenerado (M10).
+- Decidir si `GATSBY_CONTACT_EMAIL` queda en Netlify (saldría el correo en la página de contacto).
+- Asumir que **desde el merge no se mide el tráfico** (A4 a) y que los textos legales son un borrador sin revisión legal.
+- Contenido: los 5 artículos de prueba siguen publicados (salen en el blog y la home) y el relleno del CMS se oculta por código; no bloquea el merge, pero sí la imagen del sitio (ver [datocms-api.md](datocms-api.md)).
+- Forma de fusionar: **"Create a merge commit"** conserva los 10 commits y los hashes que citan estos documentos (el squash del PR #2 los perdió); **no borrar la rama** después.
+
+**Revertir si algo falla en producción:** en Netlify → Deploys, **"Publish deploy"** del último deploy bueno (inmediato, sin tocar Git); y en Git `git revert -m 1 <commit del merge>`.
+
+**Tras el merge:** comprobaciones en producción (home ES/EN, sitemap, robots, un envío real de cada formulario, ninguna llamada a Analytics, EmailJS ni Equalweb), dominio canónico (con o sin `www`; hoy `siteUrl: https://nansystems.us`) y avisar a la clienta (contacto y cotización estuvieron caídos, política de privacidad por revisar, créditos).
+
+### Estado al cerrar el bloque (leer primero)
+- **Rama `feat/redesign-coral-editorial`**: 10 commits sobre `master` (79 archivos), **todavía no subida a GitHub**. El rediseño está hecho (R1a–R4, A4 sin Analytics ni banner, widget de Equalweb apagado detrás de un interruptor, favicon y textos legales nuevos). Las partes 1 a 8 están commiteadas (hasta `afc03ec`); queda sin commitear este cierre de documentación (corrección sobre los tokens, plan de la próxima sesión, checklist del PR). `docs/images_new` no se añade nunca.
+- **Siguiente paso:** abrir el **PR contra `master`** para probar todo en el Deploy Preview y, si va bien, fusionar (checklist arriba). **Todo lo demás queda para la próxima sesión** (ver "Próximos pasos").
+- **Hecho por el dueño:** desinstalados `react-share`, `bootstrap`, `react-bootstrap`, `react-cookie-consent`, `gatsby-plugin-gdpr-cookies` y `gatsby-plugin-google-gtag`; `api_key` del `.env` = token de solo lectura (verificado); `datocms-write.env` (ignorado por Git) con un token de escritura que se comporta como el rol Editor; **modo borrador activado en `blog_post`** (verificado; los 5 artículos siguen publicados). Sin comprobar: `api_key` de Netlify.
+
+### Próximos pasos
+1. **PR de preview** (comprobaciones arriba) y, si todo va bien, **merge a `master`** con el procedimiento de arriba (visto bueno de la clienta incluido).
+2. **Próxima sesión · contenido de DatoCMS con la API** (Fase 5 del [roadmap](roadmap.md), tareas C1–C8; detalle en [datocms-api.md](datocms-api.md), sección 7): carpeta `tools/` (simulacro por defecto, registro de cambios, filtro de tokens), alt y punto focal de las 108 imágenes, subir el kit de imágenes del rediseño, vaciar el relleno, sustituir los 5 artículos de prueba (ya con borrador), quitar `emailjs.com` de los créditos.
+3. **Próxima sesión · limpieza final:** borrar `src/styles/styles.css` y lo que solo ella usa (`media-imgs` de fondos), M4 (`confettiAnimation`, `teamlist`, `blogList`, `commentsForm`, `pages/about.js` y su `exclude` del sitemap), `gatsby-plugin-scroll-reveal` (sin uso en las páginas portadas) y repetir el análisis de [dependency-audit.md](dependency-audit.md).
+4. **Tras el merge:** comprobaciones en producción y aviso a la clienta (lista arriba).
+
+### Commits de la sesión
+- `3eb7951` R1a pasos 2 y 3 (del cierre de la 5.ª sesión).
+- `a388284` Parte 1 (logo con engranajes, blog, post y servicios).
+- `82bb814` Parte 2 (biografía, portafolio, proyectos y contacto).
+- `d6876d8` Parte 3 (ajustes de la revisión del dueño).
+- `fb9466d` Parte 4 (R4: legales, créditos y 404).
+- `12b1632` Parte 5 (favicon, términos y política de privacidad).
+- `0e7a2a0` Parte 6 (A4 (a): sin Analytics ni banner; enlace del autor).
+- `c47c196` Parte 7 (widget de Equalweb desactivado detrás de un interruptor).
+- `afc03ec` Parte 8 (qué se puede hacer con la API de DatoCMS; M10).
+- Parte 9 (cierre: corrección sobre los tokens, plan de la próxima sesión y lista del PR): pendiente del dueño, propuesto: `docs: close the session with the PR checklist and the DatoCMS plan`
+
+---
+
+## 2026-10-12 (5.ª sesión) · Rediseño: decisiones, análisis de migración y R1a paso 1
+
+**Rama:** `feat/redesign-coral-editorial` (desde `master` en `2de51ed`, el squash del PR #2) · **Entorno:** Node 14.21.3
+**Objetivo:** arrancar el rediseño ahora que la clienta dio carta abierta ("rediséñalo como gustes").
+
+### Contexto
+- **PR #2 fusionado con squash** (`2de51ed`, un solo padre, contenido idéntico al de la rama), no con merge commit como se había recomendado. Consecuencia: los hashes que citan los docs (`0816500`, `3c0f244`, `8bfe809`…) existen solo en la rama `fix/portfolio-total-refactor-design-2026` y en el PR #2. **No borrar esa rama.** Revertir todo el hito: `git revert 2de51ed`; un arreglo suelto: `git revert -n <hash de la rama>` (sin probar, puede pedir resolver conflictos).
+- La rama principal se llama `master` (el dueño dice "main").
+
+### Decisiones del dueño
+1. **Fuentes autoalojadas** (sí).
+2. **Imágenes con Gemini:** prompts en [image-prompts.md](image-prompts.md) (prompt maestro de estilo + un prompt por hueco, con proporción, punto focal y textos alternativos).
+3. **Textos realistas** en lugar de los de relleno del mock (sin cifras ni promesas no verificables; lo que dependa de un dato del negocio irá como clave o campo configurable y se confirma).
+4. **Google Analytics:** evaluar si vale la pena mantenerlo (A4); hasta entonces no se toca.
+5. Mismo ritmo: se prueba en local y, cuando haya bastantes cambios, un **PR en borrador** contra `master` que no se fusiona hasta que la clienta apruebe (los branch deploys están apagados; cada push al PR gasta minutos de build, 300 al mes).
+
+### Análisis: ¿migrar a React 18?
+- **No se propuso migrar**; la mención de React 18 salió de `react-cookie-consent` 10, que lo exige (M8). Aun así se analizó (datos del registro de npm y del README del plugin; tabla completa en [dependency-audit.md](dependency-audit.md)):
+  - React 18 exige **Gatsby ≥ 4.13** (Gatsby 2 solo admite React 16/17). Gatsby 4.25.9 sigue admitiendo **Node ≥ 14.15**; Gatsby 5 exige React ≥ 18 y Node ≥ 18.
+  - `gatsby-source-datocms`: 2.x = Gatsby 2/3, 3.x y 4.x = Gatsby 2–4, 5.x = Gatsby ≥ 4.24. **DatoCMS (el CMS) no se rompe**; cambia el plugin. **El plugin está en mantenimiento y archivado desde junio 2024** y Gatsby también lo está de facto (el README lo atribuye a "cambios en Gatsby y Netlify").
+  - Imágenes: el README sigue documentando `fluid`/`fixed` como obsoletas pero disponibles. En este repo: 17 archivos con `gatsby-image`, 50 fragmentos `fluid` en 15 archivos, 26 `<Img>`; SEO (`HelmetDatoCms`, 10 usos) sin cambios.
+- **Conclusión:** no migrar ahora; rediseñar sobre Gatsby 2 / React 17 con reglas que abaratan la migración posterior (un solo componente `Media`, ningún plugin de Gatsby nuevo, retirar Bootstrap/react-bootstrap/react-cookie-consent) y decidir después (Gatsby 5 u otro framework) con un spike de un día.
+
+### R1a · paso 1: fuentes y CSS nuevos, inertes
+- **Fuentes:** de los paquetes `@fontsource/plus-jakarta-sans` y `@fontsource/jetbrains-mono` (5.3.0, OFL-1.1), obtenidos en una carpeta aparte (**no son dependencias del proyecto**). Se copian a `static/fonts/` solo los `woff2` del subconjunto latino (Jakarta 400/500/600/800 y Mono 500): **70.044 bytes**, dentro del presupuesto de ~90 KB de la SPEC, con los textos de la licencia junto a ellos. `src/styles/fonts.css` declara los `@font-face` (`font-display: swap`, mismo `unicode-range` que fontsource, `url("/fonts/…")`).
+- **CSS:** `src/styles/nx.css` es una copia exacta del paquete. Tanto `fonts.css` como `nx.css` se importan desde `layout.js`.
+- **Por qué es seguro (inerte):** en `nx.css` los tokens van en `:root`/`[data-theme]` y el reset está acotado a `.nx-root`, que todavía no se aplica a `<body>`.
+- **Prueba de que no cambia nada visible:** antes de tocar, se calculó una *huella* (hash de ~16 estilos calculados de todos los elementos del `<body>`, más altura de página y número de elementos) de 5 páginas servidas con `gatsby serve`; dos cargas daban lo mismo (estable). Tras el cambio: **idéntica en las 5** (`/tos/` 609076d8, `/privacy/` 250f3c09, `/contact/` 799638a, `/blog/` e88190b3, `/aboutNew/` e9820de1; mismas alturas y mismo número de elementos). Build: mismas 20 rutas + `404.html` y mismos `page-data`.
+- **Las fuentes cargan de verdad:** con un elemento de prueba bajo `.nx-root`, `document.fonts.check` da verdadero para Jakarta 600 y 800 y Mono 500, con acentos, ñ y ¿¡; las peticiones van a `/fonts/…` (200, `font/woff2`). Las 7 peticiones a Google Fonts que siguen apareciendo son las del CSS viejo (`@import` de Tenor Sans, Fira Sans Extra Condensed y Signika Negative) y se van con `styles.css`.
+- **Coste temporal:** +~47 KB de CSS (10,7 KB gzip) en cada página hasta que se retire `styles.css`.
+
+### R1a · pasos 2 y 3: `Layout` nuevo, diálogos y home
+- **Imágenes (generadas por el dueño con Gemini, carpeta temporal `docs/images_new`; los nombres siguen el orden de los prompts):** `1` y `1-alt` = hero (sala técnica / mesa con planos); `2`, `3`, `4`, `5` = los 4 servicios (tablero de control, servidores, diseño CAD, sensor inalámbrico); `servicios-1/2/3` = las 3 tarjetas cuadradas de Biografía (atrio eficiente, bomba y tuberías, escritorio de desarrollo); `proyectos`; `portada-blog-1/2/3` (cables, candado, tableta de energía); `404`. Resoluciones de 2048² a 2624×1632. Procesadas con `sharp` (ya instalado por `gatsby-plugin-sharp`, **sin dependencia nueva**): **al repo** (`src/media-imgs/redesign/`) solo lo que usa el código, el hero en 3 tamaños (640/1200/1800 px: 33/83/160 KB) y la 404 (18 KB); las otras 12 van a un **kit para subir a DatoCMS fuera del repo** (`Refactor-Sites2026/nanasystems/imagenes-para-datocms/`, ~2 MB, con un `LEEME.md`: a qué campo va cada una, punto focal sugerido y alt ES/EN). Revisadas a 900 px: coherentes con el prompt maestro, un acento coral, sin logos ni texto visibles. **No se revisaron a tamaño real** las esquinas (marca visible de Gemini) ni el texto de las pantallas de tabletas y portátiles: confirmarlo a ojo antes de subirlas. `docs/images_new` pesa 37 MB y **no debe commitearse**: se borra tras esta tanda.
+- **El hero es un archivo local, no del CMS.** `InfoSite.carouselHome` trae fotos de 2020 y, siendo la fuente del hero, siempre ganaría a la imagen nueva. Se cambia en un solo sitio (`src/components/hero.js`): `Media` ya acepta `image={…}` del CMS. La imagen del hero se ve en el HTML estático (`<img srcset>` con ancho y alto), así que no hace falta precarga.
+- **La cifra "+N años" no sale del primer empleo.** Los datos del portafolio dicen que los empleos de 2008 a 2013 son de coordinación de recursos humanos y redes sociales; el primer puesto técnico es de **febrero de 2015** (soporte informático), lo que coincide con el "más de 6 años" que decía la web en 2020. Calcularlo desde el primer empleo habría dado "+18 años de automatización e IT", falso. Va como constante explicada en `src/config/site.js` (`TECH_CAREER_START_YEAR = 2015` → **+11**). **Pendiente de confirmar con la clienta.**
+- **Código nuevo:**
+  - `gatsby-ssr.js`: `lang="es"`, `<body class="nx-root">`, `<meta name="color-scheme">`, script de tema antes de pintar y precarga de las fuentes 400/600/800.
+  - `src/hooks/`: `useNx` (traducción e idioma **estables** en el primer render: hasta montar usa español, para que no queden atributos `aria-label`, `alt`… en otro idioma tras hidratar; la trampa de A7), `useTheme` (guardado > sistema; primer render claro), `useDialog` (contexto: un diálogo a la vez, resto de la página inerte y foco devuelto al botón).
+  - `src/components/`: `layout` (enlace de salto, cabecera, `<main id="nx-main">`, banda + pie fuera de `<main>`, diálogos), `header` (menú móvil con Esc, enlace activo por ruta, botón ES/EN, botón de tema), `footer` (servicios y redes del CMS, mapa, legal, botón de boletín), `ctaBand`, `button` (misma API que antes), `dialog` (trampa de foco, Esc, clic en el fondo), `formField` (campo con error accesible y resumen de errores), `quoteDialog` y `newsletterDialog` (con `submitNetlifyForm`, honeypot, límites y `FormErrorText` de A8), `media` (**único** componente de imágenes del CMS, para que una migración futura toque un solo archivo), `icons`, `hero`, `marquee`, `testimonials`.
+  - `src/utils/content.js` (`parseCategories`, `focalToPosition`, `altFor`, `formatDate`), `src/config/site.js`.
+  - Traducciones: 96 claves del paquete + `hero.alt`, fusionadas con un script que **conserva el formato** del archivo (el diff muestra solo lo añadido) y 3 retoques de texto: `hero.fig` ("FIG. 01 — AUTOMATIZACIÓN DE EDIFICIOS", ya no afirma una integración real), `hero.photoFallback` y `footer.copy` ("Hecho con ♥", sin el "©2020" caducado).
+- **Se eliminan:** `carouselHome`, `newCarouselHome`, `testimony`, `testimonyFixed`, `quickQuote`, `mailChimpForm` y `selector` (sin importadores o sustituidos), y los imports de `styles.css` y Bootstrap. **Siguen** `src/styles/styles.css` (referencia para portar las páginas; se borra al terminar R3) y las dependencias `bootstrap` y `react-bootstrap` (ya no las importa nada; las desinstala el dueño).
+- **`react-cookie-consent` se mantiene** hasta decidir A4 (si se sigue con Google Analytics): el banner es el antiguo, grande en móvil, y no se toca el comportamiento.
+- **Verificado con el build de producción + `gatsby serve`** (iframes del ancho real, `fetch` simulado; sin envíos reales):
+  - Mismas 21 rutas; las 15 páginas probadas renderizan dentro del `Layout` nuevo sin errores de JavaScript (las antiguas se ven sin estilos hasta R3).
+  - **Sin desborde horizontal de 320 a 1920 px** (8 anchos); hamburguesa por debajo de 960 px, navegación y botón completos desde 1024; hero 4:5 en móvil y 540 px de alto en pantallas grandes.
+  - HTML estático de la home: `lang="es"`, `<body class="nx-root">`, `<title>`, `color-scheme`, script de tema, 3 precargas de fuente, un solo `h1`, enlace de salto, `main#nx-main`, hero con `srcset`, `width` y `height`.
+  - Idioma ES↔EN (titular, menú, etiquetas, `aria`, enlace de salto, botón) y, con el inglés guardado, los atributos salen en inglés tras hidratar. Tema: se guarda y al recargar entra oscuro **antes de pintar**; contrastes 16,05:1 (oscuro) y 14,47:1 (claro). Menú móvil: abre, Esc cierra y devuelve el foco, el clic en un enlace navega y cierra.
+  - **Cotización:** `role="dialog"`, `aria-modal`, foco en el primer campo, cabecera/`main`/banda inertes; trampa de foco; Esc y clic en el fondo cierran y devuelven el foco; validación con resumen enlazado (foco en el resumen), `aria-invalid` y errores por campo; campos de empresa; envío con el cuerpo esperado (`form-name=quote` y los 10 campos de `forms.html`); aviso de espera sin segundo envío; error 500 con enlace al correo y sin gastar el límite; honeypot sin envío. **Boletín:** igual, más error con enlace a contacto, reintento que conserva el correo y honeypot. **Servicio:** el botón abre la cotización con "Servicio: <título>" y lo envía como `quote`.
+  - **Peso:** JS de la home **503.420 bytes (−16 KB)** frente a 519.447; CSS **45 KB (9 KB comprimido)** frente a 274 KB (52 KB) del CSS antiguo con Bootstrap.
+- **Fallo encontrado y corregido durante la prueba:** al pulsar "Reintentar" en la cotización el foco iba al **primer `input` del formulario, que es el campo trampa (honeypot)**; quien escribiera ahí (p. ej. con lector de pantalla) habría visto su mensaje descartado en silencio. Ahora va al campo "Nombre", y el ciclo de foco del diálogo ignora los elementos con `tabindex="-1"`.
+- **Verificación visual (límite del entorno):** las capturas del panel solo son fiables en la primera pintura de una carga nueva; tras desplazarse salen en blanco o a trozos, y con `resize_window` a 1440 px el panel solo muestra los primeros 800 px. Se vieron: hero en móvil (4:5 centrado en el técnico), titular y cabecera en escritorio, y banda y pie en escritorio. **El resto de la revisión visual (desktop completo, tableta, tema oscuro) la tiene que hacer el dueño en su navegador** con `npm run develop`.
+
+### Hallazgos / sorpresas
+- Las **capturas de pantalla** del panel de pruebas funcionan solo en la primera pintura de una carga nueva (ver arriba): el resto se comprueba con mediciones del DOM, y la vista real la valida el dueño.
+- **Quitar del DOM un nodo que React gestiona rompe las actualizaciones posteriores** (en las pruebas, eliminar el banner de cookies impedía que se abriera un diálogo): para ocultar algo en una prueba se usa `style.display = "none"`.
+- La SPEC del paquete quedó desactualizada en formularios (asume EmailJS), SSR/cabecera (ya existen `react-helmet` y `gatsby-ssr.js`) y correo de contacto (ya hay `GATSBY_CONTACT_EMAIL`): detalle en [redesign.md](redesign.md).
+
+### Pendiente y abierto
+- **El dueño revisa el resultado en local** (`npm run develop`): escritorio completo, tableta, tema oscuro, y las imágenes a tamaño real.
+- **Confirmar con la clienta la cifra "+11"** y el resto de textos del inicio (chip "Proyectos medianos y grandes", texto de la banda). Mientras tanto no hay promesas con plazos.
+- Subir al CMS las imágenes del kit (servicios, tarjetas, proyectos, portadas) con punto focal y texto alternativo: sin eso las páginas de R3 mostrarán las fotos antiguas.
+- Comprobar producción tras el merge del PR #2 y avisar a la clienta de que contacto y cotización estuvieron caídos.
+- A4: decidir si se mantiene Google Analytics. Pregunta heredada: dominio canónico (con o sin `www`).
+
+### Estado al cerrar la sesión (leer primero)
+- **Rama `feat/redesign-coral-editorial`**, desde `master` en `2de51ed`. Último commit: `3727028` (R1a paso 1: fuentes y `nx.css`). **Sin commitear** (el dueño commitea): R1a pasos 2 y 3 completos en el árbol de trabajo; commit propuesto `feat: R1a new layout, dialogs and home for the redesign`. `docs/images_new` (37 MB) es una carpeta temporal **que no se debe añadir** (los `git add` van con rutas explícitas).
+- **Ya hecho y verificado** (detalle arriba): `Layout` nuevo, cabecera, pie, banda de cotización, diálogos de cotización y boletín sobre el helper de A8, `Media`, home completa con datos del CMS, imágenes optimizadas, traducciones fusionadas, documentación al día. Las páginas **antiguas** (blog, post, servicios, biografía, portafolio, proyectos, contacto, legales, 404) renderizan dentro del `Layout` nuevo **sin estilos** hasta portarlas.
+- **Entorno:** Node 14.21.3; comprobar que los puertos 8000 y 9000 están libres antes de `npm run build` (comparten `.cache`); `GATSBY_CONTACT_EMAIL` se define en `.env` y en Netlify (en las pruebas se pasa por la línea de comandos); los commits los hace el dueño, de una línea.
+
+### Próximos pasos (detalle para retomar sin contexto)
+**0. Acciones del dueño antes de seguir** (se pueden hacer en cualquier orden):
+1. `npm uninstall bootstrap react-bootstrap` (ya nada los importa), borrar `docs/images_new` y commitear.
+2. Revisar la home en local (`npm run develop`): escritorio, tableta y tema oscuro, y las imágenes a tamaño real (¿alguna con marca visible de Gemini o texto legible en tabletas y portátiles?). Anotar qué cambiar.
+3. Confirmar con la clienta: la cifra **"+11 años"** (`TECH_CAREER_START_YEAR = 2015` en `src/config/site.js`), el chip "Proyectos medianos y grandes", la franja de tecnologías (hoy fija en `src/components/marquee.js`) y el texto de la banda de cotización.
+4. Subir a DatoCMS el kit `imagenes-para-datocms` (servicios, tarjetas de Biografía, Proyectos, portadas de blog) con **punto focal y texto alternativo**; sin eso las páginas de R3 mostrarán las fotos antiguas.
+5. Asuntos heredados: comprobar producción tras el merge del PR #2 (lista en el [roadmap](roadmap.md)), avisar a la clienta de que contacto y cotización estuvieron caídos (EmailJS), decidir A4 (¿se mantiene Google Analytics?) y el dominio canónico (con o sin `www`).
+
+**1. R3: portar las páginas con contenido del CMS, una por vez** (verificar cada una antes de la siguiente). Fuentes de verdad en el paquete **fuera del repo**: `Refactor-Sites2026/nanasystems/nansystems-nx/nx-site/` → `SPEC.md` (secciones **c** mapa pantalla→datos, **d** imágenes por slot, **g** mapa de portado, **j** supuestos, **k** contratos) y las muestras `blog.html`, `post.html`, `servicio.html`, `biografia.html`, `portafolio.html`, `proyectos.html`, `contacto.html`; el CSS ya está en `src/styles/nx.css` y las claves de traducción de esas páginas ya están fusionadas (`blog`, `about`, `portfolio`, `ventures`, `technology`, `contact`, `form`, `notfound`, `credits`, `legal`, `meta`). Orden propuesto:
+   1. **Blog (`src/pages/blog.js`) y post (`src/templates/blogpost.js`):** `nx-post-card` (la primera `--featured`, portada 16:10, hasta 3 pastillas con `parseCategories`), `nx-article` con portada 2:1 y `.nx-prose--lg`, compartir con `react-share` (`size={44} round bgStyle={{fill:"transparent"}} iconFillColor="currentColor"` dentro de `.nx-share__btn`), fechas con `formatDate`, `timeToRead` por `contentNode.childMarkdownRemark`. **El `h1` del contenido del CMS debe bajar a `h2` también en la plantilla de servicio** (`html.replace(/<(\/?)h1>/g,'<$1h2>')`; SPEC j.3), y un solo `h1` por página.
+   2. **Servicios (`src/templates/technology.js`):** `nx-article` con `coverImage` 3:2, `shortTitle` como etiqueta, `categories` parseadas y el botón de cotización con el título precargado (`Button action="quote"` ya lo soporta).
+   3. **Biografía (`src/pages/aboutNew.js`):** tarjetas `aboutarea` 1:1 (`Media`), `itemAboutus` alternadas con acordeón "Leer más" (`content` por fin se muestra), `welcomeNode` en `.nx-prose--lg`; ya tiene `HelmetDatoCms` y el `key` arreglado (B1).
+   4. **Portafolio (`src/pages/portfolio.js`):** `nx-row--exp` con rango de años (`dateIn`–`dateOut` o "Empleo actual") y panel con 4 bloques; **no pedir ni mostrar `salary` ni `opinionAboutCompany`** (A6 ya los quitó de las consultas).
+   5. **Proyectos (`src/pages/ventures.js`):** cabecera de 2 columnas con `sidePicture` 4:5 y `itemVenture` con diálogo "Leer más" (sin `/singleventure` ni estado del router); el botón "Cotizar" del diálogo abre la cotización con el título del proyecto (`useDialog().open("nx-quote", título)`; hoy un diálogo cierra al otro: diseñar el encadenado).
+   6. **Contacto (`src/pages/contact.js`):** formulario `nx-field` con validación como `quoteDialog`, estados idle/sending/sent/error, **reutilizando `submitNetlifyForm("contact", { name, email, message, "bot-field" })`, `HoneypotField` y `FormErrorText`** (nada de EmailJS). Mostrar el correo de `GATSBY_CONTACT_EMAIL` si existe.
+   Para cada página: consultas solo con lo que se muestra; toda imagen del CMS por `Media` (con `fallbackAlt` = título); todo texto visible por `t()` de `useNx` (nunca `useTranslation` directo para atributos); datos por idioma con el patrón `data["services_" + L]` de `src/pages/index.js` (L = "es" o "en").
+
+**2. R4:** legales (`tos`, `privacy`, `credits`: lectura larga de 880 px, `Credit.image` 1:1 `contain`), 404 (hay imagen local lista: `src/media-imgs/redesign/404-cable-desconectado.jpg`; texto con las claves `notfound.*`), `prefers-reduced-motion` (franja estática, `data-sal` fuera), QA a 375/768/1440 px en claro y oscuro y en `es`, `es-VE` y `en-US`.
+
+**3. Primer preview:** cuando haya bastantes pantallas, abrir un **PR en borrador** contra `master` (los branch deploys están apagados; solo así hay deploy preview; cada push reconstruye y gasta de los 300 minutos de build al mes). **Nunca fusionarlo** hasta que la clienta apruebe.
+
+**4. Limpieza al terminar R3/R4:** borrar `src/styles/styles.css`; M4 (código muerto: `confettiAnimation`, `teamlist`, `blogList`, `commentsForm`, `pages/about.js`, `pages/singleventure.js`, y quitar `/about` y `/singleventure` de `exclude` del sitemap en `gatsby-config.js` con sus redirecciones); decidir A4 y, según el resultado, retirar `react-cookie-consent` (y `gatsby-plugin-gdpr-cookies`/`gatsby-plugin-google-gtag`); repetir el análisis de [dependency-audit.md](dependency-audit.md); revisar el listado de claves de traducción sin uso.
+
+**Cómo verificar (lo que funciona en este entorno):** `npm run build` + `npx gatsby serve -p 9000`; iframes del ancho real (320, 375, 768, 1024, 1280, 1440…) para medir desbordes y comportamiento; `fetch` simulado dentro del iframe para los formularios; sondas de DOM para `aria-*`, foco e `inert`. Las capturas del panel solo son fiables en la primera pintura de una carga nueva (con scroll salen en blanco). No eliminar con `.remove()` nodos que gestiona React (usar `style.display = "none"`).
+
+### Commits de la sesión
+- `3727028` R1a paso 1 (fuentes y CSS inertes)
+- `3eb7951` R1a pasos 2 y 3 (`feat: R1a new layout, dialogs and home for the redesign`)
+
+---
+
 ## 2026-10-12 (4.ª sesión) · Cierre de M5, A3 (SEO, sitemap y `robots.txt`), B1 parcial, M9, análisis de M8 y A8 (formularios a Netlify Forms)
 
 **Rama:** `fix/portfolio-total-refactor-design-2026` (sobre `c75189b`) · **Entorno:** Node 14.21.3

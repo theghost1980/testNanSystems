@@ -162,3 +162,50 @@ Se revisó contra los datos reales (esquema de DatoCMS, consultas del repo) y en
 
 ## Siguiente paso: pieza vertical (R1a)
 Antes de portar las 11 pantallas restantes se construye una rebanada completa en una rama `feat/redesign-…` (desde `master`, tras fusionar los docs): `layout` nuevo (`gatsby-ssr.js`, tema, idioma, cabecera, pie) + hero de la home alimentado por el CMS con `.nx-media`. Se valida con `npm run build` y `gatsby serve` en local (Node 14) y con el deploy preview. Si algo no encaja (imágenes, SSR, hidratación), se descubre con una pantalla, no con doce.
+
+## Decisiones y avance (2026-10-12)
+
+La clienta dio **carta abierta** para el rediseño. Se trabaja en la rama `feat/redesign-coral-editorial` (desde `master`), se prueba en local y se abre un **PR en borrador** contra `master` solo para obtener deploy previews (los branch deploys están apagados); **no se fusiona hasta que ella apruebe**.
+
+### Decisiones
+1. **Gatsby 2, React 17 y `gatsby-image` se quedan** durante el rediseño. Migrar (React 18 exige Gatsby ≥ 4.13; Gatsby 5 exige React ≥ 18 y Node ≥ 18) mezclaría dos riesgos y el plugin de DatoCMS para Gatsby está en mantenimiento y archivado. Se decide después, con un spike de un día; análisis en [dependency-audit.md](dependency-audit.md).
+2. **Reglas para que el rediseño no encarezca esa migración:** un solo componente `Media` para todas las imágenes del CMS (hoy 17 archivos importan `gatsby-image`, hay 50 fragmentos `fluid` y 26 `<Img>`); ningún plugin de Gatsby nuevo; retirar `bootstrap`, `react-bootstrap` y `react-cookie-consent` (y, según A4, `gatsby-plugin-gdpr-cookies`).
+3. **Fuentes autoalojadas** (en vez de Google Fonts): 5 archivos `woff2` latinos en `static/fonts/` (70 KB; Plus Jakarta Sans 400/500/600/800 y JetBrains Mono 500), licencia OFL-1.1 con sus textos junto a los archivos, `@font-face` en `src/styles/fonts.css`. Sin petición a terceros y sin `@import`. Los preloads de las fuentes críticas se añaden en `gatsby-ssr.js` cuando el nuevo `Layout` las use.
+4. **Textos realistas** en ES y EN al portar cada pantalla, sin cifras ni promesas no verificables (ver "Decisiones abiertas" del roadmap).
+5. **Imágenes con IA (Gemini)** solo para portadas de concepto; no se generan personas reales, retratos de la clienta ni testimonios. Si una imagen generada ocupa el hero, el rótulo "FIG. 01 — INTEGRACIÓN EN SITIO" no puede sugerir que es una obra real.
+6. **Google Analytics (A4):** se evaluará si compensa mantenerlo antes de diseñar el banner de cookies definitivo.
+
+### La SPEC del paquete quedó desactualizada en estos puntos (adaptar al portar)
+- **Formularios (k.1–k.3, g):** asume EmailJS. Desde A8 contacto, cotización y boletín usan `submitNetlifyForm` (`src/utils/netlifyForm.js`), `FormErrorText`, `HoneypotField` y el límite por navegador; los campos de contacto son `name`, `email`, `message` y los de cotización los de `static/forms.html`. La validación en cliente del diseño debe sumarse a eso, no sustituirlo.
+- **SSR y cabecera (k.5, g):** `gatsby-plugin-react-helmet` ya está instalado (A3) y `gatsby-ssr.js` ya fija `<html lang="es">`; `Layout` ajusta `lang` al montar y `i18n/config.js` ya no usa el detector `htmlTag`. Añadir `nx-root` en `<body>`, el script de tema y los preloads de fuentes ahí, sin duplicar el mecanismo de `lang`.
+- **Correo de contacto:** ya existe `GATSBY_CONTACT_EMAIL` (variable de entorno, fuera del repo); el `contacto@nansystems.us` del paquete es solo un ejemplo.
+- **Cookies (k.4):** el banner nuevo sustituye a `react-cookie-consent`; qué hace con Google Analytics depende de A4.
+
+### Avance de R1a
+- **Paso 1 (hecho):** `static/fonts/` + `src/styles/fonts.css` + `src/styles/nx.css` (copia sin cambios del paquete), importados desde `Layout`. Son **inertes**: los tokens van en `:root` y el reset está acotado a `.nx-root`, que aún no se aplica. Comprobado: mismas rutas y `page-data`, y la huella de estilos calculados de 5 páginas (`/tos/`, `/privacy/`, `/contact/`, `/blog/`, `/aboutNew/`) es idéntica a la de antes; las fuentes cargan de `/fonts/` con acentos y ñ. Las peticiones a Google Fonts que siguen apareciendo son las del CSS viejo (`@import` de Tenor Sans, Fira Sans y Signika) y se van con `styles.css`.
+- **Paso 2 (hecho):** `Layout` nuevo (`nx-root` en `<body>` desde `gatsby-ssr.js`, script de tema y precarga de fuentes; cabecera con menú móvil, selector ES/EN y botón de tema; pie con servicios y redes del CMS; banda de cotización; diálogos de cotización y boletín accesibles y conectados al helper de A8). Se retiran los imports de `styles.css` y Bootstrap (SPEC k.6); el archivo `styles.css` queda como referencia hasta terminar R3.
+- **Paso 3 (hecho):** home completa: hero (imagen local, cifra "+11", tarjeta de cotización), franja de tecnologías, servicios, testimonios y artículos recientes con datos del CMS, todo a través del componente `Media`.
+- **Paso 4 (parcial):** verificado con el build de producción por mediciones del DOM (sin desborde de 320 a 1920 px, comportamiento de menú, idioma, tema y diálogos, 15 rutas sin errores); la revisión visual completa la hace el dueño en su navegador porque las capturas del entorno no son fiables al desplazarse. **Pendiente:** PR en borrador para el primer preview cuando haya bastantes pantallas.
+
+### Avance de R3 (2026-10-12)
+- **Hechos:** blog, post, servicio, biografía, portafolio, proyectos y contacto (`nx-post-card`, `nx-article`, `nx-feature`, `nx-row--exp`, `nx-venture`, formulario de contacto), con `prepareCmsHtml` aplicado al contenido del CMS (SPEC j.3 y j.4), y **R4**: términos, privacidad, créditos y 404. **Falta:** la revisión visual final, el PR en borrador y la limpieza.
+- **El relleno del CMS no se publica** (`isPlaceholder`/`usefulBlocks` en `utils/content.js`): "Lorem ipsum", "Ipsem Lorem" y la nota interna de los logros se tratan como vacíos. El diseño asume campos con texto real: hay que completarlos en DatoCMS (lista en el [dev-log](dev-log.md)).
+- **404 con la imagen local** (`404-cable-desconectado.jpg`), no con `InfoSite.notFoundImg` del CMS; **créditos** con el nombre sacado del dominio porque los logos del CMS no tienen leyenda; **`tos.l5` corregido** (frase duplicada pegada al final).
+- **Menú de escritorio desde 1100 px** (la SPEC decía 960): con los textos en español la cabecera no cabía entre 960 y 1099 px.
+- **Proyectos:** las tarjetas sin texto real ofrecen "Cotizar por Email" en lugar de "Leer más" (decisión nueva, no estaba en la muestra); el diálogo de detalle encadena con la cotización.
+- **Sin `data-sal`** en las páginas portadas (decorativo y puede dejar contenido invisible); `gatsby-plugin-scroll-reveal` queda como candidato a retirar.
+- **El correo de contacto de la tarjeta lateral** sale de `GATSBY_CONTACT_EMAIL` (no se inventa uno): sin la variable, la tarjeta no aparece.
+- **Favicon con los engranajes del logo** (coral y azul marino sobre crema) y colores del manifiesto web del rediseño; **textos legales reescritos** (términos con dos secciones nuevas; política de privacidad con los proveedores y datos reales del sitio) como borrador técnico a revisar por la clienta; el aviso de cookies deja de afirmar que no se guarda información personal.
+- **Post con el título sobre la imagen** desde 768 px (decisión del dueño tras revisar el sitio): portada 16:9 y desde 1100 px 21:9 con 560 px de alto máximo; la muestra del paquete tenía el título encima de una portada 2:1 a ancho completo. En móvil y sin portada va apilado.
+- **Barras de desplazamiento propias** (decisión del dueño): color del borde de los campos (≥ 3:1) y coral al pasar el mouse; `color-scheme` sigue el tema elegido, no el del sistema.
+- **Compartir sin `react-share`:** enlaces normales a cada red (como en la muestra), con la URL de `siteUrl` + ruta. La SPEC pedía `react-share`; se cambia porque la muestra ya usa `<a>` y así no hay SDK ni ventanas emergentes. `react-share` se desinstala cuando se porten `aboutNew.js` y `singleventure.js`.
+- **Logo:** vuelven los engranajes del logo anterior (SVG propio, coral y color del texto) en lugar del punto; la SPEC los había descartado en favor de solo texto, pero el dueño pidió recuperarlos.
+- **Títulos de tarjeta del blog en `h2`** (la muestra usaba `h3` bajo el `h1`, saltando un nivel).
+
+### Decisiones tomadas al portar la home (2026-10-12)
+- **El hero es un archivo local**, no `carouselHome[0]` del CMS: el carrusel antiguo trae fotos de 2020 y siempre ganaría. Cambiar a la fuente del CMS es una línea en `src/components/hero.js`.
+- **La cifra "+11 años"** sale de `TECH_CAREER_START_YEAR = 2015` en `src/config/site.js`, no del primer empleo (2008 es coordinación de recursos humanos). Pendiente de confirmar con la clienta.
+- **El rótulo del hero** pasa de "FIG. 01 — INTEGRACIÓN EN SITIO" (afirma una obra real) a "FIG. 01 — AUTOMATIZACIÓN DE EDIFICIOS", porque la imagen es de concepto.
+- **`react-cookie-consent` y el banner antiguo se mantuvieron** hasta decidir A4; **el 2026-10-12 el dueño eligió quitar Google Analytics y el banner** (ver [dev-log](dev-log.md), parte 6).
+- **Primer render estable** (`useNx`): hasta montar se usa español, para que ningún atributo dependiente del idioma quede obsoleto tras hidratar (A7).
+- **Diálogos que se montan solo al abrirse:** su formulario se reinicia al cerrar y no hay contenido oculto en el HTML.

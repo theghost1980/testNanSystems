@@ -53,6 +53,8 @@ export const submitNetlifyForm = async (formName, fields) => {
   // Honeypot relleno: es un bot. No se envía (así tampoco gasta cuota) y se
   // responde como si hubiera ido bien.
   if (fields["bot-field"]) {
+    // Aviso para depurar: si lo ves en una persona real, algo (autorrelleno, extensión) rellenó el campo.
+    if (typeof console !== "undefined") console.warn("Formulario no enviado: el campo trampa vino relleno.");
     return;
   }
 
