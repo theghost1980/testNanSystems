@@ -85,6 +85,8 @@ Prerrequisitos ya cumplidos (2026-10-12): `api_key` del `.env` es de solo lectur
 | C6 | Quitar "emailjs.com" de los créditos del CMS (dejar "equalweb.com" mientras se vaya a reactivar el widget) | bajo | pendiente | — |
 | C7 | Revisión de los textos legales por la clienta o su asesor; confirmar el estado del domicilio en la cláusula de leyes aplicables | medio | pendiente (clienta) | — |
 | C8 | Reactivar el menú de accesibilidad de Equalweb (`A11Y_WIDGET_ENABLED = true`) cuando el dueño lo decida | bajo | pospuesto | — |
+| C9 | **Contenido real redactado con otra IA** a partir del CV de Ana: misión, visión, valores, biografía, servicios, portafolio, certificaciones, SEO, blog y testimonios de ejemplo. El prompt está listo en [prompt-contenido-ia.md](prompt-contenido-ia.md); falta que el dueño lo ejecute y traiga el archivo. Después: revisión contra el CV, aprobación de Ana y carga en borrador | medio | **prompt listo, a la espera del texto de la IA** | — |
+| C10 | Corregir el CMS con los datos del CV ([cv-ana-echeverria.md](cv-ana-echeverria.md), sección 6): Austin ISD ya no figura como actual, puestos que faltan (H&R Block, GTS, K-FORCE, JFC Global, segundo puesto en Austin ISD), fechas de Messiah y Voith, nombres propios traducidos, LEED Green Associate, formación; quitar testimonios de ejemplo y datos de relleno antes de publicar | medio | pendiente (Ana confirma) | — |
 
 ## Rediseño (ver [redesign.md](redesign.md))
 

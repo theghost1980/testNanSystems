@@ -3,6 +3,10 @@
 Documento **vivo**. Una entrada por cambio relevante, la más reciente arriba.
 Formato: fecha · ID del [roadmap](roadmap.md) · qué cambió · rama o PR · riesgo para producción.
 
+## 2026-10-13
+
+- **docs** · C9 y C10 · Revisión de contenido del sitio (código, traducciones y los 26 modelos de DatoCMS, solo lectura): hay textos escritos en el código que no vienen del CMS, y el CMS tiene relleno, textos copiados de terceros y testimonios de ejemplo (resumen en el [dev-log](dev-log.md)). Nuevo [cv-ana-echeverria.md](cv-ana-echeverria.md): CV actual de Ana (LinkedIn) junto con los datos del CMS, diferencias a resolver y preguntas para Ana. Nuevo [prompt-contenido-ia.md](prompt-contenido-ia.md): prompt para que otra IA redacte el contenido real. Sin cambios de código ni de contenido en el CMS.
+
 ## 2026-10-12
 
 - **docs** · Cierre de la sesión · Se documentan el plan de la próxima sesión (Fase 5 del roadmap, C1–C8: contenido de DatoCMS con la API), la lista de comprobaciones del Deploy Preview, los requisitos antes de fusionar y cómo revertir; se corrige `datocms-api.md` (el token de solo lectura no puede listar tokens; estado verificado de los dos tokens y del modo borrador de `blog_post`) y el roadmap (M10 parcial). Sin cambios de código ni de contenido en el CMS.

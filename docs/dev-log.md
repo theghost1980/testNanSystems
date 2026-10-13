@@ -41,6 +41,47 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 
 ---
 
+## 2026-10-13 (7.ª sesión) · Revisión de contenido, CV de Ana y prompt para redactar el contenido real
+
+**Rama:** `feat/redesign-coral-editorial` (sobre `a806150`) · **Entorno:** solo lecturas al CMS y archivos de `docs/`
+**Objetivo:** saber qué contenido del sitio es real, qué falta y qué no tiene sentido; reunir el CV de Ana y preparar el encargo de redacción a otra IA.
+
+### Hecho
+- **Revisión de contenido (sin cambios):** se leyó el código, las traducciones y los 26 modelos de DatoCMS (volcado de solo lectura con el token de lectura, sin imprimirlo) y las etiquetas SEO reales de cada página.
+- **[cv-ana-echeverria.md](cv-ana-echeverria.md):** el CV de LinkedIn (PDF de 7 páginas, entregado por el dueño) más lo que ya tiene el CMS, con las diferencias marcadas, la sección "qué respalda el CV", preguntas para Ana y la correspondencia con los modelos para reconstruir el CMS si fallara. No incluye sueldos, correo ni identificadores de credenciales (el repositorio es público).
+- **[prompt-contenido-ia.md](prompt-contenido-ia.md):** prompt completo (ES/EN) para que otra IA redacte posicionamiento y catálogo, misión, visión y valores, biografía, servicios, portafolio, certificaciones, SEO, dos artículos de blog, microtextos corregidos y testimonios de ejemplo, en un único `.md` con una estructura que luego se puede cargar al CMS con un script.
+
+### Decisiones
+- Los **testimonios** que pida el dueño al redactor son **de ejemplo, marcados "no publicar como reales"**, con nombres y organizaciones ficticios y genéricos. Sirven para maquetar; antes de producción se sustituyen por reales o se borra la sección (FTC de EE. UU.).
+- Todo lo que devuelva la IA se **contrasta con el CV** antes de tocar el CMS, y Ana aprueba el posicionamiento y la lista de pendientes.
+- El CV confirma el año base **2015** de la cifra "+11 años" (primer puesto técnico: enero de 2015).
+
+### Hallazgos / sorpresas
+- **Fuera del CMS (escrito en el código):** titular, bajada, chip y rótulo del hero; franja de tecnologías; descripción del pie; banda de cotización; introducciones; promesa del boletín "una vez al mes"; cita de Churchill sin autor en el blog; imágenes del hero y de la 404 generadas con IA; textos legales (borrador técnico). Claves de traducción muertas: `site.*` (texto del starter de Gatsby), `home.some`, `blogList.readingtime`.
+- **Testimonios del inicio:** parecen de relleno (empresas reales como Apple, un "Karl Marx"), y los tres enlazan a la web personal del desarrollador.
+- **Biografía:** muestra un tutorial genérico de "cómo redactar la misión de una empresa"; la biografía real de Ana (modelo `about`), 9 certificaciones y 16 frases de marca existen en el CMS pero el sitio nuevo no las muestra.
+- **Servicios:** textos que parecen copiados de Wikipedia, AutoCAD, Tridium y Avnet; mención de CentOS 7 (fuera de soporte desde 2024); el título en español del servicio de IoT es "Niágara y Tridium (Se buscan)". Tres catálogos de servicios que no coinciden y tres posicionamientos.
+- **Blog:** 5 artículos de prueba con cuerpos "Lorem ipsum" (el cuerpo del artículo no pasa por el filtro de relleno).
+- **SEO:** la biografía no tiene SEO propio (pestaña "NaNSYSTEMS.us"), servicios y artículos comparten una descripción con erratas, y el portafolio dice "más de 6 años".
+- **Portafolio contra LinkedIn:** el CMS da a Ana como empleada actual en Austin ISD; LinkedIn termina en agosto de 2024. Faltan 7 puestos (H&R Block ×3, GTS, K-FORCE, JFC Global y el segundo puesto de Austin ISD) y toda la formación; hay nombres propios traducidos y textos genéricos copiados de anuncios.
+- **El CV no respalda** Niagara/Tridium, IoT como programa propio, Linux como servicio ni diseño web; lo más fuerte es conservación de energía y agua, automatización de edificios (BAS/HVAC/EMS), consultoría de TI y gestión de proyectos.
+
+### Pendiente y abierto
+- **Esperar el texto de la IA** (archivo `contenido-nansystems.md`) y revisarlo contra el CV.
+- Respuestas de Ana a la sección 8 de [cv-ana-echeverria.md](cv-ana-echeverria.md): ocupación actual, servicios reales, equipo, alianzas, domicilio y correo públicos, puestos a mostrar, testimonios reales.
+- Instagram del CMS: el enlace no coincide con el nombre de Ana (sin verificar).
+
+### Próximos pasos
+1. El dueño pega el prompt en la IA con el CV adjunto y trae el archivo.
+2. Revisión del archivo contra el CV y lista de pendientes para Ana.
+3. Tras su visto bueno, cargar el contenido en borrador con el flujo de la Fase 5 (C1 a C5, C9 y C10).
+4. Limpieza final y comprobaciones posteriores al merge (ver el cierre de la 6.ª sesión).
+
+### Commits de la sesión
+- Sin commits todavía: `docs/cv-ana-echeverria.md`, `docs/prompt-contenido-ia.md`, `docs/README.md`, `docs/roadmap.md`, `docs/CHANGELOG.md` y `docs/dev-log.md` quedan pendientes del dueño (mensaje propuesto: `docs: add Ana's CV and the prompt to write the site content`).
+
+---
+
 ## 2026-10-12 (6.ª sesión) · R3 completo: logo con engranajes, blog, post, servicios, biografía, portafolio, proyectos, contacto y ajustes de la revisión
 
 **Rama:** `feat/redesign-coral-editorial` (sobre `3eb7951`, el commit de R1a pasos 2 y 3) · **Entorno:** Node 14.21.3
