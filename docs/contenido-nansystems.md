@@ -530,6 +530,7 @@ We help facility managers, school districts, public organizations and companies 
 
 ### [item.content] mision-contenido
 **ES**
+
 ## Qué nos proponemos
 
 Que las organizaciones tomen mejores decisiones sobre sus edificios y sus sistemas, con información que puedan entender y comprobar por sí mismas.
@@ -546,6 +547,7 @@ Que las organizaciones tomen mejores decisiones sobre sus edificios y sus sistem
 Administradores de instalaciones, distritos escolares, organizaciones públicas y empresas pequeñas, medianas y grandes que quieren gastar menos, operar mejor y tener a su equipo preparado.
 
 **EN**
+
 ## What we set out to do
 
 Help organizations make better decisions about their buildings and systems, using information they can understand and check for themselves.
@@ -584,6 +586,7 @@ We want every facility we work with to use its resources wisely: with data in pl
 
 ### [item.content] vision-contenido
 **ES**
+
 ## Hacia dónde vamos
 
 A un futuro en el que los edificios públicos y privados gastan solo la energía y el agua que necesitan, y en el que quienes los operan saben por qué.
@@ -600,6 +603,7 @@ A un futuro en el que los edificios públicos y privados gastan solo la energía
 Por la claridad de la información que dejamos y por la autonomía de tu equipo para seguir adelante sin nosotros.
 
 **EN**
+
 ## Where we are heading
 
 Toward a future in which public and private buildings use only the energy and water they need, and the people who run them know why.
@@ -638,6 +642,7 @@ We measure before we recommend, document what we do, train in your language, exp
 
 ### [item.content] valores-contenido
 **ES**
+
 ## Cinco valores, y cómo se ven en el trabajo
 
 - **Medir antes de recomendar.** En Austin ISD, Ana siguió el consumo de energía y agua de 132 instalaciones y trabajó con indicadores como EUI y WUI.
@@ -651,6 +656,7 @@ We measure before we recommend, document what we do, train in your language, exp
 Que sabrás en qué se basa cada recomendación, quién hace qué y cómo seguir cuando el proyecto termine.
 
 **EN**
+
 ## Five values, and how they show up in the work
 
 - **Measure before recommending.** At Austin ISD, Ana tracked energy and water use across 132 facilities and worked with indicators such as EUI and WUI.
@@ -751,6 +757,7 @@ We measure energy and water use across your facilities, prioritize where to act 
 
 ### [technology.content] s1-contenido
 **ES**
+
 ## Qué problema resuelve
 
 Los edificios grandes gastan energía y agua que nadie ve: fugas, horarios que no coinciden con el uso real, equipos que quedan encendidos y facturas que se revisan tarde. Sin datos claros, es difícil decidir dónde actuar primero.
@@ -775,6 +782,7 @@ Informes de consumo claros, una lista priorizada de acciones, material de capaci
 Administradores de instalaciones, distritos escolares y organizaciones públicas o privadas con varios edificios. Ana aplicó este enfoque en Austin ISD, donde monitoreó el consumo de 132 instalaciones.
 
 **EN**
+
 ## What problem it solves
 
 Large buildings use energy and water that nobody sees: leaks, schedules that do not match actual use, equipment left running and bills that get reviewed late. Without clear data, it is hard to decide where to act first.
@@ -844,6 +852,7 @@ We review how your building automation system performs, diagnose HVAC faults and
 
 ### [technology.content] s2-contenido
 **ES**
+
 ## Qué problema resuelve
 
 El sistema de automatización de un edificio suele hacer menos de lo que podría: horarios que no siguen el uso real, alarmas que nadie atiende y equipos de HVAC que trabajan de más. El resultado es un confort irregular y un gasto innecesario.
@@ -868,6 +877,7 @@ Inventario de HVAC, lista de ajustes recomendados, registro de cambios y un info
 Administradores de instalaciones y equipos de operaciones y mantenimiento que ya tienen un BAS y quieren aprovecharlo mejor. No sustituimos a tu contratista de controles: trabajamos con él.
 
 **EN**
+
 ## What problem it solves
 
 A building automation system often does less than it could: schedules that do not follow actual use, alarms nobody answers and HVAC equipment working harder than needed. The result is uneven comfort and unnecessary cost.
@@ -937,6 +947,7 @@ IT support and consulting for medium and large organizations: users, devices, ne
 
 ### [technology.content] s3-contenido
 **ES**
+
 ## Qué problema resuelve
 
 Muchas organizaciones dependen de la TI para operar, pero tienen usuarios sin acceso a tiempo, equipos configurados de forma distinta y pocos procedimientos escritos. Cuando algo falla, nadie sabe qué cambió.
@@ -961,6 +972,7 @@ Equipos y servicios funcionando, procedimientos y documentación técnica, y cap
 Pymes y empresas con varias sedes, organizaciones públicas y equipos de TI pequeños que necesitan un refuerzo puntual.
 
 **EN**
+
 ## What problem it solves
 
 Many organizations depend on IT to operate, yet they have users without access on time, devices configured differently and few written procedures. When something breaks, nobody knows what changed.
@@ -1030,6 +1042,7 @@ We plan and follow up on energy, building and IT projects, and support purchasin
 
 ### [technology.content] s4-contenido
 **ES**
+
 ## Qué problema resuelve
 
 Los proyectos de edificios, energía o TI se complican cuando el alcance no está claro, el presupuesto no se sigue y las compras no cumplen los requisitos. Eso retrasa decisiones y encarece el trabajo.
@@ -1054,6 +1067,7 @@ Plan de proyecto, proyecciones de costos, documentación de compras, informes pa
 Administradores de instalaciones, organizaciones públicas y empresas que ejecutan proyectos de energía, edificios o TI y necesitan orden y trazabilidad. También acompañamos a equipos que preparan solicitudes de subvenciones o reembolsos.
 
 **EN**
+
 ## What problem it solves
 
 Building, energy or IT projects get complicated when the scope is unclear, the budget is not tracked and purchases do not meet requirements. That slows decisions and raises costs.
@@ -2062,6 +2076,7 @@ A five-step guide to measuring energy and water use, prioritizing where to act a
 
 ### [blog_post.content] a1-contenido
 **ES**
+
 ## Por qué empezar por medir
 
 Cuando una instalación gasta más energía o agua de la que debería, la tentación es comprar equipos nuevos. Casi siempre conviene empezar por otra cosa: saber cuánto se consume, dónde y cuándo. Sin esa línea de base, no hay forma de comprobar si un cambio funcionó.
@@ -2130,11 +2145,26 @@ Cuando sí toque invertir, compara las opciones por su costo durante toda su vid
 - Dejar fuera de la conversación a quien opera el edificio.
 - No documentar los cambios.
 
+## Preguntas frecuentes
+
+### ¿Cuál es la forma más rápida de reducir el consumo de energía en un edificio grande?
+
+Casi siempre, revisar los horarios de los sistemas de climatización e iluminación y compararlos con el uso real del edificio. Es un cambio de operación, no de equipos, y se ve en la factura del mes siguiente.
+
+### ¿Cuántos meses de datos necesito para empezar?
+
+Con doce meses completos de facturas ya puedes calcular una línea de base que incluya todas las estaciones. Si tienes veinticuatro, la comparación es todavía más sólida.
+
+### ¿Hace falta instalar medidores nuevos?
+
+No para empezar. Primero aprovecha lo que ya existe: facturas, medidores de la empresa de servicios y el sistema de gestión de energía si lo tienes. Los medidores adicionales se justifican cuando esos datos no alcanzan para explicar un consumo.
+
 ## Para llevarte
 
 Medir, priorizar, ajustar, verificar y documentar: ese ciclo sirve igual para un edificio que para un distrito escolar. Si quieres ayuda para ponerlo en marcha en tu organización, cuéntanos tu caso en el formulario de cotización.
 
 **EN**
+
 ## Why start by measuring
 
 When a facility uses more energy or water than it should, the temptation is to buy new equipment. Almost always it is better to start somewhere else: knowing how much is used, where and when. Without that baseline, there is no way to check whether a change worked.
@@ -2203,6 +2233,20 @@ When it is time to invest, compare the options by their cost over their whole us
 - Leaving the people who run the building out of the conversation.
 - Not documenting the changes.
 
+## Frequently asked questions
+
+### What is the fastest way to cut energy use in a large building?
+
+Almost always, reviewing the heating, cooling and lighting schedules and comparing them with how the building is actually used. It is an operating change, not an equipment change, and it shows up on next month's bill.
+
+### How many months of data do I need to start?
+
+With twelve full months of bills you can already calculate a baseline that includes every season. With twenty-four, the comparison is even stronger.
+
+### Do I need to install new meters?
+
+Not to begin with. Start with what already exists: bills, the utility's meters and the energy management system if you have one. Additional meters make sense when that data cannot explain a given load.
+
 ## Takeaway
 
 Measure, prioritize, adjust, verify and document: that cycle works just as well for one building as for a school district. If you want help putting it in place in your organization, tell us about your case in the quote form.
@@ -2239,6 +2283,7 @@ Six steps to review the schedules, alarms and trends in your automation system a
 
 ### [blog_post.content] a2-contenido
 **ES**
+
 ## Qué es un sistema de automatización de edificios
 
 Un sistema de automatización de edificios, o BAS por sus siglas en inglés, es el conjunto de controladores, sensores y software que gobierna la climatización y otros sistemas de un edificio. Hace exactamente lo que alguien le programó, y los edificios cambian con el tiempo: se remodelan, cambian de uso, cambian de horarios. Por eso un BAS que no se revisa termina trabajando para un edificio que ya no existe.
@@ -2300,11 +2345,26 @@ Un BAS bien ajustado se desajusta si nadie entiende cómo funciona. Un procedimi
 - Cambiar parámetros sin dejar registro.
 - Tratar el BAS como un tema solo de mantenimiento y no de operación y de energía.
 
+## Preguntas frecuentes
+
+### ¿Qué hace un sistema de automatización de edificios (BAS)?
+
+Controla y supervisa la climatización y otros sistemas del edificio: horarios, temperaturas, ventiladores, bombas y alarmas. Un buen BAS permite ver lo que pasa en cada zona sin ir al lugar.
+
+### ¿Con qué frecuencia conviene revisar los horarios?
+
+Al menos dos veces al año, al cambiar de estación, y siempre que cambie el uso del edificio: remodelaciones, nuevos turnos o eventos recurrentes.
+
+### ¿Hace falta cambiar el sistema para ahorrar energía?
+
+Normalmente no. Muchos sistemas hacen menos de lo que podrían por horarios heredados, alarmas ignoradas o ajustes provisionales que nadie revirtió. Revisar y documentar suele dar resultados antes de plantearse una inversión.
+
 ## Cuándo pedir ayuda
 
 Si no sabes por dónde empezar, si el sistema tiene problemas que se repiten o si necesitas coordinar a varias partes (operación, controles, compras), una revisión externa puede ahorrar tiempo. Si quieres que revisemos juntos tu sistema, pide una cotización desde el formulario.
 
 **EN**
+
 ## What a building automation system is
 
 A building automation system, or BAS, is the set of controllers, sensors and software that runs a building's climate control and other systems. It does exactly what someone programmed it to do, and buildings change over time: they get remodeled, change use, change schedules. That is why a BAS that is never reviewed ends up working for a building that no longer exists.
@@ -2366,22 +2426,1104 @@ A well-tuned BAS drifts out of tune if nobody understands how it works. A short 
 - Changing parameters without leaving a record.
 - Treating the BAS as a maintenance-only topic instead of an operations and energy topic.
 
+## Frequently asked questions
+
+### What does a building automation system (BAS) do?
+
+It controls and monitors heating, cooling and other building systems: schedules, temperatures, fans, pumps and alarms. A good BAS lets you see what is happening in each zone without going on site.
+
+### How often should schedules be reviewed?
+
+At least twice a year, when the seasons change, and whenever the use of the building changes: remodels, new shifts or recurring events.
+
+### Do I need to replace the system to save energy?
+
+Usually not. Many systems do less than they could because of inherited schedules, ignored alarms or temporary overrides nobody set back. Reviewing and documenting often delivers results before an investment is even considered.
+
 ## When to ask for help
 
 If you do not know where to start, if the system has problems that keep coming back or if you need to coordinate several parties (operations, controls, purchasing), an outside review can save time. If you want us to review your system with you, request a quote through the form.
 
+### Artículo 3 · Cómo leer la factura de electricidad de un edificio
+
+### [blog_post.title] a3-titulo
+**ES**
+Cómo leer la factura de electricidad de un edificio
+
+**EN**
+How to read a commercial electricity bill
+
+### [blog_post.slug] a3-slug
+**ES**
+how-to-read-commercial-electricity-bill
+
+**EN**
+how-to-read-commercial-electricity-bill
+
+### [blog_post.categories] a3-categorias
+**ES**
+Energía, Facturas, Demanda eléctrica
+
+**EN**
+Energy, Utility bills, Electric demand
+
+### [blog_post.content] a3-contenido
+**ES**
+
+## Por qué vale la pena leer la factura
+
+Para la mayoría de las instalaciones, la factura de electricidad es el primer dato de consumo que existe, y a veces el único. Leerla bien permite saber en qué se va el dinero, detectar errores de la empresa eléctrica y encontrar ahorros que no requieren comprar nada.
+
+La estructura cambia según la empresa y la tarifa, así que conviene tener a mano la hoja de tarifas de tu instalación. Aun así, casi todas las facturas comerciales comparten los mismos bloques.
+
+## Los cuatro bloques de una factura comercial
+
+- **Energía (kWh).** Es lo que consumiste durante el periodo. Algunas tarifas lo cobran a precios distintos según la hora del día o la estación del año.
+- **Demanda (kW).** Es la potencia máxima que registró el medidor, normalmente promediada en intervalos de 15 minutos. Muchas tarifas comerciales cobran la demanda además de la energía, y un solo pico puede fijar el cargo de todo el mes.
+- **Cargos fijos y de servicio.** No dependen del consumo: medidor, distribución, conexión.
+- **Impuestos, recargos y ajustes.** Incluyen ajustes por combustible o cargos regulatorios. Cambian de un mes a otro sin que hayas hecho nada distinto.
+
+### kW y kWh no son lo mismo
+
+Una forma sencilla de verlo: los kWh son los litros de agua que gastaste en el mes, y los kW son el caudal máximo que abriste en un momento. Puedes gastar poco en total y aun así pagar mucho si abres todas las llaves a la vez.
+
+## Qué revisar cada mes
+
+1. **Consumo contra el mismo mes del año anterior.** Compararlo con el mes previo confunde: cambian el clima y el calendario.
+2. **Demanda máxima y cuándo ocurrió.** Si la fecha y la hora coinciden con arranques simultáneos de equipos o con un evento, ya tienes una pista.
+3. **Factor de potencia.** Algunas tarifas penalizan un factor de potencia bajo. Si aparece un cargo por ese concepto, vale la pena revisar los equipos que lo causan.
+4. **Tarifa aplicada.** Verifica que la categoría corresponda a la instalación, sobre todo después de ampliaciones o cambios de uso.
+5. **Lecturas estimadas.** Varios meses seguidos con lecturas estimadas ocultan problemas reales.
+6. **Cargos que no reconoces.** Pregunta a la empresa eléctrica antes de pagar.
+
+### Señales que piden una revisión
+
+- Un aumento de consumo sin cambio de uso o de ocupación.
+- Una demanda que sube sin explicación.
+- Consumo alto de noche o en fines de semana, cuando el edificio está vacío.
+- Diferencias entre varias facturas de instalaciones parecidas.
+
+## Cómo bajar la demanda sin afectar el confort
+
+Reducir el pico suele costar menos que reducir el consumo total:
+
+- **Escalonar el arranque** de equipos grandes (enfriadoras, bombas, ventilación) desde el sistema de automatización del edificio, en lugar de encenderlos todos a la misma hora.
+- **Revisar los horarios** de precalentamiento y preenfriamiento para que no coincidan con la entrada de la gente.
+- **Evitar coincidencias** con otras cargas fuertes, como cocinas, eventos o la carga de vehículos eléctricos.
+
+## Lleva un registro
+
+Una hoja de cálculo con consumo, demanda, costo y observaciones de cada mes basta para empezar. Si administras varios edificios, una herramienta gratuita como ENERGY STAR Portfolio Manager permite comparar instalaciones y ver la evolución en el tiempo.
+
+## Preguntas frecuentes
+
+### ¿Qué diferencia hay entre kW y kWh en la factura?
+
+Los kWh miden la energía consumida durante el periodo. Los kW miden la demanda: la potencia máxima registrada en un instante, normalmente en un intervalo de 15 minutos. Muchas tarifas comerciales cobran las dos cosas.
+
+### ¿Cómo sé si pago demasiado por demanda?
+
+Compara la demanda máxima de cada mes con la típica del resto del mes. Si un pico aislado es mucho mayor, es probable que haya arranques simultáneos que se pueden escalonar.
+
+### ¿Cada cuánto debo revisar la factura?
+
+Cada mes. Diez minutos bastan para comparar el consumo y la demanda con el mismo mes del año anterior y anotar cualquier diferencia.
+
+### ¿Se puede cambiar de tarifa?
+
+En muchos casos sí. Si tu patrón de uso cambió, pregunta a la empresa eléctrica qué tarifas corresponden a tu categoría y calcula el costo con tus datos reales antes de decidir.
+
+## Para llevarte
+
+La factura cuenta una historia: qué consumes, cuándo y a qué precio. Revisarla cada mes toma poco tiempo y es la base de cualquier plan de ahorro. Si quieres que revisemos juntos las facturas de tu organización, pide una cotización desde el formulario.
+
+**EN**
+
+## Why it pays to read the bill
+
+For most facilities, the electricity bill is the first consumption data that exists, and sometimes the only one. Reading it well tells you where the money goes, helps you spot utility errors and uncovers savings that do not require buying anything.
+
+The layout changes by utility and rate, so keep your facility's rate schedule at hand. Even so, nearly all commercial bills share the same building blocks.
+
+## The four blocks of a commercial bill
+
+- **Energy (kWh).** What you used during the period. Some rates charge different prices by time of day or season.
+- **Demand (kW).** The highest power the meter recorded, usually averaged over 15-minute intervals. Many commercial rates charge demand on top of energy, and a single peak can set the charge for the whole month.
+- **Fixed and service charges.** They do not depend on use: meter, distribution, connection.
+- **Taxes, surcharges and adjustments.** They include fuel adjustments or regulatory charges. They change from month to month even if you did nothing different.
+
+### kW and kWh are not the same thing
+
+A simple way to see it: kWh are the liters of water you used in the month, and kW is the widest you opened the tap at any one moment. You can use little water overall and still pay a lot if you open every tap at once.
+
+## What to check every month
+
+1. **Use against the same month last year.** Comparing with the previous month is misleading: weather and the calendar change.
+2. **Peak demand and when it happened.** If the date and time match simultaneous equipment start-ups or an event, you already have a lead.
+3. **Power factor.** Some rates penalize a low power factor. If a charge for it appears, check the equipment causing it.
+4. **Rate applied.** Make sure the category matches the facility, especially after expansions or changes of use.
+5. **Estimated readings.** Several months in a row of estimated readings hide real problems.
+6. **Charges you do not recognize.** Ask the utility before paying.
+
+### Signs that call for a closer look
+
+- A rise in use with no change in operations or occupancy.
+- Demand that climbs without explanation.
+- High use at night or on weekends, when the building is empty.
+- Differences between bills from similar facilities.
+
+## How to lower demand without hurting comfort
+
+Cutting the peak often costs less than cutting total use:
+
+- **Stagger start-ups** of large equipment (chillers, pumps, ventilation) from the building automation system instead of turning everything on at the same time.
+- **Review pre-heating and pre-cooling schedules** so they do not overlap with people arriving.
+- **Avoid overlaps** with other heavy loads such as kitchens, events or electric-vehicle charging.
+
+## Keep a record
+
+A spreadsheet with use, demand, cost and notes for each month is enough to start. If you manage several buildings, a free tool such as ENERGY STAR Portfolio Manager lets you compare facilities and follow trends over time.
+
+## Frequently asked questions
+
+### What is the difference between kW and kWh on the bill?
+
+kWh measure the energy used during the period. kW measure demand: the highest power recorded at any moment, usually in a 15-minute interval. Many commercial rates charge for both.
+
+### How do I know if I am paying too much for demand?
+
+Compare each month's peak demand with the typical level for the rest of the month. If a single peak is much higher, simultaneous equipment start-ups can probably be staggered.
+
+### How often should I review the bill?
+
+Every month. Ten minutes is enough to compare use and demand with the same month last year and note any difference.
+
+### Can I change rates?
+
+In many cases, yes. If your usage pattern has changed, ask the utility which rates apply to your category and calculate the cost with your real data before deciding.
+
+## Takeaway
+
+The bill tells a story: what you use, when and at what price. Reviewing it every month takes little time and is the foundation of any savings plan. If you would like us to go through your organization's bills with you, request a quote through the form.
+
+### Artículo 4 · EUI y WUI
+
+### [blog_post.title] a4-titulo
+**ES**
+EUI y WUI: cómo comparar el consumo de tus edificios
+
+**EN**
+EUI and WUI: how to benchmark your buildings
+
+### [blog_post.slug] a4-slug
+**ES**
+eui-wui-benchmark-energy-water-use
+
+**EN**
+eui-wui-benchmark-energy-water-use
+
+### [blog_post.categories] a4-categorias
+**ES**
+Energía, Agua, Indicadores
+
+**EN**
+Energy, Water, Benchmarking
+
+### [blog_post.content] a4-contenido
+**ES**
+
+## El problema de comparar edificios por la factura
+
+Un colegio de 20.000 pies cuadrados y uno de 120.000 no pueden compararse por lo que pagan cada mes. El grande casi siempre gasta más, y eso no dice nada sobre cuál funciona mejor. Para comparar de verdad hace falta un indicador que tenga en cuenta el tamaño. Ahí entran el EUI y el WUI.
+
+## Qué es el EUI
+
+El **EUI** (*energy use intensity*, intensidad de uso de energía) es la energía que consume un edificio en un año dividida por su superficie. En Estados Unidos suele expresarse en kBtu por pie cuadrado al año.
+
+Sirve para responder preguntas como estas:
+
+- ¿Este edificio gasta más energía por pie cuadrado que otros parecidos?
+- ¿Mejoró después de un cambio de horarios o de equipos?
+- ¿Por cuál de mis edificios conviene empezar?
+
+## Qué es el WUI
+
+El **WUI** (*water use intensity*, intensidad de uso de agua) funciona igual con el agua: el consumo anual dividido por la superficie, por ejemplo en galones por pie cuadrado al año. Es útil para detectar fugas, riego excesivo o equipos que gastan más agua de la que deberían.
+
+## Cómo calcularlos
+
+1. **Reúne un año completo de facturas** de electricidad, gas y agua de cada edificio.
+2. **Convierte la energía a una misma unidad** (kBtu) y suma todas las fuentes.
+3. **Obtén la superficie** del edificio de forma confiable (planos o registros de la propiedad).
+4. **Divide** el consumo anual entre la superficie.
+
+Con una hoja de cálculo basta, pero herramientas como ENERGY STAR Portfolio Manager hacen las conversiones y permiten comparar con edificios del mismo tipo.
+
+## Cómo interpretarlos sin equivocarte
+
+Un EUI alto no significa automáticamente que el edificio esté mal operado. Antes de sacar conclusiones, ten en cuenta:
+
+- **El tipo de uso.** Una cocina, un laboratorio o un centro de datos consumen más que un aula o una oficina.
+- **Las horas de ocupación.** Un edificio con tres turnos no se compara con uno que cierra a las seis.
+- **El clima.** Los años muy fríos o muy calurosos mueven el resultado.
+- **La calidad de los datos.** Un metro cuadrado mal registrado cambia el indicador.
+
+Por eso conviene comparar edificios del mismo tipo y mirar la **evolución del mismo edificio** año con año, que es la comparación más justa.
+
+## Cómo usarlos para decidir
+
+- **Ordena** tus edificios de mayor a menor intensidad y empieza por los de arriba.
+- **Fija una meta** razonable por edificio, no una igual para todos.
+- **Mide el efecto** de cada cambio comparando el indicador antes y después, ajustando por clima.
+- **Comunica** los resultados al personal y a la comunidad en un formato simple: una tabla o un gráfico por edificio.
+
+## Un ejemplo con números
+
+Imagina un edificio de 50.000 pies cuadrados que consume en un año 1.200.000 kWh de electricidad y 8.000 therms de gas (cifras de ejemplo, no de un caso real):
+
+- Electricidad: 1.200.000 kWh × 3,412 = 4.094.400 kBtu.
+- Gas: 8.000 therms × 100 = 800.000 kBtu.
+- Total: 4.894.400 kBtu.
+- EUI: 4.894.400 ÷ 50.000 = unos **97,9 kBtu por pie cuadrado al año**.
+
+Con ese número ya puedes compararlo con edificios de uso parecido y con tu propio historial.
+
+## Preguntas frecuentes
+
+### ¿Qué es un buen EUI?
+
+No existe un número universal: depende del tipo de edificio, del clima y del uso. Lo útil es compararlo con edificios similares y con la evolución del mismo edificio.
+
+### ¿Qué unidades se usan?
+
+En Estados Unidos, kBtu por pie cuadrado al año para la energía y galones por pie cuadrado al año para el agua. En sistema métrico se usan kWh por metro cuadrado al año y litros por metro cuadrado al año.
+
+### ¿Qué datos necesito para calcularlo?
+
+Doce meses de facturas de cada fuente de energía y de agua, y la superficie del edificio medida con criterio.
+
+### ¿Sirve para edificios pequeños?
+
+Sí. Lo importante es que la superficie y los consumos estén bien registrados, no el tamaño.
+
+## Para llevarte
+
+El EUI y el WUI convierten facturas en una comparación justa entre edificios. No dicen por sí solos qué hacer, pero señalan dónde mirar primero. Si necesitas ayuda para calcularlos y leerlos en tu organización, pide una cotización desde el formulario.
+
+**EN**
+
+## The problem with comparing buildings by their bills
+
+A 20,000-square-foot school and a 120,000-square-foot one cannot be compared by what they pay each month. The large one almost always spends more, and that says nothing about which one runs better. A fair comparison needs an indicator that accounts for size. That is where EUI and WUI come in.
+
+## What EUI is
+
+**EUI** (energy use intensity) is the energy a building uses in a year divided by its floor area. In the United States it is usually expressed in kBtu per square foot per year.
+
+It helps answer questions like these:
+
+- Does this building use more energy per square foot than similar ones?
+- Did it improve after a schedule or equipment change?
+- Which of my buildings should I start with?
+
+## What WUI is
+
+**WUI** (water use intensity) works the same way for water: annual use divided by floor area, for example in gallons per square foot per year. It is useful for spotting leaks, excess irrigation or equipment that uses more water than it should.
+
+## How to calculate them
+
+1. **Gather a full year of bills** for electricity, gas and water for each building.
+2. **Convert energy to one unit** (kBtu) and add up all sources.
+3. **Get the building's floor area** from a reliable source (drawings or property records).
+4. **Divide** annual use by floor area.
+
+A spreadsheet is enough, but tools such as ENERGY STAR Portfolio Manager handle the conversions and let you compare with buildings of the same type.
+
+## How to read them without getting it wrong
+
+A high EUI does not automatically mean a building is poorly run. Before drawing conclusions, consider:
+
+- **The type of use.** A kitchen, a lab or a data center uses more than a classroom or an office.
+- **Hours of occupancy.** A building running three shifts is not comparable to one that closes at six.
+- **Weather.** Very cold or very hot years move the result.
+- **Data quality.** A wrongly recorded floor area changes the indicator.
+
+That is why it is best to compare buildings of the same type and to follow **the same building year over year**, which is the fairest comparison.
+
+## How to use them to decide
+
+- **Rank** your buildings from highest to lowest intensity and start at the top.
+- **Set a reasonable target** for each building, not the same one for all.
+- **Measure the effect** of each change by comparing the indicator before and after, adjusting for weather.
+- **Share** results with staff and the community in a simple format: one table or chart per building.
+
+## An example with numbers
+
+Imagine a 50,000-square-foot building that uses 1,200,000 kWh of electricity and 8,000 therms of gas in a year (example figures, not a real case):
+
+- Electricity: 1,200,000 kWh × 3.412 = 4,094,400 kBtu.
+- Gas: 8,000 therms × 100 = 800,000 kBtu.
+- Total: 4,894,400 kBtu.
+- EUI: 4,894,400 ÷ 50,000 = about **97.9 kBtu per square foot per year**.
+
+With that number you can compare against buildings with a similar use and against your own history.
+
+## Frequently asked questions
+
+### What is a good EUI?
+
+There is no universal number: it depends on building type, climate and use. What helps is comparing against similar buildings and following the same building over time.
+
+### Which units are used?
+
+In the United States, kBtu per square foot per year for energy and gallons per square foot per year for water. In the metric system, kWh per square meter per year and liters per square meter per year.
+
+### What data do I need to calculate it?
+
+Twelve months of bills for each energy and water source, and the building's floor area measured carefully.
+
+### Does it work for small buildings?
+
+Yes. What matters is that floor area and consumption are well recorded, not the size.
+
+## Takeaway
+
+EUI and WUI turn bills into a fair comparison between buildings. On their own they do not say what to do, but they show where to look first. If you need help calculating and reading them in your organization, request a quote through the form.
+
+### Artículo 5 · Auditoría energética
+
+### [blog_post.title] a5-titulo
+**ES**
+Auditoría energética: qué esperar y cómo prepararla
+
+**EN**
+Energy audits: what to expect and how to prepare
+
+### [blog_post.slug] a5-slug
+**ES**
+energy-audit-what-to-expect-how-to-prepare
+
+**EN**
+energy-audit-what-to-expect-how-to-prepare
+
+### [blog_post.categories] a5-categorias
+**ES**
+Energía, Auditorías, Eficiencia
+
+**EN**
+Energy, Audits, Efficiency
+
+### [blog_post.content] a5-contenido
+**ES**
+
+## Qué es una auditoría energética
+
+Una auditoría energética es una revisión ordenada de cómo un edificio usa la energía: dónde entra, en qué se transforma y dónde se pierde. Termina con un informe que propone mejoras, con su costo estimado y su ahorro esperado. No es una inspección de cumplimiento ni una oferta de venta de equipos; si lo que recibes es solo una lista de productos, no es una auditoría.
+
+## Los niveles más comunes
+
+Muchas auditorías comerciales siguen los niveles que define ASHRAE:
+
+- **Nivel 1: recorrido.** Una visita al edificio y el análisis de las facturas. Identifica mejoras de bajo costo y señala cuáles merecen un estudio más profundo.
+- **Nivel 2: estudio y análisis.** Añade mediciones, análisis detallado de los sistemas y cálculo de costos y ahorros de cada mejora. Es el nivel que suele pedirse para tomar decisiones de inversión.
+- **Nivel 3: análisis detallado de inversiones grandes.** Modela con precisión las mejoras de mayor costo, como reemplazar sistemas completos.
+
+Para empezar, un nivel 1 sobre varios edificios ayuda a decidir en cuáles vale la pena un nivel 2.
+
+## Qué reunir antes de la visita
+
+Cuanto mejor sea la información, más útil y más barata resulta la auditoría:
+
+- Facturas de electricidad, gas y agua de al menos 12 meses, y las de 24 si las tienes.
+- Planos o descripción de los sistemas de climatización, iluminación y control.
+- Horarios reales de ocupación, incluidos eventos y temporadas.
+- Inventario de equipos principales y su antigüedad.
+- Historial de mantenimiento y de reparaciones frecuentes.
+- Acceso al sistema de automatización del edificio, si existe.
+
+## Cómo es la visita
+
+Durante la visita, el auditor recorre las instalaciones, mide, fotografía los equipos y conversa con quienes operan el edificio. Esa conversación es de las partes más valiosas: el personal de mantenimiento suele conocer problemas que ningún dato muestra.
+
+Conviene que haya alguien de operaciones presente y que se pueda entrar a salas técnicas, azoteas y cuartos de máquinas.
+
+## Qué debe incluir el informe
+
+- Un **resumen** comprensible para quien decide, sin tecnicismos.
+- Una **línea de base** del consumo y los indicadores de cada edificio.
+- Una **lista priorizada de mejoras**, con costo, ahorro estimado y plazo de recuperación.
+- Las **suposiciones** usadas, para poder revisarlas.
+- Los **siguientes pasos** y quién se encarga de cada uno.
+
+## Después de la auditoría
+
+Un informe que queda en un cajón no ahorra nada. Para sacarle partido:
+
+1. Empieza por las mejoras de **bajo costo y poca complejidad**, como horarios y ajustes de control.
+2. Asigna **responsables y fechas** a cada acción.
+3. **Mide el resultado** con el consumo de los meses siguientes.
+4. Guarda la documentación: te servirá para pedir subvenciones o reembolsos.
+
+## Cómo elegir a quien hace la auditoría
+
+- **Independencia:** conviene que quien audita no dependa de vender los equipos que recomienda.
+- **Experiencia con edificios como el tuyo:** escuelas, oficinas o instalaciones industriales tienen necesidades distintas.
+- **Claridad del alcance:** pide por escrito qué nivel incluye, qué se medirá y qué entregables recibirás.
+- **Informes comprensibles:** pide un ejemplo de informe anterior, sin datos de clientes.
+- **Acompañamiento posterior:** pregunta si ayuda a priorizar y a dar seguimiento a las mejoras.
+
+## Preguntas frecuentes
+
+### ¿Cuánto cuesta una auditoría energética?
+
+Depende de la superficie, del número de edificios y del nivel de detalle. Pide una propuesta con alcance y entregables definidos y compara propuestas de alcance equivalente.
+
+### ¿Cuánto tiempo toma?
+
+Una visita de nivel 1 puede resolverse en pocos días; un nivel 2 o 3 requiere más tiempo para medir y analizar. Planifícalo con margen respecto a cualquier fecha límite de subvenciones.
+
+### ¿Qué ahorros puedo esperar?
+
+Varían mucho entre edificios, y quien promete una cifra sin ver tus datos está adivinando. Lo razonable es pedir el ahorro estimado de cada mejora con sus suposiciones.
+
+### ¿Es obligatoria?
+
+Depende de las normas locales y de los programas a los que quieras acceder; algunos exigen una auditoría previa. Confírmalo con la entidad correspondiente.
+
+## Para llevarte
+
+Una buena auditoría no promete milagros: ordena las decisiones. Si quieres ayuda para prepararla, revisar el informe o llevarlo a la práctica, pide una cotización desde el formulario.
+
+**EN**
+
+## What an energy audit is
+
+An energy audit is an orderly review of how a building uses energy: where it comes in, what it turns into and where it is lost. It ends with a report that proposes improvements, with estimated cost and expected savings. It is not a compliance inspection or an equipment sales pitch; if all you receive is a list of products, it is not an audit.
+
+## The most common levels
+
+Many commercial audits follow the levels defined by ASHRAE:
+
+- **Level 1: walk-through.** A site visit and an analysis of the bills. It identifies low-cost improvements and flags which ones deserve a deeper study.
+- **Level 2: energy survey and analysis.** It adds measurements, detailed analysis of the systems and calculation of the cost and savings of each improvement. It is the level usually requested to make investment decisions.
+- **Level 3: detailed analysis of capital projects.** It models the costliest improvements precisely, such as replacing entire systems.
+
+To get started, a Level 1 across several buildings helps decide which ones deserve a Level 2.
+
+## What to gather before the visit
+
+The better the information, the more useful and cheaper the audit:
+
+- Electricity, gas and water bills for at least 12 months, and 24 if you have them.
+- Drawings or a description of the heating, cooling, lighting and control systems.
+- Real occupancy schedules, including events and seasons.
+- An inventory of major equipment and its age.
+- Maintenance history and frequent repairs.
+- Access to the building automation system, if there is one.
+
+## What the visit looks like
+
+During the visit, the auditor walks the facility, takes measurements, photographs equipment and talks with the people who run the building. That conversation is one of the most valuable parts: maintenance staff often know about problems that no data shows.
+
+It helps to have someone from operations present and access to technical rooms, rooftops and mechanical rooms.
+
+## What the report should include
+
+- A **summary** that a decision-maker can follow, without jargon.
+- A **baseline** of consumption and indicators for each building.
+- A **prioritized list of improvements**, with cost, estimated savings and payback.
+- The **assumptions** used, so they can be reviewed.
+- The **next steps** and who is responsible for each.
+
+## After the audit
+
+A report that stays in a drawer saves nothing. To get value from it:
+
+1. Start with **low-cost, low-complexity** improvements, such as schedules and control adjustments.
+2. Assign **owners and dates** to each action.
+3. **Measure the result** using the following months of consumption.
+4. Keep the documentation: it will help you apply for grants or rebates.
+
+## How to choose who does the audit
+
+- **Independence:** it helps if the auditor does not depend on selling the equipment they recommend.
+- **Experience with buildings like yours:** schools, offices and industrial facilities have different needs.
+- **A clear scope:** ask in writing which level is included, what will be measured and what you will receive.
+- **Readable reports:** ask for a sample of a previous report, without client data.
+- **Follow-up support:** ask whether they help prioritize and track the improvements.
+
+## Frequently asked questions
+
+### How much does an energy audit cost?
+
+It depends on floor area, the number of buildings and the level of detail. Ask for a proposal with a defined scope and deliverables, and compare proposals of equivalent scope.
+
+### How long does it take?
+
+A Level 1 visit can be done in a few days; a Level 2 or 3 needs more time to measure and analyze. Plan it with margin against any grant deadline.
+
+### What savings can I expect?
+
+They vary widely between buildings, and anyone who promises a figure without seeing your data is guessing. The reasonable thing is to ask for the estimated savings of each improvement along with its assumptions.
+
+### Is it mandatory?
+
+It depends on local rules and on the programs you want to access; some require a prior audit. Confirm with the relevant organization.
+
+## Takeaway
+
+A good audit does not promise miracles: it puts decisions in order. If you want help preparing for one, reviewing the report or putting it into practice, request a quote through the form.
+
+### Artículo 6 · Subvenciones y reembolsos
+
+### [blog_post.title] a6-titulo
+**ES**
+Subvenciones y reembolsos de energía: cómo pedirlos
+
+**EN**
+Energy and water rebates and grants: how to apply
+
+### [blog_post.slug] a6-slug
+**ES**
+energy-water-rebates-grants-how-to-apply
+
+**EN**
+energy-water-rebates-grants-how-to-apply
+
+### [blog_post.categories] a6-categorias
+**ES**
+Energía, Subvenciones, Reembolsos
+
+**EN**
+Energy, Grants, Rebates
+
+### [blog_post.content] a6-contenido
+**ES**
+
+## Dinero disponible que muchas organizaciones no piden
+
+Cambiar un equipo, mejorar un sistema de control o instalar medición de agua cuesta dinero, pero a menudo existen programas que cubren una parte. Muchas organizaciones no los aprovechan por una razón sencilla: no saben que existen o llegan a la convocatoria sin la documentación lista.
+
+Los programas varían mucho según el lugar, el tipo de organización y el año, así que lo que sigue es un método y no una lista cerrada. Antes de planificar una inversión, confirma las condiciones vigentes con la entidad que ofrece cada programa.
+
+## Los tres tipos más comunes
+
+- **Reembolsos de la empresa de servicios públicos.** Pagan una parte de un equipo o de una mejora concreta, como iluminación eficiente, motores, climatización o dispositivos que ahorran agua. Suelen tener una lista de equipos elegibles y exigen pedir la aprobación antes de comprar.
+- **Incentivos por resultado.** Pagan según el ahorro medido o estimado de un proyecto.
+- **Subvenciones públicas o de fundaciones.** Cubren proyectos más grandes y se concursan: hay que presentar una propuesta, un presupuesto y un plan de seguimiento.
+
+## Antes de comprar nada
+
+El error más caro es comprar y después descubrir que el programa exigía aprobación previa. Por eso:
+
+1. **Pregunta primero** a tu empresa de electricidad, gas y agua qué programas tiene y qué exigen.
+2. **Lee las condiciones de elegibilidad**: tipo de cliente, tipo de equipo, fechas y topes.
+3. **Guarda las fechas límite** de cada convocatoria en un calendario compartido.
+
+## Qué documentar desde el principio
+
+Una solicitud sólida casi siempre pide lo mismo:
+
+- **Línea de base:** el consumo de energía y agua de los últimos 12 a 24 meses.
+- **Descripción del proyecto:** qué se va a cambiar, dónde y por qué.
+- **Costo y plazo:** presupuestos de proveedores y calendario.
+- **Ahorro esperado:** cómo se calculó y con qué supuestos.
+- **Plan de medición:** cómo se comprobará el resultado después.
+- **Fichas técnicas** de los equipos y comprobantes de compra.
+
+Si ya llevas un registro mensual de consumo (ver el artículo sobre la factura de electricidad), la mitad del trabajo está hecha.
+
+## Cómo escribir una propuesta que se entienda
+
+- Empieza por el **problema** que resuelve el proyecto, no por el equipo.
+- Usa **cifras comprobables** de tu propia instalación.
+- Explica **quién hará qué** y cuándo.
+- Muestra que el proyecto **se sostiene después**: mantenimiento, capacitación y seguimiento.
+- Revisa que **todos los anexos** pedidos estén completos y legibles.
+
+## Después de recibir el dinero
+
+Los programas suelen exigir informes. Anota desde el primer día qué se compró, cuándo se instaló y cómo evolucionó el consumo. Esa documentación también te sirve para la siguiente solicitud.
+
+## Preguntas frecuentes
+
+### ¿Puedo pedir un reembolso por equipos que ya instalé?
+
+Depende del programa. Muchos exigen aprobación previa a la compra y no cubren equipos ya instalados; confírmalo antes de gastar.
+
+### ¿Se pueden combinar varios programas en el mismo proyecto?
+
+A veces. Cada programa define si admite otras ayudas para el mismo equipo y cómo se descuentan. Pregunta por esas reglas al preparar el presupuesto.
+
+### ¿Quién puede pedirlos: el propietario o el inquilino?
+
+Varía. Algunos programas se dirigen al titular de la cuenta de servicio y otros al propietario del edificio. Las escuelas y las organizaciones públicas suelen tener programas específicos.
+
+### ¿Cuánto tardan en pagar?
+
+Depende de la entidad: algunos programas pagan tras instalar y verificar, otros por etapas. Pregunta por los plazos y por la documentación que piden para el cobro.
+
+### ¿Es mejor pedir ayuda externa?
+
+Si tu equipo no tiene tiempo de preparar la documentación, tiene sentido. Una persona que conozca los requisitos y tus datos puede ahorrar semanas y evitar solicitudes rechazadas por errores.
+
+## Para llevarte
+
+Los reembolsos y las subvenciones premian a quien llega con datos ordenados y con tiempo. Si quieres ayuda para reunir la documentación o preparar una solicitud, pide una cotización desde el formulario.
+
+**EN**
+
+## Money that many organizations never ask for
+
+Replacing equipment, upgrading a control system or installing water metering costs money, but programs often exist that cover part of it. Many organizations do not use them for a simple reason: they do not know they exist, or they reach the deadline without the paperwork ready.
+
+Programs vary widely by location, type of organization and year, so what follows is a method rather than a closed list. Before planning an investment, confirm the current conditions with the organization that runs each program.
+
+## The three most common types
+
+- **Utility rebates.** They pay part of a specific piece of equipment or improvement, such as efficient lighting, motors, heating and cooling or water-saving devices. They usually have a list of eligible equipment and require approval before you buy.
+- **Performance incentives.** They pay according to the measured or estimated savings of a project.
+- **Public or foundation grants.** They cover larger projects and are competitive: you submit a proposal, a budget and a monitoring plan.
+
+## Before you buy anything
+
+The costliest mistake is buying first and discovering the program required prior approval. So:
+
+1. **Ask first** your electric, gas and water utilities which programs they have and what they require.
+2. **Read the eligibility conditions**: type of customer, type of equipment, dates and caps.
+3. **Save the deadline** of each call in a shared calendar.
+
+## What to document from the start
+
+A strong application almost always asks for the same things:
+
+- **Baseline:** energy and water use for the last 12 to 24 months.
+- **Project description:** what will change, where and why.
+- **Cost and timeline:** vendor quotes and schedule.
+- **Expected savings:** how they were calculated and under what assumptions.
+- **Measurement plan:** how the result will be verified afterward.
+- **Equipment data sheets** and proof of purchase.
+
+If you already keep a monthly consumption log (see the article on the electricity bill), half the work is done.
+
+## How to write a proposal people can follow
+
+- Start with the **problem** the project solves, not the equipment.
+- Use **verifiable figures** from your own facility.
+- Explain **who will do what** and when.
+- Show that the project **lasts**: maintenance, training and follow-up.
+- Check that **every requested attachment** is complete and legible.
+
+## After you receive the funds
+
+Programs usually require reports. From day one, record what was bought, when it was installed and how consumption changed. That documentation also helps with your next application.
+
+## Frequently asked questions
+
+### Can I ask for a rebate on equipment I have already installed?
+
+It depends on the program. Many require approval before purchase and do not cover equipment already installed; confirm before spending.
+
+### Can several programs be combined on the same project?
+
+Sometimes. Each program defines whether it allows other incentives for the same equipment and how they are deducted. Ask about those rules when you prepare the budget.
+
+### Who can apply: the owner or the tenant?
+
+It varies. Some programs are aimed at the utility account holder and others at the building owner. Schools and public organizations often have dedicated programs.
+
+### How long do they take to pay out?
+
+It depends on the organization: some programs pay after installation and verification, others in stages. Ask about timelines and the documents required to receive payment.
+
+### Is it better to get outside help?
+
+If your team has no time to prepare the paperwork, it makes sense. Someone who knows the requirements and your data can save weeks and prevent applications from being rejected over mistakes.
+
+## Takeaway
+
+Rebates and grants reward those who arrive with orderly data and enough time. If you want help gathering the documentation or preparing an application, request a quote through the form.
+
+### Artículo 7 · Migración de servidores
+
+### [blog_post.title] a7-titulo
+**ES**
+Migrar servidores sin sorpresas: lista de verificación
+
+**EN**
+How to migrate servers without surprises: a checklist
+
+### [blog_post.slug] a7-slug
+**ES**
+server-migration-checklist
+
+**EN**
+server-migration-checklist
+
+### [blog_post.categories] a7-categorias
+**ES**
+TI, Servidores, Migraciones
+
+**EN**
+IT, Servers, Migrations
+
+### [blog_post.content] a7-contenido
+**ES**
+
+## Por qué fallan las migraciones
+
+Casi nunca falla la migración en sí. Falla lo que nadie sabía que dependía del servidor viejo: una tarea programada, un script, una impresora, un permiso heredado. Una buena migración dedica más tiempo a descubrir y comprobar que a copiar.
+
+Esta lista sirve para migrar un servidor de archivos, de aplicaciones o de directorio, ya sea a equipos nuevos, a una máquina virtual o a la nube.
+
+## Antes de la migración
+
+1. **Inventaría lo que hace el servidor.** Roles, servicios, carpetas compartidas, tareas programadas, impresoras, certificados y cuentas de servicio.
+2. **Identifica quién lo usa.** Usuarios, aplicaciones y otros servidores que se conectan a él.
+3. **Revisa las dependencias de red.** Direcciones IP fijas, nombres DNS, reglas de firewall, rutas y DHCP.
+4. **Haz una copia de seguridad completa** y comprueba que se puede restaurar. Una copia que nunca se restauró es una suposición.
+5. **Define la ventana de cambio** con las áreas afectadas y comunícala con anticipación.
+6. **Escribe el plan de vuelta atrás:** qué señales indican que hay que revertir y cómo se hace.
+
+## Durante la migración
+
+- **Congela los cambios** en el servidor de origen mientras dura la copia final.
+- **Migra primero un grupo piloto** de usuarios o una carpeta, y comprueba que todo funciona antes de seguir.
+- **Mantén el servidor viejo encendido** pero sin acceso de escritura, hasta tener la confirmación de los usuarios.
+- **Anota cada paso** y la hora en que se hizo: si algo falla, sabrás qué cambió.
+
+## Pruebas de aceptación
+
+No des la migración por terminada cuando termine la copia. Pide a los usuarios que comprueben lo que hacen todos los días:
+
+- Abrir y guardar archivos en las carpetas compartidas, con los permisos correctos.
+- Imprimir en las impresoras de siempre.
+- Entrar a las aplicaciones y a los informes habituales.
+- Recibir los correos y las notificaciones automáticas.
+- Ejecutar las tareas programadas y los respaldos.
+
+## Después de la migración
+
+1. **Vigila el servidor nuevo** durante los primeros días: espacio, rendimiento y registros de errores.
+2. **Actualiza la documentación:** diagrama, direcciones, cuentas y responsables.
+3. **Retira el servidor viejo con calma:** primero apágalo y espera un plazo razonable antes de borrarlo.
+4. **Revisa los respaldos** del servidor nuevo y haz una restauración de prueba.
+
+## Errores frecuentes
+
+- **Migrar sin inventario.** Es la causa principal de las sorpresas del día siguiente.
+- **No probar la restauración** de la copia de seguridad antes del cambio.
+- **Hacer el cambio en horario laboral** o justo antes de un cierre importante.
+- **Olvidar las cuentas de servicio** y las tareas programadas que dependen del servidor.
+- **Apagar el servidor viejo** el mismo día, sin un periodo de espera.
+- **No avisar a los usuarios** de lo que va a cambiar y de a quién acudir si algo falla.
+
+## Preguntas frecuentes
+
+### ¿Cuánto tiempo toma migrar un servidor?
+
+Depende del volumen de datos y de la cantidad de servicios. Planifica más tiempo para descubrir y probar que para copiar, y programa el cambio en un horario de poca actividad.
+
+### ¿Conviene migrar a la nube o a un servidor nuevo en la oficina?
+
+No hay una respuesta única. Compara costos de licencias y de operación, la calidad de tu conexión a internet, los requisitos de cumplimiento de tus datos y las capacidades de tu equipo antes de decidir.
+
+### ¿Cómo evito el tiempo de inactividad?
+
+Sincroniza los datos con anticipación, haz el cambio final en una ventana corta y mantén el servidor viejo disponible en modo de solo lectura hasta que los usuarios confirmen.
+
+### ¿Qué hago con el servidor viejo?
+
+Apágalo, consérvalo un periodo acordado por si hay que volver atrás y bórralo de forma segura. Si guardaba datos sensibles, documenta cómo se destruyeron.
+
+## Para llevarte
+
+Una migración tranquila es la que se planeó como un cambio de personas y procesos, no solo de equipos. Si necesitas un refuerzo para planificarla o ejecutarla, pide una cotización desde el formulario.
+
+**EN**
+
+## Why migrations fail
+
+The migration itself almost never fails. What fails is whatever nobody knew depended on the old server: a scheduled task, a script, a printer, an inherited permission. A good migration spends more time discovering and checking than copying.
+
+This checklist works for migrating a file, application or directory server, whether to new hardware, a virtual machine or the cloud.
+
+## Before the migration
+
+1. **Inventory what the server does.** Roles, services, shared folders, scheduled tasks, printers, certificates and service accounts.
+2. **Identify who uses it.** Users, applications and other servers that connect to it.
+3. **Check network dependencies.** Fixed IP addresses, DNS names, firewall rules, routes and DHCP.
+4. **Take a full backup** and confirm it can be restored. A backup that was never restored is an assumption.
+5. **Set the change window** with the affected teams and announce it in advance.
+6. **Write the rollback plan:** what signs mean you must revert and how it is done.
+
+## During the migration
+
+- **Freeze changes** on the source server while the final copy runs.
+- **Migrate a pilot group first**, a set of users or one folder, and check that everything works before continuing.
+- **Keep the old server on** but read-only until users confirm.
+- **Write down each step** and the time it was done: if something fails, you will know what changed.
+
+## Acceptance testing
+
+Do not call the migration finished when the copy ends. Ask users to check what they do every day:
+
+- Open and save files in the shared folders, with the right permissions.
+- Print on the usual printers.
+- Log in to the usual applications and reports.
+- Receive emails and automatic notifications.
+- Run scheduled tasks and backups.
+
+## After the migration
+
+1. **Watch the new server** during the first days: space, performance and error logs.
+2. **Update the documentation:** diagram, addresses, accounts and owners.
+3. **Retire the old server carefully:** power it off first and wait a reasonable period before wiping it.
+4. **Check the backups** of the new server and run a test restore.
+
+## Common mistakes
+
+- **Migrating without an inventory.** It is the main cause of next-day surprises.
+- **Not testing the restore** of the backup before the change.
+- **Making the change during business hours** or right before an important close.
+- **Forgetting service accounts** and scheduled tasks that depend on the server.
+- **Powering off the old server** the same day, with no waiting period.
+- **Not telling users** what will change and who to go to if something fails.
+
+## Frequently asked questions
+
+### How long does it take to migrate a server?
+
+It depends on the volume of data and the number of services. Plan more time for discovering and testing than for copying, and schedule the cutover for a low-activity window.
+
+### Should we migrate to the cloud or to a new on-site server?
+
+There is no single answer. Compare licensing and operating costs, the quality of your internet connection, the compliance requirements of your data and your team's capabilities before deciding.
+
+### How do I avoid downtime?
+
+Sync the data ahead of time, do the final cutover in a short window and keep the old server available read-only until users confirm.
+
+### What do I do with the old server?
+
+Power it off, keep it for an agreed period in case you need to go back and wipe it securely. If it held sensitive data, document how it was destroyed.
+
+## Takeaway
+
+A calm migration is one planned as a change of people and processes, not only of hardware. If you need extra hands to plan or carry one out, request a quote through the form.
+
+### Artículo 8 · Documentar la red y el directorio
+
+### [blog_post.title] a8-titulo
+**ES**
+Cómo documentar tu red y tu directorio activo
+
+**EN**
+How to document your network and Active Directory
+
+### [blog_post.slug] a8-slug
+**ES**
+document-network-active-directory
+
+**EN**
+document-network-active-directory
+
+### [blog_post.categories] a8-categorias
+**ES**
+TI, Documentación, Redes
+
+**EN**
+IT, Documentation, Networking
+
+### [blog_post.content] a8-contenido
+**ES**
+
+## El conocimiento que vive en una sola cabeza
+
+En muchas organizaciones pequeñas y medianas, la red y los usuarios funcionan gracias a una persona que recuerda cómo está todo armado. Mientras esa persona está, no se nota. El día que se va, se enferma o está de vacaciones, cualquier fallo se convierte en una investigación.
+
+Documentar no significa escribir un libro. Significa dejar por escrito lo mínimo que otra persona necesitaría para dar soporte sin adivinar.
+
+## Qué documentar de la red
+
+- **Un diagrama sencillo:** conexión a internet, firewall, switches, puntos de acceso y servidores principales.
+- **Direccionamiento:** rangos de IP, redes y VLAN, qué dispositivos tienen dirección fija y cuáles usan DHCP.
+- **Nombres y DNS:** quién resuelve los nombres internos y dónde están los registros importantes.
+- **Equipos de red:** modelo, ubicación, versión de firmware y dónde se guarda su configuración.
+- **Reglas del firewall** y accesos remotos: qué está abierto, por qué y quién lo pidió.
+- **Proveedores y contratos:** servicio de internet, números de cuenta y contactos de soporte.
+
+## Qué documentar del directorio activo
+
+- **Estructura:** dominios, unidades organizativas y la razón de cada una.
+- **Grupos y permisos:** qué grupos existen, qué acceso da cada uno y quién decide sus miembros.
+- **Políticas de grupo:** qué configuran y a qué unidades se aplican.
+- **Cuentas de servicio:** para qué se usan, dónde se usan y cuándo se renuevan sus contraseñas.
+- **Altas y bajas:** el procedimiento para crear y retirar usuarios.
+- **Respaldos:** qué se respalda del directorio y cómo se restaura.
+
+## Dónde guardarlo
+
+Elige un solo lugar que el equipo use de verdad: una wiki interna, una carpeta compartida con permisos limitados o una herramienta de documentación de TI. Dos reglas básicas:
+
+1. **No guardes contraseñas en el documento.** Usa un gestor de contraseñas con acceso controlado.
+2. **Limita quién puede leerlo y editarlo:** la documentación de red es información sensible.
+
+## Cómo mantenerla viva
+
+- **Actualiza al cambiar.** Que documentar el cambio sea parte de terminarlo.
+- **Pon una fecha de revisión** (por ejemplo, cada seis meses) y un responsable.
+- **Prueba la documentación:** pide a alguien que no conoce el sistema que resuelva una tarea siguiendo solo lo escrito, y corrige lo que le falte.
+- **Versiona los cambios importantes** para saber qué se modificó y quién lo hizo.
+
+## Empieza por lo más urgente
+
+Si no hay nada escrito, no intentes hacerlo todo a la vez. Ordena por riesgo:
+
+1. Cómo entrar al firewall y al servidor principal, y quién tiene acceso.
+2. Dónde están los respaldos y cómo se restauran.
+3. Diagrama básico de la red.
+4. Procedimiento de altas y bajas de usuarios.
+
+## Un esquema mínimo para el documento
+
+Si no sabes cómo empezar, usa estos apartados y rellénalos poco a poco:
+
+1. **Resumen:** qué es la organización, cuántos usuarios y sedes tiene.
+2. **Accesos y responsables:** quién administra qué y cómo se solicita acceso.
+3. **Red:** diagrama, direccionamiento y proveedores.
+4. **Directorio y usuarios:** estructura, grupos y procedimiento de altas y bajas.
+5. **Servidores y servicios:** qué hace cada uno y cómo se respalda.
+6. **Respaldos y recuperación:** qué se copia, dónde y cómo se restaura.
+7. **Contactos y proveedores:** a quién llamar y con qué número de cuenta.
+8. **Historial de cambios:** fecha, qué cambió y quién lo hizo.
+
+## Preguntas frecuentes
+
+### ¿Qué herramienta uso para documentar?
+
+La que tu equipo vaya a usar de verdad: una wiki interna, documentos compartidos con permisos o una herramienta de documentación de TI. Lo importante es que sea fácil de actualizar y esté en un solo lugar.
+
+### ¿Cada cuánto hay que revisar la documentación?
+
+Al menos cada seis meses y siempre que haya un cambio importante en la red, los servidores o los usuarios.
+
+### ¿Quién debe tener acceso?
+
+Solo el personal de TI y las personas responsables. La documentación de red y de cuentas es información sensible.
+
+### ¿Qué hago con las contraseñas?
+
+No las escribas en el documento. Usa un gestor de contraseñas con acceso controlado y registra quién puede entrar.
+
+### ¿Cuánto tiempo lleva documentar una red pequeña?
+
+Con una persona que conozca el sistema, unos pocos días repartidos en varias semanas suelen bastar para un primer documento útil. Después se mantiene con cada cambio.
+
+## Para llevarte
+
+Una documentación modesta y actualizada vale más que una perfecta que nadie abre. Si quieres que levantemos y ordenemos la documentación de tu red y tu directorio, pide una cotización desde el formulario.
+
+**EN**
+
+## Knowledge that lives in one head
+
+In many small and mid-sized organizations, the network and the users work thanks to one person who remembers how everything is put together. While that person is around, nobody notices. The day they leave, get sick or go on vacation, any fault becomes an investigation.
+
+Documenting does not mean writing a book. It means putting in writing the minimum another person would need to provide support without guessing.
+
+## What to document about the network
+
+- **A simple diagram:** internet connection, firewall, switches, access points and main servers.
+- **Addressing:** IP ranges, networks and VLANs, which devices have fixed addresses and which use DHCP.
+- **Names and DNS:** who resolves internal names and where the important records are.
+- **Network equipment:** model, location, firmware version and where its configuration is stored.
+- **Firewall rules** and remote access: what is open, why and who asked for it.
+- **Vendors and contracts:** internet service, account numbers and support contacts.
+
+## What to document about Active Directory
+
+- **Structure:** domains, organizational units and the reason for each.
+- **Groups and permissions:** which groups exist, what access each gives and who decides its members.
+- **Group policies:** what they configure and which units they apply to.
+- **Service accounts:** what they are for, where they are used and when their passwords are renewed.
+- **Joiners and leavers:** the procedure to create and remove users.
+- **Backups:** what is backed up from the directory and how it is restored.
+
+## Where to keep it
+
+Pick a single place the team actually uses: an internal wiki, a shared folder with restricted permissions or an IT documentation tool. Two basic rules:
+
+1. **Do not store passwords in the document.** Use a password manager with controlled access.
+2. **Limit who can read and edit it:** network documentation is sensitive information.
+
+## How to keep it alive
+
+- **Update when you change things.** Make documenting the change part of finishing it.
+- **Set a review date** (for example, every six months) and an owner.
+- **Test the documentation:** ask someone who does not know the system to complete a task using only what is written, and fix whatever they were missing.
+- **Version important changes** so you know what was modified and by whom.
+
+## Start with what is most urgent
+
+If nothing is written down, do not try to do everything at once. Order by risk:
+
+1. How to get into the firewall and the main server, and who has access.
+2. Where the backups are and how they are restored.
+3. A basic network diagram.
+4. The joiner and leaver procedure for users.
+
+## A minimal outline for the document
+
+If you do not know where to start, use these sections and fill them in gradually:
+
+1. **Summary:** what the organization is, how many users and sites it has.
+2. **Access and owners:** who administers what and how access is requested.
+3. **Network:** diagram, addressing and vendors.
+4. **Directory and users:** structure, groups and the joiner and leaver procedure.
+5. **Servers and services:** what each does and how it is backed up.
+6. **Backups and recovery:** what is copied, where and how it is restored.
+7. **Contacts and vendors:** who to call and with which account number.
+8. **Change log:** date, what changed and who did it.
+
+## Frequently asked questions
+
+### Which tool should I use to document?
+
+The one your team will actually use: an internal wiki, shared documents with permissions or an IT documentation tool. What matters is that it is easy to update and lives in one place.
+
+### How often should the documentation be reviewed?
+
+At least every six months and whenever there is an important change to the network, servers or users.
+
+### Who should have access?
+
+Only IT staff and the people in charge. Network and account documentation is sensitive information.
+
+### What do I do about passwords?
+
+Do not write them in the document. Use a password manager with controlled access and record who can get in.
+
+### How long does it take to document a small network?
+
+With one person who knows the system, a few days spread over several weeks is usually enough for a first useful document. After that it is maintained with each change.
+
+## Takeaway
+
+Modest, up-to-date documentation is worth more than perfect documentation nobody opens. If you want us to build and organize the documentation of your network and directory, request a quote through the form.
+
 ### 9.2 Calendario editorial
 
-Ocho ideas más, en orden sugerido de publicación.
+Ideas siguientes, en orden sugerido de publicación (las seis que estaban aquí ya son artículos).
 
-1. **Cómo leer la factura de electricidad de un edificio** / *How to read a building's electricity bill*. Qué significa cada cargo y qué señales piden una revisión.
-2. **EUI y WUI: qué miden y cómo usarlos** / *EUI and WUI: what they measure and how to use them*. Cómo comparar edificios de distinto tamaño sin engañarte.
-3. **Auditorías de energía: qué esperar y cómo prepararlas** / *Energy audits: what to expect and how to prepare*. Qué información reunir antes de la visita y cómo aprovechar el informe.
-4. **Subvenciones y reembolsos de energía y agua: cómo preparar una solicitud** / *Energy and water grants and rebates: how to prepare an application*. Qué documentar desde el principio para no empezar de cero cuando aparezca una convocatoria.
-5. **Cero residuos en instalaciones públicas: por dónde empezar** / *Zero waste in public facilities: where to start*. Un primer paso realista para escuelas y oficinas.
-6. **Capacitación bilingüe para el personal de operaciones: qué funciona** / *Bilingual training for operations staff: what works*. Cómo explicar el consumo de energía a equipos que hablan idiomas distintos.
-7. **Lista de verificación para migrar servidores sin sorpresas** / *A checklist for migrating servers without surprises*. Qué inventariar, probar y documentar antes y después del cambio.
-8. **Cómo documentar tu red y tu directorio para que cualquiera pueda dar soporte** / *How to document your network and directory so anyone can support it*. Un formato sencillo para que el conocimiento no dependa de una sola persona.
+1. **Cero residuos en instalaciones públicas: por dónde empezar** / *Zero waste in public facilities: where to start*. Auditoría de residuos, tasa de desvío y un primer paso realista para escuelas y oficinas.
+2. **Capacitación bilingüe para el personal de operaciones: qué funciona** / *Bilingual training for operations staff: what works*. Cómo explicar el consumo de energía a equipos que hablan idiomas distintos.
+3. **Mantenimiento preventivo de HVAC: lista de verificación mensual y anual** / *Preventive HVAC maintenance: monthly and yearly checklist*. Filtros, serpentines, correas, sensores y registros.
+4. **Horarios de climatización en escuelas: cómo ajustarlos sin quejas** / *School HVAC schedules: how to adjust them without complaints*. Ocupación real, eventos y arranque anticipado.
+5. **Alarmas del sistema de automatización: cuáles atender primero** / *Building automation alarms: which ones to handle first*. Priorizar por confort, seguridad y repetición.
+6. **Cómo pedir cotizaciones de un proyecto de eficiencia energética** / *How to request quotes for an energy efficiency project*. Alcance, criterios de comparación y preguntas para los proveedores.
+7. **Copias de seguridad para organizaciones pequeñas: la regla 3-2-1** / *Backups for small organizations: the 3-2-1 rule*. Qué respaldar, dónde y cómo probar la restauración.
+8. **Seguridad básica de cuentas en Microsoft 365 y Azure: primeros pasos** / *Basic account security in Microsoft 365 and Azure: first steps*. Autenticación en dos pasos, administradores y alertas.
 
 ## 10. Ayudas para Ana
 

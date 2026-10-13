@@ -418,6 +418,14 @@
   background: radial-gradient(circle at var(--focal-x) var(--focal-y), var(--placeholder-b), var(--placeholder-a) 70%);
 }
 .nx-media--contain > img { object-fit: contain; padding: 12%; background: var(--surface); }
+/* Aparición suave de las imágenes locales (las del CMS la traen de gatsby-image, con `durationFadeIn`). La clase
+   `nx-is-loaded` la pone un script mínimo de gatsby-ssr.js cuando la imagen termina de cargar. */
+.nx-media > img.nx-fade { opacity: 0; transition: opacity 0.7s ease; }
+.nx-media > img.nx-fade.nx-is-loaded { opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .nx-media > img.nx-fade { opacity: 1; transition: none; }
+  .nx-media .gatsby-image-wrapper img { transition: none !important; }
+}
 .nx-media__fallback {
   position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
   text-align: center; padding: 16px;

@@ -28,7 +28,7 @@ Herramientas para cargar y respaldar contenido con la API de gestión (CMA). Con
 3. **Imágenes del kit** (alt ES/EN y punto focal salen de la tabla del `LEEME.md` del kit):
 
    ```bash
-   node tools/datocms/upload-kit.js --dir "C:\...\imagenes-para-datocms" --env contenido-2026-10 --files blog-eficiencia-energetica.jpg,servicio-automatizacion-edificios.jpg,servicio-infraestructura-it.jpg,servicio-diseno-cad.jpg,tarjeta-conservacion-energia.jpg,proyectos-edificio.jpg
+   node tools/datocms/upload-kit.js --dir "C:\...\imagenes-para-datocms" --env contenido-2026-10 --files blog-eficiencia-energetica.jpg,servicio-automatizacion-edificios.jpg,servicio-infraestructura-it.jpg,servicio-diseno-cad.jpg,tarjeta-conservacion-energia.jpg,proyectos-edificio.jpg,hero-mesa-diseno.jpg,servicio-iot-inalambrico.jpg,blog-sistemas-heredados.jpg,blog-seguridad-servidores.jpg
    ```
 
    Añade `--apply` para subirlas (sin él solo lista lo que haría).

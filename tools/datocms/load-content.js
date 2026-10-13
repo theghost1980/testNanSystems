@@ -406,9 +406,16 @@ const buildPlan = async (dato, uploads, only) => {
   // ── blog: se despublican las 5 pruebas y se crean 2 artículos reales
   if (want("blog")) {
     const all = await items("blog_post");
+    // Un artículo por semana hacia atrás desde el más reciente, para que el blog no parezca recién llenado.
     const posts = [
       { k: "a1", cover: "blog-eficiencia-energetica.jpg", date: "2026-10-06T12:00:00+00:00" },
       { k: "a2", cover: "servicio-automatizacion-edificios.jpg", date: "2026-10-13T12:00:00+00:00" },
+      { k: "a3", cover: "hero-mesa-diseno.jpg", date: "2026-09-29T12:00:00+00:00" },
+      { k: "a4", cover: "servicio-iot-inalambrico.jpg", date: "2026-09-22T12:00:00+00:00" },
+      { k: "a5", cover: "proyectos-edificio.jpg", date: "2026-09-15T12:00:00+00:00" },
+      { k: "a6", cover: "servicio-diseno-cad.jpg", date: "2026-09-08T12:00:00+00:00" },
+      { k: "a7", cover: "blog-sistemas-heredados.jpg", date: "2026-09-01T12:00:00+00:00" },
+      { k: "a8", cover: "blog-seguridad-servidores.jpg", date: "2026-08-25T12:00:00+00:00" },
     ];
     const newSlugs = posts.map((p) => C("blog_post.slug", `${p.k}-slug`).en);
     for (const r of all.values()) {

@@ -11,9 +11,16 @@ import { useNx } from "../hooks/useNx";
 //   (`image` trae `fluid`, `focalPoint` y `alt`).
 // - Archivo local (importado con webpack): <Media src={…} srcSet={…} sizes={…} alt={…} />.
 //
+// Aparición: las imágenes del CMS entran con el fundido de `gatsby-image` (de la miniatura borrosa a la nítida)
+// y las locales con la clase `nx-fade`, que un script mínimo de `gatsby-ssr.js` marca como cargada al terminar
+// (no depende de React, así que funciona también antes de la hidratación). Sin JavaScript se ven sin efecto.
+//
 // `ratio` reserva el espacio con aspect-ratio (sin saltos de diseño):
 // 1x1 · 3x2 · 16x10 · 2x1 · 4x5 · hero. Sin imagen, o si falla, muestra el relleno.
 // `priority` es para la imagen del LCP (carga inmediata; el resto, diferida).
+// Duración del fundido de las imágenes del CMS (ms). El de las locales está en nx.css (`.nx-fade`).
+const FADE_MS = 700;
+
 const Media = ({
   image,
   src,
@@ -51,7 +58,7 @@ const Media = ({
           fluid={fluid}
           alt={text}
           loading={priority ? "eager" : "lazy"}
-          fadeIn={false}
+          durationFadeIn={FADE_MS}
           imgStyle={
             fit === "contain"
               ? // Logos: se ven enteros, centrados y con margen sobre fondo blanco.
@@ -67,6 +74,7 @@ const Media = ({
           width={width}
           height={height}
           alt={text}
+          className="nx-fade"
           loading={priority ? "eager" : "lazy"}
           decoding={priority ? "sync" : "async"}
           onError={() => setFailed(true)}
