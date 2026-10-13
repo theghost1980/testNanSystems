@@ -26,6 +26,10 @@ export const CONTACT_EMAIL = process.env.GATSBY_CONTACT_EMAIL || "";
 // 12 de octubre de 2026. Actualizar cada vez que se revisen.
 export const LEGAL_UPDATED = "2026-10-12";
 
+// Certificaciones del CMS que no se muestran en "Sobre nosotros" (no apoyan el perfil de energía, edificios y TI):
+// impuestos (H&R Block, IRS) y la de supervisión de exámenes (AMP). Siguen en el CMS; se filtran por el título.
+export const HIDDEN_CERTIFICATIONS = /\b(tax|proctor)\b/i;
+
 // Menú de accesibilidad de Equalweb (script de un tercero). Desactivado por decisión del dueño; para
 // reactivarlo basta con poner `true`: `gatsby-browser.js` vuelve a cargar el script, la política de
 // privacidad vuelve a mencionarlo y el CSS reserva espacio junto al botón de la banda de cotización.

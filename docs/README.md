@@ -18,6 +18,7 @@ Esta carpeta **no se publica en el sitio web**: vive solo en el repositorio.
 | [dependency-audit.md](dependency-audit.md) | Las 337 vulnerabilidades de `npm audit`: de dónde vienen, qué llega al visitante y por qué no se arreglan ahora (M8) | **Vivo** |
 | [datocms-api.md](datocms-api.md) | Qué se puede (y qué no) hacer en DatoCMS desde el repositorio con su API de gestión, modelos del CMS y la recomendación sobre los tokens (M10) | **Vivo** |
 | [cv-ana-echeverria.md](cv-ana-echeverria.md) | CV actual de Ana (LinkedIn) junto con lo que ya tiene DatoCMS: contraste de datos, diferencias a resolver, preguntas para Ana y respaldo si el CMS falla | **Vivo** |
+| [contenido-nansystems.md](contenido-nansystems.md) | Contenido real del sitio en español e inglés (misión, visión, servicios, portafolio, SEO, blog, testimonios de ejemplo), revisado y listo para aprobar; con las notas de carga al CMS | **Vivo** |
 | [prompt-contenido-ia.md](prompt-contenido-ia.md) | Prompt para que otra IA redacte el contenido real (misión, visión, servicios, portafolio, SEO, blog, testimonios de ejemplo) y qué hacer con su respuesta | **Vivo** |
 | [roadmap.md](roadmap.md) | Mejoras pendientes con estado | **Vivo** |
 | [redesign.md](redesign.md) | Decisión, tokens y plan del rediseño | **Vivo** |

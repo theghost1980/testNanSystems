@@ -62,7 +62,7 @@ Recomendación (pendiente del dueño):
 - **Cambiar el esquema** (añadir campos, por ejemplo un correo de contacto en `info_site`, o activar el modo borrador), sin tocar el panel.
 - **Auditar el contenido** con informes: imágenes sin alt, textos de relleno, traducciones vacías o idénticas.
 - **Disparar el despliegue** en Netlify (`build-triggers/<id>/trigger`) cuando termine una tanda de cambios.
-- **Probar en un sandbox:** las peticiones llevan la cabecera `X-Environment: <nombre>` (o la opción `environment` del cliente) y el plugin de Gatsby puede apuntar a ese entorno. Crear (`fork`) y promover entornos también va por la API; **no se probó** (crea datos) y puede depender del plan.
+- **Probar en un sandbox:** las peticiones llevan la cabecera `X-Environment: <nombre>` (o la opción `environment` del cliente) y el plugin de Gatsby puede apuntar a ese entorno. Crear (`fork`) y promover entornos también va por la API: está implementado en [tools/datocms/env.js](../tools/datocms/env.js) y **todavía no se ha ejecutado** (crea datos y puede depender del plan). `gatsby-config.js` lee la variable `DATO_ENVIRONMENT` para apuntar el plugin a ese entorno.
 - **Programar publicaciones** (solo en modelos con borrador) y consultar versiones de un registro.
 - **Preparar el artículo completo** (texto en los dos idiomas, categorías, fecha, slug, portada subida y alt) y **dejarlo en un sandbox o en borrador para que la clienta lo revise antes de publicar**.
 

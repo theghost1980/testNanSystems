@@ -19,7 +19,7 @@ const Footer = () => {
           }
         }
       }
-      services_es: allDatoCmsTechnology(filter: { locale: { eq: "es" } }) {
+      services_es: allDatoCmsTechnology(filter: { locale: { eq: "es" } }, sort: { fields: originalId, order: ASC }) {
         edges {
           node {
             id
@@ -28,7 +28,7 @@ const Footer = () => {
           }
         }
       }
-      services_en: allDatoCmsTechnology(filter: { locale: { eq: "en" } }) {
+      services_en: allDatoCmsTechnology(filter: { locale: { eq: "en" } }, sort: { fields: originalId, order: ASC }) {
         edges {
           node {
             id

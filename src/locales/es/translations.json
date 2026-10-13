@@ -14,20 +14,20 @@
       "title": "Página no encontrada"
     },
     "menu": {
-      "siteMap": "Mapa de Sitio",
+      "siteMap": "Mapa del sitio",
       "home": "Inicio",
-      "about": "Biografía",
+      "about": "Sobre nosotros",
       "portfolio": "Portafolio",
       "blog": "Blog",
-      "ventures": "Proyectos",
+      "ventures": "Servicios",
       "contact": "Contacto",
       "close": "CERRAR",
-      "ariaHome": "Ir página inicio",
-      "ariaAbout": "Ir página acerca de",
-      "ariaPortfolio": "Ir página portafolio",
-      "ariaBlog": "Ir página blog",
-      "ariaVentures": "Ir página proyectos",
-      "ariaContact": "Ir página contacto",
+      "ariaHome": "Ir a la página de inicio",
+      "ariaAbout": "Ir a la página sobre nosotros",
+      "ariaPortfolio": "Ir a la página del portafolio",
+      "ariaBlog": "Ir al blog",
+      "ariaVentures": "Ir a la página de servicios",
+      "ariaContact": "Ir a la página de contacto",
       "ariaLanguage": "Cambiar lenguaje",
       "ariaHam": "Abrir o cerrar mini menú",
       "ariaLogo": "Logo de Nansystems",
@@ -36,31 +36,30 @@
     "footer": {
       "copy": "Hecho con ",
       "by": " por ",
-      "terms": "Términos de Servicio",
-      "contactme": "Contáctame en las Redes Sociales",
-      "ourserv": "Nuestros Servicios",
-      "desc": "Automatización e IT por Ana Echeverría. Español · English.",
+      "terms": "Términos de servicio",
+      "contactme": "Síguenos en las redes sociales",
+      "ourserv": "Nuestros servicios",
+      "desc": "Ingeniería para energía, edificios y TI, por Ana Echeverría. Español · English.",
       "legal": "Legal",
       "privacy": "Privacidad",
       "credits": "Créditos",
-      "newsletterText": "Artículos técnicos y novedades de proyectos, una vez al mes y sin spam.",
+      "newsletterText": "Artículos técnicos y novedades de proyectos. Sin spam.",
       "rights": "Derechos reservados",
       "social": "Redes sociales"
     },
     "home": {
-      "latest": "Artículos Recientes",
+      "latest": "Artículos recientes",
       "some": "Algunas technologías con las que trabajamos:"
     },
     "blogList": {
       "readingtime": "min de lectura)"
     },
     "portfolio": {
-      "text": "Durante más de {{years}} años de experiencia, he podido trabajar en proyectos medianos y grandes. Cada experiencia ha sido de gran ayuda para completar mis habilidades como ingeniero.",
+      "text": "Con más de {{years}} años de experiencia técnica, he trabajado en energía y agua, automatización de edificios y TI, desde un distrito escolar con 132 instalaciones hasta empresas y organizaciones públicas.",
       "since": "Empleada desde:",
       "until": "Hasta",
-      "actual": "Empleo Actual",
-      "visit": "Visitar el Sitio Web",
-      "salary": "Salario: $",
+      "actual": "Empleo actual",
+      "visit": "Visitar el sitio web",
       "description": "Descripción del puesto",
       "responsibilities": "Responsabilidades",
       "tasks": "Tareas habituales",
@@ -69,14 +68,14 @@
       "present": "Actual"
     },
     "blog": {
-      "quote": "Escribir un libro es una aventura para empezar, es un juguete y una diversión, luego se convierte en una amante, y luego se convierte en un maestro, y luego en un tirano. La última fase es que justo cuando está a punto de reconciliarse con su servidumbre, mata al monstruo, y lo lanza al público.",
+      "quote": "",
       "all": "Ir al blog",
       "empty": "Todavía no hay artículos.",
       "readTime": "min de lectura",
       "published": "Publicado el",
       "back": "Volver al blog",
       "share": "Compartir este artículo",
-      "intro": "Notas técnicas sobre automatización, infraestructura y diseño."
+      "intro": "Notas prácticas sobre energía, agua, edificios y TI, escritas desde la experiencia."
     },
     "contact": {
       "name": "Nombre",
@@ -84,16 +83,16 @@
       "feedback": "Comentarios",
       "submit": "Enviar",
       "cancel": "Cancelar",
-      "inputName": "nombre acá por favor",
-      "inputEmail": "correo acá por favor",
-      "inputFeedback": "comentarios/sugerencias acá por favor",
-      "sending": "Enviando Correo. Por favor Espere!",
-      "sentOne": "Correo Enviado!",
-      "sentTwo": "Gracias. Responderé a la brevedad posible.",
+      "inputName": "Tu nombre",
+      "inputEmail": "Tu correo electrónico",
+      "inputFeedback": "Cuéntanos qué necesitas",
+      "sending": "Enviando mensaje. Espera un momento.",
+      "sentOne": "Mensaje enviado",
+      "sentTwo": "Gracias. Te responderemos lo antes posible.",
       "errorTitle": "No se pudo enviar el mensaje.",
       "errorText": "Inténtalo de nuevo en unos minutos o escríbenos directamente por correo.",
       "errorTextWithEmail": "Inténtalo de nuevo en unos minutos o escríbenos directamente a",
-      "intro": "Escríbenos y te respondemos lo antes posible.",
+      "intro": "Escríbenos y te respondemos por email lo antes posible, en español o en inglés.",
       "message": "Mensaje"
     },
     "tos": {
@@ -170,8 +169,8 @@
       "l10": "Esta política parte de una plantilla de GetTerms y fue adaptada a este sitio."
     },
     "button": {
-      "readmore": "Leer Más",
-      "getquote": "Cotizar por Email",
+      "readmore": "Leer más",
+      "getquote": "Pide una cotización por email",
       "retry": "Reintentar",
       "quote": "Cotizar",
       "close": "Cerrar",
@@ -184,30 +183,30 @@
       "categories": "Categorías: "
     },
     "subscribe": {
-      "getgood": "Únete a la Familia",
-      "getme": "Subscribirme!",
+      "getgood": "Suscríbete al boletín",
+      "getme": "Suscribirme",
       "emailhere": " email acá por favor",
-      "thanks": "Grazie, Gracias, Shukran, 감사합니다!",
+      "thanks": "Gracias por suscribirte.",
       "error": "Si el error persiste,",
       "error2": "contáctenos",
       "errorTitle": "No se pudo completar la suscripción.",
-      "text": "Artículos técnicos y novedades de proyectos, una vez al mes y sin spam."
+      "text": "Artículos técnicos y novedades de proyectos. Sin spam."
     },
     "quickquote": {
-      "companyUser": "Trabajador/Empleado",
+      "companyUser": "Trabajo en una organización",
       "name": "Nombre",
-      "phone": "Teléfono(opcional)",
-      "callme": "Llamar sólo durante",
+      "phone": "Teléfono (opcional)",
+      "callme": "Llamarme solo durante",
       "call": "por favor seleccione un mejor momento para llamarle",
-      "callB": "Horario Laboral 9 a.m. - 5 p.m.",
-      "callA": "Después del Trabajo 5 p.m. - 9 p.m.",
-      "iwill": "me pondré en contacto con usted, así que por favor no me llame.",
+      "callB": "Horario laboral, 9 a. m. a 5 p. m. (hora central)",
+      "callA": "Fuera de horario, 5 p. m. a 9 p. m. (hora central)",
+      "iwill": "No me llamen; prefiero que me escriban por email.",
       "company": "Compañía",
-      "job": "Empleo",
+      "job": "Cargo",
       "email": "Email",
       "comments": "Comentarios",
       "nameh": "nombre acá",
-      "phoneh": "telêfono acá",
+      "phoneh": "Tu teléfono",
       "companyh": "nombre de compañía acá",
       "jobth": "empleo acá",
       "emailh": "email acá",
@@ -215,9 +214,9 @@
       "send": "Enviar",
       "cancel": "Cancelar",
       "sending": "Enviando mensaje por favor espere...",
-      "ourobots": "Nuestros robots están haciendo del mundo un lugar mejor :D",
-      "sent": "Mensaje enviado. Nuestros robots están felices de trabajar para usted!",
-      "wewill": "Le responderemos lo antes posible. Por favor, añada nuestro correo electrónico a sus contactos seguros",
+      "ourobots": "Nuestros robots trabajan para hacer del mundo un lugar mejor.",
+      "sent": "Mensaje enviado. Gracias por escribirnos.",
+      "wewill": "Te responderemos lo antes posible. Si no ves nuestra respuesta, revisa tu carpeta de spam.",
       "title": "Solicitar cotización",
       "errorTitle": "No se pudo enviar la solicitud.",
       "errorText": "Inténtalo de nuevo o escríbenos por correo.",
@@ -245,14 +244,14 @@
       "readMoreAbout": "Leer más sobre"
     },
     "hero": {
-      "l1": "Edificios inteligentes,",
-      "accent": "operación",
-      "box": "simple.",
-      "lead": "Automatización, infraestructura IT y diseño técnico, liderados por Ana Echeverría.",
-      "fig": "FIG. 01 — AUTOMATIZACIÓN DE EDIFICIOS",
-      "chip": "Proyectos medianos y grandes",
-      "statText": "años resolviendo proyectos de automatización e IT.",
-      "cta": "Hablemos de tu proyecto",
+      "l1": "Edificios que gastan",
+      "accent": "menos",
+      "box": "energía.",
+      "lead": "Te ayudamos a reducir el consumo de energía y agua, operar mejor tus edificios y resolver tus necesidades de TI.",
+      "fig": "FIG. 01 — ILUSTRACIÓN CONCEPTUAL",
+      "chip": "Ingeniería en Austin, Texas",
+      "statText": "años de experiencia técnica en energía y TI",
+      "cta": "Pide una cotización",
       "photoFallback": "FOTO: SALA TÉCNICA",
       "alt": "Técnico, de espaldas, revisando un tablero de control ordenado en la sala técnica de un edificio"
     },
@@ -261,7 +260,7 @@
     },
     "services": {
       "title": "Lo que hacemos",
-      "all": "Todos los proyectos",
+      "all": "Ver todos los servicios",
       "empty": "Todavía no hay servicios publicados."
     },
     "testimony": {
@@ -273,17 +272,20 @@
       "t1": "¿Hablamos de tu",
       "t2": "próximo",
       "t3": "proyecto?",
-      "text": "Cuéntanos qué necesitas y recibe una cotización por email. Nuestros robots están felices de trabajar para ti."
+      "text": "Cuéntanos qué necesitas y te enviamos una cotización por email. Respondemos en español y en inglés."
     },
     "about": {
       "area": "Área",
       "areas": "Áreas de trabajo",
-      "share": "Compartir esta página"
+      "share": "Compartir esta página",
+      "headline": "Ingeniera, MBA, máster en Dirección Internacional de Proyectos y LEED Green Associate",
+      "short": "Ingeniera electrónica e informática, bilingüe, con MBA, máster en Dirección Internacional de Proyectos y LEED Green Associate. Cinco años en Austin ISD en conservación de energía y agua, y consultoría de TI desde 2015.",
+      "certifications": "Certificaciones y membresías"
     },
     "ventures": {
-      "project": "Proyecto",
-      "dialogTitle": "Detalle del proyecto",
-      "empty": "Todavía no hay proyectos publicados."
+      "project": "Servicio",
+      "dialogTitle": "Detalle del servicio",
+      "empty": "Todavía no hay servicios publicados."
     },
     "technology": {
       "quote": "Cotizar este servicio",
@@ -298,7 +300,7 @@
     "notfound": {
       "code": "ERROR 404",
       "title": "Esta página no existe",
-      "text": "La dirección puede haber cambiado o nunca existió. Nuestros robots ya lo están revisando.",
+      "text": "Puede que la dirección haya cambiado o que nunca haya existido. Nuestros robots ya lo están revisando.",
       "back": "Volver al inicio",
       "alt": "Cable de red desconectado sobre una superficie clara"
     },
@@ -311,10 +313,10 @@
     },
     "meta": {
       "home": "NaNSYSTEMS · Automatización de edificios e infraestructura IT",
-      "about": "Biografía · NaNSYSTEMS",
+      "about": "Sobre nosotros · NaNSYSTEMS",
       "portfolio": "Portafolio · NaNSYSTEMS",
       "blog": "Blog · NaNSYSTEMS",
-      "ventures": "Proyectos · NaNSYSTEMS",
+      "ventures": "Servicios · NaNSYSTEMS",
       "contact": "Contacto · NaNSYSTEMS",
       "notfound": "Página no encontrada · NaNSYSTEMS",
       "tos": "Términos de servicio · NaNSYSTEMS",

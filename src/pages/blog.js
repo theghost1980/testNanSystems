@@ -41,6 +41,8 @@ const Blog = ({ data }) => {
   const L = lang === "en" ? "en" : "es";
   const seo = data[`dataSEO_${L}`];
   const posts = data[`posts_${L}`].edges;
+  // El epígrafe es opcional: con la clave vacía no se pinta el recuadro.
+  const quote = t("blog.quote");
 
   return (
     <Layout>
@@ -50,7 +52,7 @@ const Blog = ({ data }) => {
           {t("menu.blog")}
         </h1>
         <p className="nx-lead">{t("blog.intro")}</p>
-        <blockquote className="nx-epigraph">{t("blog.quote")}</blockquote>
+        {quote && <blockquote className="nx-epigraph">{quote}</blockquote>}
       </section>
       <section className="nx-section nx-section--tight nx-container" aria-label={t("menu.blog")}>
         {posts.length ? (

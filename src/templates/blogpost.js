@@ -1,5 +1,6 @@
 import React from "react";
 import { graphql, Link } from "gatsby";
+import { Helmet } from "react-helmet";
 import { HelmetDatoCms } from "gatsby-source-datocms";
 import Layout from "../components/layout";
 import Media from "../components/media";
@@ -8,7 +9,7 @@ import Pills from "../components/pills";
 import PostMeta from "../components/postMeta";
 import Share from "../components/share";
 import { useNx } from "../hooks/useNx";
-import { parseCategories, prepareCmsHtml, readMinutes } from "../utils/content";
+import { excerptFromHtml, parseCategories, prepareCmsHtml, readMinutes } from "../utils/content";
 
 const Blogpost = ({ data, location }) => {
   const { t, lang } = useNx();
@@ -18,10 +19,18 @@ const Blogpost = ({ data, location }) => {
   const cats = parseCategories(post.categories);
   const md = post.contentNode && post.contentNode.childMarkdownRemark;
   const hasCover = Boolean(post.coverImage && post.coverImage.fluid);
+  const excerpt = md ? excerptFromHtml(md.html) : "";
 
   return (
     <Layout>
       <HelmetDatoCms seo={post.seoMetaTags} />
+      {excerpt && (
+        <Helmet>
+          <meta name="description" content={excerpt} />
+          <meta property="og:description" content={excerpt} />
+          <meta name="twitter:description" content={excerpt} />
+        </Helmet>
+      )}
       <article className="nx-article nx-section nx-section--tight nx-container">
         <Link className="nx-link-more" to="/blog">
           <Icon name="back" size={18} /> <span>{t("blog.back")}</span>

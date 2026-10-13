@@ -14,20 +14,20 @@
       "title": "Page not found"
     },
     "menu": {
-      "siteMap": "Site Map",
+      "siteMap": "Site map",
       "home": "Home",
       "about": "About",
       "portfolio": "Portfolio",
       "blog": "Blog",
-      "ventures": "Ventures",
+      "ventures": "Services",
       "contact": "Contact",
       "close": "CLOSE",
-      "ariaHome": "Navigate to home page",
-      "ariaAbout": "Navigate to about page",
-      "ariaPortfolio": "Navigate to portfolio page",
-      "ariaBlog": "Navigate to blog page",
-      "ariaVentures": "Navigate to venture page",
-      "ariaContact": "Navigate to contact page",
+      "ariaHome": "Go to the home page",
+      "ariaAbout": "Go to the about page",
+      "ariaPortfolio": "Go to the portfolio page",
+      "ariaBlog": "Go to the blog",
+      "ariaVentures": "Go to the services page",
+      "ariaContact": "Go to the contact page",
       "ariaLanguage": "Change Language",
       "ariaHam": "Open or close mobile Menu",
       "ariaLogo": "Company logo",
@@ -37,13 +37,13 @@
       "copy": "Made with ",
       "by": " by ",
       "terms": "Terms of Service",
-      "contactme": "Contact me over Social Media",
-      "ourserv": "Our Services",
-      "desc": "Automation and IT by Ana Echeverría. Español · English.",
+      "contactme": "Find us on social media",
+      "ourserv": "Our services",
+      "desc": "Engineering for energy, buildings and IT, by Ana Echeverría. Español · English.",
       "legal": "Legal",
       "privacy": "Privacy",
       "credits": "Credits",
-      "newsletterText": "Technical articles and project news, once a month and no spam.",
+      "newsletterText": "Technical articles and project news. No spam.",
       "rights": "All rights reserved",
       "social": "Social media"
     },
@@ -55,12 +55,11 @@
       "readingtime": "minutes to read)"
     },
     "portfolio": {
-      "text": "During more than {{years}} years of experience, I have been able to work on medium and large projects. Each experience has been of great help in completing my skills as an engineer.",
+      "text": "With more than {{years}} years of technical experience, I have worked on energy and water, building automation and IT, from a school district with 132 facilities to companies and public organizations.",
       "since": "Working since:",
       "until": "Until",
       "actual": "Current role",
-      "visit": "Visit Company Web Site",
-      "salary": "Wage: $",
+      "visit": "Visit the company website",
       "description": "Job description",
       "responsibilities": "Responsibilities",
       "tasks": "Day-to-day tasks",
@@ -69,14 +68,14 @@
       "present": "Present"
     },
     "blog": {
-      "quote": "Writing a book is an adventure to begin with, it is a toy and an amusement, then it becomes a mistress, and then it becomes a master, and then a tyrant. The last phase is that just as you are about to be reconciled to your servitude, you kill the monster, and fling him out to the public.",
+      "quote": "",
       "all": "Go to the blog",
       "empty": "There are no articles yet.",
       "readTime": "min read",
       "published": "Published on",
       "back": "Back to the blog",
       "share": "Share this article",
-      "intro": "Technical notes on automation, infrastructure and design."
+      "intro": "Practical notes on energy, water, buildings and IT, written from experience."
     },
     "contact": {
       "name": "Name",
@@ -84,16 +83,16 @@
       "feedback": "Feedback",
       "submit": "Submit",
       "cancel": "Cancel",
-      "inputName": "name here please",
-      "inputEmail": "email here please",
-      "inputFeedback": "feedback/comments here please",
-      "sending": "Sending Email. Please Wait!",
-      "sentOne": "Email Sent!",
-      "sentTwo": "Thank you. I will reply as soon as possible.",
+      "inputName": "Your name",
+      "inputEmail": "Your email",
+      "inputFeedback": "Tell us what you need",
+      "sending": "Sending message. Please wait.",
+      "sentOne": "Message sent",
+      "sentTwo": "Thank you. We will reply as soon as possible.",
       "errorTitle": "The message could not be sent.",
       "errorText": "Please try again in a few minutes or email us directly.",
       "errorTextWithEmail": "Please try again in a few minutes or email us directly at",
-      "intro": "Write to us and we will reply as soon as possible.",
+      "intro": "Write to us and we will reply by email as soon as we can, in English or Spanish.",
       "message": "Message"
     },
     "tos": {
@@ -170,8 +169,8 @@
       "l10": "This policy is based on a GetTerms template and was adapted to this site."
     },
     "button": {
-      "readmore": "Read More",
-      "getquote": "Get quote by Email",
+      "readmore": "Read more",
+      "getquote": "Get a quote by email",
       "retry": "Try again",
       "quote": "Get a quote",
       "close": "Close",
@@ -184,30 +183,30 @@
       "categories": "Categories: "
     },
     "subscribe": {
-      "getgood": "Get good News",
-      "getme": "I'm in!",
+      "getgood": "Subscribe to our newsletter",
+      "getme": "Subscribe",
       "emailhere": " email here please",
-      "thanks": "Grazie, Gracias, Shukran, 감사합니다!",
+      "thanks": "Thanks for subscribing.",
       "error": "If error persists, ",
       "error2": "contact us",
       "errorTitle": "The subscription could not be completed.",
-      "text": "Technical articles and project news, once a month and no spam."
+      "text": "Technical articles and project news. No spam."
     },
     "quickquote": {
-      "companyUser": "Company User",
+      "companyUser": "I work for an organization",
       "name": "Name",
-      "phone": "Phone(optional)",
-      "callme": "Call me during",
+      "phone": "Phone (optional)",
+      "callme": "Call me only during",
       "call": "Please select better time to call you",
-      "callB": "Business Hours 9 a.m. - 5 p.m.",
-      "callA": "After Hours 5 p.m. - 9 p.m.",
-      "iwill": "I will contact you, so please do not call me.",
+      "callB": "Business hours, 9 a.m. to 5 p.m. (Central Time)",
+      "callA": "After hours, 5 p.m. to 9 p.m. (Central Time)",
+      "iwill": "Please do not call me; I prefer email.",
       "company": "Company",
-      "job": "Job Title",
+      "job": "Job title",
       "email": "Email",
       "comments": "Comments",
       "nameh": "name here",
-      "phoneh": "phone here",
+      "phoneh": "Your phone",
       "companyh": "company name here",
       "jobth": "job title here",
       "emailh": "email here",
@@ -215,9 +214,9 @@
       "send": "Send",
       "cancel": "Cancel",
       "sending": "Sending Message Please Wait..",
-      "ourobots": "Our Robots are making the world a better place :D",
-      "sent": "Message Sent. Our Robots are happy to work for you!",
-      "wewill": "We will answer you as soon as possible. Please add our email to your safe contacts",
+      "ourobots": "Our robots are working to make the world a better place.",
+      "sent": "Message sent. Thank you for writing to us.",
+      "wewill": "We will reply as soon as possible. If you do not see our reply, check your spam folder.",
       "title": "Request a quote",
       "errorTitle": "The request could not be sent.",
       "errorText": "Please try again or email us directly.",
@@ -245,14 +244,14 @@
       "readMoreAbout": "Read more about"
     },
     "hero": {
-      "l1": "Smart buildings,",
-      "accent": "simple",
-      "box": "operations.",
-      "lead": "Building automation, IT infrastructure and technical design, led by Ana Echeverría.",
-      "fig": "FIG. 01 — BUILDING AUTOMATION",
-      "chip": "Medium and large projects",
-      "statText": "years solving automation and IT projects.",
-      "cta": "Let’s talk about your project",
+      "l1": "Buildings that use",
+      "accent": "less",
+      "box": "energy.",
+      "lead": "We help you cut energy and water use, run your buildings better and solve your IT needs.",
+      "fig": "FIG. 01 — CONCEPT ILLUSTRATION",
+      "chip": "Engineering in Austin, Texas",
+      "statText": "years of technical experience in energy and IT",
+      "cta": "Request a quote",
       "photoFallback": "PHOTO: TECHNICAL ROOM",
       "alt": "Technician, seen from behind, reviewing a tidy control cabinet in a building's technical room"
     },
@@ -261,7 +260,7 @@
     },
     "services": {
       "title": "What we do",
-      "all": "All projects",
+      "all": "See all services",
       "empty": "No services have been published yet."
     },
     "testimony": {
@@ -270,20 +269,23 @@
       "profile": "View profile"
     },
     "cta": {
-      "t1": "Shall we talk about your",
+      "t1": "Let's talk about your",
       "t2": "next",
-      "t3": "project?",
-      "text": "Tell us what you need and get a quote by email. Our robots are happy to work for you."
+      "t3": "project",
+      "text": "Tell us what you need and we will send you a quote by email. We reply in English and Spanish."
     },
     "about": {
       "area": "Area",
       "areas": "Areas of work",
-      "share": "Share this page"
+      "share": "Share this page",
+      "headline": "Engineer, MBA, master's in International Project Management and LEED Green Associate",
+      "short": "Bilingual electronic and computer engineer with an MBA, a master's in International Project Management and LEED Green Associate. Five years at Austin ISD in energy and water conservation, and IT consulting since 2015.",
+      "certifications": "Certifications and memberships"
     },
     "ventures": {
-      "project": "Project",
-      "dialogTitle": "Project details",
-      "empty": "No projects have been published yet."
+      "project": "Service",
+      "dialogTitle": "Service details",
+      "empty": "No services have been published yet."
     },
     "technology": {
       "quote": "Get a quote for this service",
@@ -314,7 +316,7 @@
       "about": "About · NaNSYSTEMS",
       "portfolio": "Portfolio · NaNSYSTEMS",
       "blog": "Blog · NaNSYSTEMS",
-      "ventures": "Ventures · NaNSYSTEMS",
+      "ventures": "Services · NaNSYSTEMS",
       "contact": "Contact · NaNSYSTEMS",
       "notfound": "Page not found · NaNSYSTEMS",
       "tos": "Terms of Service · NaNSYSTEMS",

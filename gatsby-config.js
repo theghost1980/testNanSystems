@@ -13,7 +13,7 @@ if (!process.env.api_key) {
 module.exports = {
   siteMetadata: {
     title: `NanSystems - Ana Echeverría`,
-    description: `Ana Echeverria provides solutions in IT and technology for the medium, small and large companies.`,
+    description: `NaNSYSTEMS: engineering consulting in Austin, Texas. Energy and water, building automation, IT and project management, in English and Spanish.`,
     author: `Saturno Mangieri -> github.com/theghost1980`,
     siteUrl: `https://nansystems.us`,
   },
@@ -53,6 +53,9 @@ module.exports = {
       resolve: `gatsby-source-datocms`,
       options: {
         apiToken: `${process.env.api_key}`,
+        // Entorno de DatoCMS del que se lee. Sin la variable, el principal (`main`, el de producción). Sirve para
+        // revisar contenido nuevo en un entorno de pruebas (fork) antes de promoverlo (docs/datocms-api.md).
+        ...(process.env.DATO_ENVIRONMENT ? { environment: process.env.DATO_ENVIRONMENT } : {}),
       },
     },
     //animations for ventures page

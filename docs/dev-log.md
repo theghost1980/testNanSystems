@@ -51,9 +51,27 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 - **[cv-ana-echeverria.md](cv-ana-echeverria.md):** el CV de LinkedIn (PDF de 7 páginas, entregado por el dueño) más lo que ya tiene el CMS, con las diferencias marcadas, la sección "qué respalda el CV", preguntas para Ana y la correspondencia con los modelos para reconstruir el CMS si fallara. No incluye sueldos, correo ni identificadores de credenciales (el repositorio es público).
 - **[prompt-contenido-ia.md](prompt-contenido-ia.md):** prompt completo (ES/EN) para que otra IA redacte posicionamiento y catálogo, misión, visión y valores, biografía, servicios, portafolio, certificaciones, SEO, dos artículos de blog, microtextos corregidos y testimonios de ejemplo, en un único `.md` con una estructura que luego se puede cargar al CMS con un script.
 
+### Hecho (parte 2: contenido recibido)
+- El dueño trajo el texto de la otra IA y pidió quitar todo lo de "confirmar" (la clienta quiere el sitio lleno de forma creíble y él asume la responsabilidad de los datos). Se dejó de exigir respaldo del CV frase a frase, pero se mantuvo la coherencia: **[contenido-nansystems.md](contenido-nansystems.md)** es la versión revisada.
+- Cuadre: marcas "confirmar" fuera; secciones 11 a 13 y preguntas de la IA fuera (sustituidas por las notas de carga); claves de traducción llevadas a las que existen; `cta.text` tenía dos valores y se dejó el de la banda; `quickquote.iwill` distinto en ES y EN (corregido); "(omitir en la web)" estaba dentro del título de tres certificaciones; `excerpt`, `about.headline` y `about.short` no existen como campos del CMS; cargo de Austin ISD mal traducido; "añade nuestro correo" cuando el sitio no muestra ninguna dirección; textos de interfaz que seguían diciendo "proyectos". Las 408 longitudes se comprobaron por script (0 incumplimientos).
+
+### Hecho (parte 3: contenido en el código y herramientas de carga)
+- El dev aprobó todas las decisiones propuestas (catálogo de 4 servicios, un solo catálogo en Servicios, titular "Edificios que gastan menos energía", sin epígrafe en el blog, 7 certificaciones, redirecciones 301, artículos de prueba fuera, nueva franja de tecnologías) y pidió **publicar los testimonios** (decisión suya y de la clienta, que asumen). Son genéricos y no nombran ninguna organización del CV.
+- **Código:** `translations.json` (es/en) a partir del documento (66 claves, `about.headline/short/certifications` nuevas, `blog.quote` y `portfolio.salary` fuera); `ventures.js` pasa a listar `Technology`; `aboutNew.js` suma biografía con foto, SEO de `about` y certificaciones; `isPlaceholder` trata "—" como vacío; `marquee.js` con las tecnologías del CV; `blog.js` sin recuadro si no hay epígrafe; `static/_redirects`; `gatsby-config.js` con la descripción nueva y `environment` desde `DATO_ENVIRONMENT`.
+- **Herramientas** en [tools/datocms](../tools/datocms/README.md): cliente con filtro de tokens y límite de peticiones, `backup.js` (hecho: respaldo completo fuera del repositorio, 56 peticiones, 108 archivos de mediateca), `env.js` (copiar, promover y borrar entornos), `upload-kit.js` y `load-content.js` (47 operaciones calculadas en simulacro contra `main`).
+- **Bloqueo:** crear la copia (`fork`) del entorno es una escritura en el proyecto de DatoCMS y la herramienta de permisos la rechazó. Al ejecutarla el dev, la API respondió `401 INSUFFICIENT_PERMISSIONS`: el token de `datocms-write.env` es de rol Editor y los entornos exigen el "Full-access API token" (Admin). Hasta usar ese token (o crear la copia desde el panel) no hay entorno donde cargar, y las escrituras de los scripts siguen sin probarse. Alternativa si el plan no permite entornos: modo borrador en los modelos y lectura con `previewMode`.
+
+### Hecho (parte 4: carga al entorno de pruebas y revisión completa)
+- **Carga:** el dev creó la copia `contenido-2026-10` (con el token Admin; el Editor responde `401 INSUFFICIENT_PERMISSIONS`), subió las 6 imágenes del kit y ejecutó la carga. Incidencias resueltas por el camino: `item.shot_title` exige 10 a 20 caracteres (el cargador ahora valida longitudes contra el esquema antes de escribir), publicar y despublicar son `PUT /items/:id/publish` y `/unpublish`, el cliente leía mal los acentos al partir las respuestas (ya usa UTF-8 correcto y el respaldo se repitió), las fechas vuelven con el huso del proyecto y los logros vacíos se cargan como "—" (con `null` el CMS rellena un texto de ejemplo).
+- **Revisión completa** sobre una compilación de producción en copia aislada que lee el entorno nuevo: 16 páginas por 4 anchos (360, 768, 1100 y 1440 px) sin desbordes y con un solo h1; 202 URLs de imagen responden 200; 0 enlaces internos rotos; sitio en inglés sin textos en español; sin relleno ni textos de prueba en el contenido cargado.
+- **Correcciones:** (1) el orden de servicios y testimonios salía invertido y cambiaba con cada edición (la API los entrega por última modificación): ahora se ordenan por `originalId` y por `name`; (2) la página vieja `/about` seguía publicada con la integrante "Tia Ferguson": se borra `about.js` y `teamlist.js` y `/about` redirige a `/aboutNew`; (3) EmailJS seguía en los créditos: el cargador lo borra; (4) etiquetas de certificaciones mal traducidas ("Empleos", "CRP"): corregidas; (5) los artículos salían con la descripción SEO general vieja: ahora usan un extracto del primer párrafo.
+- **Orden para salir:** (1) en Netlify, `DATO_ENVIRONMENT=contenido-2026-10` solo en el contexto Deploy Previews; (2) preview revisado; (3) `node tools/datocms/env.js promote contenido-2026-10 --yes`; (4) quitar la variable de Netlify y fusionar a `master` enseguida (producción lee `main`, que ya tendrá el contenido); (5) borrar el entorno con `env.js delete`.
+
 ### Decisiones
-- Los **testimonios** que pida el dueño al redactor son **de ejemplo, marcados "no publicar como reales"**, con nombres y organizaciones ficticios y genéricos. Sirven para maquetar; antes de producción se sustituyen por reales o se borra la sección (FTC de EE. UU.).
+- Los **testimonios** se cargan y se publican por decisión del dev y de la clienta (en la parte 1 se había propuesto dejarlos como ejemplo; ver la parte 3).
 - Todo lo que devuelva la IA se **contrasta con el CV** antes de tocar el CMS, y Ana aprueba el posicionamiento y la lista de pendientes.
+- **Cómo se carga y se aprueba el contenido:** copia de `main` en DatoCMS, carga con los scripts de `tools/datocms`, lectura en local y en el Deploy Preview con `DATO_ENVIRONMENT`, aprobación del dev y promoción de la copia al terminar. Detalle en el [README de las herramientas](../tools/datocms/README.md) y en las notas de carga de [contenido-nansystems.md](contenido-nansystems.md).
+- Contenido cargado en un **entorno de pruebas** (copia de `main`), no en borrador: producción sigue leyendo `main` hasta que se promueva. La lectura local y el Deploy Preview usan `DATO_ENVIRONMENT`.
 - El CV confirma el año base **2015** de la cifra "+11 años" (primer puesto técnico: enero de 2015).
 
 ### Hallazgos / sorpresas
@@ -67,14 +85,16 @@ Reglas: nada de secretos ni rutas locales (el repo es público); enlazar con IDs
 - **El CV no respalda** Niagara/Tridium, IoT como programa propio, Linux como servicio ni diseño web; lo más fuerte es conservación de energía y agua, automatización de edificios (BAS/HVAC/EMS), consultoría de TI y gestión de proyectos.
 
 ### Pendiente y abierto
-- **Esperar el texto de la IA** (archivo `contenido-nansystems.md`) y revisarlo contra el CV.
+- **Aprobación del dev** del contenido (decisiones de la sección 11.3 y 11.2 de [contenido-nansystems.md](contenido-nansystems.md)).
+- Decisión del dev: el Instagram del CMS (`gabrielmelissa2015`) sale en el pie y en contacto y no parece de Ana; la descripción SEO general del proyecto (Ajustes → SEO, solo desde el panel) conserva el texto viejo y la usan las páginas sin SEO propio.
 - Respuestas de Ana a la sección 8 de [cv-ana-echeverria.md](cv-ana-echeverria.md): ocupación actual, servicios reales, equipo, alianzas, domicilio y correo públicos, puestos a mostrar, testimonios reales.
 - Instagram del CMS: el enlace no coincide con el nombre de Ana (sin verificar).
 
 ### Próximos pasos
-1. El dueño pega el prompt en la IA con el CV adjunto y trae el archivo.
-2. Revisión del archivo contra el CV y lista de pendientes para Ana.
-3. Tras su visto bueno, cargar el contenido en borrador con el flujo de la Fase 5 (C1 a C5, C9 y C10).
+1. El dev aprueba el contenido y las decisiones de carga.
+2. Crear la copia del entorno, subir las 6 imágenes del kit y cargar el contenido (comandos en el README de `tools/datocms`; el simulacro ya está hecho).
+3. Leer el sitio completo en local con `DATO_ENVIRONMENT`, corregir lo que haga falta (textos en el documento y volver a cargar).
+4. Deploy Preview con la misma variable, revisión en ES y EN, y promoción de la copia tras el merge.
 4. Limpieza final y comprobaciones posteriores al merge (ver el cierre de la 6.ª sesión).
 
 ### Commits de la sesión

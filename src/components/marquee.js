@@ -2,11 +2,23 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNx } from "../hooks/useNx";
 
 // Franja de tecnologías que se desplaza (SPEC: componente "Franja").
-// Contenido fijo en código (hoy no está en el CMS); "networks" es traducible.
+// Contenido fijo en código (hoy no está en el CMS): solo tecnologías y credenciales que aparecen en el CV de Ana
+// (docs/cv-ana-echeverria.md).
 // Repite el grupo hasta cubrir ≥ 2× el ancho de pantalla y duplica la mitad
 // (aria-hidden) para que el bucle no deje huecos; 60 px/s. Con
 // `prefers-reduced-motion` el CSS la deja estática y envuelta (sin botón).
-const ITEMS = ["TRIDIUM", "RED HAT LINUX", "AUTOCAD", "BMS / HVAC", "networks", "NIAGARA 4"];
+const ITEMS = [
+  "BAS / HVAC",
+  "EMS",
+  "ENERGY STAR",
+  "LEED",
+  "AUTOCAD",
+  "AZURE",
+  "ACTIVE DIRECTORY",
+  "CISCO MERAKI",
+  "FORTINET",
+  "VMWARE",
+];
 
 const Marquee = () => {
   const { t } = useNx();
@@ -26,8 +38,7 @@ const Marquee = () => {
     setDuration(Math.max(20, Math.round((width * n) / 60)));
   }, []);
 
-  // Medir el grupo original tras montar, al cambiar el tamaño de la ventana y
-  // al cambiar de idioma (cambia el texto de "REDES").
+  // Medir el grupo original tras montar y al cambiar el tamaño de la ventana.
   useEffect(() => {
     measure();
     let timer;
@@ -44,7 +55,7 @@ const Marquee = () => {
 
   const items = ITEMS.map((item) => (
     <React.Fragment key={item}>
-      <li>{item === "networks" ? t("marquee.networks") : item}</li>
+      <li>{item}</li>
       <li className="nx-marquee__star" aria-hidden="true">
         ✦
       </li>

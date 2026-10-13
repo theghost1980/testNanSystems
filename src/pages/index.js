@@ -193,28 +193,28 @@ export const data = graphql`
         }
       }
     }
-    services_en: allDatoCmsTechnology(filter: { locale: { eq: "en" } }) {
+    services_en: allDatoCmsTechnology(filter: { locale: { eq: "en" } }, sort: { fields: originalId, order: ASC }) {
       edges {
         node {
           ...NxService
         }
       }
     }
-    services_es: allDatoCmsTechnology(filter: { locale: { eq: "es" } }) {
+    services_es: allDatoCmsTechnology(filter: { locale: { eq: "es" } }, sort: { fields: originalId, order: ASC }) {
       edges {
         node {
           ...NxService
         }
       }
     }
-    testimonies_en: allDatoCmsTestimony(filter: { locale: { eq: "en" } }, limit: 3) {
+    testimonies_en: allDatoCmsTestimony(filter: { locale: { eq: "en" } }, sort: { fields: name, order: ASC }, limit: 3) {
       edges {
         node {
           ...NxTestimony
         }
       }
     }
-    testimonies_es: allDatoCmsTestimony(filter: { locale: { eq: "es" } }, limit: 3) {
+    testimonies_es: allDatoCmsTestimony(filter: { locale: { eq: "es" } }, sort: { fields: name, order: ASC }, limit: 3) {
       edges {
         node {
           ...NxTestimony

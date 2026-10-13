@@ -34,10 +34,12 @@ export const readMinutes = (node) =>
 // contenga se trata como vacío hasta que se escriba el texto real en DatoCMS.
 const PLACEHOLDER_RE = /lorem\s+ipsum|ipsem\s+lorem|place here all the|recommended for ana/i;
 const stripTags = (html) => String(html || "").replace(/<[^>]+>/g, " ");
+// "—" (o "-") es la marca de "sin texto" que se carga en campos obligatorios del CMS que no aplican.
+const EMPTY_MARK_RE = /^[\s—–-]+$/;
 
 export const isPlaceholder = (text) => {
   const s = stripTags(text).trim();
-  return !s || PLACEHOLDER_RE.test(s);
+  return !s || EMPTY_MARK_RE.test(s) || PLACEHOLDER_RE.test(s);
 };
 
 // Texto plano en minúsculas y sin espacios repetidos, para comparar bloques.
@@ -76,6 +78,23 @@ export const prepareCmsHtml = (html) =>
     .replace(/<(pre|table)(\s[^>]*)?>/g, (m, tag, attrs = "") =>
       /\stabindex=/.test(attrs) ? m : `<${tag} tabindex="0"${attrs}>`
     );
+
+// Descripción para buscadores a partir del cuerpo del artículo (primer párrafo, hasta ~155 caracteres, cortada en una
+// palabra). El campo SEO de un artículo no tiene idioma, así que sin esto saldría la descripción general del sitio.
+export const excerptFromHtml = (html, max = 155) => {
+  const paragraphs = (String(html || "").match(/<p[\s>][\s\S]*?<\/p>/g) || []).map((p) =>
+    stripTags(p).replace(/&nbsp;/g, " ").replace(/\s+/g, " ").trim()
+  );
+  let text = "";
+  for (const p of paragraphs) {
+    if (!p) continue;
+    text = text ? `${text} ${p}` : p;
+    if (text.length >= 80) break;
+  }
+  if (text.length <= max) return text;
+  const cut = text.slice(0, max - 1);
+  return `${cut.slice(0, cut.lastIndexOf(" ")).replace(/[.,;:\s]+$/, "")}…`;
+};
 
 // Fecha absoluta por idioma (más estable que "hace 3 meses" para SEO y traducción).
 // Zona UTC para que el día no se mueva.
